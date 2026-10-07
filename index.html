@@ -50,9 +50,6 @@
         .stat-card.red { background: #c41e3a; }
         .stat-card.gold { background: #d4a843; }
         .stat-card.green { background: #2e7d32; }
-        .stat-card.blue { background: #1976d2; }
-        .stat-card.purple { background: #7b1fa2; }
-        .stat-card.orange { background: #e65100; }
         .stat-number { font-size: 2.5em; font-weight: 700; line-height: 1; margin-bottom: 4px; }
         .stat-label { font-size: 0.9em; font-weight: 500; margin-bottom: 8px; opacity: 0.95; }
         .stat-details { text-align: left; font-size: 0.75em; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 8px; }
@@ -132,7 +129,7 @@
         .alert-info { background: #e3f2fd; border-left: 4px solid #1976d2; padding: 12px 15px; border-radius: 6px; margin-bottom: 15px; font-size: 0.9em; color: #0d47a1; }
         .alert-success { background: #e8f5e9; border-left: 4px solid #2e7d32; padding: 12px 15px; border-radius: 6px; margin-bottom: 15px; font-size: 0.9em; color: #1b5e20; }
         .dashboard-welcome { background: linear-gradient(135deg, #1a3a5c 0%, #2a4a6c 100%); color: white; padding: 40px 30px; border-radius: 12px; margin-bottom: 25px; text-align: center; }
-.dashboard-welcome .welcome-date { font-size: 2em; font-weight: 700; letter-spacing: 0.5px; }
+        .dashboard-welcome .welcome-date { font-size: 2em; font-weight: 700; letter-spacing: 0.5px; }
         .quick-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 25px; }
         .quick-action { background: white; border-radius: 8px; padding: 20px; text-align: center; cursor: pointer; transition: all 0.2s; border: 2px solid #e0e2e5; }
         .quick-action:hover { border-color: #1a3a5c; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
@@ -158,7 +155,7 @@
             .config-row { flex-direction: column; }
             .login-box { margin: 20px; padding: 30px 20px; }
         }
-        @media (max-width: 480px) { .header-title h1 { font-size: 1.1em; } .stat-number { font-size: 1.8em; } }
+        @media (max-width: 480px) { .header-title h1 { font-size: 1.1em; } .stat-number { font-size: 1.8em; } .dashboard-welcome .welcome-date { font-size: 1.4em; } }
     </style>
 </head>
 <body>
@@ -188,7 +185,7 @@
     <div class="app-container" id="appContainer">
         <div class="header">
             <div class="header-left">
-                <span class="header-icon"></span>
+                <span class="header-icon">🎄</span>
                 <div class="header-title">
                     <h1>Control Lotería Navidad - Pabellón Niño Jesús</h1>
                     <div class="header-subtitle">Gestión de décimos, pagos y entregas</div>
@@ -196,27 +193,27 @@
             </div>
             <div class="header-right">
                 <div class="user-info">
-                    <div class="user-avatar"></div>
+                    <div class="user-avatar">👤</div>
                     <span id="usuarioActual">Administrador</span>
                 </div>
                 <button class="btn-logout" onclick="cerrarSesion()">Cerrar sesión</button>
             </div>
         </div>
         <div class="nav-tabs">
-            <button class="nav-tab active" data-page="inicio">🏠 Inicio</button>
-            <button class="nav-tab" data-page="solicitar">🎟️ Solicitar décimos</button>
+            <button class="nav-tab active" data-page="inicio"> Inicio</button>
+            <button class="nav-tab" data-page="solicitar">️ Solicitar décimos</button>
             <button class="nav-tab" data-page="pedidos">📋 Pedidos</button>
-            <button class="nav-tab" data-page="resumen">📊 Resumen</button>
-            <button class="nav-tab" data-page="participantes">👥 Participantes</button>
+            <button class="nav-tab" data-page="resumen"> Resumen</button>
+            <button class="nav-tab" data-page="participantes"> Participantes</button>
             <button class="nav-tab" data-page="configuracion">⚙️ Configuración</button>
         </div>
 
         <div class="main-content">
             <!-- PÁGINA INICIO (DASHBOARD) -->
             <div class="section-page active" id="page-inicio">
-              <div class="dashboard-welcome">
-  		  <div class="welcome-date" id="welcomeDate"></div>
-		</div>
+                <div class="dashboard-welcome">
+                    <div class="welcome-date" id="welcomeDate"></div>
+                </div>
 
                 <div class="stats-grid">
                     <div class="stat-card red">
@@ -233,7 +230,7 @@
                         <div class="stat-label">Dinero Recaudado</div>
                         <div class="stat-details">
                             <div class="stat-detail-row"><span>💰 Total esperado:</span><span id="statTotalEsperado">0 €</span></div>
-                            <div class="stat-detail-row"><span>📈 % Cobrado:</span><span id="statPorcentaje">0%</span></div>
+                            <div class="stat-detail-row"><span> % Cobrado:</span><span id="statPorcentaje">0%</span></div>
                             <div class="stat-detail-row"><span>🎟️ Precio/décimo:</span><span id="statPrecioDecimo">20 €</span></div>
                         </div>
                     </div>
@@ -242,7 +239,7 @@
                         <div class="stat-label">Participantes</div>
                         <div class="stat-details">
                             <div class="stat-detail-row"><span>✓ Con pago:</span><span id="statConPago">0</span></div>
-                            <div class="stat-detail-row"><span>⏳ Sin pago:</span><span id="statSinPago">0</span></div>
+                            <div class="stat-detail-row"><span> Sin pago:</span><span id="statSinPago">0</span></div>
                             <div class="stat-detail-row"><span>📦 Recogidos:</span><span id="statRecogidos">0</span></div>
                         </div>
                     </div>
@@ -250,7 +247,7 @@
 
                 <div class="quick-actions">
                     <div class="quick-action" onclick="irAPagina('solicitar')">
-                        <div class="qa-icon">🎟️</div>
+                        <div class="qa-icon">️</div>
                         <div class="qa-title">Solicitar décimos</div>
                     </div>
                     <div class="quick-action" onclick="irAPagina('pedidos')">
@@ -258,7 +255,7 @@
                         <div class="qa-title">Ver pedidos</div>
                     </div>
                     <div class="quick-action" onclick="irAPagina('resumen')">
-                        <div class="qa-icon">📊</div>
+                        <div class="qa-icon"></div>
                         <div class="qa-title">Ver resumen</div>
                     </div>
                     <div class="quick-action" onclick="irAPagina('participantes')">
@@ -308,8 +305,8 @@
                     <div class="table-header">
                         <h2>Estado actual de los pedidos</h2>
                         <div class="export-buttons">
-                            <button class="btn btn-export" onclick="exportarPDF()"> Exportar PDF</button>
-                            <button class="btn btn-export" onclick="exportarCSV()"> Exportar CSV</button>
+                            <button class="btn btn-export" onclick="exportarPDF()">📄 Exportar PDF</button>
+                            <button class="btn btn-export" onclick="exportarCSV()">📊 Exportar CSV</button>
                             <button class="btn btn-export" onclick="imprimirListado()">🖨️ Imprimir</button>
                         </div>
                     </div>
@@ -369,7 +366,7 @@
                         </table>
                     </div>
                     <div class="empty-state" id="emptyParticipantes">
-                        <div class="empty-icon">👥</div>
+                        <div class="empty-icon"></div>
                         <h3>Sin participantes aún</h3>
                         <p>Los participantes aparecerán aquí cuando añadas pedidos</p>
                     </div>
@@ -389,7 +386,7 @@
                     </div>
 
                     <div class="config-block">
-                        <h3> Máximo de décimos por persona</h3>
+                        <h3>🔢 Máximo de décimos por persona</h3>
                         <div class="alert-info">
                             Establece el número máximo de décimos que puede solicitar una misma persona (acumulando todos sus pedidos).
                         </div>
@@ -421,7 +418,7 @@
                     </div>
 
                     <div class="config-block">
-                        <h3>🔐 Cambiar contraseña</h3>
+                        <h3> Cambiar contraseña</h3>
                         <div class="alert-info">
                             Cambia la contraseña de acceso a la aplicación.
                         </div>
@@ -440,7 +437,7 @@
                             Exporta tus datos para tener una copia de seguridad, o impórtalos para restaurarlos.
                         </div>
                         <div class="config-row">
-                            <button type="button" class="btn btn-primary btn-small" onclick="exportarDatosJSON()"> Exportar datos (JSON)</button>
+                            <button type="button" class="btn btn-primary btn-small" onclick="exportarDatosJSON()">📤 Exportar datos (JSON)</button>
                             <button type="button" class="btn btn-success btn-small" onclick="document.getElementById('importarFile').click()">📥 Importar datos</button>
                             <input type="file" id="importarFile" accept=".json" style="display:none" onchange="importarDatosJSON(event)">
                         </div>
@@ -454,7 +451,7 @@
     <div class="modal-overlay" id="modalEditar">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>✏️ Editar Pedido</h3>
+                <h3>️ Editar Pedido</h3>
                 <button class="close-btn" onclick="cerrarModal()">✕</button>
             </div>
             <form id="editarForm">
@@ -660,7 +657,6 @@
                 document.getElementById('loginOverlay').classList.add('hidden');
                 document.getElementById('appContainer').classList.add('visible');
                 document.getElementById('usuarioActual').textContent = usuario;
-                document.getElementById('welcomeUser').textContent = usuario;
                 localStorage.setItem('loteriaSesionActiva', 'true');
                 localStorage.setItem('loteriaUsuarioActivo', usuario);
                 document.getElementById('loginError').classList.remove('show');
@@ -687,7 +683,6 @@
                 document.getElementById('loginOverlay').classList.add('hidden');
                 document.getElementById('appContainer').classList.add('visible');
                 document.getElementById('usuarioActual').textContent = usuario;
-                document.getElementById('welcomeUser').textContent = usuario;
                 initApp();
             }
         }
@@ -719,12 +714,12 @@
             setSyncStatus('syncing', 'Conectando con la nube...');
         }
 
-       function actualizarFechaBienvenida() {
-    const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    const fecha = new Date().toLocaleDateString('es-ES', opciones);
-    const fechaCapitalizada = fecha.charAt(0).toUpperCase() + fecha.slice(1);
-    document.getElementById('welcomeDate').textContent = fechaCapitalizada;
-}
+        function actualizarFechaBienvenida() {
+            const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const fecha = new Date().toLocaleDateString('es-ES', opciones);
+            const fechaCapitalizada = fecha.charAt(0).toUpperCase() + fecha.slice(1);
+            document.getElementById('welcomeDate').textContent = fechaCapitalizada;
+        }
 
         function irAPagina(page) {
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
@@ -801,7 +796,7 @@
             const input = document.getElementById('nuevaOficina');
             const nombre = input.value.trim();
             if (!nombre) { showToast('⚠️', 'Escribe un nombre de oficina'); return; }
-            if (oficinas.includes(nombre)) { showToast('️', 'Esa oficina ya existe'); return; }
+            if (oficinas.includes(nombre)) { showToast('⚠️', 'Esa oficina ya existe'); return; }
             oficinas.push(nombre);
             guardarOficinasLocal();
             firebaseGuardarOficinas();
@@ -886,7 +881,7 @@
             empty.style.display = 'none'; table.style.display = 'block';
             tbody.innerHTML = pedidos.map(p => {
                 const quienRecogeHtml = p.quienRecoge
-                    ? '<span class="badge badge-collected"> ' + p.quienRecoge + '</span>'
+                    ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>'
                     : '<span class="badge badge-pending">—</span>';
                 return '<tr>' +
                     '<td class="nombre-cell">' + p.nombre + '</td>' +
@@ -948,7 +943,7 @@
                 p.pagado = !p.pagado;
                 firebaseGuardarPedido(p);
                 const msg = p.pagado ? p.nombre + ' ha pagado' : 'Pago pendiente de ' + p.nombre;
-                showToast(p.pagado ? '💰' : '⏳', msg);
+                showToast(p.pagado ? '💰' : '', msg);
             }
         }
 
@@ -1134,7 +1129,7 @@
             doc.setFontSize(10); doc.setTextColor(50);
             doc.text('Total pedidos: ' + pedidos.length + '  |  Decimos: ' + totalD + '  |  Pagados: ' + totalP + '  |  Recaudado: ' + recaudado.toLocaleString('es-ES') + ' EUR', 14, fy + 15);
             doc.save('loteria-navidad-2026-pabellon-nino-jesus.pdf');
-            showToast('📄', 'PDF exportado correctamente');
+            showToast('', 'PDF exportado correctamente');
         }
 
         function exportarCSV() {
@@ -1147,7 +1142,7 @@
         }
 
         function imprimirListado() {
-            if (pedidos.length === 0) { showToast('⚠️', 'No hay pedidos para imprimir'); return; }
+            if (pedidos.length === 0) { showToast('️', 'No hay pedidos para imprimir'); return; }
             const v = window.open('', '', 'width=900,height=600');
             const tablaHTML = pedidos.map(p => '<tr><td>' + p.nombre + '</td><td>' + p.oficina + '</td><td>' + p.telefono + '</td><td>' + p.numDecimos + '</td><td>' + (p.numDecimos*PRECIO_DECIMO).toLocaleString('es-ES') + ' €</td><td>' + (p.pagado?'Si':'No') + '</td><td>' + (p.recogido?'Si':'No') + '</td><td>' + (p.quienRecoge||'-') + '</td></tr>').join('');
             const totalDecimos = pedidos.reduce((s,p) => s + p.numDecimos, 0);
