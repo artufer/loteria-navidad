@@ -131,10 +131,8 @@
         .oficina-list li span { font-weight: 500; }
         .alert-info { background: #e3f2fd; border-left: 4px solid #1976d2; padding: 12px 15px; border-radius: 6px; margin-bottom: 15px; font-size: 0.9em; color: #0d47a1; }
         .alert-success { background: #e8f5e9; border-left: 4px solid #2e7d32; padding: 12px 15px; border-radius: 6px; margin-bottom: 15px; font-size: 0.9em; color: #1b5e20; }
-        .dashboard-welcome { background: linear-gradient(135deg, #1a3a5c 0%, #2a4a6c 100%); color: white; padding: 30px; border-radius: 12px; margin-bottom: 25px; }
-        .dashboard-welcome h2 { font-size: 1.8em; margin-bottom: 8px; }
-        .dashboard-welcome p { opacity: 0.9; font-size: 1em; }
-        .dashboard-welcome .welcome-date { opacity: 0.7; font-size: 0.9em; margin-top: 5px; }
+        .dashboard-welcome { background: linear-gradient(135deg, #1a3a5c 0%, #2a4a6c 100%); color: white; padding: 40px 30px; border-radius: 12px; margin-bottom: 25px; text-align: center; }
+.dashboard-welcome .welcome-date { font-size: 2em; font-weight: 700; letter-spacing: 0.5px; }
         .quick-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 25px; }
         .quick-action { background: white; border-radius: 8px; padding: 20px; text-align: center; cursor: pointer; transition: all 0.2s; border: 2px solid #e0e2e5; }
         .quick-action:hover { border-color: #1a3a5c; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
@@ -216,11 +214,9 @@
         <div class="main-content">
             <!-- PÁGINA INICIO (DASHBOARD) -->
             <div class="section-page active" id="page-inicio">
-                <div class="dashboard-welcome">
-                    <h2>¡Bienvenido, <span id="welcomeUser">Administrador</span>! 👋</h2>
-                    <p>Panel de control de la Lotería de Navidad 2026</p>
-                    <div class="welcome-date" id="welcomeDate"></div>
-                </div>
+              <div class="dashboard-welcome">
+  		  <div class="welcome-date" id="welcomeDate"></div>
+		</div>
 
                 <div class="stats-grid">
                     <div class="stat-card red">
@@ -723,12 +719,12 @@
             setSyncStatus('syncing', 'Conectando con la nube...');
         }
 
-        function actualizarFechaBienvenida() {
-            const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            const fecha = new Date().toLocaleDateString('es-ES', opciones);
-            const fechaCapitalizada = fecha.charAt(0).toUpperCase() + fecha.slice(1);
-            document.getElementById('welcomeDate').textContent = '📅 ' + fechaCapitalizada;
-        }
+       function actualizarFechaBienvenida() {
+    const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    const fecha = new Date().toLocaleDateString('es-ES', opciones);
+    const fechaCapitalizada = fecha.charAt(0).toUpperCase() + fecha.slice(1);
+    document.getElementById('welcomeDate').textContent = fechaCapitalizada;
+}
 
         function irAPagina(page) {
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
