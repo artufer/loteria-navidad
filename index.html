@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Lotería Navidad - Pabellón Niño Jesús</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; color: #333; min-height: 100vh; }
+        .login-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #1a3a5c 0%, #2a4a6c 50%, #1a3a5c 100%); display: flex; justify-content: center; align-items: center; z-index: 9999; }
+        .login-overlay.hidden { display: none; }
+        .login-box { background: white; border-radius: 12px; padding: 40px; width: 100%; max-width: 400px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); text-align: center; }
+        .login-box .login-icon { font-size: 3em; margin-bottom: 10px; }
+        .login-box h2 { color: #1a3a5c; font-size: 1.4em; margin-bottom: 8px; }
+        .login-box .login-subtitle { color: #666; font-size: 0.9em; margin-bottom: 30px; }
+        .login-box .form-group { margin-bottom: 18px; text-align: left; }
+        .login-box .form-group label { font-size: 0.85em; font-weight: 600; color: #555; margin-bottom: 6px; display: block; }
+        .login-box .form-group input { width: 100%; padding: 12px 14px; border: 1px solid #d0d3d8; border-radius: 6px; font-size: 1em; font-family: inherit; transition: border-color 0.2s; }
+        .login-box .form-group input:focus { outline: none; border-color: #1a3a5c; }
+        .login-box .btn-login { width: 100%; padding: 14px; background: #1a3a5c; color: white; border: none; border-radius: 6px; font-size: 1em; font-weight: 600; cursor: pointer; font-family: inherit; transition: background 0.2s; margin-top: 10px; }
+        .login-box .btn-login:hover { background: #2a4a6c; }
+        .login-error { background: #ffebee; color: #c41e3a; padding: 10px 14px; border-radius: 6px; font-size: 0.85em; margin-top: 15px; display: none; border-left: 4px solid #c41e3a; }
+        .login-error.show { display: block; }
+        .app-container { display: none; }
+        .app-container.visible { display: block; }
+        .header { background: #e8eaed; padding: 15px 25px; display: flex; justify-content: center; align-items: center; border-bottom: 1px solid #d0d3d8; position: relative; }
+        .header-left { display: flex; align-items: center; gap: 12px; }
+        .header-icon { font-size: 1.8em; }
+        .header-title { text-align: center; }
+        .header-title h1 { font-size: 1.4em; color: #1a3a5c; font-weight: 600; }
+        .header-subtitle { font-size: 0.85em; color: #666; margin-top: 2px; }
+        .header-right { position: absolute; right: 25px; display: flex; align-items: center; gap: 12px; }
+        .user-info { display: flex; align-items: center; gap: 8px; font-size: 0.9em; color: #555; }
+        .user-avatar { width: 32px; height: 32px; background: #1a3a5c; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.9em; }
+        .btn-logout { background: #c41e3a; color: white; border: none; padding: 8px 16px; border-radius: 20px; font-size: 0.85em; cursor: pointer; font-weight: 500; }
+        .btn-logout:hover { background: #a01830; }
+        .nav-tabs { background: #e8eaed; padding: 0 25px; display: flex; justify-content: center; gap: 5px; border-bottom: 1px solid #d0d3d8; }
+        .nav-tab { padding: 12px 20px; background: #d5d8dc; border: none; border-radius: 8px 8px 0 0; cursor: pointer; font-size: 0.9em; font-weight: 500; color: #555; display: flex; align-items: center; gap: 8px; transition: all 0.2s; }
+        .nav-tab:hover { background: #c8ccd1; }
+        .nav-tab.active { background: #1a3a5c; color: white; }
+        .main-content { padding: 25px; max-width: 1400px; margin: 0 auto; }
+        .content-card { background: white; border-radius: 8px; padding: 30px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 25px; }
+        .section-title { font-size: 1.5em; color: #1a3a5c; font-weight: 600; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #1a3a5c; }
+        .section-page { display: none; }
+        .section-page.active { display: block; }
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 20px; }
+        .stat-card { border-radius: 8px; padding: 15px 15px 12px; color: white; text-align: center; }
+        .stat-card.red { background: #c41e3a; }
+        .stat-card.gold { background: #d4a843; }
+        .stat-card.green { background: #2e7d32; }
+        .stat-number { font-size: 2em; font-weight: 700; line-height: 1; margin-bottom: 4px; }
+        .stat-label { font-size: 0.85em; font-weight: 500; margin-bottom: 8px; opacity: 0.95; }
+        .stat-details { text-align: left; font-size: 0.75em; border-top: 1px solid rgba(255,255,255,0.3); padding-top: 8px; }
+        .stat-detail-row { display: flex; justify-content: space-between; margin-bottom: 3px; opacity: 0.95; }
+        .form-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 20px; }
+        .form-group { display: flex; flex-direction: column; }
+        .form-group label { font-size: 0.85em; font-weight: 600; color: #555; margin-bottom: 6px; }
+        .form-group input, .form-group select { padding: 10px 12px; border: 1px solid #d0d3d8; border-radius: 6px; font-size: 0.95em; font-family: inherit; transition: border-color 0.2s; background: white; }
+        .form-group input:focus, .form-group select:focus { outline: none; border-color: #1a3a5c; }
+        .form-group input::placeholder { color: #aaa; }
+        .btn { padding: 10px 20px; border: none; border-radius: 6px; font-size: 0.9em; font-weight: 600; cursor: pointer; transition: all 0.2s; display: inline-flex; align-items: center; gap: 6px; font-family: inherit; }
+        .btn-primary { background: #1a3a5c; color: white; }
+        .btn-primary:hover { background: #2a4a6c; }
+        .btn-export { background: #f0f2f5; color: #333; border: 1px solid #d0d3d8; padding: 8px 16px; font-size: 0.85em; }
+        .btn-export:hover { background: #e0e2e5; }
+        .btn-edit { background: #1976d2; color: white; padding: 6px 12px; font-size: 0.8em; }
+        .btn-edit:hover { background: #1565c0; }
+        .btn-delete { background: #c41e3a; color: white; padding: 6px 12px; font-size: 0.8em; }
+        .btn-delete:hover { background: #a01830; }
+        .btn-small { padding: 6px 12px; font-size: 0.8em; }
+        .btn-success { background: #2e7d32; color: white; }
+        .btn-success:hover { background: #1b5e20; }
+        .table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
+        .table-header h2 { font-size: 1.3em; color: #1a3a5c; font-weight: 600; }
+        .export-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+        .table-container { overflow-x: auto; border-radius: 6px; border: 1px solid #e0e2e5; }
+        table { width: 100%; border-collapse: collapse; }
+        thead { background: #1a3a5c; color: white; }
+        th { padding: 14px 12px; text-align: left; font-size: 0.85em; font-weight: 600; white-space: nowrap; }
+        td { padding: 12px; border-bottom: 1px solid #e8eaed; font-size: 0.9em; }
+        tbody tr { transition: background 0.15s; }
+        tbody tr:hover { background: #f5f7f9; }
+        tbody tr:last-child td { border-bottom: none; }
+        .checkbox-cell { text-align: center; }
+        .checkbox-cell input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; }
+        .badge { display: inline-flex; align-items: center; gap: 4px; padding: 5px 12px; border-radius: 20px; font-size: 0.8em; font-weight: 600; }
+        .badge-collected { background: #fff3e0; color: #e65100; border: 1px solid #ffcc80; }
+        .badge-pending { background: #f5f5f5; color: #757575; border: 1px solid #e0e0e0; }
+        .badge-decimos { background: #1a3a5c; color: white; padding: 4px 10px; border-radius: 12px; font-size: 0.8em; font-weight: 600; }
+        .importe-cell { font-weight: 700; color: #c41e3a; }
+        .nombre-cell { font-weight: 600; color: #1a3a5c; }
+        .actions-cell { display: flex; gap: 6px; }
+        .empty-state { text-align: center; padding: 60px 20px; color: #999; }
+        .empty-icon { font-size: 3em; margin-bottom: 15px; opacity: 0.4; }
+        .empty-state h3 { font-size: 1.2em; color: #666; margin-bottom: 8px; }
+        .empty-state p { font-size: 0.9em; }
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; padding: 20px; }
+        .modal-overlay.active { display: flex; }
+        .modal-content { background: white; border-radius: 8px; padding: 30px; max-width: 500px; width: 100%; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid #1a3a5c; }
+        .modal-header h3 { color: #1a3a5c; font-size: 1.3em; }
+        .close-btn { background: none; border: none; font-size: 1.5em; cursor: pointer; color: #999; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: all 0.2s; }
+        .close-btn:hover { background: #f0f2f5; color: #333; }
+        .modal-actions { display: flex; gap: 10px; margin-top: 25px; }
+        .modal-actions .btn { flex: 1; }
+        .btn-cancel { background: #f0f2f5; color: #666; border: 1px solid #d0d3d8; }
+        .btn-cancel:hover { background: #e0e2e5; }
+        .btn-save { background: #1a3a5c; color: white; }
+        .btn-save:hover { background: #2a4a6c; }
+        .toast { position: fixed; bottom: 30px; right: 30px; background: white; border-left: 4px solid #2e7d32; border-radius: 6px; padding: 14px 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); display: flex; align-items: center; gap: 10px; z-index: 2000; transform: translateY(100px); opacity: 0; transition: all 0.3s; }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast.error { border-left-color: #c41e3a; }
+        .toast-icon { font-size: 1.2em; }
+        .toast-text { font-size: 0.9em; font-weight: 500; color: #333; }
+        .sync-status { position: fixed; bottom: 15px; right: 20px; background: white; padding: 8px 14px; border-radius: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); font-size: 0.8em; color: #666; display: flex; align-items: center; gap: 6px; z-index: 100; }
+        .sync-dot { width: 8px; height: 8px; background: #2e7d32; border-radius: 50%; animation: pulse 2s infinite; }
+        .sync-dot.offline { background: #c41e3a; }
+        .sync-dot.syncing { background: #d4a843; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .config-block { background: #f8f9fa; border: 1px solid #e0e2e5; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+        .config-block h3 { color: #1a3a5c; font-size: 1.1em; margin-bottom: 15px; }
+        .config-row { display: flex; gap: 10px; align-items: flex-end; margin-bottom: 10px; flex-wrap: wrap; }
+        .config-row .form-group { flex: 1; margin-bottom: 0; min-width: 200px; }
+        .oficina-list { list-style: none; margin-top: 10px; }
+        .oficina-list li { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: white; border: 1px solid #e0e2e5; border-radius: 6px; margin-bottom: 6px; }
+        .oficina-list li span { font-weight: 500; }
+        .alert-info { background: #e3f2fd; border-left: 4px solid #1976d2; padding: 12px 15px; border-radius: 6px; margin-bottom: 15px; font-size: 0.9em; color: #0d47a1; }
+        .alert-success { background: #e8f5e9; border-left: 4px solid #2e7d32; padding: 12px 15px; border-radius: 6px; margin-bottom: 15px; font-size: 0.9em; color: #1b5e20; }
+        @media (max-width: 1024px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) {
+            .header { flex-direction: column; gap: 10px; padding: 15px; }
+            .header-right { position: static; }
+            .header-left { flex-direction: column; }
+            .header-title { text-align: center; }
+            .nav-tabs { overflow-x: auto; padding: 0 15px; justify-content: flex-start; }
+            .nav-tab { white-space: nowrap; padding: 10px 15px; font-size: 0.85em; }
+            .main-content { padding: 15px; }
+            .content-card { padding: 20px; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .form-grid { grid-template-columns: 1fr; }
+            .table-header { flex-direction: column; align-items: stretch; }
+            .export-buttons { justify-content: center; }
+            th, td { padding: 10px 8px; font-size: 0.85em; }
+            .actions-cell { flex-direction: column; }
+            .toast { left: 15px; right: 15px; bottom: 15px; }
+            .config-row { flex-direction: column; }
+            .login-box { margin: 20px; padding: 30px 20px; }
+        }
+        @media (max-width: 480px) { .header-title h1 { font-size: 1.1em; } .stat-number { font-size: 1.5em; } }
+    </style>
+</head>
+<body>
+
+    <!-- ===== PANTALLA DE LOGIN ===== -->
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-box">
+            <div class="login-icon">🎄</div>
+            <h2>Control Lotería Navidad</h2>
+            <div class="login-subtitle">Pabellón Niño Jesús - Acceso restringido</div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginUsuario">Usuario</label>
+                    <input type="text" id="loginUsuario" placeholder="Introduce tu usuario" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label for="loginClave">Contraseña</label>
+                    <input type="password" id="loginClave" placeholder="Introduce tu contraseña" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="btn-login">Iniciar sesión</button>
+                <div class="login-error" id="loginError">Usuario o contraseña incorrectos</div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===== APLICACIÓN PRINCIPAL ===== -->
+    <div class="app-container" id="appContainer">
+        <div class="header">
+            <div class="header-left">
+                <span class="header-icon">🎄</span>
+                <div class="header-title">
+                    <h1>Control Lotería Navidad - Pabellón Niño Jesús</h1>
+                    <div class="header-subtitle">Gestión de décimos, pagos y entregas</div>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <div class="user-avatar">👤</div>
+                    <span id="usuarioActual">Administrador</span>
+                </div>
+                <button class="btn-logout" onclick="cerrarSesion()">Cerrar sesión</button>
+            </div>
+        </div>
+        <div class="nav-tabs">
+            <button class="nav-tab active" data-page="inicio">🏠 Inicio</button>
+            <button class="nav-tab" data-page="pedidos">📋 Pedidos</button>
+            <button class="nav-tab" data-page="resumen"> Resumen</button>
+            <button class="nav-tab" data-page="participantes"> Participantes</button>
+            <button class="nav-tab" data-page="configuracion">️ Configuración</button>
+        </div>
+
+        <div class="main-content">
+            <!-- PÁGINA INICIO -->
+            <div class="section-page active" id="page-inicio">
+                <div class="content-card">
+                    <h2 class="section-title">Resumen General</h2>
+                    <div class="stats-grid">
+                        <div class="stat-card red">
+                            <div class="stat-number" id="totalDecimos">0</div>
+                            <div class="stat-label">Total Décimos</div>
+                            <div class="stat-details">
+                                <div class="stat-detail-row"><span>✓ Pagados:</span><span id="statPagados">0</span></div>
+                                <div class="stat-detail-row"><span>⏳ Pendientes:</span><span id="statPendientes">0</span></div>
+                                <div class="stat-detail-row"><span>📦 Entregados:</span><span id="statEntregados">0</span></div>
+                            </div>
+                        </div>
+                        <div class="stat-card gold">
+                            <div class="stat-number" id="dineroRecaudado">0 €</div>
+                            <div class="stat-label">Dinero Recaudado</div>
+                            <div class="stat-details">
+                                <div class="stat-detail-row"><span> Total esperado:</span><span id="statTotalEsperado">0 €</span></div>
+                                <div class="stat-detail-row"><span>📈 % Cobrado:</span><span id="statPorcentaje">0%</span></div>
+                                <div class="stat-detail-row"><span>️ Precio/décimo:</span><span id="statPrecioDecimo">20 €</span></div>
+                            </div>
+                        </div>
+                        <div class="stat-card green">
+                            <div class="stat-number" id="totalParticipantes">0</div>
+                            <div class="stat-label">Participantes</div>
+                            <div class="stat-details">
+                                <div class="stat-detail-row"><span>✓ Con pago:</span><span id="statConPago">0</span></div>
+                                <div class="stat-detail-row"><span>⏳ Sin pago:</span><span id="statSinPago">0</span></div>
+                                <div class="stat-detail-row"><span>📦 Recogidos:</span><span id="statRecogidos">0</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h2 class="section-title">Nuevo Pedido</h2>
+                    <form id="pedidoForm">
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="nombre">Nombre y Apellidos *</label>
+                                <input type="text" id="nombre" placeholder="Ej: María García López" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="oficina">Oficina / Lugar de Trabajo *</label>
+                                <select id="oficina" required>
+                                    <option value="">-- Selecciona una oficina --</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="telefono">Teléfono *</label>
+                                <input type="tel" id="telefono" placeholder="Ej: 600 123 456" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="numDecimos">Nº de Décimos *</label>
+                                <input type="number" id="numDecimos" min="1" placeholder="Ej: 2" required>
+                            </div>
+                            <div class="form-group" style="grid-column: 1 / -1;">
+                                <label for="quienRecoge">Quién lo recoge (si es otra persona)</label>
+                                <input type="text" id="quienRecoge" placeholder="Dejar vacío si lo recoge él/ella">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">➕ Añadir Pedido</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- PÁGINA PEDIDOS -->
+            <div class="section-page" id="page-pedidos">
+                <div class="content-card">
+                    <div class="table-header">
+                        <h2>Estado actual de los pedidos</h2>
+                        <div class="export-buttons">
+                            <button class="btn btn-export" onclick="exportarPDF()">📄 Exportar PDF</button>
+                            <button class="btn btn-export" onclick="exportarCSV()">📊 Exportar CSV</button>
+                            <button class="btn btn-export" onclick="imprimirListado()">️ Imprimir</button>
+                        </div>
+                    </div>
+                    <div class="table-container" id="tableContainer" style="display:none;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Oficina</th>
+                                    <th>Teléfono</th>
+                                    <th>Décimos</th>
+                                    <th>Importe</th>
+                                    <th class="checkbox-cell">Pagado</th>
+                                    <th class="checkbox-cell">Recogido</th>
+                                    <th>Recogido por</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tablaBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="empty-state" id="emptyState">
+                        <div class="empty-icon">🎰</div>
+                        <h3>Sin pedidos aún</h3>
+                        <p>Añade el primer pedido desde la pestaña Inicio</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PÁGINA RESUMEN -->
+            <div class="section-page" id="page-resumen">
+                <div class="content-card">
+                    <h2 class="section-title">Resumen Detallado</h2>
+                    <div id="resumenContenido"></div>
+                </div>
+            </div>
+
+            <!-- PÁGINA PARTICIPANTES -->
+            <div class="section-page" id="page-participantes">
+                <div class="content-card">
+                    <h2 class="section-title">Lista de Participantes</h2>
+                    <div class="table-container" id="participantesContainer" style="display:none;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Oficina</th>
+                                    <th>Teléfono</th>
+                                    <th>Décimos</th>
+                                    <th>Importe</th>
+                                    <th>Pagado</th>
+                                    <th>Recogido</th>
+                                    <th>Recogido por</th>
+                                </tr>
+                            </thead>
+                            <tbody id="participantesBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="empty-state" id="emptyParticipantes">
+                        <div class="empty-icon">👥</div>
+                        <h3>Sin participantes aún</h3>
+                        <p>Los participantes aparecerán aquí cuando añadas pedidos</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PÁGINA CONFIGURACIÓN -->
+            <div class="section-page" id="page-configuracion">
+                <div class="content-card">
+                    <h2 class="section-title">Configuración</h2>
+
+                    <div class="config-block">
+                        <h3>☁️ Sincronización en la nube</h3>
+                        <div id="syncStatusBox" class="alert-info">
+                            Conectando con la base de datos...
+                        </div>
+                    </div>
+
+                    <div class="config-block">
+                        <h3>🔢 Máximo de décimos por persona</h3>
+                        <div class="alert-info">
+                            Establece el número máximo de décimos que puede solicitar una misma persona (acumulando todos sus pedidos).
+                        </div>
+                        <div class="config-row">
+                            <div class="form-group">
+                                <label for="maxDecimos">Máximo de décimos</label>
+                                <input type="number" id="maxDecimos" min="1" value="5">
+                            </div>
+                            <button type="button" class="btn btn-primary btn-small" onclick="guardarMaxDecimos()">Guardar</button>
+                        </div>
+                    </div>
+
+                    <div class="config-block">
+                        <h3>🏢 Gestión de Oficinas</h3>
+                        <div class="alert-info">
+                            Añade las oficinas o lugares de trabajo del pabellón. Aparecerán en el desplegable al crear un nuevo pedido.
+                        </div>
+                        <div class="config-row">
+                            <div class="form-group">
+                                <label for="nuevaOficina">Nombre de la oficina</label>
+                                <input type="text" id="nuevaOficina" placeholder="Ej: Planta 1 - Administración">
+                            </div>
+                            <button type="button" class="btn btn-success btn-small" onclick="agregarOficina()">➕ Añadir</button>
+                        </div>
+                        <ul class="oficina-list" id="oficinaList"></ul>
+                        <div id="emptyOficinas" style="text-align:center; padding: 20px; color: #999; font-size: 0.9em;">
+                            No hay oficinas configuradas
+                        </div>
+                    </div>
+
+                    <div class="config-block">
+                        <h3>🔐 Cambiar contraseña</h3>
+                        <div class="alert-info">
+                            Cambia la contraseña de acceso a la aplicación.
+                        </div>
+                        <div class="config-row">
+                            <div class="form-group">
+                                <label for="nuevaClave">Nueva contraseña</label>
+                                <input type="password" id="nuevaClave" placeholder="Introduce la nueva contraseña">
+                            </div>
+                            <button type="button" class="btn btn-primary btn-small" onclick="cambiarClave()">Guardar</button>
+                        </div>
+                    </div>
+
+                    <div class="config-block">
+                        <h3> Copia de seguridad manual</h3>
+                        <div class="alert-info">
+                            Exporta tus datos para tener una copia de seguridad, o impórtalos para restaurarlos.
+                        </div>
+                        <div class="config-row">
+                            <button type="button" class="btn btn-primary btn-small" onclick="exportarDatosJSON()"> Exportar datos (JSON)</button>
+                            <button type="button" class="btn btn-success btn-small" onclick="document.getElementById('importarFile').click()">📥 Importar datos</button>
+                            <input type="file" id="importarFile" accept=".json" style="display:none" onchange="importarDatosJSON(event)">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL EDITAR -->
+    <div class="modal-overlay" id="modalEditar">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>✏️ Editar Pedido</h3>
+                <button class="close-btn" onclick="cerrarModal()">✕</button>
+            </div>
+            <form id="editarForm">
+                <input type="hidden" id="editarId">
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label for="editarNombre">Nombre y Apellidos</label>
+                    <input type="text" id="editarNombre" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label for="editarOficina">Oficina</label>
+                    <select id="editarOficina" required></select>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label for="editarTelefono">Teléfono</label>
+                    <input type="tel" id="editarTelefono" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label for="editarNumDecimos">Nº de Décimos</label>
+                    <input type="number" id="editarNumDecimos" min="1" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label for="editarQuienRecoge">Quién lo recoge</label>
+                    <input type="text" id="editarQuienRecoge">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-cancel" onclick="cerrarModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-save">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">
+        <span class="toast-icon" id="toastIcon">✅</span>
+        <span class="toast-text" id="toastText">Acción completada</span>
+    </div>
+    <div class="sync-status">
+        <div class="sync-dot" id="syncDot"></div>
+        <span id="syncText">Conectando...</span>
+    </div>
+
+    <!-- ===== FIREBASE ===== -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
+
+    <script>
+        // ===== FIREBASE CONFIGURATION =====
+        const firebaseConfig = {
+            apiKey: "AIzaSyChUlUS8TRyVQ0Jkxj5zeoc0A12O36f-eY",
+            authDomain: "loteria-de-navidad-e059b.firebaseapp.com",
+            databaseURL: "https://loteria-de-navidad-e059b-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "loteria-de-navidad-e059b",
+            storageBucket: "loteria-de-navidad-e059b.firebasestorage.app",
+            messagingSenderId: "528127800392",
+            appId: "1:528127800392:web:5b8a6ea8694f50c71b547d"
+        };
+
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        // Referencias a la base de datos
+        const dbRef = {
+            pedidos: db.ref('loteria/pedidos'),
+            oficinas: db.ref('loteria/oficinas'),
+            config: db.ref('loteria/config')
+        };
+
+        // ===== CREDENCIALES APP =====
+        const USUARIO_DEFECTO = 'admin';
+        const CLAVE_DEFECTO = 'admin123';
+
+        function getUsuario() { return localStorage.getItem('loteriaUsuario') || USUARIO_DEFECTO; }
+        function getClave() { return localStorage.getItem('loteriaClave') || CLAVE_DEFECTO; }
+        function setClave(clave) { localStorage.setItem('loteriaClave', clave); }
+
+        // ===== DATOS LOCALES =====
+        const PRECIO_DECIMO = 20;
+        let pedidos = [];
+        let oficinas = [];
+        let config = { maxDecimos: 5 };
+        let firebaseReady = false;
+
+        // ===== SINCRONIZACIÓN CON FIREBASE =====
+        function setSyncStatus(status, text) {
+            const dot = document.getElementById('syncDot');
+            const txt = document.getElementById('syncText');
+            const box = document.getElementById('syncStatusBox');
+            
+            dot.className = 'sync-dot';
+            if (status === 'online') {
+                txt.textContent = text || 'Sincronizado en la nube';
+                if (box) { box.className = 'alert-success'; box.innerHTML = '✅ ' + (text || 'Conectado y sincronizado con la nube'); }
+            } else if (status === 'syncing') {
+                dot.classList.add('syncing');
+                txt.textContent = text || 'Sincronizando...';
+                if (box) { box.className = 'alert-info'; box.innerHTML = '🔄 ' + (text || 'Sincronizando con la nube...'); }
+            } else if (status === 'offline') {
+                dot.classList.add('offline');
+                txt.textContent = text || 'Sin conexión';
+                if (box) { box.className = 'alert-info'; box.innerHTML = '⚠️ ' + (text || 'Sin conexión. Los datos se guardan localmente.'); }
+            }
+        }
+
+        // Escuchar cambios en pedidos (tiempo real)
+        dbRef.pedidos.on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                pedidos = Object.keys(data).map(key => ({ id: key, ...data[key] }));
+            } else {
+                pedidos = [];
+            }
+            localStorage.setItem('pedidosLoteria', JSON.stringify(pedidos));
+            
+            if (firebaseReady) {
+                renderizarTabla();
+                actualizarEstadisticas();
+            }
+        }, (error) => {
+            console.error('Error leyendo pedidos:', error);
+            setSyncStatus('offline', 'Error de conexión');
+        });
+
+        // Escuchar cambios en oficinas
+        dbRef.oficinas.on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                oficinas = Object.keys(data).map(key => data[key]);
+            } else {
+                oficinas = [];
+            }
+            localStorage.setItem('oficinasLoteria', JSON.stringify(oficinas));
+            
+            if (firebaseReady) {
+                actualizarSelectOficinas();
+                renderizarOficinas();
+            }
+        });
+
+        // Escuchar cambios en config
+        dbRef.config.on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                config = { ...config, ...data };
+            }
+            localStorage.setItem('configLoteria', JSON.stringify(config));
+            
+            if (firebaseReady) {
+                document.getElementById('maxDecimos').value = config.maxDecimos || 5;
+            }
+        });
+
+        // Detectar conexión
+        db.ref('.info/connected').on('value', (snapshot) => {
+            if (snapshot.val() === true) {
+                setSyncStatus('online');
+            } else {
+                setSyncStatus('offline', 'Sin conexión');
+            }
+        });
+
+        // Funciones para escribir en Firebase
+        function firebaseGuardarPedido(pedido) {
+            setSyncStatus('syncing', 'Guardando...');
+            const { id, ...datos } = pedido;
+            dbRef.pedidos.child(id).set(datos)
+                .then(() => setSyncStatus('online'))
+                .catch((err) => {
+                    console.error(err);
+                    setSyncStatus('offline', 'Error al guardar');
+                    showToast('⚠️', 'No se pudo guardar en la nube', true);
+                });
+        }
+
+        function firebaseEliminarPedido(id) {
+            setSyncStatus('syncing', 'Eliminando...');
+            dbRef.pedidos.child(id).remove()
+                .then(() => setSyncStatus('online'))
+                .catch((err) => {
+                    console.error(err);
+                    setSyncStatus('offline', 'Error al eliminar');
+                });
+        }
+
+        function firebaseGuardarOficinas() {
+            setSyncStatus('syncing', 'Guardando oficinas...');
+            const obj = {};
+            oficinas.forEach((o, i) => { obj[i] = o; });
+            dbRef.oficinas.set(obj)
+                .then(() => setSyncStatus('online'))
+                .catch((err) => {
+                    console.error(err);
+                    setSyncStatus('offline', 'Error al guardar oficinas');
+                });
+        }
+
+        function firebaseGuardarConfig() {
+            setSyncStatus('syncing', 'Guardando config...');
+            dbRef.config.set(config)
+                .then(() => setSyncStatus('online'))
+                .catch((err) => {
+                    console.error(err);
+                    setSyncStatus('offline', 'Error al guardar config');
+                });
+        }
+
+        // ===== LOGIN =====
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const usuario = document.getElementById('loginUsuario').value.trim();
+            const clave = document.getElementById('loginClave').value;
+
+            if (usuario === getUsuario() && clave === getClave()) {
+                document.getElementById('loginOverlay').classList.add('hidden');
+                document.getElementById('appContainer').classList.add('visible');
+                document.getElementById('usuarioActual').textContent = usuario;
+                localStorage.setItem('loteriaSesionActiva', 'true');
+                localStorage.setItem('loteriaUsuarioActivo', usuario);
+                document.getElementById('loginError').classList.remove('show');
+                this.reset();
+                initApp();
+            } else {
+                document.getElementById('loginError').classList.add('show');
+            }
+        });
+
+        function cerrarSesion() {
+            localStorage.removeItem('loteriaSesionActiva');
+            localStorage.removeItem('loteriaUsuarioActivo');
+            document.getElementById('appContainer').classList.remove('visible');
+            document.getElementById('loginOverlay').classList.remove('hidden');
+            document.getElementById('loginUsuario').value = '';
+            document.getElementById('loginClave').value = '';
+            document.getElementById('loginError').classList.remove('show');
+        }
+
+        function verificarSesion() {
+            if (localStorage.getItem('loteriaSesionActiva') === 'true') {
+                const usuario = localStorage.getItem('loteriaUsuarioActivo') || 'Administrador';
+                document.getElementById('loginOverlay').classList.add('hidden');
+                document.getElementById('appContainer').classList.add('visible');
+                document.getElementById('usuarioActual').textContent = usuario;
+                initApp();
+            }
+        }
+
+        function cambiarClave() {
+            const nueva = document.getElementById('nuevaClave').value.trim();
+            if (!nueva) { showToast('⚠️', 'Escribe una nueva contraseña'); return; }
+            if (nueva.length < 4) { showToast('⚠️', 'La contraseña debe tener al menos 4 caracteres'); return; }
+            setClave(nueva);
+            document.getElementById('nuevaClave').value = '';
+            showToast('✅', 'Contraseña actualizada correctamente');
+        }
+
+        // ===== INICIALIZAR APP =====
+        function initApp() {
+            // Cargar datos locales primero (para mostrar algo inmediatamente)
+            const pedLocal = localStorage.getItem('pedidosLoteria');
+            const ofiLocal = localStorage.getItem('oficinasLoteria');
+            const confLocal = localStorage.getItem('configLoteria');
+            
+            if (pedLocal) pedidos = JSON.parse(pedLocal);
+            if (ofiLocal) oficinas = JSON.parse(ofiLocal);
+            if (confLocal) config = { ...config, ...JSON.parse(confLocal) };
+            
+            actualizarSelectOficinas();
+            renderizarTabla();
+            renderizarConfig();
+            
+            // Marcar como listo (Firebase ya está escuchando)
+            firebaseReady = true;
+            setSyncStatus('syncing', 'Conectando con la nube...');
+        }
+
+        // ===== NAVEGACIÓN PESTAÑAS =====
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const page = this.getAttribute('data-page');
+                document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                document.querySelectorAll('.section-page').forEach(p => p.classList.remove('active'));
+                document.getElementById('page-' + page).classList.add('active');
+                if (page === 'resumen') renderizarResumen();
+                if (page === 'participantes') renderizarParticipantes();
+                if (page === 'configuracion') renderizarConfig();
+            });
+        });
+
+        // ===== TOAST =====
+        function showToast(icon, text, esError) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastIcon').textContent = icon;
+            document.getElementById('toastText').textContent = text;
+            if (esError) {
+                toast.classList.add('error');
+            } else {
+                toast.classList.remove('error');
+            }
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3500);
+        }
+
+        // ===== GUARDAR LOCAL =====
+        function guardarDatos() { localStorage.setItem('pedidosLoteria', JSON.stringify(pedidos)); }
+        function guardarOficinasLocal() { localStorage.setItem('oficinasLoteria', JSON.stringify(oficinas)); }
+        function guardarConfigLocal() { localStorage.setItem('configLoteria', JSON.stringify(config)); }
+        function generarId() { return Date.now().toString(36) + Math.random().toString(36).substr(2); }
+
+        // ===== VALIDAR MÁXIMO DE DÉCIMOS =====
+        function obtenerDecimosAcumulados(nombre) {
+            const nombreNormalizado = nombre.trim().toLowerCase();
+            return pedidos
+                .filter(p => p.nombre.trim().toLowerCase() === nombreNormalizado)
+                .reduce((total, p) => total + p.numDecimos, 0);
+        }
+
+        function validarMaximoDecimos(nombre, nuevosDecimos) {
+            if (config.maxDecimos <= 0) return { valido: true };
+            const acumulados = obtenerDecimosAcumulados(nombre);
+            const total = acumulados + nuevosDecimos;
+            if (total > config.maxDecimos) {
+                return {
+                    valido: false,
+                    acumulados: acumulados,
+                    nuevos: nuevosDecimos,
+                    total: total,
+                    maximo: config.maxDecimos,
+                    disponibles: config.maxDecimos - acumulados
+                };
+            }
+            return { valido: true, acumulados: acumulados };
+        }
+
+        // ===== CONFIG =====
+        function guardarMaxDecimos() {
+            const max = parseInt(document.getElementById('maxDecimos').value);
+            if (max > 0) {
+                config.maxDecimos = max;
+                guardarConfigLocal();
+                firebaseGuardarConfig();
+                showToast('✅', 'Máximo de décimos por persona: ' + max);
+            }
+        }
+
+        function agregarOficina() {
+            const input = document.getElementById('nuevaOficina');
+            const nombre = input.value.trim();
+            if (!nombre) { showToast('⚠️', 'Escribe un nombre de oficina'); return; }
+            if (oficinas.includes(nombre)) { showToast('️', 'Esa oficina ya existe'); return; }
+            oficinas.push(nombre);
+            guardarOficinasLocal();
+            firebaseGuardarOficinas();
+            input.value = '';
+            renderizarOficinas();
+            actualizarSelectOficinas();
+            showToast('✅', 'Oficina "' + nombre + '" añadida');
+        }
+
+        function eliminarOficina(nombre) {
+            if (confirm('¿Eliminar la oficina "' + nombre + '"?')) {
+                oficinas = oficinas.filter(o => o !== nombre);
+                guardarOficinasLocal();
+                firebaseGuardarOficinas();
+                renderizarOficinas();
+                actualizarSelectOficinas();
+                showToast('🗑️', 'Oficina eliminada');
+            }
+        }
+
+        function renderizarOficinas() {
+            const list = document.getElementById('oficinaList');
+            const empty = document.getElementById('emptyOficinas');
+            if (oficinas.length === 0) { list.innerHTML = ''; empty.style.display = 'block'; return; }
+            empty.style.display = 'none';
+            list.innerHTML = oficinas.map(o =>
+                '<li><span> ' + o + '</span><button class="btn btn-delete btn-small" onclick="eliminarOficina(\'' + o.replace(/'/g, "\\'") + '\')">🗑️ Eliminar</button></li>'
+            ).join('');
+        }
+
+        function actualizarSelectOficinas() {
+            const select = document.getElementById('oficina');
+            const selectEditar = document.getElementById('editarOficina');
+            const valorActual = select.value;
+            const valorEditar = selectEditar ? selectEditar.value : '';
+            let html = '<option value="">-- Selecciona una oficina --</option>';
+            oficinas.forEach(o => { html += '<option value="' + o + '">' + o + '</option>'; });
+            select.innerHTML = html;
+            if (selectEditar) {
+                selectEditar.innerHTML = html;
+                if (valorEditar) selectEditar.value = valorEditar;
+            }
+            if (valorActual) select.value = valorActual;
+        }
+
+        function renderizarConfig() {
+            document.getElementById('maxDecimos').value = config.maxDecimos || 5;
+            renderizarOficinas();
+        }
+
+        // ===== ESTADÍSTICAS =====
+        function actualizarEstadisticas() {
+            const totalDecimos = pedidos.reduce((s, p) => s + p.numDecimos, 0);
+            const recaudado = pedidos.filter(p => p.pagado).reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0);
+            const totalEsperado = pedidos.reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0);
+            const pagados = pedidos.filter(p => p.pagado).length;
+            const pendientes = pedidos.length - pagados;
+            const recogidos = pedidos.filter(p => p.recogido).length;
+            const porcentaje = totalEsperado > 0 ? Math.round((recaudado / totalEsperado) * 100) : 0;
+
+            document.getElementById('totalDecimos').textContent = totalDecimos;
+            document.getElementById('dineroRecaudado').textContent = recaudado.toLocaleString('es-ES') + ' €';
+            document.getElementById('totalParticipantes').textContent = pedidos.length;
+            document.getElementById('statPagados').textContent = pagados;
+            document.getElementById('statPendientes').textContent = pendientes;
+            document.getElementById('statEntregados').textContent = recogidos;
+            document.getElementById('statTotalEsperado').textContent = totalEsperado.toLocaleString('es-ES') + ' €';
+            document.getElementById('statPorcentaje').textContent = porcentaje + '%';
+            document.getElementById('statPrecioDecimo').textContent = PRECIO_DECIMO + ' €';
+            document.getElementById('statConPago').textContent = pagados;
+            document.getElementById('statSinPago').textContent = pendientes;
+            document.getElementById('statRecogidos').textContent = recogidos;
+        }
+
+        // ===== TABLA PEDIDOS =====
+        function renderizarTabla() {
+            const tbody = document.getElementById('tablaBody');
+            const empty = document.getElementById('emptyState');
+            const table = document.getElementById('tableContainer');
+            if (pedidos.length === 0) {
+                tbody.innerHTML = ''; empty.style.display = 'block'; table.style.display = 'none';
+                actualizarEstadisticas(); return;
+            }
+            empty.style.display = 'none'; table.style.display = 'block';
+            tbody.innerHTML = pedidos.map(p => {
+                const quienRecogeHtml = p.quienRecoge
+                    ? '<span class="badge badge-collected"> ' + p.quienRecoge + '</span>'
+                    : '<span class="badge badge-pending">—</span>';
+                return '<tr>' +
+                    '<td class="nombre-cell">' + p.nombre + '</td>' +
+                    '<td>' + p.oficina + '</td>' +
+                    '<td>' + p.telefono + '</td>' +
+                    '<td><span class="badge-decimos">' + p.numDecimos + '</span></td>' +
+                    '<td class="importe-cell">' + (p.numDecimos * PRECIO_DECIMO).toLocaleString('es-ES') + ' €</td>' +
+                    '<td class="checkbox-cell"><input type="checkbox" ' + (p.pagado ? 'checked' : '') + ' onchange="togglePagado(\'' + p.id + '\')"></td>' +
+                    '<td class="checkbox-cell"><input type="checkbox" ' + (p.recogido ? 'checked' : '') + ' onchange="toggleRecogido(\'' + p.id + '\')"></td>' +
+                    '<td>' + quienRecogeHtml + '</td>' +
+                    '<td><div class="actions-cell">' +
+                        '<button class="btn btn-edit" onclick="editarPedido(\'' + p.id + '\')">✏️ Editar</button>' +
+                        '<button class="btn btn-delete" onclick="eliminarPedido(\'' + p.id + '\')">🗑️</button>' +
+                    '</div></td>' +
+                '</tr>';
+            }).join('');
+            actualizarEstadisticas();
+        }
+
+        // ===== FORMULARIO NUEVO PEDIDO =====
+        document.getElementById('pedidoForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const nombre = document.getElementById('nombre').value.trim();
+            const numDecimos = parseInt(document.getElementById('numDecimos').value);
+
+            const validacion = validarMaximoDecimos(nombre, numDecimos);
+            if (!validacion.valido) {
+                let mensaje = nombre + ' ya tiene ' + validacion.acumulados + ' décimo(s). ';
+                mensaje += 'Con estos ' + validacion.nuevos + ' nuevos llegaría a ' + validacion.total + ', ';
+                mensaje += 'pero el máximo permitido es ' + validacion.maximo + '. ';
+                if (validacion.disponibles > 0) {
+                    mensaje += 'Solo puede pedir ' + validacion.disponibles + ' más.';
+                } else {
+                    mensaje += 'Ya ha alcanzado el máximo.';
+                }
+                showToast('', mensaje, true);
+                return;
+            }
+
+            const nuevo = {
+                nombre: nombre,
+                oficina: document.getElementById('oficina').value.trim(),
+                telefono: document.getElementById('telefono').value.trim(),
+                numDecimos: numDecimos,
+                quienRecoge: document.getElementById('quienRecoge').value.trim(),
+                pagado: false,
+                recogido: false,
+                fecha: new Date().toLocaleDateString('es-ES')
+            };
+
+            const id = generarId();
+            firebaseGuardarPedido({ id: id, ...nuevo });
+            this.reset();
+            showToast('✅', 'Pedido de ' + nombre + ' añadido y sincronizado');
+        });
+
+        function togglePagado(id) {
+            const p = pedidos.find(x => x.id === id);
+            if (p) {
+                p.pagado = !p.pagado;
+                firebaseGuardarPedido(p);
+                const msg = p.pagado ? p.nombre + ' ha pagado' : 'Pago pendiente de ' + p.nombre;
+                showToast(p.pagado ? '' : '⏳', msg);
+            }
+        }
+
+        function toggleRecogido(id) {
+            const p = pedidos.find(x => x.id === id);
+            if (p) {
+                p.recogido = !p.recogido;
+                firebaseGuardarPedido(p);
+                const msg = p.recogido ? 'Décimos entregados a ' + p.nombre : 'Entrega pendiente de ' + p.nombre;
+                showToast(p.recogido ? '📦' : '⏳', msg);
+            }
+        }
+
+        function eliminarPedido(id) {
+            const p = pedidos.find(x => x.id === id);
+            if (p && confirm('¿Eliminar el pedido de ' + p.nombre + '?')) {
+                firebaseEliminarPedido(id);
+                showToast('🗑️', 'Pedido eliminado');
+            }
+        }
+
+        function editarPedido(id) {
+            const p = pedidos.find(x => x.id === id);
+            if (!p) return;
+            actualizarSelectOficinas();
+            document.getElementById('editarId').value = id;
+            document.getElementById('editarNombre').value = p.nombre;
+            document.getElementById('editarOficina').value = p.oficina;
+            document.getElementById('editarTelefono').value = p.telefono;
+            document.getElementById('editarNumDecimos').value = p.numDecimos;
+            document.getElementById('editarQuienRecoge').value = p.quienRecoge;
+            document.getElementById('modalEditar').classList.add('active');
+        }
+
+        function cerrarModal() { document.getElementById('modalEditar').classList.remove('active'); }
+
+        document.getElementById('editarForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const id = document.getElementById('editarId').value;
+            const p = pedidos.find(x => x.id === id);
+            if (p) {
+                p.nombre = document.getElementById('editarNombre').value.trim();
+                p.oficina = document.getElementById('editarOficina').value.trim();
+                p.telefono = document.getElementById('editarTelefono').value.trim();
+                p.numDecimos = parseInt(document.getElementById('editarNumDecimos').value);
+                p.quienRecoge = document.getElementById('editarQuienRecoge').value.trim();
+                firebaseGuardarPedido(p);
+                cerrarModal();
+                showToast('✅', 'Pedido actualizado y sincronizado');
+            }
+        });
+
+        document.getElementById('modalEditar').addEventListener('click', function(e) { if (e.target === this) cerrarModal(); });
+
+        // ===== RESUMEN =====
+        function renderizarResumen() {
+            const cont = document.getElementById('resumenContenido');
+            if (pedidos.length === 0) {
+                cont.innerHTML = '<div class="empty-state"><div class="empty-icon"></div><h3>Sin datos</h3><p>Aún no hay pedidos registrados</p></div>';
+                return;
+            }
+            const totalDecimos = pedidos.reduce((s, p) => s + p.numDecimos, 0);
+            const totalRecaudado = pedidos.filter(p => p.pagado).reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0);
+            const totalPendiente = pedidos.filter(p => !p.pagado).reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0);
+
+            const porOficina = {};
+            pedidos.forEach(p => {
+                if (!porOficina[p.oficina]) porOficina[p.oficina] = { decimos: 0, importe: 0, pagados: 0 };
+                porOficina[p.oficina].decimos += p.numDecimos;
+                porOficina[p.oficina].importe += p.numDecimos * PRECIO_DECIMO;
+                if (p.pagado) porOficina[p.oficina].pagados += p.numDecimos;
+            });
+
+            let html = '<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 25px;">';
+            html += '<div style="background:#e3f2fd; padding:15px; border-radius:8px; border-left:4px solid #1976d2;"><strong style="color:#1976d2;">Total pedidos</strong><br><span style="font-size:1.5em; font-weight:700;">' + pedidos.length + '</span></div>';
+            html += '<div style="background:#e8f5e9; padding:15px; border-radius:8px; border-left:4px solid #2e7d32;"><strong style="color:#2e7d32;">Total décimos</strong><br><span style="font-size:1.5em; font-weight:700;">' + totalDecimos + '</span></div>';
+            html += '<div style="background:#fff3e0; padding:15px; border-radius:8px; border-left:4px solid #e65100;"><strong style="color:#e65100;">Recaudado</strong><br><span style="font-size:1.5em; font-weight:700;">' + totalRecaudado.toLocaleString('es-ES') + ' €</span></div>';
+            html += '<div style="background:#ffebee; padding:15px; border-radius:8px; border-left:4px solid #c41e3a;"><strong style="color:#c41e3a;">Pendiente</strong><br><span style="font-size:1.5em; font-weight:700;">' + totalPendiente.toLocaleString('es-ES') + ' €</span></div>';
+            html += '</div>';
+
+            html += '<h3 style="color:#1a3a5c; margin-bottom:15px; font-size:1.1em;">📊 Por oficina</h3>';
+            html += '<div class="table-container"><table><thead><tr><th>Oficina</th><th>Décimos</th><th>Importe</th><th>Pagados</th></tr></thead><tbody>';
+            Object.keys(porOficina).sort().forEach(of => {
+                const d = porOficina[of];
+                html += '<tr><td><strong>' + of + '</strong></td><td>' + d.decimos + '</td><td>' + d.importe.toLocaleString('es-ES') + ' €</td><td>' + d.pagados + '/' + d.decimos + '</td></tr>';
+            });
+            html += '</tbody></table></div>';
+            cont.innerHTML = html;
+        }
+
+        // ===== PARTICIPANTES =====
+        function renderizarParticipantes() {
+            const tbody = document.getElementById('participantesBody');
+            const empty = document.getElementById('emptyParticipantes');
+            const cont = document.getElementById('participantesContainer');
+            if (pedidos.length === 0) {
+                tbody.innerHTML = ''; empty.style.display = 'block'; cont.style.display = 'none'; return;
+            }
+            empty.style.display = 'none'; cont.style.display = 'block';
+            tbody.innerHTML = pedidos.map(p => {
+                const pagadoBadge = p.pagado
+                    ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7;">✓ Pagado</span>'
+                    : '<span class="badge" style="background:#ffebee; color:#c41e3a; border:1px solid #ef9a9a;">⏳ Pendiente</span>';
+                const recogidoBadge = p.recogido
+                    ? '<span class="badge" style="background:#e3f2fd; color:#1976d2; border:1px solid #90caf9;">✓ Recogido</span>'
+                    : '<span class="badge badge-pending">⏳ Pendiente</span>';
+                const recogidoPor = p.quienRecoge
+                    ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>'
+                    : '<span class="badge badge-pending">—</span>';
+                return '<tr>' +
+                    '<td class="nombre-cell">' + p.nombre + '</td>' +
+                    '<td>' + p.oficina + '</td>' +
+                    '<td>' + p.telefono + '</td>' +
+                    '<td><span class="badge-decimos">' + p.numDecimos + '</span></td>' +
+                    '<td class="importe-cell">' + (p.numDecimos * PRECIO_DECIMO).toLocaleString('es-ES') + ' €</td>' +
+                    '<td>' + pagadoBadge + '</td>' +
+                    '<td>' + recogidoBadge + '</td>' +
+                    '<td>' + recogidoPor + '</td>' +
+                '</tr>';
+            }).join('');
+        }
+
+        // ===== EXPORTAR/IMPORTAR JSON =====
+        function exportarDatosJSON() {
+            const datos = { pedidos: pedidos, oficinas: oficinas, config: config, fechaExportacion: new Date().toISOString() };
+            const json = JSON.stringify(datos, null, 2);
+            const blob = new Blob([json], { type: 'application/json' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'loteria-navidad-backup-' + new Date().toISOString().slice(0,10) + '.json';
+            link.click();
+            showToast('📤', 'Datos exportados correctamente');
+        }
+
+        function importarDatosJSON(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const datos = JSON.parse(e.target.result);
+                    if (!confirm('¿Seguro que quieres importar estos datos? Se REEMPLAZARÁN los datos actuales (también en la nube).')) return;
+                    
+                    if (datos.pedidos) {
+                        pedidos = datos.pedidos;
+                        const obj = {};
+                        pedidos.forEach(p => { const { id, ...d } = p; obj[id] = d; });
+                        dbRef.pedidos.set(obj);
+                    }
+                    if (datos.oficinas) {
+                        oficinas = datos.oficinas;
+                        firebaseGuardarOficinas();
+                    }
+                    if (datos.config) {
+                        config = { ...config, ...datos.config };
+                        firebaseGuardarConfig();
+                    }
+                    
+                    renderizarTabla();
+                    actualizarSelectOficinas();
+                    renderizarConfig();
+                    showToast('✅', 'Datos importados y sincronizados');
+                } catch (err) {
+                    showToast('⚠️', 'Error al leer el archivo: ' + err.message, true);
+                }
+            };
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+
+        // ===== EXPORTAR PDF/CSV/IMPRIMIR =====
+        function exportarPDF() {
+            if (pedidos.length === 0) { showToast('⚠️', 'No hay pedidos para exportar'); return; }
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.setFontSize(20); doc.setTextColor(26, 58, 92);
+            doc.text('Control Loteria Navidad 2026 - Pabellon Nino Jesus', 14, 22);
+            doc.setFontSize(10); doc.setTextColor(100);
+            doc.text('Fecha: ' + new Date().toLocaleDateString('es-ES'), 14, 30);
+            const cols = ["Nombre", "Oficina", "Telefono", "Decimos", "Importe", "Pagado", "Recogido", "Recogido por"];
+            const rows = pedidos.map(p => [p.nombre, p.oficina, p.telefono, p.numDecimos, (p.numDecimos * PRECIO_DECIMO).toLocaleString('es-ES') + ' EUR', p.pagado ? 'Si' : 'No', p.recogido ? 'Si' : 'No', p.quienRecoge || '-']);
+            doc.autoTable(cols, rows, { startY: 36, theme: 'striped', headStyles: { fillColor: [26, 58, 92], textColor: [255, 255, 255], fontSize: 8 }, bodyStyles: { fontSize: 8 } });
+            const fy = doc.autoTable.previous.finalY;
+            const totalD = pedidos.reduce((s, p) => s + p.numDecimos, 0);
+            const totalP = pedidos.filter(p => p.pagado).length;
+            const recaudado = pedidos.filter(p => p.pagado).reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0);
+            doc.setFontSize(10); doc.setTextColor(50);
+            doc.text('Total pedidos: ' + pedidos.length + '  |  Decimos: ' + totalD + '  |  Pagados: ' + totalP + '  |  Recaudado: ' + recaudado.toLocaleString('es-ES') + ' EUR', 14, fy + 15);
+            doc.save('loteria-navidad-2026-pabellon-nino-jesus.pdf');
+            showToast('📄', 'PDF exportado correctamente');
+        }
+
+        function exportarCSV() {
+            if (pedidos.length === 0) { showToast('⚠️', 'No hay pedidos para exportar'); return; }
+            let csv = '\uFEFFNombre,Oficina,Telefono,N Decimos,Importe,Pagado,Recogido,Recogido por,Fecha\n';
+            pedidos.forEach(p => { csv += '"' + p.nombre + '","' + p.oficina + '","' + p.telefono + '",' + p.numDecimos + ',' + (p.numDecimos * PRECIO_DECIMO) + ',' + (p.pagado ? 'Si' : 'No') + ',' + (p.recogido ? 'Si' : 'No') + ',"' + (p.quienRecoge || '-') + '","' + p.fecha + '"\n'; });
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'loteria-navidad-2026-pabellon-nino-jesus.csv'; link.click();
+            showToast('📊', 'CSV exportado correctamente');
+        }
+
+        function imprimirListado() {
+            if (pedidos.length === 0) { showToast('⚠️', 'No hay pedidos para imprimir'); return; }
+            const v = window.open('', '', 'width=900,height=600');
+            const tablaHTML = pedidos.map(p => '<tr><td>' + p.nombre + '</td><td>' + p.oficina + '</td><td>' + p.telefono + '</td><td>' + p.numDecimos + '</td><td>' + (p.numDecimos*PRECIO_DECIMO).toLocaleString('es-ES') + ' €</td><td>' + (p.pagado?'Si':'No') + '</td><td>' + (p.recogido?'Si':'No') + '</td><td>' + (p.quienRecoge||'-') + '</td></tr>').join('');
+            const totalDecimos = pedidos.reduce((s,p) => s + p.numDecimos, 0);
+            const totalPagados = pedidos.filter(p => p.pagado).length;
+            const totalRecaudado = pedidos.filter(p => p.pagado).reduce((s,p) => s + (p.numDecimos*PRECIO_DECIMO), 0);
+            v.document.write('<html><head><title>Loteria Navidad 2026 - Pabellon Nino Jesus</title><style>body { font-family: Arial, sans-serif; padding: 30px; color: #333; } h1 { color: #1a3a5c; font-size: 1.6em; } table { width: 100%; border-collapse: collapse; margin-top: 20px; } th, td { border: 1px solid #ddd; padding: 10px; text-align: left; font-size: 0.9em; } th { background: #1a3a5c; color: white; } tr:nth-child(even) { background: #f5f7f9; } .stats { margin-top: 25px; padding: 15px; background: #f0f2f5; border-radius: 8px; border-left: 4px solid #1a3a5c; }</style></head><body><h1>Control Loteria Navidad 2026 - Pabellon Nino Jesus</h1><p>Fecha: ' + new Date().toLocaleDateString('es-ES') + '</p><table><thead><tr><th>Nombre</th><th>Oficina</th><th>Telefono</th><th>Decimos</th><th>Importe</th><th>Pagado</th><th>Recogido</th><th>Recogido por</th></tr></thead><tbody>' + tablaHTML + '</tbody></table><div class="stats"><p><strong>Total pedidos:</strong> ' + pedidos.length + ' | <strong>Decimos:</strong> ' + totalDecimos + ' | <strong>Pagados:</strong> ' + totalPagados + ' | <strong>Recaudado:</strong> ' + totalRecaudado.toLocaleString('es-ES') + ' €</p></div></body></html>');
+            v.document.close(); v.print();
+            showToast('🖨️', 'Listado enviado a impresora');
+        }
+
+        // ===== INICIO =====
+        verificarSesion();
+    </script>
+</body>
+</html>
