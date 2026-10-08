@@ -181,7 +181,7 @@
                 </div>
                 <button type="submit" class="btn-login">Iniciar sesión</button>
                 <div class="login-error" id="loginError"> Acceso no autorizado. Verifica tus credenciales.</div>
-                <button type="button" class="btn-reset" onclick="restablecerClave()">🔑 ¿Olvidaste la contraseña? Restablecer</button>
+                <button type="button" class="btn-reset" onclick="restablecerCredenciales()">🔑 ¿Olvidaste las credenciales? Restablecer</button>
             </form>
         </div>
     </div>
@@ -224,7 +224,7 @@
                         <div class="stat-details">
                             <div class="stat-detail-row"><span>✓ Pagados:</span><span id="statPagados">0</span></div>
                             <div class="stat-detail-row"><span>⏳ Pendientes:</span><span id="statPendientes">0</span></div>
-                            <div class="stat-detail-row"><span> Entregados:</span><span id="statEntregados">0</span></div>
+                            <div class="stat-detail-row"><span>📦 Entregados:</span><span id="statEntregados">0</span></div>
                         </div>
                     </div>
                     <div class="stat-card gold">
@@ -233,7 +233,7 @@
                         <div class="stat-details">
                             <div class="stat-detail-row"><span>💰 Total esperado:</span><span id="statTotalEsperado">0 €</span></div>
                             <div class="stat-detail-row"><span>💵 Cobrado:</span><span id="statCobrado">0 €</span></div>
-                            <div class="stat-detail-row"><span>⏳ Pendiente de cobro:</span><span id="statPendienteCobro">0 €</span></div>
+                            <div class="stat-detail-row"><span> Pendiente de cobro:</span><span id="statPendienteCobro">0 €</span></div>
                         </div>
                     </div>
                     <div class="stat-card green">
@@ -241,8 +241,8 @@
                         <div class="stat-label">Participantes</div>
                         <div class="stat-details">
                             <div class="stat-detail-row"><span>✓ Con pago:</span><span id="statConPago">0</span></div>
-                            <div class="stat-detail-row"><span>⏳ Sin pago:</span><span id="statSinPago">0</span></div>
-                            <div class="stat-detail-row"><span>📦 Recogidos:</span><span id="statRecogidos">0</span></div>
+                            <div class="stat-detail-row"><span> Sin pago:</span><span id="statSinPago">0</span></div>
+                            <div class="stat-detail-row"><span> Recogidos:</span><span id="statRecogidos">0</span></div>
                         </div>
                     </div>
                 </div>
@@ -252,7 +252,7 @@
                         <div class="qa-title">Solicitar décimos</div>
                     </div>
                     <div class="quick-action" onclick="irAPagina('pedidos')">
-                        <div class="qa-icon">📋</div>
+                        <div class="qa-icon"></div>
                         <div class="qa-title">Ver pedidos</div>
                     </div>
                     <div class="quick-action" onclick="irAPagina('resumen')">
@@ -260,7 +260,7 @@
                         <div class="qa-title">Ver resumen</div>
                     </div>
                     <div class="quick-action" onclick="irAPagina('participantes')">
-                        <div class="qa-icon"></div>
+                        <div class="qa-icon">👥</div>
                         <div class="qa-title">Participantes</div>
                     </div>
                 </div>
@@ -268,7 +268,7 @@
 
             <div class="section-page" id="page-solicitar">
                 <div class="content-card">
-                    <h2 class="section-title">️ Solicitar Décimos</h2>
+                    <h2 class="section-title">🎟️ Solicitar Décimos</h2>
                     <form id="pedidoForm">
                         <div class="form-grid">
                             <div class="form-group">
@@ -424,7 +424,33 @@
                     <div class="config-block">
                         <h3>☁️ Sincronización en la nube</h3>
                         <div id="syncStatusBox" class="alert-info">
-                             Conectando con el servidor del Pabellón...
+                            🌐 Conectando con el servidor del Pabellón...
+                        </div>
+                    </div>
+                    <div class="config-block">
+                        <h3>👤 Cambiar usuario</h3>
+                        <div class="alert-info">
+                            Cambia el nombre de usuario para iniciar sesión. Se sincronizará automáticamente en todos los dispositivos.
+                        </div>
+                        <div class="config-row">
+                            <div class="form-group">
+                                <label for="nuevoUsuario">Nuevo usuario</label>
+                                <input type="text" id="nuevoUsuario" placeholder="Introduce el nuevo usuario">
+                            </div>
+                            <button type="button" class="btn btn-primary btn-small" onclick="cambiarUsuario()">Guardar</button>
+                        </div>
+                    </div>
+                    <div class="config-block">
+                        <h3>🔐 Cambiar contraseña</h3>
+                        <div class="alert-info">
+                            Cambia la contraseña de acceso a la aplicación. Se sincronizará automáticamente en todos los dispositivos.
+                        </div>
+                        <div class="config-row">
+                            <div class="form-group">
+                                <label for="nuevaClave">Nueva contraseña</label>
+                                <input type="password" id="nuevaClave" placeholder="Introduce la nueva contraseña">
+                            </div>
+                            <button type="button" class="btn btn-primary btn-small" onclick="cambiarClave()">Guardar</button>
                         </div>
                     </div>
                     <div class="config-block">
@@ -450,24 +476,11 @@
                                 <label for="nuevaOficina">Nombre de la oficina</label>
                                 <input type="text" id="nuevaOficina" placeholder="Ej: Planta 1 - Administración">
                             </div>
-                            <button type="button" class="btn btn-success btn-small" onclick="agregarOficina()"> Añadir</button>
+                            <button type="button" class="btn btn-success btn-small" onclick="agregarOficina()">➕ Añadir</button>
                         </div>
                         <ul class="oficina-list" id="oficinaList"></ul>
                         <div id="emptyOficinas" style="text-align:center; padding: 20px; color: #999; font-size: 0.9em;">
                             No hay oficinas configuradas
-                        </div>
-                    </div>
-                    <div class="config-block">
-                        <h3>🔐 Cambiar contraseña</h3>
-                        <div class="alert-info">
-                            Cambia la contraseña de acceso a la aplicación. Se sincronizará automáticamente en todos los dispositivos.
-                        </div>
-                        <div class="config-row">
-                            <div class="form-group">
-                                <label for="nuevaClave">Nueva contraseña</label>
-                                <input type="password" id="nuevaClave" placeholder="Introduce la nueva contraseña">
-                            </div>
-                            <button type="button" class="btn btn-primary btn-small" onclick="cambiarClave()">Guardar</button>
                         </div>
                     </div>
                     <div class="config-block">
@@ -618,7 +631,6 @@
             }
         }
 
-        // Listener de seguridad (contraseña y usuario)
         dbRef.seguridad.on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
@@ -683,7 +695,7 @@
             if (snapshot.val() === true) {
                 setSyncStatus('online');
             } else {
-                setSyncStatus('offline', ' Sin conexión al servidor');
+                setSyncStatus('offline', '📡 Sin conexión al servidor');
             }
         });
 
@@ -727,7 +739,7 @@
                 .then(() => setSyncStatus('online'))
                 .catch((err) => {
                     console.error(err);
-                    setSyncStatus('offline', '❌ Error al guardar la configuración');
+                    setSyncStatus('offline', ' Error al guardar la configuración');
                 });
         }
 
@@ -776,16 +788,30 @@
             if (nueva.length < 4) { showToast('🔑', 'La contraseña debe tener mínimo 4 caracteres.'); return; }
             setClave(nueva);
             document.getElementById('nuevaClave').value = '';
-            showToast('✅', '¡Contraseña actualizada! Ya puedes usarla en tu próximo acceso.');
+            showToast('✅', '¡Contraseña actualizada! Se ha sincronizado en todos los dispositivos.');
         }
 
-        function restablecerClave() {
-            if (confirm('¿Seguro que quieres restablecer la contraseña a "admin123"? Se perderá la contraseña personalizada en todos los dispositivos.')) {
+        function cambiarUsuario() {
+            const nuevo = document.getElementById('nuevoUsuario').value.trim();
+            if (!nuevo) { showToast('✏️', 'Por favor, introduce el nuevo usuario.'); return; }
+            if (nuevo.length < 3) { showToast('👤', 'El usuario debe tener mínimo 3 caracteres.'); return; }
+            setUsuario(nuevo);
+            document.getElementById('nuevoUsuario').value = '';
+            document.getElementById('usuarioActual').textContent = nuevo;
+            showToast('✅', '¡Usuario actualizado a "' + nuevo + '"! Se sincronizó en la nube.');
+        }
+
+        function restablecerCredenciales() {
+            if (confirm('¿Seguro que quieres restablecer las credenciales a las originales?\n\nUsuario: admin\nContraseña: admin123\n\nSe perderán los cambios en todos los dispositivos.')) {
                 const nuevaClave = CLAVE_DEFECTO;
+                const nuevoUsuario = USUARIO_DEFECTO;
                 claveNube = nuevaClave;
+                usuarioNube = nuevoUsuario;
                 localStorage.setItem('loteriaClave', nuevaClave);
+                localStorage.setItem('loteriaUsuario', nuevoUsuario);
                 dbRef.seguridad.child('clave').set(nuevaClave);
-                alert('✅ Contraseña restablecida a: admin123\n\nUsuario: admin\nContraseña: admin123\n\nAhora puedes iniciar sesión.');
+                dbRef.seguridad.child('usuario').set(nuevoUsuario);
+                alert('✅ Credenciales restablecidas:\n\nUsuario: admin\nContraseña: admin123\n\nAhora puedes iniciar sesión.');
                 document.getElementById('loginError').classList.remove('show');
             }
         }
@@ -807,7 +833,7 @@
             establecerFechaHoraActual();
             
             firebaseReady = true;
-            setSyncStatus('syncing', ' Conectando con el servidor del Pabellón...');
+            setSyncStatus('syncing', '🌐 Conectando con el servidor del Pabellón...');
         }
 
         function establecerFechaHoraActual() {
@@ -900,7 +926,7 @@
                 config.maxDecimos = max;
                 guardarConfigLocal();
                 firebaseGuardarConfig();
-                showToast('✅', ' Límite establecido: máximo ' + max + ' décimos por persona.');
+                showToast('✅', '🔢 Límite establecido: máximo ' + max + ' décimos por persona.');
             }
         }
 
@@ -937,7 +963,7 @@
             if (oficinas.length === 0) { list.innerHTML = ''; empty.style.display = 'block'; return; }
             empty.style.display = 'none';
             list.innerHTML = oficinas.map(o =>
-                '<li><span> ' + o + '</span><button class="btn btn-delete btn-small" onclick="eliminarOficina(\'' + o.replace(/'/g, "\\'") + '\')">🗑️ Eliminar</button></li>'
+                '<li><span>🏢 ' + o + '</span><button class="btn btn-delete btn-small" onclick="eliminarOficina(\'' + o.replace(/'/g, "\\'") + '\')">🗑️ Eliminar</button></li>'
             ).join('');
         }
 
@@ -1045,7 +1071,7 @@
                     '<td>' + quienRecogeHtml + '</td>' +
                     '<td class="col-centro"><div class="actions-cell">' +
                         '<button class="btn btn-edit" onclick="editarPedido(\'' + p.id + '\')">✏️ Editar</button>' +
-                        '<button class="btn btn-delete" onclick="eliminarPedido(\'' + p.id + '\')">🗑️</button>' +
+                        '<button class="btn btn-delete" onclick="eliminarPedido(\'' + p.id + '\')">️</button>' +
                     '</div></td>' +
                 '</tr>';
             }).join('');
@@ -1063,11 +1089,11 @@
                 mensaje += 'Con esta nueva solicitud de ' + validacion.nuevos + ' llegaría a ' + validacion.total + ', ';
                 mensaje += 'pero el límite establecido es de ' + validacion.maximo + ' décimos por persona. ';
                 if (validacion.disponibles > 0) {
-                    mensaje += ' Aún puede solicitar ' + validacion.disponibles + ' décimo(s) más.';
+                    mensaje += '👉 Aún puede solicitar ' + validacion.disponibles + ' décimo(s) más.';
                 } else {
                     mensaje += 'Ya ha alcanzado el máximo permitido.';
                 }
-                showToast('', mensaje, true);
+                showToast('🚫', mensaje, true);
                 return;
             }
 
@@ -1098,7 +1124,7 @@
             if (p) {
                 p.pagado = !p.pagado;
                 firebaseGuardarPedido(p);
-                const msg = p.pagado ? '💰 ¡' + p.nombre + ' ha realizado el pago!' : '⏳ Pago pendiente de ' + p.nombre + '.';
+                const msg = p.pagado ? '💰 ¡' + p.nombre + ' ha realizado el pago!' : ' Pago pendiente de ' + p.nombre + '.';
                 showToast(p.pagado ? '💰' : '⏳', msg);
             }
         }
@@ -1108,8 +1134,8 @@
             if (p) {
                 p.recogido = !p.recogido;
                 firebaseGuardarPedido(p);
-                const msg = p.recogido ? '📦 Décimos entregados a ' + p.nombre + '.' : ' Entrega pendiente a ' + p.nombre + '.';
-                showToast(p.recogido ? '📦' : '⏳', msg);
+                const msg = p.recogido ? '📦 Décimos entregados a ' + p.nombre + '.' : '⏳ Entrega pendiente a ' + p.nombre + '.';
+                showToast(p.recogido ? '📦' : '', msg);
             }
         }
 
@@ -1156,7 +1182,7 @@
                 p.quienRecoge = document.getElementById('editarQuienRecoge').value.trim();
                 firebaseGuardarPedido(p);
                 cerrarModal();
-                showToast('✅', '️ Pedido actualizado y sincronizado correctamente.');
+                showToast('✅', '✏️ Pedido actualizado y sincronizado correctamente.');
             }
         });
 
@@ -1259,7 +1285,7 @@
             reader.onload = function(e) {
                 try {
                     const datos = JSON.parse(e.target.result);
-                    if (!confirm('⚠️ ATENCIÓN: Al importar estos datos se REEMPLAZARÁN todos los registros actuales (también en el servidor). ¿Deseas continuar?')) return;
+                    if (!confirm('️ ATENCIÓN: Al importar estos datos se REEMPLAZARÁN todos los registros actuales (también en el servidor). ¿Deseas continuar?')) return;
                     
                     if (datos.pedidos) {
                         pedidos = datos.pedidos;
@@ -1316,7 +1342,7 @@
             pedidos.forEach(p => { csv += '"' + p.nombre + '","' + p.oficina + '","' + p.telefono + '",' + p.numDecimos + ',' + (p.numDecimos * PRECIO_DECIMO) + ',"' + (p.fechaSolicitud || '') + '","' + (p.horaSolicitud || '') + '","' + (p.fechaEntrega || '') + '","' + (p.horaEntrega || '') + '",' + (p.pagado ? 'Si' : 'No') + ',' + (p.recogido ? 'Si' : 'No') + ',"' + (p.quienRecoge || '-') + '","' + p.fecha + '"\n'; });
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'loteria-navidad-2026-pabellon-nino-jesus.csv'; link.click();
-            showToast('', '📊 Listado CSV generado correctamente.');
+            showToast('📊', ' Listado CSV generado correctamente.');
         }
 
         function imprimirListado() {
