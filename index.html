@@ -957,15 +957,15 @@
             }
         }
 
-        function renderizarOficinas() {
-            const list = document.getElementById('oficinaList');
-            const empty = document.getElementById('emptyOficinas');
-            if (oficinas.length === 0) { list.innerHTML = ''; empty.style.display = 'block'; return; }
-            empty.style.display = 'none';
-            list.innerHTML = oficinas.map(o =>
-                '<li><span>🏢 ' + o + '</span><button class="btn btn-delete btn-small" onclick="eliminarOficina(\'' + o.replace(/'/g, "\\'") + '\')">🗑️ Eliminar</button></li>'
-            ).join('');
-        }
+       function renderizarOficinas() {
+    const list = document.getElementById('oficinaList');
+    const empty = document.getElementById('emptyOficinas');
+    if (oficinas.length === 0) { list.innerHTML = ''; empty.style.display = 'block'; return; }
+    empty.style.display = 'none';
+    list.innerHTML = [...oficinas].sort((a, b) => a.localeCompare(b, 'es')).map(o =>
+        '<li><span>🏢 ' + o + '</span><button class="btn btn-delete btn-small" onclick="eliminarOficina(\'' + o.replace(/'/g, "\\'") + '\')">🗑️ Eliminar</button></li>'
+    ).join('');
+}
 
         function actualizarSelectOficinas() {
             const select = document.getElementById('oficina');
