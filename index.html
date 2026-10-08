@@ -38,7 +38,7 @@
         .user-avatar { width: 32px; height: 32px; background: #1a3a5c; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-size: 0.9em; }
         .btn-logout { background: #c41e3a; color: white; border: none; padding: 8px 16px; border-radius: 20px; font-size: 0.85em; cursor: pointer; font-weight: 500; }
         .btn-logout:hover { background: #a01830; }
-        .nav-tabs { background: #e8eaed; padding: 0 25px; display: flex; justify-content: center; gap: 5px; border-bottom: 1px solid #d0d3d8; }
+        .nav-tabs { background: #e8eaed; padding: 0 25px; display: flex; justify-content: center; gap: 5px; border-bottom: 1px solid #d0d3d8; flex-wrap: wrap; }
         .nav-tab { padding: 12px 20px; background: #d5d8dc; border: none; border-radius: 8px 8px 0 0; cursor: pointer; font-size: 0.9em; font-weight: 500; color: #555; display: flex; align-items: center; gap: 8px; transition: all 0.2s; }
         .nav-tab:hover { background: #c8ccd1; }
         .nav-tab.active { background: #1a3a5c; color: white; }
@@ -82,7 +82,9 @@
         .table-container { overflow-x: auto; border-radius: 6px; border: 1px solid #e0e2e5; }
         table { width: 100%; border-collapse: collapse; }
         thead { background: #1a3a5c; color: white; }
-        th { padding: 14px 12px; text-align: left; font-size: 0.85em; font-weight: 600; white-space: nowrap; }
+        th { padding: 14px 12px; text-align: left; font-size: 0.85em; font-weight: 600; white-space: nowrap; cursor: pointer; user-select: none; }
+        th:hover { background: #2a4a6c; }
+        th .sort-icon { margin-left: 5px; font-size: 0.8em; }
         td { padding: 12px; border-bottom: 1px solid #e8eaed; font-size: 0.9em; }
         tbody tr { transition: background 0.15s; }
         tbody tr:hover { background: #f5f7f9; }
@@ -127,9 +129,6 @@
         .config-block h3 { color: #1a3a5c; font-size: 1.1em; margin-bottom: 15px; }
         .config-row { display: flex; gap: 10px; align-items: flex-end; margin-bottom: 10px; flex-wrap: wrap; }
         .config-row .form-group { flex: 1; margin-bottom: 0; min-width: 200px; }
-        .oficina-list { list-style: none; margin-top: 10px; }
-        .oficina-list li { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: white; border: 1px solid #e0e2e5; border-radius: 6px; margin-bottom: 6px; }
-        .oficina-list li span { font-weight: 500; }
         .alert-info { background: #e3f2fd; border-left: 4px solid #1976d2; padding: 12px 15px; border-radius: 6px; margin-bottom: 15px; font-size: 0.9em; color: #0d47a1; }
         .alert-success { background: #e8f5e9; border-left: 4px solid #2e7d32; padding: 12px 15px; border-radius: 6px; margin-bottom: 15px; font-size: 0.9em; color: #1b5e20; }
         .dashboard-welcome { background: linear-gradient(135deg, #1a3a5c 0%, #2a4a6c 100%); color: white; padding: 40px 30px; border-radius: 12px; margin-bottom: 25px; text-align: center; }
@@ -140,6 +139,13 @@
         .quick-action .qa-icon { font-size: 2em; margin-bottom: 8px; }
         .quick-action .qa-title { font-weight: 600; color: #1a3a5c; font-size: 0.95em; }
         .col-centro { text-align: center; }
+        .sort-controls { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap; }
+        .sort-controls .form-group { flex: 1; min-width: 200px; margin-bottom: 0; }
+        .loading-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(26, 58, 92, 0.9); display: flex; justify-content: center; align-items: center; z-index: 9998; flex-direction: column; gap: 20px; color: white; }
+        .loading-overlay.hidden { display: none; }
+        .loading-spinner { width: 50px; height: 50px; border: 4px solid rgba(255,255,255,0.3); border-top: 4px solid white; border-radius: 50%; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .loading-text { font-size: 1.1em; font-weight: 500; }
         @media (max-width: 1024px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 768px) {
             .header { flex-direction: column; gap: 10px; padding: 15px; }
@@ -159,11 +165,17 @@
             .toast { left: 15px; right: 15px; bottom: 15px; }
             .config-row { flex-direction: column; }
             .login-box { margin: 20px; padding: 30px 20px; }
+            .sort-controls { flex-direction: column; }
         }
         @media (max-width: 480px) { .header-title h1 { font-size: 1.1em; } .stat-number { font-size: 1.8em; } .dashboard-welcome .welcome-date { font-size: 1.4em; } }
     </style>
 </head>
 <body>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text" id="loadingText">Cargando datos iniciales...</div>
+    </div>
 
     <div class="login-overlay" id="loginOverlay">
         <div class="login-box">
@@ -180,7 +192,7 @@
                     <input type="password" id="loginClave" placeholder="Introduce tu contraseña" required autocomplete="current-password">
                 </div>
                 <button type="submit" class="btn-login">Iniciar sesión</button>
-                <div class="login-error" id="loginError"> Acceso no autorizado. Verifica tus credenciales.</div>
+                <div class="login-error" id="loginError">⛔ Acceso no autorizado. Verifica tus credenciales.</div>
                 <button type="button" class="btn-reset" onclick="restablecerCredenciales()">🔑 ¿Olvidaste las credenciales? Restablecer</button>
             </form>
         </div>
@@ -197,7 +209,7 @@
             </div>
             <div class="header-right">
                 <div class="user-info">
-                    <div class="user-avatar">👤</div>
+                    <div class="user-avatar"></div>
                     <span id="usuarioActual">Administrador</span>
                 </div>
                 <button class="btn-logout" onclick="cerrarSesion()">Cerrar sesión</button>
@@ -206,7 +218,8 @@
         <div class="nav-tabs">
             <button class="nav-tab active" data-page="inicio">🏠 Inicio</button>
             <button class="nav-tab" data-page="solicitar">🎟️ Solicitar décimos</button>
-            <button class="nav-tab" data-page="pedidos">📋 Pedidos</button>
+            <button class="nav-tab" data-page="pedidos"> Pedidos</button>
+            <button class="nav-tab" data-page="listado">📑 Listado General</button>
             <button class="nav-tab" data-page="resumen">📊 Resumen</button>
             <button class="nav-tab" data-page="participantes">👥 Participantes</button>
             <button class="nav-tab" data-page="configuracion">⚙️ Configuración</button>
@@ -224,7 +237,7 @@
                         <div class="stat-details">
                             <div class="stat-detail-row"><span>✓ Pagados:</span><span id="statPagados">0</span></div>
                             <div class="stat-detail-row"><span>⏳ Pendientes:</span><span id="statPendientes">0</span></div>
-                            <div class="stat-detail-row"><span> Entregados:</span><span id="statEntregados">0</span></div>
+                            <div class="stat-detail-row"><span>📦 Entregados:</span><span id="statEntregados">0</span></div>
                         </div>
                     </div>
                     <div class="stat-card gold">
@@ -233,7 +246,7 @@
                         <div class="stat-details">
                             <div class="stat-detail-row"><span>💰 Total esperado:</span><span id="statTotalEsperado">0 €</span></div>
                             <div class="stat-detail-row"><span>💵 Cobrado:</span><span id="statCobrado">0 €</span></div>
-                            <div class="stat-detail-row"><span>⏳ Pendiente de cobro:</span><span id="statPendienteCobro">0 €</span></div>
+                            <div class="stat-detail-row"><span> Pendiente:</span><span id="statPendienteCobro">0 €</span></div>
                         </div>
                     </div>
                     <div class="stat-card green">
@@ -255,12 +268,16 @@
                         <div class="qa-icon">📋</div>
                         <div class="qa-title">Ver pedidos</div>
                     </div>
+                    <div class="quick-action" onclick="irAPagina('listado')">
+                        <div class="qa-icon">📑</div>
+                        <div class="qa-title">Listado General</div>
+                    </div>
                     <div class="quick-action" onclick="irAPagina('resumen')">
                         <div class="qa-icon">📊</div>
                         <div class="qa-title">Ver resumen</div>
                     </div>
                     <div class="quick-action" onclick="irAPagina('participantes')">
-                        <div class="qa-icon">👥</div>
+                        <div class="qa-icon"></div>
                         <div class="qa-title">Participantes</div>
                     </div>
                 </div>
@@ -330,7 +347,7 @@
                         <div class="export-buttons">
                             <button class="btn btn-export" onclick="exportarPDF()">📄 Exportar PDF</button>
                             <button class="btn btn-export" onclick="exportarCSV()">📊 Exportar CSV</button>
-                            <button class="btn btn-export" onclick="imprimirListado()">️ Imprimir</button>
+                            <button class="btn btn-export" onclick="imprimirListado()">🖨️ Imprimir</button>
                         </div>
                     </div>
                     <div class="filter-bar">
@@ -374,6 +391,98 @@
                         <div class="empty-icon">🎰</div>
                         <h3>Sin pedidos aún</h3>
                         <p>Añade el primer pedido desde la pestaña "Solicitar décimos"</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-page" id="page-listado">
+                <div class="content-card">
+                    <h2 class="section-title">📑 Listado General</h2>
+                    <div class="alert-info">
+                        💡 Haz clic en cualquier cabecera de columna para ordenar. Usa los controles para personalizar el orden.
+                    </div>
+                    <div class="sort-controls">
+                        <div class="form-group">
+                            <label for="ordenarPor">Ordenar por</label>
+                            <select id="ordenarPor" onchange="renderizarListadoGeneral()">
+                                <option value="nombre">Nombre</option>
+                                <option value="servicio">Servicio</option>
+                                <option value="seccion">Sección</option>
+                                <option value="telefono">Teléfono</option>
+                                <option value="numDecimos">Nº de Décimos</option>
+                                <option value="importe">Importe</option>
+                                <option value="fechaSolicitud">Fecha de Solicitud</option>
+                                <option value="pagado">Estado de Pago</option>
+                                <option value="recogido">Estado de Entrega</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="ordenDireccion">Dirección</label>
+                            <select id="ordenDireccion" onchange="renderizarListadoGeneral()">
+                                <option value="asc">️ Ascendente (A-Z)</option>
+                                <option value="desc">⬇️ Descendente (Z-A)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="filtroServicioListado">Filtrar por servicio</label>
+                            <select id="filtroServicioListado" onchange="renderizarListadoGeneral()">
+                                <option value="">Todos los servicios</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="filtroSeccionListado">Filtrar por sección</label>
+                            <select id="filtroSeccionListado" onchange="renderizarListadoGeneral()">
+                                <option value="">Todas las secciones</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="filtroPagadoListado">Filtrar por pago</label>
+                            <select id="filtroPagadoListado" onchange="renderizarListadoGeneral()">
+                                <option value="">Todos</option>
+                                <option value="pagado">✓ Pagados</option>
+                                <option value="pendiente">⏳ Pendientes</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="filtroRecogidoListado">Filtrar por entrega</label>
+                            <select id="filtroRecogidoListado" onchange="renderizarListadoGeneral()">
+                                <option value="">Todos</option>
+                                <option value="recogido">✓ Entregados</option>
+                                <option value="pendiente">⏳ Pendientes</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="export-buttons" style="margin-bottom: 20px;">
+                        <button class="btn btn-export" onclick="exportarListadoGeneralPDF()"> Exportar PDF</button>
+                        <button class="btn btn-export" onclick="exportarListadoGeneralCSV()">📊 Exportar CSV</button>
+                        <button class="btn btn-export" onclick="imprimirListadoGeneral()">🖨️ Imprimir</button>
+                    </div>
+                    <div class="table-container" id="listadoGeneralContainer" style="display:none;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th onclick="ordenarListado('nombre')">Nombre <span class="sort-icon" id="sort-nombre"></span></th>
+                                    <th onclick="ordenarListado('servicio')">Servicio <span class="sort-icon" id="sort-servicio"></span></th>
+                                    <th onclick="ordenarListado('seccion')">Sección <span class="sort-icon" id="sort-seccion"></span></th>
+                                    <th class="col-centro" onclick="ordenarListado('telefono')">Teléfono <span class="sort-icon" id="sort-telefono"></span></th>
+                                    <th class="col-centro" onclick="ordenarListado('numDecimos')">Décimos <span class="sort-icon" id="sort-numDecimos"></span></th>
+                                    <th class="col-centro" onclick="ordenarListado('importe')">Importe <span class="sort-icon" id="sort-importe"></span></th>
+                                    <th class="col-centro" onclick="ordenarListado('fechaSolicitud')">Fecha Sol. <span class="sort-icon" id="sort-fechaSolicitud"></span></th>
+                                    <th class="col-centro" onclick="ordenarListado('horaSolicitud')">Hora Sol. <span class="sort-icon" id="sort-horaSolicitud"></span></th>
+                                    <th class="col-centro" onclick="ordenarListado('fechaEntrega')">Fecha Ent. <span class="sort-icon" id="sort-fechaEntrega"></span></th>
+                                    <th class="col-centro" onclick="ordenarListado('horaEntrega')">Hora Ent. <span class="sort-icon" id="sort-horaEntrega"></span></th>
+                                    <th class="col-centro" onclick="ordenarListado('pagado')">Pagado <span class="sort-icon" id="sort-pagado"></span></th>
+                                    <th class="col-centro" onclick="ordenarListado('recogido')">Recogido <span class="sort-icon" id="sort-recogido"></span></th>
+                                    <th>Recogido por</th>
+                                </tr>
+                            </thead>
+                            <tbody id="listadoGeneralBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="empty-state" id="emptyListadoGeneral">
+                        <div class="empty-icon"></div>
+                        <h3>Sin datos para mostrar</h3>
+                        <p>Aún no hay pedidos registrados o no coinciden con los filtros</p>
                     </div>
                 </div>
             </div>
@@ -452,11 +561,11 @@
                     <div class="config-block">
                         <h3>☁️ Sincronización en la nube</h3>
                         <div id="syncStatusBox" class="alert-info">
-                             Conectando con el servidor del Pabellón...
+                            🔄 Conectando con el servidor del Pabellón...
                         </div>
                     </div>
                     <div class="config-block">
-                        <h3>👤 Cambiar usuario</h3>
+                        <h3> Cambiar usuario</h3>
                         <div class="alert-info">
                             Cambia el nombre de usuario para iniciar sesión. Se sincronizará automáticamente en todos los dispositivos.
                         </div>
@@ -482,7 +591,7 @@
                         </div>
                     </div>
                     <div class="config-block">
-                        <h3> Máximo de décimos por persona</h3>
+                        <h3>🔢 Máximo de décimos por persona</h3>
                         <div class="alert-info">
                             Establece el número máximo de décimos que puede solicitar una misma persona (acumulando todos sus pedidos).
                         </div>
@@ -524,7 +633,7 @@
                 </div>
                 <div class="form-group" style="margin-bottom: 15px;">
                     <label for="editarServicio">Servicio</label>
-                    <select id="editarServicio" required></select>
+                    <select id="editarServicio" required onchange="actualizarSelectSeccionesEditar(this.value)"></select>
                 </div>
                 <div class="form-group" style="margin-bottom: 15px;">
                     <label for="editarSeccion">Sección</label>
@@ -621,14 +730,265 @@
             secciones: db.ref('loteria/secciones'),
             empleados: db.ref('loteria/empleados'),
             config: db.ref('loteria/config'),
-            seguridad: db.ref('loteria/seguridad')
+            seguridad: db.ref('loteria/seguridad'),
+            inicializado: db.ref('loteria/inicializado')
         };
 
         const USUARIO_DEFECTO = 'admin';
         const CLAVE_DEFECTO = 'admin123';
+        const PRECIO_DECIMO = 20;
 
         let claveNube = CLAVE_DEFECTO;
         let usuarioNube = USUARIO_DEFECTO;
+        let pedidos = [];
+        let servicios = [];
+        let secciones = [];
+        let empleados = [];
+        let config = { maxDecimos: 5 };
+        let firebaseReady = false;
+        let datosInicialesCargados = false;
+
+        // Datos iniciales de empleados (extraídos de los pantallazos)
+        const EMPLEADOS_INICIALES = [
+            {nombre:"M.CARMEN CORDERO GONZALEZ",telefono:"1449",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MEDIO AMBIENTE"},
+            {nombre:"M.ASUNCION ALVAREZ LOPEZ",telefono:"1073",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"DESARROLLO AGRO-PECUARIO GRAL"},
+            {nombre:"M.CARMEN ALVAREZ CABO",telefono:"1062",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MEDIO AMBIENTE"},
+            {nombre:"M.CARMEN GODOY CANO",telefono:"1448",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"TRATAMIENTO DE RESIDUOS"},
+            {nombre:"M.NIEVES LOZANO LOZANO",telefono:"1053",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"DESARROLLO AGRO-PECUARIO GRAL"},
+            {nombre:"M.YOLANDA RODRIGUEZ GARCIA",telefono:"1056",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"DESARROLLO AGRO-PECUARIO GRAL"},
+            {nombre:"MARIA DE LA PAZ SANCHEZ LOZANO",telefono:"1011",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"TRATAMIENTO DE RESIDUOS"},
+            {nombre:"MARINA ARIAS ROBLES",telefono:"1265",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"ACCION FORMATIVA MONTE SAN ISIDRO"},
+            {nombre:"MARIO VILLADANGOS FERNANDEZ",telefono:"1054",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MEDIO AMBIENTE"},
+            {nombre:"MARTA EVA PASTRANA RUBIO",telefono:"1060",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MEDIO AMBIENTE"},
+            {nombre:"NATIVIDAD MORETA ROQUE",telefono:"1071",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"TRATAMIENTO DE RESIDUOS"},
+            {nombre:"PAULA GONZALEZ PEÑA",telefono:"1474",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MEDIO AMBIENTE"},
+            {nombre:"RAQUEL ANDRES GARCIA",telefono:"1058",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MEDIO AMBIENTE"},
+            {nombre:"RUTH NOEMI GRAÑERAS REYERO",telefono:"1052",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MEDIO AMBIENTE"},
+            {nombre:"SECUNDINO PRIETO TERCERO",telefono:"1065",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"TRATAMIENTO DE RESIDUOS"},
+            {nombre:"ANGELA DOMINGUEZ GOMEZ",telefono:"1061",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MEDIO AMBIENTE"},
+            {nombre:"BEATRIZ ALVAREZ CAMPOS",telefono:"1072",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"DESARROLLO AGRO-PECUARIO GRAL"},
+            {nombre:"CLAUDIA FERNANDEZ ROMAN",telefono:"1474",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MEDIO AMBIENTE"},
+            {nombre:"FATIMA SUSANA MANSILLA RODRIGUEZ",telefono:"1050",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"DESARROLLO AGRO-PECUARIO GRAL"},
+            {nombre:"FRANCISCO BAJO ALVAREZ",telefono:"1451",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"DESARROLLO AGRO-PECUARIO GRAL"},
+            {nombre:"IRENE OTERO LLAMAZARES",telefono:"1051",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MEDIO AMBIENTE"},
+            {nombre:"JOSE RAUL ORTEGA PEREZ",telefono:"1131",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"ACCION FORMATIVA MONTE SAN ISIDRO"},
+            {nombre:"LETICIA FERNANDEZ RASCON",telefono:"1265",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"ACCION FORMATIVA MONTE SAN ISIDRO"},
+            {nombre:"M.AURORA RODRIGUEZ APARICIO",telefono:"",servicio:"ASUNTOS GENERALES",seccion:"MANTENIMIENTO"},
+            {nombre:"M.CAMINO DIEZ SOTO",telefono:"1033",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS"},
+            {nombre:"M.CARMEN FERNANDEZ FERNANDEZ",telefono:"1032",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS"},
+            {nombre:"M.DOLORES FERNANDEZ GONZALEZ",telefono:"1057",servicio:"SEPEIS",seccion:"SEPEIS"},
+            {nombre:"M.ELENA CIMAS HERNANDO",telefono:"1040",servicio:"DERECHOS SOCIALES",seccion:"CONSUMO"},
+            {nombre:"M.ENCARNACION MIGUELEZ SASTRE",telefono:"1029",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - FAMILIA EAF"},
+            {nombre:"M.GUIOMAR ALVAREZ GONZALEZ",telefono:"1022",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - FAMILIA EAF"},
+            {nombre:"M.ISABEL SANTOS MARTINEZ",telefono:"1455",servicio:"CENTROS DE ATENCIÓN ESPECIALIZADA",seccion:"CAE"},
+            {nombre:"M.JESUS MATILLA GUTIERREZ",telefono:"1441",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - FAMILIA EAF"},
+            {nombre:"M.MAR CHAMORRO GONZALEZ",telefono:"1006",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS"},
+            {nombre:"M.MONTTSERRAT GARCIA ALONSO",telefono:"1003",servicio:"DERECHOS SOCIALES",seccion:"JEFATURA"},
+            {nombre:"M.PAZ SANCHEZ GONZALEZ",telefono:"1038",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE DEPENDENCIA"},
+            {nombre:"M.PILAR MORAN GONZALEZ",telefono:"1025",servicio:"COOPERACIÓN",seccion:"PROYECTOS"},
+            {nombre:"MAITE MUÑIZ MARTINEZ",telefono:"1430",servicio:"COOPERACIÓN",seccion:"COOPERACIÓN"},
+            {nombre:"MARIA GARCIA CRESPO",telefono:"1442",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - FAMILIA EAF"},
+            {nombre:"MARIA HENAR BREZMES NICOLAS",telefono:"1437",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - FAMILIA EAF"},
+            {nombre:"MARIA JESUS BERMEJO CAZURRO",telefono:"1068",servicio:"ARCHIVO E IMPRENTA",seccion:"IMPRENTA"},
+            {nombre:"MARIA JOSE OLMOS FERNANDEZ CORUGEDO",telefono:"1434",servicio:"DERECHOS SOCIALES",seccion:"CONSUMO"},
+            {nombre:"MARIA LUISA FERNANDEZ DIEZ",telefono:"1092",servicio:"ILC - BIBLIOBÚS",seccion:"COORDINACION BIBLIOTECAS"},
+            {nombre:"MARTA MARIA GUTIERREZ MUYOR",telefono:"1047",servicio:"DERECHOS SOCIALES",seccion:"COOPERACION AL DESARROLLO"},
+            {nombre:"MARTA MARIA TASCON MARTINEZ",telefono:"1440",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS"},
+            {nombre:"MIGUEL ANGEL LOZANO GONZALEZ",telefono:"1480",servicio:"CENTROS DE ATENCIÓN ESPECIALIZADA",seccion:"CAE"},
+            {nombre:"MIGUEL ANGEL ORDAS DEL CORRAL",telefono:"1439",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - FAMILIA EAF"},
+            {nombre:"MIGUEL ANGEL PALENZUELA PASTRANA",telefono:"1444",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - EDIS"},
+            {nombre:"MIRIAM GUTIERREZ MARTINEZ",telefono:"1438",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - FAMILIA EAF"},
+            {nombre:"MIRIAN ALVAREZ VIVAS",telefono:"1024",servicio:"SEPEIS",seccion:"SEPEIS"},
+            {nombre:"MONICA SEVILLA PEREZ",telefono:"1018",servicio:"DERECHOS SOCIALES",seccion:"TELEASISTENCIA"},
+            {nombre:"MONTSERRAT ALVAREZ CANO",telefono:"1098",servicio:"COOPERACIÓN",seccion:"COOPERACIÓN"},
+            {nombre:"MONTSERRAT GAGO GARCIA",telefono:"1021",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - FAMILIA EAF"},
+            {nombre:"MONTSERRAT GONZALEZ LOPEZ",telefono:"1010",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - ADICCIONES"},
+            {nombre:"NEMESIO MARTINEZ MARTINEZ",telefono:"4077",servicio:"ASUNTOS GENERALES",seccion:"MANTENIMIENTO"},
+            {nombre:"NOEMI ALONSO SANCHEZ",telefono:"1477",servicio:"DERECHOS SOCIALES",seccion:"COOPERACION AL DESARROLLO"},
+            {nombre:"NURIA BAÑOS FERNANDEZ",telefono:"1436",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN SERVICIOS BÁSICOS"},
+            {nombre:"NURIA JAULAR DEL POZO",telefono:"1044",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - ADICCIONES"},
+            {nombre:"OLGA ROPERO SERRANO",telefono:"1093",servicio:"ILC - BIBLIOBÚS",seccion:"COORDINACION BIBLIOTECAS"},
+            {nombre:"OSCAR MARTIN ALVAREZ",telefono:"1433",servicio:"DERECHOS SOCIALES",seccion:"JEFATURA"},
+            {nombre:"PAMELA TAVEIRA RODRIGUES",telefono:"1079",servicio:"ASUNTOS GENERALES",seccion:"MANTENIMIENTO"},
+            {nombre:"PATRICIA AJENJO FRESNO",telefono:"1026",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - FAMILIA EAF"},
+            {nombre:"RAQUEL ALONSO RODRIGO",telefono:"1063",servicio:"ASUNTOS GENERALES",seccion:"MANTENIMIENTO"},
+            {nombre:"ROCIO RODRIGUEZ CURTO",telefono:"",servicio:"ILC - BIBLIOBÚS",seccion:"COORDINACION BIBLIOTECAS"},
+            {nombre:"ROSA MARTINEZ RODRIGUEZ",telefono:"1097",servicio:"COOPERACIÓN",seccion:"COOPERACIÓN"},
+            {nombre:"ROSALINA GUTIERREZ RODRIGUEZ",telefono:"1076",servicio:"ASUNTOS GENERALES",seccion:"MANTENIMIENTO"},
+            {nombre:"RUBEN JIMENEZ PINILLA",telefono:"1428",servicio:"COOPERACIÓN",seccion:"INFORMES"},
+            {nombre:"SANTIAGO CARLOS GONZALEZ MAYOR",telefono:"1478",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - FAMILIA EAF"},
+            {nombre:"SANTIAGO MARTINEZ NOVO",telefono:"1084",servicio:"ASUNTOS GENERALES",seccion:"MANTENIMIENTO"},
+            {nombre:"SARA CALVO CARRAL",telefono:"1094",servicio:"ILC - COORDINACIÓN DE BIBLIOTECAS",seccion:"COORDINACIÓN DE BIBLIOTECAS"},
+            {nombre:"SERGIO CAYON CAÑON",telefono:"1055",servicio:"COOPERACIÓN",seccion:"COOPERACIÓN"},
+            {nombre:"SILVIA LORENZANA GUTIERREZ",telefono:"1005",servicio:"COOPERACIÓN",seccion:"COOPERACIÓN"},
+            {nombre:"SOFIA GONZALEZ SANTAMARTA",telefono:"1046",servicio:"DERECHOS SOCIALES",seccion:"COOPERACION AL DESARROLLO"},
+            {nombre:"SONIA SANZ GUTIERREZ",telefono:"1019",servicio:"DERECHOS SOCIALES",seccion:"JEFATURA"},
+            {nombre:"SONIA VICENTE DE CELIS",telefono:"1431",servicio:"SEPEIS",seccion:"SEPEIS"},
+            {nombre:"TANIA RODRIGUEZ ALVAREZ",telefono:"1457",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE DEPENDENCIA"},
+            {nombre:"TRINIDAD CANURIA FERNANDEZ",telefono:"1039",servicio:"DERECHOS SOCIALES",seccion:"CONSUMO"},
+            {nombre:"VANESA FERNANDEZ GARCIA",telefono:"1034",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE DEPENDENCIA"},
+            {nombre:"VANESA GRANDE FIDALGO",telefono:"1059",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS"},
+            {nombre:"ALBERTO DIAZ FLECHA",telefono:"1027",servicio:"COOPERACIÓN",seccion:"COOPERACIÓN"},
+            {nombre:"ALBINA VEGA RAMON",telefono:"1081",servicio:"ARCHIVO E IMPRENTA",seccion:"IMPRENTA"},
+            {nombre:"ALICIA SOTO CASADO",telefono:"1458",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - MUJER"},
+            {nombre:"ALMA MARIA TASCON TASCON",telefono:"1456",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - MUJER"},
+            {nombre:"AMAYA REGINA RUBIO MAYO",telefono:"1096",servicio:"ILC - BIBLIOBÚS",seccion:"COORDINACION BIBLIOTECAS"},
+            {nombre:"ANA BELEN COSMEN GARCIA",telefono:"1012",servicio:"COOPERACIÓN",seccion:"COOPERACIÓN"},
+            {nombre:"ANA BELEN RODRIGUEZ ROBLES",telefono:"1457",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE DEPENDENCIA"},
+            {nombre:"ANA GONZALEZ MASIA",telefono:"1023",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - FAMILIA EAF"},
+            {nombre:"ANA ISABEL SUAREZ RODRIGUEZ",telefono:"1066",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - FAMILIA EAF"},
+            {nombre:"ANA MARIA LLAMAS CAÑO",telefono:"1099",servicio:"COOPERACIÓN",seccion:"COOPERACIÓN"},
+            {nombre:"ANA OLGA CUEVAS MOLLEDA",telefono:"1041",servicio:"DERECHOS SOCIALES",seccion:"CONSUMO"},
+            {nombre:"ANA TAGARRO GARCIA",telefono:"1048",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"ANGEL LESCUN GUTIERREZ",telefono:"1074",servicio:"COOPERACIÓN",seccion:"COOPERACIÓN"},
+            {nombre:"BERTA SANTOS DEL CASTILLO",telefono:"1095",servicio:"ILC - UNIDAD ADMINISTRATIVA",seccion:"UNIDAD ADMINISTRATIVA"},
+            {nombre:"BLAS CASTRILLO MARTINEZ",telefono:"1067",servicio:"SEPEIS",seccion:"SEPEIS"},
+            {nombre:"CARLOS MARTINEZ DIAZ",telefono:"1075",servicio:"ARCHIVO E IMPRENTA",seccion:"IMPRENTA"},
+            {nombre:"CARMEN PELAEZ ROMERO",telefono:"1028",servicio:"DERECHOS SOCIALES",seccion:"ABSENTISMO"},
+            {nombre:"CESAR SERRANO LEON",telefono:"1082",servicio:"ARCHIVO E IMPRENTA",seccion:"IMPRENTA"},
+            {nombre:"ELENA GONZALEZ SANCHEZ",telefono:"1382",servicio:"CENTROS DE ATENCIÓN ESPECIALIZADA",seccion:"CAE"},
+            {nombre:"ESTHER RODRIGUEZ ALVAREZ",telefono:"1454",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - FAMILIA EAF"},
+            {nombre:"EVA MARIA SANCHEZ ALONSO",telefono:"1078",servicio:"ARCHIVO E IMPRENTA",seccion:"IMPRENTA"},
+            {nombre:"EVA MARIA SUAREZ DIEZ",telefono:"1042",servicio:"DERECHOS SOCIALES",seccion:"CONSUMO"},
+            {nombre:"EVA SANTOS GONZALEZ",telefono:"1091",servicio:"ILC - BIBLIOBÚS",seccion:"COORDINACION BIBLIOTECAS"},
+            {nombre:"FERNANDO FERNANDEZ MARTINEZ",telefono:"1085",servicio:"ASUNTOS GENERALES",seccion:"MANTENIMIENTO"},
+            {nombre:"FRANCISCO JAVIER LARRAURI MIGUEL",telefono:"1064",servicio:"COOPERACIÓN",seccion:"PROYECTOS"},
+            {nombre:"FRANCISCO JAVIER ROJO GONZALEZ",telefono:"1008",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE COORDINACIÓN"},
+            {nombre:"GABRIELA MARIA FERNANDEZ TABUYO",telefono:"1002",servicio:"ARCHIVO E IMPRENTA",seccion:"IMPRENTA"},
+            {nombre:"GLORIA MABEL HIDALGO ESCOBAR",telefono:"1475",servicio:"CENTROS DE ATENCIÓN ESPECIALIZADA",seccion:"CAE"},
+            {nombre:"GUILLERMO GONZALEZ DIEZ",telefono:"1013",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"HECTOR ALVAREZ CABAÑEROS",telefono:"1069",servicio:"ARCHIVO E IMPRENTA",seccion:"IMPRENTA"},
+            {nombre:"HORTENSIA VALCARCE SERNANDEZ",telefono:"1020",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - FAMILIA EAF"},
+            {nombre:"IBAN MARTINEZ ROBLES",telefono:"1435",servicio:"DERECHOS SOCIALES",seccion:"JEFATURA"},
+            {nombre:"ISABEL LOPEZ URBAN",telefono:"",servicio:"DERECHOS SOCIALES",seccion:"DERECHOS SOCIALES"},
+            {nombre:"ISABEL ZARDAIN TAMARGO",telefono:"1036",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS"},
+            {nombre:"JORGE NODAL PUERTA",telefono:"1045",servicio:"CENTROS DE ATENCIÓN ESPECIALIZADA",seccion:"CAE"},
+            {nombre:"JOSE ENRIQUE GARCIA PANDO",telefono:"1014",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE COORDINACIÓN"},
+            {nombre:"JOSE LUIS REY SUAREZ",telefono:"1083",servicio:"ASUNTOS GENERALES",seccion:"MANTENIMIENTO"},
+            {nombre:"JOSE MARIA ALVADO MARTIN",telefono:"1016",servicio:"COOPERACIÓN",seccion:"COOPERACIÓN"},
+            {nombre:"JUAN JOSE ESCANCIANO GONZALEZ",telefono:"1070",servicio:"ARCHIVO E IMPRENTA",seccion:"IMPRENTA"},
+            {nombre:"JULIAN ALCALA MORAN",telefono:"1459",servicio:"SEPEIS",seccion:"SEPEIS"},
+            {nombre:"JULIO ALVES RUIPEREZ",telefono:"1037",servicio:"DERECHOS SOCIALES",seccion:"JEFATURA"},
+            {nombre:"JULIO HURTADO MARTIN",telefono:"1429",servicio:"COOPERACIÓN",seccion:"COOPERACIÓN"},
+            {nombre:"LAURA CEMBRANOS ARCE",telefono:"1447",servicio:"DERECHOS SOCIALES",seccion:""},
+            {nombre:"LAURA FERNANDEZ ALVAREZ",telefono:"1017",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - EDIS"},
+            {nombre:"LAURA MENDEZ GARCIA",telefono:"1476",servicio:"DERECHOS SOCIALES",seccion:"DERECHOS SOCIALES"},
+            {nombre:"LEONARDO ARTURO FERNANDEZ CARBAJO",telefono:"1482",servicio:"ASUNTOS GENERALES",seccion:"ORDENANZAS"},
+            {nombre:"LETICIA GARCIA GONZALEZ",telefono:"1445",servicio:"DERECHOS SOCIALES",seccion:"AYUDA A DOMICILIO"},
+            {nombre:"LORENA GONZALEZ PEREZ",telefono:"1432",servicio:"CENTROS DE ATENCIÓN ESPECIALIZADA",seccion:"CAE"},
+            {nombre:"LUZ AMOR DEL RIO DIEZ",telefono:"1004",servicio:"DERECHOS SOCIALES",seccion:"JEFATURA"},
+            {nombre:"M. BELEN BARTOLOME ARCONADA",telefono:"1481",servicio:"CONTRATACION Y PATRIMONIO",seccion:"CONTRATACION Y PATRIMONIO"},
+            {nombre:"M. JOSE LESCUN CANURIA",telefono:"1007",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - MUJER"},
+            {nombre:"M.ANGELES SANTOS PEREZ",telefono:"1015",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - EDIS"},
+            {nombre:"M.ANGELES VARGA GONZALEZ",telefono:"1453",servicio:"DERECHOS SOCIALES",seccion:"AYUDA A DOMICILIO"},
+            {nombre:"M.CARMEN CORDERO GONZALEZ",telefono:"1449",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MEDIO AMBIENTE"},
+            {nombre:"CARLOS FERRERO GONZALEZ",telefono:"1596",servicio:"SEPEIS",seccion:"SEPEIS"},
+            {nombre:"BEATRIZ CARRILLO COLINO",telefono:"1479",servicio:"COOPERACIÓN",seccion:"COOPERACIÓN"},
+            {nombre:"ALMALLANA SAN MARTIN BLANCO",telefono:"8867",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"ANA MARIA CORDERO ALVAREZ",telefono:"8867",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"ANGELES GARCIA GARCIA",telefono:"8867",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"M.DE LA FE GONZALEZ MARTINEZ",telefono:"8867",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"MARTA GARCIA OCHOA",telefono:"8867",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"MIGUEL LOSADA LOPEZ",telefono:"8867",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"ROCIO GONZALEZ LOPEZ",telefono:"4031",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - EDIS"},
+            {nombre:"SARAY MARTIN GALAN",telefono:"8867",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"MIRIAM YAGÜE BENITO",telefono:"4032",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - EDIS"},
+            {nombre:"BERTA ANDONEGUI FERNANDEZ",telefono:"8866",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"RAQUEL VALCARCE ALBA",telefono:"8866",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"CONCEPCION CUERVO BRIMEZ",telefono:"987510448",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"MARIA BELEN RUBIAL ALVAREZ",telefono:"8868",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"MARIA JOSE CORDERO LORENZANA",telefono:"8868",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"ROCIO ALONSO ARENAS",telefono:"8868",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"SARA MORCUENDE BLANCO",telefono:"987510448",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"FRANCISCO RODRIGUEZ CHOZA",telefono:"987510448",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"MARIA GONZALEZ RODRIGUEZ",telefono:"987510448",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"GLORIA RODRIGUEZ GARCIA",telefono:"8870",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"LUCIA PUERTA VILLALBA",telefono:"8870",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"ANA MARIA OVALLE VILLAR",telefono:"8881",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"ESTIBALIZ LUNA ALVAREZ",telefono:"8881",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"LAURA FOLGUERAL MARTINEZ",telefono:"8881",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"LUCIA MENDEZ SUAREZ",telefono:"8881",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"M.AARANZAZU DIAZ PEREZ",telefono:"8881",servicio:"DERECHOS SOCIALES",seccion:"DERECHOS SOCIALES"},
+            {nombre:"MAR GARCIA MALLO",telefono:"8881",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"OSCAR CAMPILLO FERNANDEZ",telefono:"8881",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"MARGARITA CORDERO LORENZANA",telefono:"8875",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"DIANA MUÑOZ ASENJO",telefono:"987700401",servicio:"DERECHOS SOCIALES",seccion:"DERECHOS SOCIALES"},
+            {nombre:"M.PILAR ALFONSO ALFONSO",telefono:"8874",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"M.PILAR BIAIN DIEZ",telefono:"8874",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"MARIA PAZ MARTINEZ RAMON",telefono:"987550657",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN SERVICIOS BÁSICOS"},
+            {nombre:"ROSA MARIA CARBALLO RAMON",telefono:"8874",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"ANA MARIA CUENCA DONCEL",telefono:"8878",servicio:"DERECHOS SOCIALES",seccion:"DERECHOS SOCIALES"},
+            {nombre:"JAVIER GONZALEZ ABELLA",telefono:"8878",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"LETICIA ALFARO SANTOS",telefono:"987656125",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"LUISA CIMADEVILLA MIRANDA",telefono:"8878",servicio:"DERECHOS SOCIALES",seccion:"DERECHOS SOCIALES"},
+            {nombre:"PAULINA GARCIA FERNANDEZ",telefono:"8878",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"VISITACION MARTINEZ SAN MILLAN",telefono:"8878",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"MELQUIADES ALVAREZ FERNANDEZ",telefono:"987581596",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"ESTHER MORENO ACEBES",telefono:"8882",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"ILENIA GONZALEZ PONGA",telefono:"987302089",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"VANESA REYERO ESCUDERO",telefono:"",servicio:"DERECHOS SOCIALES",seccion:"DERECHOS SOCIALES"},
+            {nombre:"LAURA AYALA MARTINEZ",telefono:"8880",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"MONICA SANTOS CASTRO",telefono:"8880",servicio:"DERECHOS SOCIALES",seccion:"DERECHOS SOCIALES"},
+            {nombre:"MONTSERRAT ARIAS ARIAS",telefono:"8880",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"REBECA MORAN CASADO",telefono:"8880",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN SERVICIOS BÁSICOS"},
+            {nombre:"SARA COMONTE MORAN",telefono:"8880",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN SERVICIOS BÁSICOS"},
+            {nombre:"ANDRES FRANCISC GALVAN PRIETO",telefono:"8902",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"SARA LABANDA BARBADILLO",telefono:"687409129",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"NURIA MARTINEZ RODRIGO",telefono:"987111893",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"LOURDES DE LORENZO AMADO",telefono:"987111893",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"M. ANGELICA COSMEN GONZALEZ",telefono:"987610268",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"M.ASCENSION DIEZ ALVAREZ",telefono:"987330023",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"ROBERTO ALVAREZ PEREZ",telefono:"8888",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"BEATRIZ SUAREZ ORDOÑEZ",telefono:"8888",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"ANA MARIA CARVAJAL PEREZ",telefono:"8889",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"EVA LUCIA MASEDA ROBLES",telefono:"987536179",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"JUAN JOSE CASTELLANOS RUBIO",telefono:"8889",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"NIEVES BLANCO PUENTE",telefono:"8889",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"SANTIAGO ALONSO LOPEZ",telefono:"8889",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"M.TERESA DEL CURA LOPEZ",telefono:"8890",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"PATRICIA AMIGO RODRIGUEZ",telefono:"8890",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"M. AMPARO DIAZ CALLEJA",telefono:"987533241",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"ANA CRESPO GARAY",telefono:"987536179",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"M.PAZ LINARES CARDEÑOSO",telefono:"987536179",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"BEATRIZ VERDEJO MURCIEGO",telefono:"1951",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN SERVICIOS BÁSICOS"},
+            {nombre:"M DEL CARMEN RODRIGUEZ MARTINEZ",telefono:"1949",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN SERVICIOS BÁSICOS"},
+            {nombre:"M.DOLORES VALENCIA VIVAS",telefono:"1950",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN SERVICIOS BÁSICOS"},
+            {nombre:"MARGARITA FERNANDEZ GARCIA",telefono:"1952",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"MERCEDES NAVA FERREIRA",telefono:"1948",servicio:"DERECHOS SOCIALES",seccion:"DERECHOS SOCIALES"},
+            {nombre:"MIRIAM ARCE CASADO",telefono:"1941",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN SERVICIOS BÁSICOS"},
+            {nombre:"ANA-YOLANDA CELA ALBA",telefono:"8893",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"BEATRIZ CHAMORRO GAVELA",telefono:"8893",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"INES FERNANDEZ DORADO",telefono:"8893",servicio:"DERECHOS SOCIALES",seccion:"DERECHOS SOCIALES"},
+            {nombre:"M.LUISA GOMEZ PASTOR",telefono:"",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"ISIDORO DE LAS HERAS MORO",telefono:"8895",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"RAQUEL CALLEJO FUERTES",telefono:"8895",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"CRISTINA NUÑEZ LAMAGRANDE",telefono:"987371198",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN SERVICIOS BÁSICOS"},
+            {nombre:"JOSEFA GONZALEZ ALONSO",telefono:"607822137",servicio:"DERECHOS SOCIALES",seccion:"DERECHOS SOCIALES"},
+            {nombre:"M.BELEN RODRIGUEZ RODRIGUEZ",telefono:"987371198",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"MARÍA CONCEPCION DE LA VARGA FERNANDEZ",telefono:"1009",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"ANA BELEN RODRIGUEZ RIOS",telefono:"1507",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"MARIA OLGA VOCES VOCES",telefono:"1508",servicio:"DERECHOS SOCIALES",seccion:"COORDINACIÓN DE CEAS"},
+            {nombre:"LAURA FUENTES AMEZ",telefono:"4028",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - EPAP"},
+            {nombre:"MONICA ALONSO FERNANDEZ",telefono:"4029",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - EPAP"},
+            {nombre:"NATALIA DOMINGUEZ FRAGA",telefono:"4027",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - EPAP"},
+            {nombre:"BEATRIZ AMIGO AMIGO",telefono:"4016",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - EPAP"},
+            {nombre:"DANIEL GOMEZ CARRERA",telefono:"4021",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - EPAP"},
+            {nombre:"LORENA ALONSO ORIA",telefono:"4015",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - EPAP"}
+        ];
+
+        const SERVICIOS_INICIALES = [
+            "ARCHIVO E IMPRENTA",
+            "ASUNTOS GENERALES",
+            "CENTROS DE ATENCIÓN ESPECIALIZADA",
+            "COOPERACIÓN",
+            "CONTRATACION Y PATRIMONIO",
+            "DESARROLLO RURAL Y MEDIO AMBIENTE",
+            "DERECHOS SOCIALES",
+            "ILC - BIBLIOBÚS",
+            "ILC - COORDINACIÓN DE BIBLIOTECAS",
+            "ILC - UNIDAD ADMINISTRATIVA",
+            "SEPEIS"
+        ];
 
         function getUsuario() { return localStorage.getItem('loteriaUsuario') || usuarioNube; }
         function getClave() { return claveNube; }
@@ -645,14 +1005,6 @@
             dbRef.seguridad.child('usuario').set(usuario);
         }
 
-        const PRECIO_DECIMO = 20;
-        let pedidos = [];
-        let servicios = [];
-        let secciones = [];
-        let empleados = [];
-        let config = { maxDecimos: 5 };
-        let firebaseReady = false;
-
         function setSyncStatus(status, text) {
             const dot = document.getElementById('syncDot');
             const txt = document.getElementById('syncText');
@@ -668,9 +1020,78 @@
                 if (box) { box.className = 'alert-info'; box.innerHTML = '🔄 ' + (text || 'Guardando cambios en el servidor...'); }
             } else if (status === 'offline') {
                 dot.classList.add('offline');
-                txt.textContent = text || ' Sin conexión al servidor';
+                txt.textContent = text || '⚠️ Sin conexión al servidor';
                 if (box) { box.className = 'alert-info'; box.innerHTML = '⚠️ ' + (text || 'Sin conexión. Los datos se guardarán al restablecerse.'); }
             }
+        }
+
+        function showToast(icon, text, esError) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastIcon').textContent = icon;
+            document.getElementById('toastText').textContent = text;
+            if (esError) {
+                toast.classList.add('error');
+            } else {
+                toast.classList.remove('error');
+            }
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3500);
+        }
+
+        function generarId() { return Date.now().toString(36) + Math.random().toString(36).substr(2); }
+
+        async function cargarDatosIniciales() {
+            const loadingText = document.getElementById('loadingText');
+            loadingText.textContent = 'Verificando datos iniciales...';
+            
+            const snapshot = await dbRef.inicializado.once('value');
+            if (snapshot.val()) {
+                loadingText.textContent = 'Datos ya inicializados. Conectando...';
+                datosInicialesCargados = true;
+                return;
+            }
+
+            loadingText.textContent = 'Cargando servicios...';
+            const serviciosObj = {};
+            SERVICIOS_INICIALES.forEach((s, i) => { serviciosObj[i] = s; });
+            await dbRef.servicios.set(serviciosObj);
+
+            loadingText.textContent = 'Cargando secciones...';
+            const seccionesUnicas = {};
+            EMPLEADOS_INICIALES.forEach(e => {
+                if (e.servicio && e.seccion) {
+                    const key = e.servicio + '|||' + e.seccion;
+                    seccionesUnicas[key] = { nombre: e.seccion, servicio: e.servicio };
+                }
+            });
+            const seccionesObj = {};
+            Object.values(seccionesUnicas).forEach((s, i) => { seccionesObj[i] = s; });
+            await dbRef.secciones.set(seccionesObj);
+
+            loadingText.textContent = 'Cargando empleados (' + EMPLEADOS_INICIALES.length + ')...';
+            const empleadosObj = {};
+            EMPLEADOS_INICIALES.forEach((e, i) => {
+                empleadosObj['emp_' + i] = {
+                    nombre: e.nombre,
+                    telefono: e.telefono,
+                    servicio: e.servicio,
+                    seccion: e.seccion,
+                    activo: true,
+                    fechaAlta: new Date().toISOString().split('T')[0]
+                };
+            });
+            await dbRef.empleados.set(empleadosObj);
+
+            loadingText.textContent = 'Finalizando inicialización...';
+            await dbRef.inicializado.set({
+                fecha: new Date().toISOString(),
+                version: '1.0',
+                empleadosCargados: EMPLEADOS_INICIALES.length,
+                serviciosCargados: SERVICIOS_INICIALES.length
+            });
+
+            datosInicialesCargados = true;
+            showToast('✅', 'Datos iniciales cargados correctamente (' + EMPLEADOS_INICIALES.length + ' empleados)');
         }
 
         dbRef.seguridad.on('value', (snapshot) => {
@@ -736,6 +1157,7 @@
             
             if (firebaseReady) {
                 renderizarTabla();
+                renderizarListadoGeneral();
                 actualizarEstadisticas();
             }
         }, (error) => {
@@ -781,7 +1203,7 @@
                 .then(() => setSyncStatus('online'))
                 .catch((err) => {
                     console.error(err);
-                    setSyncStatus('offline', '❌ Error al eliminar el registro');
+                    setSyncStatus('offline', ' Error al eliminar el registro');
                 });
         }
 
@@ -842,13 +1264,15 @@
                 document.getElementById('appContainer').classList.add('visible');
                 document.getElementById('usuarioActual').textContent = usuario;
                 initApp();
+            } else {
+                document.getElementById('loadingOverlay').classList.add('hidden');
             }
         }
 
         function cambiarClave() {
             const nueva = document.getElementById('nuevaClave').value.trim();
-            if (!nueva) { showToast('✏️', 'Por favor, introduce la nueva contraseña.'); return; }
-            if (nueva.length < 4) { showToast('', 'La contraseña debe tener mínimo 4 caracteres.'); return; }
+            if (!nueva) { showToast('⚠️', 'Por favor, introduce la nueva contraseña.'); return; }
+            if (nueva.length < 4) { showToast('️', 'La contraseña debe tener mínimo 4 caracteres.'); return; }
             setClave(nueva);
             document.getElementById('nuevaClave').value = '';
             showToast('✅', '¡Contraseña actualizada! Se ha sincronizado en todos los dispositivos.');
@@ -856,8 +1280,8 @@
 
         function cambiarUsuario() {
             const nuevo = document.getElementById('nuevoUsuario').value.trim();
-            if (!nuevo) { showToast('✏️', 'Por favor, introduce el nuevo usuario.'); return; }
-            if (nuevo.length < 3) { showToast('👤', 'El usuario debe tener mínimo 3 caracteres.'); return; }
+            if (!nuevo) { showToast('️', 'Por favor, introduce el nuevo usuario.'); return; }
+            if (nuevo.length < 3) { showToast('⚠️', 'El usuario debe tener mínimo 3 caracteres.'); return; }
             setUsuario(nuevo);
             document.getElementById('nuevoUsuario').value = '';
             document.getElementById('usuarioActual').textContent = nuevo;
@@ -879,7 +1303,7 @@
             }
         }
 
-        function initApp() {
+        async function initApp() {
             const pedLocal = localStorage.getItem('pedidosLoteria');
             const empLocal = localStorage.getItem('empleadosLoteria');
             const confLocal = localStorage.getItem('configLoteria');
@@ -893,12 +1317,13 @@
             actualizarFiltrosServicio();
             actualizarFiltrosSeccion();
             renderizarTabla();
+            renderizarListadoGeneral();
             renderizarConfig();
             actualizarFechaBienvenida();
             establecerFechaHoraActual();
             
             firebaseReady = true;
-            setSyncStatus('syncing', '🌐 Conectando con el servidor del Pabellón...');
+            setSyncStatus('syncing', ' Conectando con el servidor del Pabellón...');
         }
 
         function establecerFechaHoraActual() {
@@ -931,6 +1356,7 @@
             document.getElementById('page-' + page).classList.add('active');
             if (page === 'resumen') renderizarResumen();
             if (page === 'participantes') renderizarParticipantes();
+            if (page === 'listado') renderizarListadoGeneral();
             if (page === 'configuracion') renderizarConfig();
             if (page === 'inicio') actualizarFechaBienvenida();
             if (page === 'solicitar') {
@@ -946,21 +1372,7 @@
             });
         });
 
-        function showToast(icon, text, esError) {
-            const toast = document.getElementById('toast');
-            document.getElementById('toastIcon').textContent = icon;
-            document.getElementById('toastText').textContent = text;
-            if (esError) {
-                toast.classList.add('error');
-            } else {
-                toast.classList.remove('error');
-            }
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3500);
-        }
-
         function guardarDatos() { localStorage.setItem('pedidosLoteria', JSON.stringify(pedidos)); }
-        function generarId() { return Date.now().toString(36) + Math.random().toString(36).substr(2); }
 
         function obtenerDecimosAcumulados(nombre) {
             const nombreNormalizado = nombre.trim().toLowerCase();
@@ -997,15 +1409,19 @@
         }
 
         function actualizarSelectServicios() {
-            const select = document.getElementById('servicio');
-            const valorActual = select.value;
-            let html = '<option value="">-- Selecciona un servicio --</option>';
-            [...servicios].sort((a, b) => a.localeCompare(b, 'es')).forEach(s => { html += '<option value="' + s + '">' + s + '</option>'; });
-            select.innerHTML = html;
-            if (valorActual) select.value = valorActual;
+            const selects = ['servicio', 'editarServicio'];
+            selects.forEach(id => {
+                const select = document.getElementById(id);
+                if (!select) return;
+                const valorActual = select.value;
+                let html = '<option value="">-- Selecciona un servicio --</option>';
+                [...servicios].sort((a, b) => a.localeCompare(b, 'es')).forEach(s => { html += '<option value="' + s + '">' + s + '</option>'; });
+                select.innerHTML = html;
+                if (valorActual) select.value = valorActual;
+            });
         }
 
-        function actualizarSelectSecciones() {
+        function actualizarSecciones() {
             const servicio = document.getElementById('servicio').value;
             const select = document.getElementById('seccion');
             const valorActual = select.value;
@@ -1016,6 +1432,12 @@
             }
             select.innerHTML = html;
             if (valorActual) select.value = valorActual;
+            actualizarEmpleados();
+        }
+
+        function actualizarSelectSecciones() {
+            // Para filtros y otros selects de sección
+            actualizarFiltrosSeccion();
         }
 
         function actualizarEmpleados() {
@@ -1028,7 +1450,7 @@
                 const empleadosFiltrados = empleados.filter(e => e.servicio === servicio && e.seccion === seccion);
                 [...empleadosFiltrados].sort((a, b) => a.nombre.localeCompare(b.nombre, 'es')).forEach(e => { html += '<option value="' + e.id + '">' + e.nombre + '</option>'; });
             }
-            html += '<option value="nuevo"> Otro (dar de alta nuevo)</option>';
+            html += '<option value="nuevo">➕ Otro (dar de alta nuevo)</option>';
             select.innerHTML = html;
             if (valorActual) select.value = valorActual;
         }
@@ -1085,7 +1507,7 @@
         });
 
         function actualizarFiltrosServicio() {
-            const filtros = ['filtroServicioPedidos', 'filtroServicioResumen', 'filtroServicioParticipantes'];
+            const filtros = ['filtroServicioPedidos', 'filtroServicioResumen', 'filtroServicioParticipantes', 'filtroServicioListado'];
             filtros.forEach(id => {
                 const select = document.getElementById(id);
                 if (select) {
@@ -1099,7 +1521,7 @@
         }
 
         function actualizarFiltrosSeccion() {
-            const filtros = ['filtroSeccionPedidos', 'filtroSeccionResumen', 'filtroSeccionParticipantes'];
+            const filtros = ['filtroSeccionPedidos', 'filtroSeccionResumen', 'filtroSeccionParticipantes', 'filtroSeccionListado'];
             filtros.forEach(id => {
                 const select = document.getElementById(id);
                 if (select) {
@@ -1190,7 +1612,7 @@
                     '<td>' + quienRecogeHtml + '</td>' +
                     '<td class="col-centro"><div class="actions-cell">' +
                         '<button class="btn btn-edit" onclick="editarPedido(\'' + p.id + '\')">✏️ Editar</button>' +
-                        '<button class="btn btn-delete" onclick="eliminarPedido(\'' + p.id + '\')">️</button>' +
+                        '<button class="btn btn-delete" onclick="eliminarPedido(\'' + p.id + '\')">🗑️</button>' +
                     '</div></td>' +
                 '</tr>';
             }).join('');
@@ -1257,8 +1679,8 @@
             if (p) {
                 p.pagado = !p.pagado;
                 firebaseGuardarPedido(p);
-                const msg = p.pagado ? '💰 ¡' + p.nombre + ' ha realizado el pago!' : '⏳ Pago pendiente de ' + p.nombre + '.';
-                showToast(p.pagado ? '💰' : '⏳', msg);
+                const msg = p.pagado ? ' ¡' + p.nombre + ' ha realizado el pago!' : '⏳ Pago pendiente de ' + p.nombre + '.';
+                showToast(p.pagado ? '💰' : '', msg);
             }
         }
 
@@ -1288,7 +1710,9 @@
             document.getElementById('editarNombre').value = p.nombre;
             document.getElementById('editarServicio').value = p.servicio || '';
             actualizarSelectSeccionesEditar(p.servicio);
-            document.getElementById('editarSeccion').value = p.seccion || '';
+            setTimeout(() => {
+                document.getElementById('editarSeccion').value = p.seccion || '';
+            }, 100);
             document.getElementById('editarTelefono').value = p.telefono || '';
             document.getElementById('editarNumDecimos').value = p.numDecimos;
             document.getElementById('editarFechaSolicitud').value = p.fechaSolicitud || '';
@@ -1333,6 +1757,131 @@
         });
 
         document.getElementById('modalEditar').addEventListener('click', function(e) { if (e.target === this) cerrarModal(); });
+
+        // LISTADO GENERAL CON ORDENACIÓN
+        function renderizarListadoGeneral() {
+            const filtroServicio = document.getElementById('filtroServicioListado').value;
+            const filtroSeccion = document.getElementById('filtroSeccionListado').value;
+            const filtroPagado = document.getElementById('filtroPagadoListado').value;
+            const filtroRecogido = document.getElementById('filtroRecogidoListado').value;
+            const ordenarPor = document.getElementById('ordenarPor').value;
+            const ordenDireccion = document.getElementById('ordenDireccion').value;
+
+            let pedidosFiltrados = [...pedidos];
+            if (filtroServicio) pedidosFiltrados = pedidosFiltrados.filter(p => p.servicio === filtroServicio);
+            if (filtroSeccion) pedidosFiltrados = pedidosFiltrados.filter(p => p.seccion === filtroSeccion);
+            if (filtroPagado === 'pagado') pedidosFiltrados = pedidosFiltrados.filter(p => p.pagado);
+            if (filtroPagado === 'pendiente') pedidosFiltrados = pedidosFiltrados.filter(p => !p.pagado);
+            if (filtroRecogido === 'recogido') pedidosFiltrados = pedidosFiltrados.filter(p => p.recogido);
+            if (filtroRecogido === 'pendiente') pedidosFiltrados = pedidosFiltrados.filter(p => !p.recogido);
+
+            // Ordenación
+            pedidosFiltrados.sort((a, b) => {
+                let valA, valB;
+                switch(ordenarPor) {
+                    case 'nombre':
+                        valA = (a.nombre || '').toLowerCase();
+                        valB = (b.nombre || '').toLowerCase();
+                        break;
+                    case 'servicio':
+                        valA = (a.servicio || '').toLowerCase();
+                        valB = (b.servicio || '').toLowerCase();
+                        break;
+                    case 'seccion':
+                        valA = (a.seccion || '').toLowerCase();
+                        valB = (b.seccion || '').toLowerCase();
+                        break;
+                    case 'telefono':
+                        valA = a.telefono || '';
+                        valB = b.telefono || '';
+                        break;
+                    case 'numDecimos':
+                        valA = a.numDecimos || 0;
+                        valB = b.numDecimos || 0;
+                        break;
+                    case 'importe':
+                        valA = (a.numDecimos || 0) * PRECIO_DECIMO;
+                        valB = (b.numDecimos || 0) * PRECIO_DECIMO;
+                        break;
+                    case 'fechaSolicitud':
+                        valA = a.fechaSolicitud || '';
+                        valB = b.fechaSolicitud || '';
+                        break;
+                    case 'pagado':
+                        valA = a.pagado ? 1 : 0;
+                        valB = b.pagado ? 1 : 0;
+                        break;
+                    case 'recogido':
+                        valA = a.recogido ? 1 : 0;
+                        valB = b.recogido ? 1 : 0;
+                        break;
+                    default:
+                        valA = (a.nombre || '').toLowerCase();
+                        valB = (b.nombre || '').toLowerCase();
+                }
+                if (valA < valB) return ordenDireccion === 'asc' ? -1 : 1;
+                if (valA > valB) return ordenDireccion === 'asc' ? 1 : -1;
+                return 0;
+            });
+
+            const tbody = document.getElementById('listadoGeneralBody');
+            const empty = document.getElementById('emptyListadoGeneral');
+            const table = document.getElementById('listadoGeneralContainer');
+
+            if (pedidosFiltrados.length === 0) {
+                tbody.innerHTML = ''; empty.style.display = 'block'; table.style.display = 'none';
+                return;
+            }
+            empty.style.display = 'none'; table.style.display = 'block';
+
+            tbody.innerHTML = pedidosFiltrados.map(p => {
+                const pagadoBadge = p.pagado
+                    ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7;">✓ Pagado</span>'
+                    : '<span class="badge" style="background:#ffebee; color:#c41e3a; border:1px solid #ef9a9a;">⏳ Pendiente</span>';
+                const recogidoBadge = p.recogido
+                    ? '<span class="badge" style="background:#e3f2fd; color:#1976d2; border:1px solid #90caf9;">✓ Recogido</span>'
+                    : '<span class="badge badge-pending"> Pendiente</span>';
+                const quienRecogeHtml = p.quienRecoge
+                    ? '<span class="badge badge-collected"> ' + p.quienRecoge + '</span>'
+                    : '<span class="badge badge-pending">—</span>';
+                return '<tr>' +
+                    '<td class="nombre-cell">' + p.nombre + '</td>' +
+                    '<td>' + (p.servicio || '-') + '</td>' +
+                    '<td>' + (p.seccion || '-') + '</td>' +
+                    '<td class="col-centro">' + (p.telefono || '-') + '</td>' +
+                    '<td class="col-centro"><span class="badge-decimos">' + p.numDecimos + '</span></td>' +
+                    '<td class="col-centro importe-cell">' + (p.numDecimos * PRECIO_DECIMO).toLocaleString('es-ES') + ' €</td>' +
+                    '<td class="col-centro">' + (p.fechaSolicitud || '-') + '</td>' +
+                    '<td class="col-centro">' + (p.horaSolicitud || '-') + '</td>' +
+                    '<td class="col-centro">' + (p.fechaEntrega || '-') + '</td>' +
+                    '<td class="col-centro">' + (p.horaEntrega || '-') + '</td>' +
+                    '<td class="col-centro">' + pagadoBadge + '</td>' +
+                    '<td class="col-centro">' + recogidoBadge + '</td>' +
+                    '<td>' + quienRecogeHtml + '</td>' +
+                '</tr>';
+            }).join('');
+
+            // Actualizar iconos de ordenación
+            document.querySelectorAll('.sort-icon').forEach(el => el.textContent = '');
+            const sortIcon = document.getElementById('sort-' + ordenarPor);
+            if (sortIcon) {
+                sortIcon.textContent = ordenDireccion === 'asc' ? '⬆️' : '️';
+            }
+        }
+
+        function ordenarListado(campo) {
+            const selectOrdenar = document.getElementById('ordenarPor');
+            const selectDireccion = document.getElementById('ordenDireccion');
+            
+            if (selectOrdenar.value === campo) {
+                // Si ya está ordenado por este campo, cambiar dirección
+                selectDireccion.value = selectDireccion.value === 'asc' ? 'desc' : 'asc';
+            } else {
+                selectOrdenar.value = campo;
+                selectDireccion.value = 'asc';
+            }
+            renderizarListadoGeneral();
+        }
 
         function renderizarResumen() {
             const filtroServicio = document.getElementById('filtroServicioResumen').value;
@@ -1399,7 +1948,7 @@
                     : '<span class="badge" style="background:#ffebee; color:#c41e3a; border:1px solid #ef9a9a;">⏳ Pendiente</span>';
                 const recogidoBadge = p.recogido
                     ? '<span class="badge" style="background:#e3f2fd; color:#1976d2; border:1px solid #90caf9;">✓ Recogido</span>'
-                    : '<span class="badge badge-pending">⏳ Pendiente</span>';
+                    : '<span class="badge badge-pending"> Pendiente</span>';
                 const recogidoPor = p.quienRecoge
                     ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>'
                     : '<span class="badge badge-pending">—</span>';
@@ -1429,7 +1978,7 @@
             link.href = URL.createObjectURL(blob);
             link.download = 'loteria-navidad-backup-' + new Date().toISOString().slice(0,10) + '.json';
             link.click();
-            showToast('📤', ' Copia de seguridad exportada correctamente.');
+            showToast('', '📤 Copia de seguridad exportada correctamente.');
         }
 
         function importarDatosJSON(event) {
@@ -1471,18 +2020,95 @@
                     }
                     
                     renderizarTabla();
+                    renderizarListadoGeneral();
                     actualizarSelectServicios();
                     actualizarSelectSecciones();
                     actualizarFiltrosServicio();
                     actualizarFiltrosSeccion();
                     renderizarConfig();
-                    showToast('✅', '📥 Datos importados y sincronizados con el servidor.');
+                    showToast('✅', ' Datos importados y sincronizados con el servidor.');
                 } catch (err) {
                     showToast('❌', 'No se pudo leer el archivo: ' + err.message, true);
                 }
             };
             reader.readAsText(file);
             event.target.value = '';
+        }
+
+        function getPedidosFiltradosListado() {
+            const filtroServicio = document.getElementById('filtroServicioListado').value;
+            const filtroSeccion = document.getElementById('filtroSeccionListado').value;
+            const filtroPagado = document.getElementById('filtroPagadoListado').value;
+            const filtroRecogido = document.getElementById('filtroRecogidoListado').value;
+            const ordenarPor = document.getElementById('ordenarPor').value;
+            const ordenDireccion = document.getElementById('ordenDireccion').value;
+
+            let pedidosFiltrados = [...pedidos];
+            if (filtroServicio) pedidosFiltrados = pedidosFiltrados.filter(p => p.servicio === filtroServicio);
+            if (filtroSeccion) pedidosFiltrados = pedidosFiltrados.filter(p => p.seccion === filtroSeccion);
+            if (filtroPagado === 'pagado') pedidosFiltrados = pedidosFiltrados.filter(p => p.pagado);
+            if (filtroPagado === 'pendiente') pedidosFiltrados = pedidosFiltrados.filter(p => !p.pagado);
+            if (filtroRecogido === 'recogido') pedidosFiltrados = pedidosFiltrados.filter(p => p.recogido);
+            if (filtroRecogido === 'pendiente') pedidosFiltrados = pedidosFiltrados.filter(p => !p.recogido);
+
+            pedidosFiltrados.sort((a, b) => {
+                let valA, valB;
+                switch(ordenarPor) {
+                    case 'nombre': valA = (a.nombre||'').toLowerCase(); valB = (b.nombre||'').toLowerCase(); break;
+                    case 'servicio': valA = (a.servicio||'').toLowerCase(); valB = (b.servicio||'').toLowerCase(); break;
+                    case 'seccion': valA = (a.seccion||'').toLowerCase(); valB = (b.seccion||'').toLowerCase(); break;
+                    case 'telefono': valA = a.telefono||''; valB = b.telefono||''; break;
+                    case 'numDecimos': valA = a.numDecimos||0; valB = b.numDecimos||0; break;
+                    case 'importe': valA = (a.numDecimos||0)*PRECIO_DECIMO; valB = (b.numDecimos||0)*PRECIO_DECIMO; break;
+                    case 'fechaSolicitud': valA = a.fechaSolicitud||''; valB = b.fechaSolicitud||''; break;
+                    case 'pagado': valA = a.pagado?1:0; valB = b.pagado?1:0; break;
+                    case 'recogido': valA = a.recogido?1:0; valB = b.recogido?1:0; break;
+                    default: valA = (a.nombre||'').toLowerCase(); valB = (b.nombre||'').toLowerCase();
+                }
+                if (valA < valB) return ordenDireccion === 'asc' ? -1 : 1;
+                if (valA > valB) return ordenDireccion === 'asc' ? 1 : -1;
+                return 0;
+            });
+            return pedidosFiltrados;
+        }
+
+        function exportarListadoGeneralPDF() {
+            const pedidosExportar = getPedidosFiltradosListado();
+            if (pedidosExportar.length === 0) { showToast('️', 'No hay pedidos para exportar.'); return; }
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            doc.setFontSize(18); doc.setTextColor(26, 58, 92);
+            doc.text('Listado General - Loteria Navidad 2026', 14, 22);
+            doc.setFontSize(10); doc.setTextColor(100);
+            doc.text('Fecha: ' + new Date().toLocaleDateString('es-ES') + ' | Total: ' + pedidosExportar.length + ' pedidos', 14, 30);
+            const cols = ["Nombre", "Servicio", "Seccion", "Telefono", "Decimos", "Importe", "Fecha Sol.", "Pagado", "Recogido"];
+            const rows = pedidosExportar.map(p => [p.nombre, p.servicio||'-', p.seccion||'-', p.telefono||'-', p.numDecimos, (p.numDecimos*PRECIO_DECIMO).toLocaleString('es-ES')+' EUR', p.fechaSolicitud||'-', p.pagado?'Si':'No', p.recogido?'Si':'No']);
+            doc.autoTable(cols, rows, { startY: 36, theme: 'striped', headStyles: { fillColor: [26, 58, 92], textColor: [255,255,255], fontSize: 7 }, bodyStyles: { fontSize: 7 } });
+            doc.save('listado-general-loteria-2026.pdf');
+            showToast('📄', '📄 Listado general PDF generado.');
+        }
+
+        function exportarListadoGeneralCSV() {
+            const pedidosExportar = getPedidosFiltradosListado();
+            if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos para exportar.'); return; }
+            let csv = '\uFEFFNombre,Servicio,Seccion,Telefono,N Decimos,Importe,Fecha Solicitud,Hora Solicitud,Fecha Entrega,Hora Entrega,Pagado,Recogido,Recogido por\n';
+            pedidosExportar.forEach(p => { csv += '"'+p.nombre+'","'+(p.servicio||'')+'","'+(p.seccion||'')+'","'+(p.telefono||'')+'",'+p.numDecimos+','+(p.numDecimos*PRECIO_DECIMO)+',"'+(p.fechaSolicitud||'')+'","'+(p.horaSolicitud||'')+'","'+(p.fechaEntrega||'')+'","'+(p.horaEntrega||'')+'",'+(p.pagado?'Si':'No')+','+(p.recogido?'Si':'No')+',"'+(p.quienRecoge||'-')+'"\n'; });
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'listado-general-loteria-2026.csv'; link.click();
+            showToast('📊', '📊 Listado general CSV generado.');
+        }
+
+        function imprimirListadoGeneral() {
+            const pedidosExportar = getPedidosFiltradosListado();
+            if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos para imprimir.'); return; }
+            const v = window.open('', '', 'width=900,height=600');
+            const tablaHTML = pedidosExportar.map(p => '<tr><td>'+p.nombre+'</td><td>'+(p.servicio||'-')+'</td><td>'+(p.seccion||'-')+'</td><td>'+(p.telefono||'-')+'</td><td>'+p.numDecimos+'</td><td>'+(p.numDecimos*PRECIO_DECIMO).toLocaleString('es-ES')+' €</td><td>'+(p.fechaSolicitud||'-')+'</td><td>'+(p.horaSolicitud||'-')+'</td><td>'+(p.fechaEntrega||'-')+'</td><td>'+(p.horaEntrega||'-')+'</td><td>'+(p.pagado?'Si':'No')+'</td><td>'+(p.recogido?'Si':'No')+'</td><td>'+(p.quienRecoge||'-')+'</td></tr>').join('');
+            const totalDecimos = pedidosExportar.reduce((s,p) => s + p.numDecimos, 0);
+            const totalPagados = pedidosExportar.filter(p => p.pagado).length;
+            const totalRecaudado = pedidosExportar.filter(p => p.pagado).reduce((s,p) => s + (p.numDecimos*PRECIO_DECIMO), 0);
+            v.document.write('<html><head><title>Listado General - Loteria Navidad 2026</title><style>body { font-family: Arial, sans-serif; padding: 30px; color: #333; } h1 { color: #1a3a5c; font-size: 1.6em; } table { width: 100%; border-collapse: collapse; margin-top: 20px; } th, td { border: 1px solid #ddd; padding: 10px; text-align: left; font-size: 0.9em; } th { background: #1a3a5c; color: white; } tr:nth-child(even) { background: #f5f7f9; } .stats { margin-top: 25px; padding: 15px; background: #f0f2f5; border-radius: 8px; border-left: 4px solid #1a3a5c; }</style></head><body><h1>Listado General - Loteria Navidad 2026</h1><p>Fecha: '+new Date().toLocaleDateString('es-ES')+'</p><table><thead><tr><th>Nombre</th><th>Servicio</th><th>Seccion</th><th>Telefono</th><th>Decimos</th><th>Importe</th><th>Fecha Sol.</th><th>Hora Sol.</th><th>Fecha Ent.</th><th>Hora Ent.</th><th>Pagado</th><th>Recogido</th><th>Recogido por</th></tr></thead><tbody>'+tablaHTML+'</tbody></table><div class="stats"><p><strong>Total pedidos:</strong> '+pedidosExportar.length+' | <strong>Decimos:</strong> '+totalDecimos+' | <strong>Pagados:</strong> '+totalPagados+' | <strong>Recaudado:</strong> '+totalRecaudado.toLocaleString('es-ES')+' €</p></div></body></html>');
+            v.document.close(); v.print();
+            showToast('🖨️', '🖨️ Enviando listado a la impresora...');
         }
 
         function exportarPDF() {
@@ -1499,15 +2125,15 @@
             doc.text('Control Loteria Navidad 2026 - Pabellon Nino Jesus', 14, 22);
             doc.setFontSize(10); doc.setTextColor(100);
             doc.text('Fecha: ' + new Date().toLocaleDateString('es-ES'), 14, 30);
-            const cols = ["Nombre", "Servicio", "Sección", "Teléfono", "Decimos", "Importe", "Fecha Sol.", "Hora Sol.", "Fecha Ent.", "Hora Ent.", "Pagado", "Recogido", "Recogido por"];
-            const rows = pedidosExportar.map(p => [p.nombre, p.servicio || '-', p.seccion || '-', p.telefono || '-', p.numDecimos, (p.numDecimos * PRECIO_DECIMO).toLocaleString('es-ES') + ' EUR', p.fechaSolicitud || '-', p.horaSolicitud || '-', p.fechaEntrega || '-', p.horaEntrega || '-', p.pagado ? 'Si' : 'No', p.recogido ? 'Si' : 'No', p.quienRecoge || '-']);
-            doc.autoTable(cols, rows, { startY: 36, theme: 'striped', headStyles: { fillColor: [26, 58, 92], textColor: [255, 255, 255], fontSize: 7 }, bodyStyles: { fontSize: 7 } });
+            const cols = ["Nombre", "Servicio", "Seccion", "Telefono", "Decimos", "Importe", "Fecha Sol.", "Hora Sol.", "Fecha Ent.", "Hora Ent.", "Pagado", "Recogido", "Recogido por"];
+            const rows = pedidosExportar.map(p => [p.nombre, p.servicio||'-', p.seccion||'-', p.telefono||'-', p.numDecimos, (p.numDecimos*PRECIO_DECIMO).toLocaleString('es-ES')+' EUR', p.fechaSolicitud||'-', p.horaSolicitud||'-', p.fechaEntrega||'-', p.horaEntrega||'-', p.pagado?'Si':'No', p.recogido?'Si':'No', p.quienRecoge||'-']);
+            doc.autoTable(cols, rows, { startY: 36, theme: 'striped', headStyles: { fillColor: [26, 58, 92], textColor: [255,255,255], fontSize: 7 }, bodyStyles: { fontSize: 7 } });
             const fy = doc.autoTable.previous.finalY;
             const totalD = pedidosExportar.reduce((s, p) => s + p.numDecimos, 0);
             const totalP = pedidosExportar.filter(p => p.pagado).length;
-            const recaudado = pedidosExportar.filter(p => p.pagado).reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0);
+            const recaudado = pedidosExportar.filter(p => p.pagado).reduce((s, p) => s + (p.numDecimos*PRECIO_DECIMO), 0);
             doc.setFontSize(10); doc.setTextColor(50);
-            doc.text('Total pedidos: ' + pedidosExportar.length + '  |  Decimos: ' + totalD + '  |  Pagados: ' + totalP + '  |  Recaudado: ' + recaudado.toLocaleString('es-ES') + ' EUR', 14, fy + 15);
+            doc.text('Total pedidos: '+pedidosExportar.length+' | Decimos: '+totalD+' | Pagados: '+totalP+' | Recaudado: '+recaudado.toLocaleString('es-ES')+' EUR', 14, fy+15);
             doc.save('loteria-navidad-2026-pabellon-nino-jesus.pdf');
             showToast('📄', '📄 Listado PDF generado correctamente.');
         }
@@ -1519,9 +2145,9 @@
             if (filtroServicio) pedidosExportar = pedidosExportar.filter(p => p.servicio === filtroServicio);
             if (filtroSeccion) pedidosExportar = pedidosExportar.filter(p => p.seccion === filtroSeccion);
             
-            if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos registrados para exportar.'); return; }
-            let csv = '\uFEFFNombre,Servicio,Sección,Telefono,N Decimos,Importe,Fecha Solicitud,Hora Solicitud,Fecha Entrega,Hora Entrega,Pagado,Recogido,Recogido por,Fecha\n';
-            pedidosExportar.forEach(p => { csv += '"' + p.nombre + '","' + (p.servicio || '') + '","' + (p.seccion || '') + '","' + (p.telefono || '') + '",' + p.numDecimos + ',' + (p.numDecimos * PRECIO_DECIMO) + ',"' + (p.fechaSolicitud || '') + '","' + (p.horaSolicitud || '') + '","' + (p.fechaEntrega || '') + '","' + (p.horaEntrega || '') + '",' + (p.pagado ? 'Si' : 'No') + ',' + (p.recogido ? 'Si' : 'No') + ',"' + (p.quienRecoge || '-') + '","' + p.fecha + '"\n'; });
+            if (pedidosExportar.length === 0) { showToast('️', 'No hay pedidos registrados para exportar.'); return; }
+            let csv = '\uFEFFNombre,Servicio,Seccion,Telefono,N Decimos,Importe,Fecha Solicitud,Hora Solicitud,Fecha Entrega,Hora Entrega,Pagado,Recogido,Recogido por,Fecha\n';
+            pedidosExportar.forEach(p => { csv += '"'+p.nombre+'","'+(p.servicio||'')+'","'+(p.seccion||'')+'","'+(p.telefono||'')+'",'+p.numDecimos+','+(p.numDecimos*PRECIO_DECIMO)+',"'+(p.fechaSolicitud||'')+'","'+(p.horaSolicitud||'')+'","'+(p.fechaEntrega||'')+'","'+(p.horaEntrega||'')+'",'+(p.pagado?'Si':'No')+','+(p.recogido?'Si':'No')+',"'+(p.quienRecoge||'-')+'","'+p.fecha+'"\n'; });
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'loteria-navidad-2026-pabellon-nino-jesus.csv'; link.click();
             showToast('', '📊 Listado CSV generado correctamente.');
@@ -1536,16 +2162,21 @@
             
             if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos registrados para imprimir.'); return; }
             const v = window.open('', '', 'width=900,height=600');
-            const tablaHTML = pedidosExportar.map(p => '<tr><td>' + p.nombre + '</td><td>' + (p.servicio || '-') + '</td><td>' + (p.seccion || '-') + '</td><td>' + (p.telefono || '-') + '</td><td>' + p.numDecimos + '</td><td>' + (p.numDecimos*PRECIO_DECIMO).toLocaleString('es-ES') + ' €</td><td>' + (p.fechaSolicitud||'-') + '</td><td>' + (p.horaSolicitud||'-') + '</td><td>' + (p.fechaEntrega||'-') + '</td><td>' + (p.horaEntrega||'-') + '</td><td>' + (p.pagado?'Si':'No') + '</td><td>' + (p.recogido?'Si':'No') + '</td><td>' + (p.quienRecoge||'-') + '</td></tr>').join('');
+            const tablaHTML = pedidosExportar.map(p => '<tr><td>'+p.nombre+'</td><td>'+(p.servicio||'-')+'</td><td>'+(p.seccion||'-')+'</td><td>'+(p.telefono||'-')+'</td><td>'+p.numDecimos+'</td><td>'+(p.numDecimos*PRECIO_DECIMO).toLocaleString('es-ES')+' €</td><td>'+(p.fechaSolicitud||'-')+'</td><td>'+(p.horaSolicitud||'-')+'</td><td>'+(p.fechaEntrega||'-')+'</td><td>'+(p.horaEntrega||'-')+'</td><td>'+(p.pagado?'Si':'No')+'</td><td>'+(p.recogido?'Si':'No')+'</td><td>'+(p.quienRecoge||'-')+'</td></tr>').join('');
             const totalDecimos = pedidosExportar.reduce((s,p) => s + p.numDecimos, 0);
             const totalPagados = pedidosExportar.filter(p => p.pagado).length;
             const totalRecaudado = pedidosExportar.filter(p => p.pagado).reduce((s,p) => s + (p.numDecimos*PRECIO_DECIMO), 0);
-            v.document.write('<html><head><title>Loteria Navidad 2026 - Pabellon Nino Jesus</title><style>body { font-family: Arial, sans-serif; padding: 30px; color: #333; } h1 { color: #1a3a5c; font-size: 1.6em; } table { width: 100%; border-collapse: collapse; margin-top: 20px; } th, td { border: 1px solid #ddd; padding: 10px; text-align: left; font-size: 0.9em; } th { background: #1a3a5c; color: white; } tr:nth-child(even) { background: #f5f7f9; } .stats { margin-top: 25px; padding: 15px; background: #f0f2f5; border-radius: 8px; border-left: 4px solid #1a3a5c; }</style></head><body><h1>Control Loteria Navidad 2026 - Pabellon Nino Jesus</h1><p>Fecha: ' + new Date().toLocaleDateString('es-ES') + '</p><table><thead><tr><th>Nombre</th><th>Servicio</th><th>Sección</th><th>Teléfono</th><th>Décimos</th><th>Importe</th><th>Fecha Sol.</th><th>Hora Sol.</th><th>Fecha Ent.</th><th>Hora Ent.</th><th>Pagado</th><th>Recogido</th><th>Recogido por</th></tr></thead><tbody>' + tablaHTML + '</tbody></table><div class="stats"><p><strong>Total pedidos:</strong> ' + pedidosExportar.length + ' | <strong>Décimos:</strong> ' + totalDecimos + ' | <strong>Pagados:</strong> ' + totalPagados + ' | <strong>Recaudado:</strong> ' + totalRecaudado.toLocaleString('es-ES') + ' €</p></div></body></html>');
+            v.document.write('<html><head><title>Loteria Navidad 2026 - Pabellon Nino Jesus</title><style>body { font-family: Arial, sans-serif; padding: 30px; color: #333; } h1 { color: #1a3a5c; font-size: 1.6em; } table { width: 100%; border-collapse: collapse; margin-top: 20px; } th, td { border: 1px solid #ddd; padding: 10px; text-align: left; font-size: 0.9em; } th { background: #1a3a5c; color: white; } tr:nth-child(even) { background: #f5f7f9; } .stats { margin-top: 25px; padding: 15px; background: #f0f2f5; border-radius: 8px; border-left: 4px solid #1a3a5c; }</style></head><body><h1>Control Loteria Navidad 2026 - Pabellon Nino Jesus</h1><p>Fecha: '+new Date().toLocaleDateString('es-ES')+'</p><table><thead><tr><th>Nombre</th><th>Servicio</th><th>Seccion</th><th>Telefono</th><th>Decimos</th><th>Importe</th><th>Fecha Sol.</th><th>Hora Sol.</th><th>Fecha Ent.</th><th>Hora Ent.</th><th>Pagado</th><th>Recogido</th><th>Recogido por</th></tr></thead><tbody>'+tablaHTML+'</tbody></table><div class="stats"><p><strong>Total pedidos:</strong> '+pedidosExportar.length+' | <strong>Decimos:</strong> '+totalDecimos+' | <strong>Pagados:</strong> '+totalPagados+' | <strong>Recaudado:</strong> '+totalRecaudado.toLocaleString('es-ES')+' €</p></div></body></html>');
             v.document.close(); v.print();
             showToast('🖨️', '🖨️ Enviando listado a la impresora...');
         }
 
-        verificarSesion();
+        // INICIALIZACIÓN
+        (async function() {
+            await cargarDatosIniciales();
+            document.getElementById('loadingOverlay').classList.add('hidden');
+            verificarSesion();
+        })();
     </script>
 </body>
 </html>
