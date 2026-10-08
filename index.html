@@ -967,21 +967,20 @@
     ).join('');
 }
 
-        function actualizarSelectOficinas() {
-            const select = document.getElementById('oficina');
-            const selectEditar = document.getElementById('editarOficina');
-            const valorActual = select.value;
-            const valorEditar = selectEditar ? selectEditar.value : '';
-            let html = '<option value="">-- Selecciona una oficina --</option>';
-            oficinas.forEach(o => { html += '<option value="' + o + '">' + o + '</option>'; });
-            select.innerHTML = html;
-            if (selectEditar) {
-                selectEditar.innerHTML = html;
-                if (valorEditar) selectEditar.value = valorEditar;
-            }
-            if (valorActual) select.value = valorActual;
-        }
-
+function actualizarSelectOficinas() {
+    const select = document.getElementById('oficina');
+    const selectEditar = document.getElementById('editarOficina');
+    const valorActual = select.value;
+    const valorEditar = selectEditar ? selectEditar.value : '';
+    let html = '<option value="">-- Selecciona una oficina --</option>';
+    [...oficinas].sort((a, b) => a.localeCompare(b, 'es')).forEach(o => { html += '<option value="' + o + '">' + o + '</option>'; });
+    select.innerHTML = html;
+    if (selectEditar) {
+        selectEditar.innerHTML = html;
+        if (valorEditar) selectEditar.value = valorEditar;
+    }
+    if (valorActual) select.value = valorActual;
+}
         function actualizarFiltrosOficina() {
             const filtros = ['filtroOficinaPedidos', 'filtroOficinaResumen', 'filtroOficinaParticipantes'];
             filtros.forEach(id => {
