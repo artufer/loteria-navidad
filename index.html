@@ -75,6 +75,8 @@
         .table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 15px; }
         .table-header h2 { font-size: 1.3em; color: #1a3a5c; font-weight: 600; }
         .export-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+        .filter-bar { background: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px; display: flex; gap: 15px; align-items: flex-end; flex-wrap: wrap; }
+        .filter-bar .form-group { flex: 1; min-width: 200px; margin-bottom: 0; }
         .table-container { overflow-x: auto; border-radius: 6px; border: 1px solid #e0e2e5; }
         table { width: 100%; border-collapse: collapse; }
         thead { background: #1a3a5c; color: white; }
@@ -135,11 +137,8 @@
         .quick-action:hover { border-color: #1a3a5c; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
         .quick-action .qa-icon { font-size: 2em; margin-bottom: 8px; }
         .quick-action .qa-title { font-weight: 600; color: #1a3a5c; font-size: 0.95em; }
-        .filter-bar { display: flex; gap: 15px; align-items: flex-end; margin-bottom: 20px; padding: 15px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e0e2e5; flex-wrap: wrap; }
-        .filter-bar .form-group { margin-bottom: 0; min-width: 200px; }
-        .filter-bar label { font-size: 0.85em; font-weight: 600; color: #555; margin-bottom: 6px; display: block; }
-        .filter-bar select { padding: 10px 12px; border: 1px solid #d0d3d8; border-radius: 6px; font-size: 0.95em; font-family: inherit; background: white; min-width: 200px; }
-        .filter-bar select:focus { outline: none; border-color: #1a3a5c; }
+        /* Columnas centradas en tabla de pedidos */
+        .col-centro { text-align: center; }
         @media (max-width: 1024px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 768px) {
             .header { flex-direction: column; gap: 10px; padding: 15px; }
@@ -159,8 +158,6 @@
             .toast { left: 15px; right: 15px; bottom: 15px; }
             .config-row { flex-direction: column; }
             .login-box { margin: 20px; padding: 30px 20px; }
-            .filter-bar { flex-direction: column; }
-            .filter-bar .form-group { width: 100%; }
         }
         @media (max-width: 480px) { .header-title h1 { font-size: 1.1em; } .stat-number { font-size: 1.8em; } .dashboard-welcome .welcome-date { font-size: 1.4em; } }
     </style>
@@ -170,7 +167,7 @@
     <!-- ===== PANTALLA DE LOGIN ===== -->
     <div class="login-overlay" id="loginOverlay">
         <div class="login-box">
-            <div class="login-icon"></div>
+            <div class="login-icon">🎄</div>
             <h2>Control Lotería Navidad</h2>
             <div class="login-subtitle">Pabellón Niño Jesús - Acceso restringido</div>
             <form id="loginForm">
@@ -212,7 +209,7 @@
             <button class="nav-tab" data-page="pedidos">📋 Pedidos</button>
             <button class="nav-tab" data-page="resumen">📊 Resumen</button>
             <button class="nav-tab" data-page="participantes">👥 Participantes</button>
-            <button class="nav-tab" data-page="configuracion">️ Configuración</button>
+            <button class="nav-tab" data-page="configuracion">⚙️ Configuración</button>
         </div>
 
         <div class="main-content">
@@ -229,7 +226,7 @@
                         <div class="stat-details">
                             <div class="stat-detail-row"><span>✓ Pagados:</span><span id="statPagados">0</span></div>
                             <div class="stat-detail-row"><span>⏳ Pendientes:</span><span id="statPendientes">0</span></div>
-                            <div class="stat-detail-row"><span> Entregados:</span><span id="statEntregados">0</span></div>
+                            <div class="stat-detail-row"><span>📦 Entregados:</span><span id="statEntregados">0</span></div>
                         </div>
                     </div>
                     <div class="stat-card gold">
@@ -237,8 +234,8 @@
                         <div class="stat-label">Dinero Recaudado</div>
                         <div class="stat-details">
                             <div class="stat-detail-row"><span>💰 Total esperado:</span><span id="statTotalEsperado">0 €</span></div>
-                            <div class="stat-detail-row"><span>📈 % Cobrado:</span><span id="statPorcentaje">0%</span></div>
-                            <div class="stat-detail-row"><span>🎟️ Precio/décimo:</span><span id="statPrecioDecimo">20 €</span></div>
+                            <div class="stat-detail-row"><span>💵 Cobrado:</span><span id="statCobrado">0 €</span></div>
+                            <div class="stat-detail-row"><span>⏳ Pendiente de cobro:</span><span id="statPendienteCobro">0 €</span></div>
                         </div>
                     </div>
                     <div class="stat-card green">
@@ -247,7 +244,7 @@
                         <div class="stat-details">
                             <div class="stat-detail-row"><span>✓ Con pago:</span><span id="statConPago">0</span></div>
                             <div class="stat-detail-row"><span>⏳ Sin pago:</span><span id="statSinPago">0</span></div>
-                            <div class="stat-detail-row"><span>📦 Recogidos:</span><span id="statRecogidos">0</span></div>
+                            <div class="stat-detail-row"><span> Recogidos:</span><span id="statRecogidos">0</span></div>
                         </div>
                     </div>
                 </div>
@@ -258,7 +255,7 @@
                         <div class="qa-title">Solicitar décimos</div>
                     </div>
                     <div class="quick-action" onclick="irAPagina('pedidos')">
-                        <div class="qa-icon">📋</div>
+                        <div class="qa-icon"></div>
                         <div class="qa-title">Ver pedidos</div>
                     </div>
                     <div class="quick-action" onclick="irAPagina('resumen')">
@@ -266,7 +263,7 @@
                         <div class="qa-title">Ver resumen</div>
                     </div>
                     <div class="quick-action" onclick="irAPagina('participantes')">
-                        <div class="qa-icon"></div>
+                        <div class="qa-icon">👥</div>
                         <div class="qa-title">Participantes</div>
                     </div>
                 </div>
@@ -275,7 +272,7 @@
             <!-- PÁGINA SOLICITAR DÉCIMOS -->
             <div class="section-page" id="page-solicitar">
                 <div class="content-card">
-                    <h2 class="section-title">🎟️ Solicitar Décimos</h2>
+                    <h2 class="section-title">️ Solicitar Décimos</h2>
                     <form id="pedidoForm">
                         <div class="form-grid">
                             <div class="form-group">
@@ -297,19 +294,19 @@
                                 <input type="number" id="numDecimos" min="1" placeholder="Ej: 2" required>
                             </div>
                             <div class="form-group">
-                                <label for="fechaSolicitud">Fecha de solicitud *</label>
+                                <label for="fechaSolicitud">Fecha de Solicitud *</label>
                                 <input type="date" id="fechaSolicitud" required>
                             </div>
                             <div class="form-group">
-                                <label for="horaSolicitud">Hora de solicitud *</label>
+                                <label for="horaSolicitud">Hora de Solicitud *</label>
                                 <input type="time" id="horaSolicitud" required>
                             </div>
                             <div class="form-group">
-                                <label for="fechaEntrega">Fecha de entrega</label>
+                                <label for="fechaEntrega">Fecha de Entrega</label>
                                 <input type="date" id="fechaEntrega">
                             </div>
                             <div class="form-group">
-                                <label for="horaEntrega">Hora de entrega</label>
+                                <label for="horaEntrega">Hora de Entrega</label>
                                 <input type="time" id="horaEntrega">
                             </div>
                             <div class="form-group" style="grid-column: 1 / -1;">
@@ -317,7 +314,7 @@
                                 <input type="text" id="quienRecoge" placeholder="Dejar vacío si lo recoge él/ella">
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">➕ Añadir Pedido</button>
+                        <button type="submit" class="btn btn-primary"> Añadir Pedido</button>
                     </form>
                 </div>
             </div>
@@ -329,14 +326,14 @@
                         <h2>Estado actual de los pedidos</h2>
                         <div class="export-buttons">
                             <button class="btn btn-export" onclick="exportarPDF()">📄 Exportar PDF</button>
-                            <button class="btn btn-export" onclick="exportarCSV()">📊 Exportar CSV</button>
+                            <button class="btn btn-export" onclick="exportarCSV()"> Exportar CSV</button>
                             <button class="btn btn-export" onclick="imprimirListado()">🖨️ Imprimir</button>
                         </div>
                     </div>
                     <div class="filter-bar">
                         <div class="form-group">
-                            <label for="filtroOficinaPedidos">Filtrar por oficina:</label>
-                            <select id="filtroOficinaPedidos" onchange="aplicarFiltroPedidos()">
+                            <label for="filtroOficinaPedidos">Filtrar por oficina</label>
+                            <select id="filtroOficinaPedidos" onchange="aplicarFiltros()">
                                 <option value="">Todas las oficinas</option>
                             </select>
                         </div>
@@ -347,17 +344,17 @@
                                 <tr>
                                     <th>Nombre</th>
                                     <th>Oficina</th>
-                                    <th>Teléfono</th>
-                                    <th>Décimos</th>
-                                    <th>Importe</th>
-                                    <th>Fecha Solicitud</th>
-                                    <th>Hora Solicitud</th>
-                                    <th>Fecha Entrega</th>
-                                    <th>Hora Entrega</th>
-                                    <th class="checkbox-cell">Pagado</th>
-                                    <th class="checkbox-cell">Recogido</th>
+                                    <th class="col-centro">Teléfono</th>
+                                    <th class="col-centro">Décimos</th>
+                                    <th class="col-centro">Importe</th>
+                                    <th class="col-centro">Fecha Solicitud</th>
+                                    <th class="col-centro">Hora Solicitud</th>
+                                    <th class="col-centro">Fecha Entrega</th>
+                                    <th class="col-centro">Hora Entrega</th>
+                                    <th class="col-centro">Pagado</th>
+                                    <th class="col-centro">Recogido</th>
                                     <th>Recogido por</th>
-                                    <th>Acciones</th>
+                                    <th class="col-centro">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody id="tablaBody"></tbody>
@@ -377,7 +374,7 @@
                     <h2 class="section-title">Resumen Detallado</h2>
                     <div class="filter-bar">
                         <div class="form-group">
-                            <label for="filtroOficinaResumen">Filtrar por oficina:</label>
+                            <label for="filtroOficinaResumen">Filtrar por oficina</label>
                             <select id="filtroOficinaResumen" onchange="renderizarResumen()">
                                 <option value="">Todas las oficinas</option>
                             </select>
@@ -393,7 +390,7 @@
                     <h2 class="section-title">Lista de Participantes</h2>
                     <div class="filter-bar">
                         <div class="form-group">
-                            <label for="filtroOficinaParticipantes">Filtrar por oficina:</label>
+                            <label for="filtroOficinaParticipantes">Filtrar por oficina</label>
                             <select id="filtroOficinaParticipantes" onchange="renderizarParticipantes()">
                                 <option value="">Todas las oficinas</option>
                             </select>
@@ -405,15 +402,15 @@
                                 <tr>
                                     <th>Nombre</th>
                                     <th>Oficina</th>
-                                    <th>Teléfono</th>
-                                    <th>Décimos</th>
-                                    <th>Importe</th>
-                                    <th>Fecha Solicitud</th>
-                                    <th>Hora Solicitud</th>
-                                    <th>Fecha Entrega</th>
-                                    <th>Hora Entrega</th>
-                                    <th>Pagado</th>
-                                    <th>Recogido</th>
+                                    <th class="col-centro">Teléfono</th>
+                                    <th class="col-centro">Décimos</th>
+                                    <th class="col-centro">Importe</th>
+                                    <th class="col-centro">Fecha Solicitud</th>
+                                    <th class="col-centro">Hora Solicitud</th>
+                                    <th class="col-centro">Fecha Entrega</th>
+                                    <th class="col-centro">Hora Entrega</th>
+                                    <th class="col-centro">Pagado</th>
+                                    <th class="col-centro">Recogido</th>
                                     <th>Recogido por</th>
                                 </tr>
                             </thead>
@@ -421,7 +418,7 @@
                         </table>
                     </div>
                     <div class="empty-state" id="emptyParticipantes">
-                        <div class="empty-icon"></div>
+                        <div class="empty-icon">👥</div>
                         <h3>Sin participantes aún</h3>
                         <p>Los participantes aparecerán aquí cuando añadas pedidos</p>
                     </div>
@@ -487,7 +484,7 @@
                     </div>
 
                     <div class="config-block">
-                        <h3>💾 Copia de seguridad manual</h3>
+                        <h3> Copia de seguridad manual</h3>
                         <div class="alert-info">
                             Exporta tus datos para tener una copia de seguridad, o impórtalos para restaurarlos.
                         </div>
@@ -528,19 +525,19 @@
                     <input type="number" id="editarNumDecimos" min="1" required>
                 </div>
                 <div class="form-group" style="margin-bottom: 15px;">
-                    <label for="editarFechaSolicitud">Fecha de solicitud</label>
+                    <label for="editarFechaSolicitud">Fecha de Solicitud</label>
                     <input type="date" id="editarFechaSolicitud" required>
                 </div>
                 <div class="form-group" style="margin-bottom: 15px;">
-                    <label for="editarHoraSolicitud">Hora de solicitud</label>
+                    <label for="editarHoraSolicitud">Hora de Solicitud</label>
                     <input type="time" id="editarHoraSolicitud" required>
                 </div>
                 <div class="form-group" style="margin-bottom: 15px;">
-                    <label for="editarFechaEntrega">Fecha de entrega</label>
+                    <label for="editarFechaEntrega">Fecha de Entrega</label>
                     <input type="date" id="editarFechaEntrega">
                 </div>
                 <div class="form-group" style="margin-bottom: 15px;">
-                    <label for="editarHoraEntrega">Hora de entrega</label>
+                    <label for="editarHoraEntrega">Hora de Entrega</label>
                     <input type="time" id="editarHoraEntrega">
                 </div>
                 <div class="form-group" style="margin-bottom: 15px;">
@@ -634,7 +631,6 @@
             if (firebaseReady) {
                 renderizarTabla();
                 actualizarEstadisticas();
-                actualizarFiltrosOficina();
             }
         }, (error) => {
             console.error('Error leyendo pedidos:', error);
@@ -652,8 +648,8 @@
             
             if (firebaseReady) {
                 actualizarSelectOficinas();
-                renderizarOficinas();
                 actualizarFiltrosOficina();
+                renderizarOficinas();
             }
         });
 
@@ -702,7 +698,7 @@
         function firebaseGuardarOficinas() {
             setSyncStatus('syncing', 'Guardando oficinas...');
             const obj = {};
-            oficinas.forEach((o, i) => { obj['oficina_' + i] = o; });
+            oficinas.forEach((o, i) => { obj[i] = o; });
             dbRef.oficinas.set(obj)
                 .then(() => setSyncStatus('online'))
                 .catch((err) => {
@@ -762,7 +758,7 @@
 
         function cambiarClave() {
             const nueva = document.getElementById('nuevaClave').value.trim();
-            if (!nueva) { showToast('️', 'Escribe una nueva contraseña'); return; }
+            if (!nueva) { showToast('⚠️', 'Escribe una nueva contraseña'); return; }
             if (nueva.length < 4) { showToast('⚠️', 'La contraseña debe tener al menos 4 caracteres'); return; }
             setClave(nueva);
             document.getElementById('nuevaClave').value = '';
@@ -789,6 +785,14 @@
             setSyncStatus('syncing', 'Conectando con la nube...');
         }
 
+        function establecerFechaHoraActual() {
+            const ahora = new Date();
+            const fechaStr = ahora.toISOString().split('T')[0];
+            const horaStr = ahora.toTimeString().slice(0, 5);
+            document.getElementById('fechaSolicitud').value = fechaStr;
+            document.getElementById('horaSolicitud').value = horaStr;
+        }
+
         function actualizarFechaBienvenida() {
             try {
                 const opciones = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -800,19 +804,6 @@
                 }
             } catch (error) {
                 console.error('Error al actualizar la fecha:', error);
-            }
-        }
-
-        function establecerFechaHoraActual() {
-            const ahora = new Date();
-            const fechaInput = document.getElementById('fechaSolicitud');
-            const horaInput = document.getElementById('horaSolicitud');
-            
-            if (fechaInput && horaInput) {
-                const fechaStr = ahora.toISOString().split('T')[0];
-                const horaStr = ahora.toTimeString().slice(0, 5);
-                fechaInput.value = fechaStr;
-                horaInput.value = horaStr;
             }
         }
 
@@ -891,7 +882,7 @@
         function agregarOficina() {
             const input = document.getElementById('nuevaOficina');
             const nombre = input.value.trim();
-            if (!nombre) { showToast('️', 'Escribe un nombre de oficina'); return; }
+            if (!nombre) { showToast('⚠️', 'Escribe un nombre de oficina'); return; }
             if (oficinas.includes(nombre)) { showToast('⚠️', 'Esa oficina ya existe'); return; }
             oficinas.push(nombre);
             guardarOficinasLocal();
@@ -954,19 +945,34 @@
             });
         }
 
+        function aplicarFiltros() {
+            renderizarTabla();
+        }
+
         function renderizarConfig() {
             document.getElementById('maxDecimos').value = config.maxDecimos || 5;
             renderizarOficinas();
+        }
+
+        // Función para ordenar alfabéticamente por nombre
+        function ordenarPorNombre(lista) {
+            return [...lista].sort((a, b) => {
+                const nombreA = (a.nombre || '').toLowerCase().trim();
+                const nombreB = (b.nombre || '').toLowerCase().trim();
+                if (nombreA < nombreB) return -1;
+                if (nombreA > nombreB) return 1;
+                return 0;
+            });
         }
 
         function actualizarEstadisticas() {
             const totalDecimos = pedidos.reduce((s, p) => s + p.numDecimos, 0);
             const recaudado = pedidos.filter(p => p.pagado).reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0);
             const totalEsperado = pedidos.reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0);
+            const pendienteCobro = totalEsperado - recaudado;
             const pagados = pedidos.filter(p => p.pagado).length;
             const pendientes = pedidos.length - pagados;
             const recogidos = pedidos.filter(p => p.recogido).length;
-            const porcentaje = totalEsperado > 0 ? Math.round((recaudado / totalEsperado) * 100) : 0;
 
             document.getElementById('totalDecimos').textContent = totalDecimos;
             document.getElementById('dineroRecaudado').textContent = recaudado.toLocaleString('es-ES') + ' €';
@@ -975,27 +981,21 @@
             document.getElementById('statPendientes').textContent = pendientes;
             document.getElementById('statEntregados').textContent = recogidos;
             document.getElementById('statTotalEsperado').textContent = totalEsperado.toLocaleString('es-ES') + ' €';
-            document.getElementById('statPorcentaje').textContent = porcentaje + '%';
-            document.getElementById('statPrecioDecimo').textContent = PRECIO_DECIMO + ' €';
+            document.getElementById('statCobrado').textContent = recaudado.toLocaleString('es-ES') + ' €';
+            document.getElementById('statPendienteCobro').textContent = pendienteCobro.toLocaleString('es-ES') + ' €';
             document.getElementById('statConPago').textContent = pagados;
             document.getElementById('statSinPago').textContent = pendientes;
             document.getElementById('statRecogidos').textContent = recogidos;
         }
 
-        function aplicarFiltroPedidos() {
-            renderizarTabla();
-        }
-
         function renderizarTabla() {
+            const filtroOficina = document.getElementById('filtroOficinaPedidos').value;
+            let pedidosFiltrados = filtroOficina ? pedidos.filter(p => p.oficina === filtroOficina) : pedidos;
+            pedidosFiltrados = ordenarPorNombre(pedidosFiltrados);
+            
             const tbody = document.getElementById('tablaBody');
             const empty = document.getElementById('emptyState');
             const table = document.getElementById('tableContainer');
-            const filtroOficina = document.getElementById('filtroOficinaPedidos') ? document.getElementById('filtroOficinaPedidos').value : '';
-            
-            let pedidosFiltrados = pedidos;
-            if (filtroOficina) {
-                pedidosFiltrados = pedidos.filter(p => p.oficina === filtroOficina);
-            }
             
             if (pedidosFiltrados.length === 0) {
                 tbody.innerHTML = ''; empty.style.display = 'block'; table.style.display = 'none';
@@ -1004,24 +1004,24 @@
             empty.style.display = 'none'; table.style.display = 'block';
             tbody.innerHTML = pedidosFiltrados.map(p => {
                 const quienRecogeHtml = p.quienRecoge
-                    ? '<span class="badge badge-collected"> ' + p.quienRecoge + '</span>'
+                    ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>'
                     : '<span class="badge badge-pending">—</span>';
                 return '<tr>' +
                     '<td class="nombre-cell">' + p.nombre + '</td>' +
                     '<td>' + p.oficina + '</td>' +
-                    '<td>' + p.telefono + '</td>' +
-                    '<td><span class="badge-decimos">' + p.numDecimos + '</span></td>' +
-                    '<td class="importe-cell">' + (p.numDecimos * PRECIO_DECIMO).toLocaleString('es-ES') + ' €</td>' +
-                    '<td>' + (p.fechaSolicitud || '-') + '</td>' +
-                    '<td>' + (p.horaSolicitud || '-') + '</td>' +
-                    '<td>' + (p.fechaEntrega || '-') + '</td>' +
-                    '<td>' + (p.horaEntrega || '-') + '</td>' +
+                    '<td class="col-centro">' + p.telefono + '</td>' +
+                    '<td class="col-centro"><span class="badge-decimos">' + p.numDecimos + '</span></td>' +
+                    '<td class="col-centro importe-cell">' + (p.numDecimos * PRECIO_DECIMO).toLocaleString('es-ES') + ' €</td>' +
+                    '<td class="col-centro">' + (p.fechaSolicitud || '-') + '</td>' +
+                    '<td class="col-centro">' + (p.horaSolicitud || '-') + '</td>' +
+                    '<td class="col-centro">' + (p.fechaEntrega || '-') + '</td>' +
+                    '<td class="col-centro">' + (p.horaEntrega || '-') + '</td>' +
                     '<td class="checkbox-cell"><input type="checkbox" ' + (p.pagado ? 'checked' : '') + ' onchange="togglePagado(\'' + p.id + '\')"></td>' +
                     '<td class="checkbox-cell"><input type="checkbox" ' + (p.recogido ? 'checked' : '') + ' onchange="toggleRecogido(\'' + p.id + '\')"></td>' +
                     '<td>' + quienRecogeHtml + '</td>' +
-                    '<td><div class="actions-cell">' +
+                    '<td class="col-centro"><div class="actions-cell">' +
                         '<button class="btn btn-edit" onclick="editarPedido(\'' + p.id + '\')">✏️ Editar</button>' +
-                        '<button class="btn btn-delete" onclick="eliminarPedido(\'' + p.id + '\')">🗑️</button>' +
+                        '<button class="btn btn-delete" onclick="eliminarPedido(\'' + p.id + '\')">️</button>' +
                     '</div></td>' +
                 '</tr>';
             }).join('');
@@ -1075,7 +1075,7 @@
                 p.pagado = !p.pagado;
                 firebaseGuardarPedido(p);
                 const msg = p.pagado ? p.nombre + ' ha pagado' : 'Pago pendiente de ' + p.nombre;
-                showToast(p.pagado ? '💰' : '⏳', msg);
+                showToast(p.pagado ? '💰' : '', msg);
             }
         }
 
@@ -1085,7 +1085,7 @@
                 p.recogido = !p.recogido;
                 firebaseGuardarPedido(p);
                 const msg = p.recogido ? 'Décimos entregados a ' + p.nombre : 'Entrega pendiente de ' + p.nombre;
-                showToast(p.recogido ? '' : '⏳', msg);
+                showToast(p.recogido ? '📦' : '⏳', msg);
             }
         }
 
@@ -1093,7 +1093,7 @@
             const p = pedidos.find(x => x.id === id);
             if (p && confirm('¿Eliminar el pedido de ' + p.nombre + '?')) {
                 firebaseEliminarPedido(id);
-                showToast('️', 'Pedido eliminado');
+                showToast('🗑️', 'Pedido eliminado');
             }
         }
 
@@ -1139,16 +1139,13 @@
         document.getElementById('modalEditar').addEventListener('click', function(e) { if (e.target === this) cerrarModal(); });
 
         function renderizarResumen() {
+            const filtroOficina = document.getElementById('filtroOficinaResumen').value;
+            let pedidosFiltrados = filtroOficina ? pedidos.filter(p => p.oficina === filtroOficina) : pedidos;
+            pedidosFiltrados = ordenarPorNombre(pedidosFiltrados);
+            
             const cont = document.getElementById('resumenContenido');
-            const filtroOficina = document.getElementById('filtroOficinaResumen') ? document.getElementById('filtroOficinaResumen').value : '';
-            
-            let pedidosFiltrados = pedidos;
-            if (filtroOficina) {
-                pedidosFiltrados = pedidos.filter(p => p.oficina === filtroOficina);
-            }
-            
             if (pedidosFiltrados.length === 0) {
-                cont.innerHTML = '<div class="empty-state"><div class="empty-icon"></div><h3>Sin datos</h3><p>Aún no hay pedidos registrados</p></div>';
+                cont.innerHTML = '<div class="empty-state"><div class="empty-icon">📊</div><h3>Sin datos</h3><p>Aún no hay pedidos registrados</p></div>';
                 return;
             }
             const totalDecimos = pedidosFiltrados.reduce((s, p) => s + p.numDecimos, 0);
@@ -1181,15 +1178,13 @@
         }
 
         function renderizarParticipantes() {
+            const filtroOficina = document.getElementById('filtroOficinaParticipantes').value;
+            let pedidosFiltrados = filtroOficina ? pedidos.filter(p => p.oficina === filtroOficina) : pedidos;
+            pedidosFiltrados = ordenarPorNombre(pedidosFiltrados);
+            
             const tbody = document.getElementById('participantesBody');
             const empty = document.getElementById('emptyParticipantes');
             const cont = document.getElementById('participantesContainer');
-            const filtroOficina = document.getElementById('filtroOficinaParticipantes') ? document.getElementById('filtroOficinaParticipantes').value : '';
-            
-            let pedidosFiltrados = pedidos;
-            if (filtroOficina) {
-                pedidosFiltrados = pedidos.filter(p => p.oficina === filtroOficina);
-            }
             
             if (pedidosFiltrados.length === 0) {
                 tbody.innerHTML = ''; empty.style.display = 'block'; cont.style.display = 'none'; return;
@@ -1201,22 +1196,22 @@
                     : '<span class="badge" style="background:#ffebee; color:#c41e3a; border:1px solid #ef9a9a;">⏳ Pendiente</span>';
                 const recogidoBadge = p.recogido
                     ? '<span class="badge" style="background:#e3f2fd; color:#1976d2; border:1px solid #90caf9;">✓ Recogido</span>'
-                    : '<span class="badge badge-pending">⏳ Pendiente</span>';
+                    : '<span class="badge badge-pending"> Pendiente</span>';
                 const recogidoPor = p.quienRecoge
                     ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>'
                     : '<span class="badge badge-pending">—</span>';
                 return '<tr>' +
                     '<td class="nombre-cell">' + p.nombre + '</td>' +
                     '<td>' + p.oficina + '</td>' +
-                    '<td>' + p.telefono + '</td>' +
-                    '<td><span class="badge-decimos">' + p.numDecimos + '</span></td>' +
-                    '<td class="importe-cell">' + (p.numDecimos * PRECIO_DECIMO).toLocaleString('es-ES') + ' €</td>' +
-                    '<td>' + (p.fechaSolicitud || '-') + '</td>' +
-                    '<td>' + (p.horaSolicitud || '-') + '</td>' +
-                    '<td>' + (p.fechaEntrega || '-') + '</td>' +
-                    '<td>' + (p.horaEntrega || '-') + '</td>' +
-                    '<td>' + pagadoBadge + '</td>' +
-                    '<td>' + recogidoBadge + '</td>' +
+                    '<td class="col-centro">' + p.telefono + '</td>' +
+                    '<td class="col-centro"><span class="badge-decimos">' + p.numDecimos + '</span></td>' +
+                    '<td class="col-centro importe-cell">' + (p.numDecimos * PRECIO_DECIMO).toLocaleString('es-ES') + ' €</td>' +
+                    '<td class="col-centro">' + (p.fechaSolicitud || '-') + '</td>' +
+                    '<td class="col-centro">' + (p.horaSolicitud || '-') + '</td>' +
+                    '<td class="col-centro">' + (p.fechaEntrega || '-') + '</td>' +
+                    '<td class="col-centro">' + (p.horaEntrega || '-') + '</td>' +
+                    '<td class="col-centro">' + pagadoBadge + '</td>' +
+                    '<td class="col-centro">' + recogidoBadge + '</td>' +
                     '<td>' + recogidoPor + '</td>' +
                 '</tr>';
             }).join('');
@@ -1230,7 +1225,7 @@
             link.href = URL.createObjectURL(blob);
             link.download = 'loteria-navidad-backup-' + new Date().toISOString().slice(0,10) + '.json';
             link.click();
-            showToast('📤', 'Datos exportados correctamente');
+            showToast('', 'Datos exportados correctamente');
         }
 
         function importarDatosJSON(event) {
@@ -1259,6 +1254,7 @@
                     
                     renderizarTabla();
                     actualizarSelectOficinas();
+                    actualizarFiltrosOficina();
                     renderizarConfig();
                     showToast('✅', 'Datos importados y sincronizados');
                 } catch (err) {
@@ -1296,7 +1292,7 @@
             pedidos.forEach(p => { csv += '"' + p.nombre + '","' + p.oficina + '","' + p.telefono + '",' + p.numDecimos + ',' + (p.numDecimos * PRECIO_DECIMO) + ',"' + (p.fechaSolicitud || '') + '","' + (p.horaSolicitud || '') + '","' + (p.fechaEntrega || '') + '","' + (p.horaEntrega || '') + '",' + (p.pagado ? 'Si' : 'No') + ',' + (p.recogido ? 'Si' : 'No') + ',"' + (p.quienRecoge || '-') + '","' + p.fecha + '"\n'; });
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'loteria-navidad-2026-pabellon-nino-jesus.csv'; link.click();
-            showToast('📊', 'CSV exportado correctamente');
+            showToast('', 'CSV exportado correctamente');
         }
 
         function imprimirListado() {
@@ -1306,7 +1302,7 @@
             const totalDecimos = pedidos.reduce((s,p) => s + p.numDecimos, 0);
             const totalPagados = pedidos.filter(p => p.pagado).length;
             const totalRecaudado = pedidos.filter(p => p.pagado).reduce((s,p) => s + (p.numDecimos*PRECIO_DECIMO), 0);
-            v.document.write('<html><head><title>Loteria Navidad 2026 - Pabellon Nino Jesus</title><style>body { font-family: Arial, sans-serif; padding: 30px; color: #333; } h1 { color: #1a3a5c; font-size: 1.6em; } table { width: 100%; border-collapse: collapse; margin-top: 20px; } th, td { border: 1px solid #ddd; padding: 10px; text-align: left; font-size: 0.85em; } th { background: #1a3a5c; color: white; } tr:nth-child(even) { background: #f5f7f9; } .stats { margin-top: 25px; padding: 15px; background: #f0f2f5; border-radius: 8px; border-left: 4px solid #1a3a5c; }</style></head><body><h1>Control Loteria Navidad 2026 - Pabellon Nino Jesus</h1><p>Fecha: ' + new Date().toLocaleDateString('es-ES') + '</p><table><thead><tr><th>Nombre</th><th>Oficina</th><th>Telefono</th><th>Decimos</th><th>Importe</th><th>Fecha Sol.</th><th>Hora Sol.</th><th>Fecha Ent.</th><th>Hora Ent.</th><th>Pagado</th><th>Recogido</th><th>Recogido por</th></tr></thead><tbody>' + tablaHTML + '</tbody></table><div class="stats"><p><strong>Total pedidos:</strong> ' + pedidos.length + ' | <strong>Decimos:</strong> ' + totalDecimos + ' | <strong>Pagados:</strong> ' + totalPagados + ' | <strong>Recaudado:</strong> ' + totalRecaudado.toLocaleString('es-ES') + ' €</p></div></body></html>');
+            v.document.write('<html><head><title>Loteria Navidad 2026 - Pabellon Nino Jesus</title><style>body { font-family: Arial, sans-serif; padding: 30px; color: #333; } h1 { color: #1a3a5c; font-size: 1.6em; } table { width: 100%; border-collapse: collapse; margin-top: 20px; } th, td { border: 1px solid #ddd; padding: 10px; text-align: left; font-size: 0.9em; } th { background: #1a3a5c; color: white; } tr:nth-child(even) { background: #f5f7f9; } .stats { margin-top: 25px; padding: 15px; background: #f0f2f5; border-radius: 8px; border-left: 4px solid #1a3a5c; }</style></head><body><h1>Control Loteria Navidad 2026 - Pabellon Nino Jesus</h1><p>Fecha: ' + new Date().toLocaleDateString('es-ES') + '</p><table><thead><tr><th>Nombre</th><th>Oficina</th><th>Telefono</th><th>Decimos</th><th>Importe</th><th>Fecha Sol.</th><th>Hora Sol.</th><th>Fecha Ent.</th><th>Hora Ent.</th><th>Pagado</th><th>Recogido</th><th>Recogido por</th></tr></thead><tbody>' + tablaHTML + '</tbody></table><div class="stats"><p><strong>Total pedidos:</strong> ' + pedidos.length + ' | <strong>Decimos:</strong> ' + totalDecimos + ' | <strong>Pagados:</strong> ' + totalPagados + ' | <strong>Recaudado:</strong> ' + totalRecaudado.toLocaleString('es-ES') + ' €</p></div></body></html>');
             v.document.close(); v.print();
             showToast('🖨️', 'Listado enviado a impresora');
         }
