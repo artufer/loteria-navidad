@@ -84,7 +84,8 @@
         .table-container { overflow-x: auto; border-radius: 6px; border: 1px solid #e0e2e5; width: 100%; }
         table { width: 100%; border-collapse: collapse; table-layout: fixed; }
         thead { background: #1a3a5c; color: white; }
-        th { padding: 6px 4px; text-align: left; font-size: 0.7em; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        th { padding: 6px 4px; text-align: left; font-size: 0.7em; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; }
+        th:hover { background: #2a4a6c; }
         th .sort-icon { margin-left: 3px; font-size: 0.9em; }
         td { padding: 5px 4px; border-bottom: 1px solid #e8eaed; font-size: 0.72em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 0; }
         tbody tr { transition: background 0.15s; }
@@ -218,7 +219,7 @@
                     <input type="password" id="loginClave" placeholder="Introduce tu contraseña" required autocomplete="current-password">
                 </div>
                 <button type="submit" class="btn-login">Iniciar sesión</button>
-                <div class="login-error" id="loginError">⛔ Acceso no autorizado.</div>
+                <div class="login-error" id="loginError"> Acceso no autorizado.</div>
             </form>
         </div>
     </div>
@@ -247,7 +248,7 @@
             <button class="nav-tab" data-page="pedidos">📋 Pedidos</button>
             <button class="nav-tab" data-page="listado">📑 Listado</button>
             <button class="nav-tab" data-page="resumen">📊 Resumen</button>
-            <button class="nav-tab" data-page="participantes">👥 Participantes</button>
+            <button class="nav-tab" data-page="participantes"> Participantes</button>
             <button class="nav-tab" data-page="ocr" id="tabOCR">📷 Lectura PDF</button>
             <button class="nav-tab" data-page="configuracion" id="tabConfig">⚙️ Config</button>
         </div>
@@ -287,10 +288,10 @@
                     </div>
                 </div>
                 <div class="quick-actions">
-                    <div class="quick-action" id="qaSolicitar" onclick="irAPagina('solicitar')"><div class="qa-icon">️</div><div class="qa-title">Solicitar</div></div>
+                    <div class="quick-action" id="qaSolicitar" onclick="irAPagina('solicitar')"><div class="qa-icon">🎟️</div><div class="qa-title">Solicitar</div></div>
                     <div class="quick-action" onclick="irAPagina('pedidos')"><div class="qa-icon">📋</div><div class="qa-title">Pedidos</div></div>
-                    <div class="quick-action" onclick="irAPagina('listado')"><div class="qa-icon">📑</div><div class="qa-title">Listado</div></div>
-                    <div class="quick-action" id="qaOCR" onclick="irAPagina('ocr')"><div class="qa-icon">📷</div><div class="qa-title">Lectura PDF</div></div>
+                    <div class="quick-action" onclick="irAPagina('listado')"><div class="qa-icon"></div><div class="qa-title">Listado</div></div>
+                    <div class="quick-action" id="qaOCR" onclick="irAPagina('ocr')"><div class="qa-icon"></div><div class="qa-title">Lectura PDF</div></div>
                     <div class="quick-action" onclick="irAPagina('resumen')"><div class="qa-icon">📊</div><div class="qa-title">Resumen</div></div>
                     <div class="quick-action" onclick="irAPagina('participantes')"><div class="qa-icon">👥</div><div class="qa-title">Participantes</div></div>
                 </div>
@@ -299,7 +300,7 @@
             <div class="section-page" id="page-solicitar">
                 <div class="content-card">
                     <div id="bannerSolicitar" class="readonly-banner" style="display:none;">🔒 Modo consulta: No puedes crear pedidos.</div>
-                    <h2 class="section-title">🎟️ Solicitar Décimos</h2>
+                    <h2 class="section-title">️ Solicitar Décimos</h2>
                     <form id="pedidoForm">
                         <div class="form-grid">
                             <div class="form-group">
@@ -402,7 +403,7 @@
                         </table>
                     </div>
                     <div class="empty-state" id="emptyState">
-                        <div class="empty-icon">🎰</div>
+                        <div class="empty-icon"></div>
                         <h3>Sin pedidos aún</h3>
                         <p>Añade el primer pedido desde "Solicitar"</p>
                     </div>
@@ -411,7 +412,7 @@
 
             <div class="section-page" id="page-listado">
                 <div class="content-card">
-                    <h2 class="section-title"> Listado General</h2>
+                    <h2 class="section-title">📑 Listado General</h2>
                     <div class="alert-info">💡 Haz clic en cualquier cabecera para ordenar.</div>
                     <div class="sort-controls">
                         <div class="form-group">
@@ -432,7 +433,7 @@
                             <label for="ordenDireccion">Dirección</label>
                             <select id="ordenDireccion" onchange="renderizarListadoGeneral()">
                                 <option value="asc">⬆️ Ascendente (A-Z)</option>
-                                <option value="desc">⬇️ Descendente (Z-A)</option>
+                                <option value="desc">️ Descendente (Z-A)</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -466,8 +467,8 @@
                     </div>
                     <div class="export-buttons" style="margin-bottom: 15px;">
                         <button class="btn btn-export" onclick="exportarListadoGeneralPDF()">📄 PDF</button>
-                        <button class="btn btn-export" onclick="exportarListadoGeneralCSV()"> CSV</button>
-                        <button class="btn btn-export" onclick="imprimirListadoGeneral()">️ Imprimir</button>
+                        <button class="btn btn-export" onclick="exportarListadoGeneralCSV()">📊 CSV</button>
+                        <button class="btn btn-export" onclick="imprimirListadoGeneral()">🖨️ Imprimir</button>
                     </div>
                     <div class="table-container" id="listadoGeneralContainer" style="display:none;">
                         <table>
@@ -492,7 +493,7 @@
                         </table>
                     </div>
                     <div class="empty-state" id="emptyListadoGeneral">
-                        <div class="empty-icon">📑</div>
+                        <div class="empty-icon"></div>
                         <h3>Sin datos</h3>
                         <p>No hay pedidos o no coinciden con los filtros</p>
                     </div>
@@ -589,7 +590,7 @@
                             <label for="ocrFile">Seleccionar PDF escaneado *</label>
                             <input type="file" id="ocrFile" accept=".pdf,image/*" style="padding: 10px;">
                         </div>
-                        <button type="button" class="btn btn-primary" onclick="procesarOCR()" id="btnProcesarOCR">🔍 Procesar PDF</button>
+                        <button type="button" class="btn btn-primary" onclick="procesarOCR()" id="btnProcesarOCR"> Procesar PDF</button>
                     </div>
                     <div id="ocrProgressContainer" style="display:none;">
                         <div class="ocr-progress">
@@ -615,17 +616,13 @@
             <div class="section-page" id="page-configuracion">
                 <div class="content-card">
                     <h2 class="section-title">⚙️ Configuración</h2>
-                    
                     <div class="config-block">
                         <h3>☁️ Estado de conexión</h3>
                         <div id="syncStatusBox" class="alert-info">🔄 Conectando...</div>
                     </div>
-
                     <div class="config-block" id="configUsuariosBlock">
                         <h3>👤 Añadir nuevo usuario</h3>
-                        <div class="alert-info">
-                            Crea un nuevo usuario con contraseña. Los nuevos usuarios tendrán acceso de <strong>consulta</strong> (solo ver datos).
-                        </div>
+                        <div class="alert-info">Crea un nuevo usuario con contraseña. Los nuevos usuarios tendrán acceso de <strong>consulta</strong> (solo ver datos).</div>
                         <div class="config-row">
                             <div class="form-group">
                                 <label for="nuevoUsuarioNombre">Nombre de usuario *</label>
@@ -638,11 +635,8 @@
                             <button type="button" class="btn btn-success btn-small" onclick="agregarUsuario()" style="align-self: flex-end;">➕ Crear usuario</button>
                         </div>
                         <ul class="user-list" id="userList"></ul>
-                        <div id="emptyUsers" style="text-align:center; padding: 15px; color: #999; font-size: 0.85em;">
-                            No hay usuarios configurados
-                        </div>
+                        <div id="emptyUsers" style="text-align:center; padding: 15px; color: #999; font-size: 0.85em;">No hay usuarios configurados</div>
                     </div>
-
                     <div class="config-block">
                         <h3>🔐 Cambiar mi contraseña</h3>
                         <div class="alert-info">Cambia tu contraseña personal. Se sincroniza en todos los dispositivos.</div>
@@ -651,10 +645,9 @@
                                 <label for="nuevaClave">Nueva contraseña *</label>
                                 <input type="password" id="nuevaClave" placeholder="Mínimo 4 caracteres">
                             </div>
-                            <button type="button" class="btn btn-primary btn-small" onclick="cambiarMiClave()" style="align-self: flex-end;"> Guardar</button>
+                            <button type="button" class="btn btn-primary btn-small" onclick="cambiarMiClave()" style="align-self: flex-end;">💾 Guardar</button>
                         </div>
                     </div>
-
                     <div class="config-block">
                         <h3>💾 Copia de seguridad</h3>
                         <div class="alert-info">Exporta o importa todos los datos de la aplicación.</div>
@@ -669,6 +662,7 @@
         </div>
     </div>
 
+    <!-- Modal Editar Pedido -->
     <div class="modal-overlay" id="modalEditar">
         <div class="modal-content">
             <div class="modal-header">
@@ -677,46 +671,16 @@
             </div>
             <form id="editarForm">
                 <input type="hidden" id="editarId">
-                <div class="form-group" style="margin-bottom: 12px;">
-                    <label for="editarNombre">Nombre y Apellidos</label>
-                    <input type="text" id="editarNombre" required>
-                </div>
-                <div class="form-group" style="margin-bottom: 12px;">
-                    <label for="editarServicio">Servicio</label>
-                    <select id="editarServicio" required onchange="actualizarSelectSeccionesEditar(this.value)"></select>
-                </div>
-                <div class="form-group" style="margin-bottom: 12px;">
-                    <label for="editarSeccion">Sección</label>
-                    <select id="editarSeccion" required></select>
-                </div>
-                <div class="form-group" style="margin-bottom: 12px;">
-                    <label for="editarTelefono">Teléfono</label>
-                    <input type="tel" id="editarTelefono" required>
-                </div>
-                <div class="form-group" style="margin-bottom: 12px;">
-                    <label for="editarNumDecimos">Nº de Décimos</label>
-                    <input type="number" id="editarNumDecimos" min="1" max="2" value="2" required>
-                </div>
-                <div class="form-group" style="margin-bottom: 12px;">
-                    <label for="editarFechaSolicitud">Fecha de Solicitud</label>
-                    <input type="date" id="editarFechaSolicitud" required>
-                </div>
-                <div class="form-group" style="margin-bottom: 12px;">
-                    <label for="editarHoraSolicitud">Hora de Solicitud</label>
-                    <input type="time" id="editarHoraSolicitud" required>
-                </div>
-                <div class="form-group" style="margin-bottom: 12px;">
-                    <label for="editarFechaEntrega">Fecha de Entrega</label>
-                    <input type="date" id="editarFechaEntrega">
-                </div>
-                <div class="form-group" style="margin-bottom: 12px;">
-                    <label for="editarHoraEntrega">Hora de Entrega</label>
-                    <input type="time" id="editarHoraEntrega">
-                </div>
-                <div class="form-group" style="margin-bottom: 12px;">
-                    <label for="editarQuienRecoge">Quién lo recoge</label>
-                    <input type="text" id="editarQuienRecoge">
-                </div>
+                <div class="form-group" style="margin-bottom: 12px;"><label for="editarNombre">Nombre y Apellidos</label><input type="text" id="editarNombre" required></div>
+                <div class="form-group" style="margin-bottom: 12px;"><label for="editarServicio">Servicio</label><select id="editarServicio" required onchange="actualizarSelectSeccionesEditar(this.value)"></select></div>
+                <div class="form-group" style="margin-bottom: 12px;"><label for="editarSeccion">Sección</label><select id="editarSeccion" required></select></div>
+                <div class="form-group" style="margin-bottom: 12px;"><label for="editarTelefono">Teléfono</label><input type="tel" id="editarTelefono" required></div>
+                <div class="form-group" style="margin-bottom: 12px;"><label for="editarNumDecimos">Nº de Décimos</label><input type="number" id="editarNumDecimos" min="1" max="2" value="2" required></div>
+                <div class="form-group" style="margin-bottom: 12px;"><label for="editarFechaSolicitud">Fecha de Solicitud</label><input type="date" id="editarFechaSolicitud" required></div>
+                <div class="form-group" style="margin-bottom: 12px;"><label for="editarHoraSolicitud">Hora de Solicitud</label><input type="time" id="editarHoraSolicitud" required></div>
+                <div class="form-group" style="margin-bottom: 12px;"><label for="editarFechaEntrega">Fecha de Entrega</label><input type="date" id="editarFechaEntrega"></div>
+                <div class="form-group" style="margin-bottom: 12px;"><label for="editarHoraEntrega">Hora de Entrega</label><input type="time" id="editarHoraEntrega"></div>
+                <div class="form-group" style="margin-bottom: 12px;"><label for="editarQuienRecoge">Quién lo recoge</label><input type="text" id="editarQuienRecoge"></div>
                 <div class="modal-actions">
                     <button type="button" class="btn btn-cancel" onclick="cerrarModal()">Cancelar</button>
                     <button type="submit" class="btn btn-save">Guardar</button>
@@ -725,6 +689,7 @@
         </div>
     </div>
 
+    <!-- Modal Nuevo Empleado -->
     <div class="modal-overlay" id="modalNuevoEmpleado">
         <div class="modal-content">
             <div class="modal-header">
@@ -732,19 +697,35 @@
                 <button class="close-btn" onclick="cerrarModalEmpleado()">✕</button>
             </div>
             <form id="nuevoEmpleadoForm">
-                <div class="form-group" style="margin-bottom: 12px;">
-                    <label for="nuevoEmpNombre">Nombre y Apellidos *</label>
-                    <input type="text" id="nuevoEmpNombre" required>
-                </div>
-                <div class="form-group" style="margin-bottom: 12px;">
-                    <label for="nuevoEmpTelefono">Teléfono *</label>
-                    <input type="tel" id="nuevoEmpTelefono" required>
-                </div>
+                <div class="form-group" style="margin-bottom: 12px;"><label for="nuevoEmpNombre">Nombre y Apellidos *</label><input type="text" id="nuevoEmpNombre" required></div>
+                <div class="form-group" style="margin-bottom: 12px;"><label for="nuevoEmpTelefono">Teléfono *</label><input type="tel" id="nuevoEmpTelefono" required></div>
                 <div class="modal-actions">
                     <button type="button" class="btn btn-cancel" onclick="cerrarModalEmpleado()">Cancelar</button>
                     <button type="submit" class="btn btn-save">Guardar</button>
                 </div>
             </form>
+        </div>
+    </div>
+
+    <!-- Modal Nueva Sección -->
+    <div class="modal-overlay" id="modalNuevaSeccion">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>➕ Crear nueva sección</h3>
+                <button class="close-btn" onclick="cerrarModalNuevaSeccion()">✕</button>
+            </div>
+            <div class="form-group" style="margin-bottom: 12px;">
+                <label>Servicio seleccionado:</label>
+                <input type="text" id="nuevaSeccionServicioInfo" disabled style="background: #f0f2f5;">
+            </div>
+            <div class="form-group" style="margin-bottom: 12px;">
+                <label for="nombreNuevaSeccion">Nombre de la nueva sección *</label>
+                <input type="text" id="nombreNuevaSeccion" placeholder="Ej: NUEVA SECCIÓN" required style="text-transform: uppercase; font-weight: 600;">
+            </div>
+            <div class="modal-actions">
+                <button type="button" class="btn btn-cancel" onclick="cerrarModalNuevaSeccion()">Cancelar</button>
+                <button type="button" class="btn btn-save" onclick="confirmarNuevaSeccion()">✅ Crear sección</button>
+            </div>
         </div>
     </div>
 
@@ -788,7 +769,7 @@
         const USUARIO_ADMIN = 'artufer';
         const CLAVE_DEFECTO = 'admin123';
         const PRECIO_DECIMO = 20;
-        const MAX_DECIMOS = 2; // Siempre 2, no configurable
+        const MAX_DECIMOS = 2;
 
         let pedidos = [];
         let servicios = [];
@@ -1028,17 +1009,7 @@
         ];
 
         const SERVICIOS_INICIALES = [
-            "ARCHIVO E IMPRENTA",
-            "ASUNTOS GENERALES",
-            "CENTROS DE ATENCIÓN ESPECIALIZADA",
-            "COOPERACIÓN",
-            "CONTRATACION Y PATRIMONIO",
-            "DESARROLLO RURAL Y MEDIO AMBIENTE",
-            "DERECHOS SOCIALES",
-            "ILC - BIBLIOBÚS",
-            "ILC - COORDINACIÓN DE BIBLIOTECAS",
-            "ILC - UNIDAD ADMINISTRATIVA",
-            "SEPEIS"
+            "ARCHIVO E IMPRENTA","ASUNTOS GENERALES","CENTROS DE ATENCIÓN ESPECIALIZADA","COOPERACIÓN","CONTRATACION Y PATRIMONIO","DESARROLLO RURAL Y MEDIO AMBIENTE","DERECHOS SOCIALES","ILC - BIBLIOBÚS","ILC - COORDINACIÓN DE BIBLIOTECAS","ILC - UNIDAD ADMINISTRATIVA","SEPEIS"
         ];
 
         function setSyncStatus(status, text) {
@@ -1051,11 +1022,11 @@
                 if (box) { box.className = 'alert-success'; box.innerHTML = '✅ ' + (text || 'Conectado con el servidor'); }
             } else if (status === 'syncing') {
                 dot.classList.add('syncing');
-                txt.textContent = text || ' Sincronizando...';
+                txt.textContent = text || '🔄 Sincronizando...';
                 if (box) { box.className = 'alert-info'; box.innerHTML = '🔄 ' + (text || 'Guardando...'); }
             } else if (status === 'offline') {
                 dot.classList.add('offline');
-                txt.textContent = text || '⚠️ Sin conexión';
+                txt.textContent = text || '️ Sin conexión';
                 if (box) { box.className = 'alert-info'; box.innerHTML = '⚠️ ' + (text || 'Sin conexión'); }
             }
         }
@@ -1105,7 +1076,7 @@
                 await dbRef.empleados.set(empleadosObj);
 
                 await dbRef.inicializado.set({
-                    fecha: new Date().toISOString(), version: '4.0',
+                    fecha: new Date().toISOString(), version: '5.0',
                     empleadosCargados: EMPLEADOS_INICIALES.length
                 });
                 showToast('✅', 'Datos cargados (' + EMPLEADOS_INICIALES.length + ' empleados)');
@@ -1168,7 +1139,7 @@
         dbRef.config.on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) config = { ...config, ...data };
-            config.maxDecimos = MAX_DECIMOS; // Forzar siempre 2
+            config.maxDecimos = MAX_DECIMOS;
             localStorage.setItem('configLoteria', JSON.stringify(config));
         });
 
@@ -1182,11 +1153,11 @@
             const { id, ...datos } = pedido;
             dbRef.pedidos.child(id).set(datos)
                 .then(() => setSyncStatus('online'))
-                .catch((err) => { setSyncStatus('offline', '❌ Error'); showToast('️', 'No se pudo guardar', true); });
+                .catch((err) => { setSyncStatus('offline', '❌ Error'); showToast('⚠️', 'No se pudo guardar', true); });
         }
 
         function firebaseEliminarPedido(id) {
-            setSyncStatus('syncing', ' Eliminando...');
+            setSyncStatus('syncing', '🔄 Eliminando...');
             dbRef.pedidos.child(id).remove()
                 .then(() => setSyncStatus('online'))
                 .catch((err) => { setSyncStatus('offline', '❌ Error'); });
@@ -1219,7 +1190,7 @@
 
             if (usuarios[usuario] && usuarios[usuario].clave === clave) {
                 usuarioActual = usuario;
-                // ⚠️ FORZAR admin para artufer
+                // ⚠️ FORZAR admin para artufer SIEMPRE
                 rolActual = (usuario === USUARIO_ADMIN) ? 'admin' : (usuarios[usuario].rol || 'consulta');
                 
                 document.getElementById('loginOverlay').classList.add('hidden');
@@ -1241,36 +1212,21 @@
 
         function aplicarPermisosRol() {
             const esAdmin = rolActual === 'admin';
-            
-            // Mostrar/ocultar pestañas
             document.getElementById('tabSolicitar').classList.toggle('hidden', !esAdmin);
             document.getElementById('tabOCR').classList.toggle('hidden', !esAdmin);
             document.getElementById('tabConfig').classList.toggle('hidden', !esAdmin);
-            
-            // Quick actions
             document.getElementById('qaSolicitar').classList.toggle('disabled', !esAdmin);
             document.getElementById('qaOCR').classList.toggle('disabled', !esAdmin);
-            
-            // Banners
             document.getElementById('bannerSolicitar').style.display = esAdmin ? 'none' : 'flex';
             document.getElementById('bannerOCR').style.display = esAdmin ? 'none' : 'flex';
-            
-            // Formulario solicitar
             const formSolicitar = document.getElementById('pedidoForm');
             const inputsSolicitar = formSolicitar.querySelectorAll('input, select, button');
             inputsSolicitar.forEach(el => { el.disabled = !esAdmin; });
             document.getElementById('btnAñadirPedido').style.display = esAdmin ? 'inline-flex' : 'none';
-            
-            // OCR
             document.getElementById('ocrFormContainer').style.display = esAdmin ? 'block' : 'none';
-            
-            // Config usuarios (solo admin)
             document.getElementById('configUsuariosBlock').style.display = esAdmin ? 'block' : 'none';
-            
-            // Columna acciones
             document.querySelectorAll('.accion-col').forEach(el => { el.style.display = esAdmin ? '' : 'none'; });
             
-            // Si no es admin y está en página restringida, ir a inicio
             const paginaActual = document.querySelector('.section-page.active');
             if (paginaActual && !esAdmin) {
                 const pageId = paginaActual.id;
@@ -1297,7 +1253,7 @@
             if (localStorage.getItem('loteriaSesionActiva') === 'true') {
                 usuarioActual = localStorage.getItem('loteriaUsuarioActivo');
                 
-                // ️ FORZAR admin para artufer SIEMPRE
+                // ⚠️ FORZAR admin para artufer SIEMPRE
                 if (usuarioActual === USUARIO_ADMIN) {
                     rolActual = 'admin';
                 } else {
@@ -1330,7 +1286,7 @@
         function cambiarMiClave() {
             const nueva = document.getElementById('nuevaClave').value.trim();
             if (!nueva) { showToast('⚠️', 'Introduce la nueva contraseña.'); return; }
-            if (nueva.length < 4) { showToast('⚠️', 'Mínimo 4 caracteres.'); return; }
+            if (nueva.length < 4) { showToast('️', 'Mínimo 4 caracteres.'); return; }
             if (usuarios[usuarioActual]) {
                 usuarios[usuarioActual].clave = nueva;
                 firebaseGuardarUsuarios();
@@ -1367,7 +1323,7 @@
                 delete usuarios[nombre];
                 firebaseGuardarUsuarios();
                 renderizarListaUsuarios();
-                showToast('️', 'Usuario eliminado.');
+                showToast('🗑️', 'Usuario eliminado.');
             }
         }
 
@@ -1383,7 +1339,7 @@
                     ? '<span class="role-badge role-admin">admin</span>' 
                     : '<span class="role-badge role-consulta">consulta</span>';
                 const btnEliminar = u === USUARIO_ADMIN ? '' : '<button class="btn btn-delete btn-small" onclick="eliminarUsuario(\'' + u + '\')">🗑️</button>';
-                return '<li><span>👤 ' + u + ' ' + rolBadge + '</span>' + btnEliminar + '</li>';
+                return '<li><span> ' + u + ' ' + rolBadge + '</span>' + btnEliminar + '</li>';
             }).join('');
         }
 
@@ -1404,7 +1360,7 @@
             establecerFechaHoraActual();
             
             firebaseReady = true;
-            setSyncStatus('syncing', '🌐 Conectando...');
+            setSyncStatus('syncing', ' Conectando...');
         }
 
         function establecerFechaHoraActual() {
@@ -1482,31 +1438,62 @@
                 const seccionesFiltradas = secciones.filter(s => s.servicio === servicio);
                 [...seccionesFiltradas].sort((a, b) => a.nombre.localeCompare(b.nombre, 'es')).forEach(s => { html += '<option value="' + s.nombre + '">' + s.nombre + '</option>'; });
             }
-            html += '<option value="__nueva__"> Nueva sección...</option>';
+            html += '<option value="__nueva__">➕ Nueva sección...</option>';
             select.innerHTML = html;
             if (valorActual && valorActual !== '__nueva__') select.value = valorActual;
+            
+            // Si selecciona "Nueva sección...", abrir modal
             if (select.value === '__nueva__') {
-                const nombreNueva = prompt('Introduce el nombre de la nueva sección:');
-                if (nombreNueva && nombreNueva.trim()) {
-                    const nombreTrim = nombreNueva.trim();
-                    const existe = secciones.some(s => s.servicio === servicio && s.nombre.toLowerCase() === nombreTrim.toLowerCase());
-                    if (!existe) {
-                        secciones.push({ nombre: nombreTrim, servicio });
-                        const obj = {};
-                        secciones.forEach((s, i) => { obj[i] = s; });
-                        dbRef.secciones.set(obj);
-                        actualizarSecciones();
-                        select.value = nombreTrim;
-                        showToast('✅', 'Sección "' + nombreTrim + '" creada.');
-                    } else {
-                        showToast('⚠️', 'Esa sección ya existe.');
-                        select.value = '';
-                    }
-                } else {
+                if (!servicio) {
+                    showToast('⚠️', 'Primero selecciona un servicio.', true);
                     select.value = '';
+                    return;
                 }
+                document.getElementById('nuevaSeccionServicioInfo').value = servicio;
+                document.getElementById('nombreNuevaSeccion').value = '';
+                document.getElementById('modalNuevaSeccion').classList.add('active');
+                setTimeout(() => document.getElementById('nombreNuevaSeccion').focus(), 100);
             }
             actualizarEmpleados();
+        }
+
+        function cerrarModalNuevaSeccion() {
+            document.getElementById('modalNuevaSeccion').classList.remove('active');
+            const select = document.getElementById('seccion');
+            select.value = '';
+            actualizarEmpleados();
+        }
+
+        function confirmarNuevaSeccion() {
+            const servicio = document.getElementById('nuevaSeccionServicioInfo').value;
+            const nombre = document.getElementById('nombreNuevaSeccion').value.trim();
+            
+            if (!nombre) {
+                showToast('️', 'Introduce el nombre de la sección.', true);
+                document.getElementById('nombreNuevaSeccion').focus();
+                return;
+            }
+            
+            const existe = secciones.some(s => s.servicio === servicio && s.nombre.toLowerCase() === nombre.toLowerCase());
+            if (existe) {
+                showToast('⚠️', 'Esa sección ya existe en este servicio.', true);
+                return;
+            }
+            
+            secciones.push({ nombre: nombre, servicio: servicio });
+            const obj = {};
+            secciones.forEach((s, i) => { obj[i] = s; });
+            dbRef.secciones.set(obj);
+            
+            cerrarModalNuevaSeccion();
+            
+            setTimeout(() => {
+                const select = document.getElementById('seccion');
+                select.value = nombre;
+                actualizarEmpleados();
+            }, 200);
+            
+            showToast('✅', 'Sección "' + nombre + '" creada correctamente.');
         }
 
         function actualizarEmpleados() {
@@ -1639,7 +1626,7 @@
             }
             empty.style.display = 'none'; table.style.display = 'block';
             tbody.innerHTML = pedidosFiltrados.map(p => {
-                const quienRecogeHtml = p.quienRecoge ? '<span class="badge badge-collected"> ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
+                const quienRecogeHtml = p.quienRecoge ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
                 const accionesHtml = esAdmin 
                     ? '<div class="actions-cell"><button class="btn btn-edit" onclick="editarPedido(\'' + p.id + '\')">✏️</button><button class="btn btn-delete" onclick="eliminarPedido(\'' + p.id + '\')">🗑️</button></div>'
                     : '<span style="color:#999; font-size:0.85em;">—</span>';
@@ -1679,11 +1666,11 @@
             } else { showToast('⚠️', 'Selecciona un empleado válido', true); return; }
             const validacion = validarMaximoDecimos(nombre, numDecimos);
             if (!validacion.valido) {
-                let mensaje = '🚫 ' + nombre + ' ya tiene ' + validacion.acumulados + ' décimo(s). ';
+                let mensaje = ' ' + nombre + ' ya tiene ' + validacion.acumulados + ' décimo(s). ';
                 mensaje += 'Con ' + validacion.nuevos + ' nuevos llegaría a ' + validacion.total + ', pero el límite es ' + validacion.maximo + '. ';
                 if (validacion.disponibles > 0) mensaje += ' Aún puede solicitar ' + validacion.disponibles + ' más.';
                 else mensaje += 'Ya ha alcanzado el máximo.';
-                showToast('', mensaje, true); return;
+                showToast('🚫', mensaje, true); return;
             }
             const nuevo = {
                 nombre, servicio, seccion, telefono, numDecimos,
@@ -1767,7 +1754,7 @@
 
         document.getElementById('editarForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
             const id = document.getElementById('editarId').value;
             const p = pedidos.find(x => x.id === id);
             if (p) {
@@ -1829,7 +1816,7 @@
             }
             empty.style.display = 'none'; table.style.display = 'block';
             tbody.innerHTML = pedidosFiltrados.map(p => {
-                const pagadoBadge = p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7;">✓ Pagado</span>' : '<span class="badge" style="background:#ffebee; color:#c41e3a; border:1px solid #ef9a9a;"> Pendiente</span>';
+                const pagadoBadge = p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7;">✓ Pagado</span>' : '<span class="badge" style="background:#ffebee; color:#c41e3a; border:1px solid #ef9a9a;">⏳ Pendiente</span>';
                 const recogidoBadge = p.recogido ? '<span class="badge" style="background:#e3f2fd; color:#1976d2; border:1px solid #90caf9;">✓ Recogido</span>' : '<span class="badge badge-pending">⏳ Pendiente</span>';
                 const quienRecogeHtml = p.quienRecoge ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
                 return '<tr>' +
@@ -1918,7 +1905,7 @@
             }
             empty.style.display = 'none'; cont.style.display = 'block';
             tbody.innerHTML = pedidosFiltrados.map(p => {
-                const pagadoBadge = p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7;">✓ Pagado</span>' : '<span class="badge" style="background:#ffebee; color:#c41e3a; border:1px solid #ef9a9a;"> Pendiente</span>';
+                const pagadoBadge = p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7;">✓ Pagado</span>' : '<span class="badge" style="background:#ffebee; color:#c41e3a; border:1px solid #ef9a9a;">⏳ Pendiente</span>';
                 const recogidoBadge = p.recogido ? '<span class="badge" style="background:#e3f2fd; color:#1976d2; border:1px solid #90caf9;">✓ Recogido</span>' : '<span class="badge badge-pending">⏳ Pendiente</span>';
                 const recogidoPor = p.quienRecoge ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
                 return '<tr>' +
@@ -1958,7 +1945,7 @@
             btnProcesar.disabled = true;
             btnProcesar.textContent = '⏳ Procesando...';
             try {
-                statusEl.textContent = ' Leyendo PDF...';
+                statusEl.textContent = '📖 Leyendo PDF...';
                 progressFill.style.width = '10%';
                 const result = await Tesseract.recognize(file, 'spa', {
                     logger: m => {
@@ -1993,11 +1980,11 @@
                 showToast('✅', empleadosEncontrados.found.length + ' empleados encontrados');
             } catch (error) {
                 console.error(error);
-                statusEl.textContent = '❌ Error: ' + error.message;
-                showToast('️', 'Error al procesar el PDF: ' + error.message, true);
+                statusEl.textContent = ' Error: ' + error.message;
+                showToast('⚠️', 'Error al procesar el PDF: ' + error.message, true);
             } finally {
                 btnProcesar.disabled = false;
-                btnProcesar.textContent = '🔍 Procesar PDF';
+                btnProcesar.textContent = ' Procesar PDF';
             }
         }
 
@@ -2036,7 +2023,7 @@
         }
 
         function confirmarPedidosOCR() {
-            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
             if (pedidosPendientesOCR.length === 0) { showToast('⚠️', 'No hay empleados para procesar'); return; }
             let creados = 0;
             let omitidos = 0;
@@ -2081,18 +2068,18 @@
             link.href = URL.createObjectURL(blob);
             link.download = 'loteria-navidad-backup-' + new Date().toISOString().slice(0,10) + '.json';
             link.click();
-            showToast('📤', '📤 Copia de seguridad exportada.');
+            showToast('📤', ' Copia de seguridad exportada.');
         }
 
         function importarDatosJSON(event) {
-            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
             const file = event.target.files[0];
             if (!file) return;
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
                     const datos = JSON.parse(e.target.result);
-                    if (!confirm('️ ATENCIÓN: Se REEMPLAZARÁN todos los registros. ¿Continuar?')) return;
+                    if (!confirm('⚠️ ATENCIÓN: Se REEMPLAZARÁN todos los registros. ¿Continuar?')) return;
                     if (datos.pedidos) { const obj = {}; datos.pedidos.forEach(p => { const { id, ...d } = p; obj[id] = d; }); dbRef.pedidos.set(obj); }
                     if (datos.empleados) { const obj = {}; datos.empleados.forEach(e => { const { id, ...d } = e; obj[id] = d; }); dbRef.empleados.set(obj); }
                     if (datos.servicios) { const obj = {}; datos.servicios.forEach((s, i) => { obj[i] = s; }); dbRef.servicios.set(obj); }
@@ -2169,7 +2156,7 @@
 
         function imprimirListadoGeneral() {
             const pedidosExportar = getPedidosFiltradosListado();
-            if (pedidosExportar.length === 0) { showToast('️', 'No hay pedidos'); return; }
+            if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos'); return; }
             const v = window.open('', '', 'width=900,height=600');
             const tablaHTML = pedidosExportar.map(p => '<tr><td>'+p.nombre+'</td><td>'+(p.servicio||'-')+'</td><td>'+(p.seccion||'-')+'</td><td>'+(p.telefono||'-')+'</td><td>'+p.numDecimos+'</td><td>'+(p.numDecimos*PRECIO_DECIMO).toLocaleString('es-ES')+'€</td><td>'+(p.fechaSolicitud||'-')+'</td><td>'+(p.horaSolicitud||'-')+'</td><td>'+(p.pagado?'Si':'No')+'</td><td>'+(p.recogido?'Si':'No')+'</td></tr>').join('');
             v.document.write('<html><head><title>Listado General</title><style>body{font-family:Arial,sans-serif;padding:20px}h1{color:#1a3a5c}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{border:1px solid #ddd;padding:6px;font-size:0.85em}th{background:#1a3a5c;color:white}</style></head><body><h1>Listado General - Lotería 2026</h1><p>Fecha: '+new Date().toLocaleDateString('es-ES')+'</p><table><thead><tr><th>Nombre</th><th>Servicio</th><th>Sección</th><th>Teléfono</th><th>Décimos</th><th>Importe</th><th>Fecha Sol.</th><th>Hora Sol.</th><th>Pagado</th><th>Recogido</th></tr></thead><tbody>'+tablaHTML+'</tbody></table></body></html>');
@@ -2193,7 +2180,7 @@
             const rows = pedidosExportar.map(p => [p.nombre, p.servicio||'-', p.seccion||'-', p.telefono||'-', p.numDecimos, (p.numDecimos*PRECIO_DECIMO)+'€', p.fechaSolicitud||'-', p.pagado?'Si':'No']);
             doc.autoTable(cols, rows, { startY: 36, theme: 'striped', headStyles: { fillColor: [26, 58, 92], fontSize: 7 }, bodyStyles: { fontSize: 7 } });
             doc.save('pedidos-loteria-2026.pdf');
-            showToast('📄', '📄 PDF generado.');
+            showToast('', '📄 PDF generado.');
         }
 
         function exportarCSV() {
