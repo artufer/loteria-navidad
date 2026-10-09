@@ -208,7 +208,7 @@
 
     <div class="login-overlay hidden" id="loginOverlay">
         <div class="login-box">
-            <div class="login-icon">🎄</div>
+            <div class="login-icon"></div>
             <h2>Control Lotería Navidad</h2>
             <div class="login-subtitle">Pabellón Niño Jesús - Acceso restringido</div>
             <form id="loginForm">
@@ -221,7 +221,7 @@
                     <input type="password" id="loginClave" placeholder="Introduce tu contraseña" required autocomplete="current-password">
                 </div>
                 <button type="submit" class="btn-login" id="btnLogin">Iniciar sesión</button>
-                <div class="login-error" id="loginError"> Acceso no autorizado.</div>
+                <div class="login-error" id="loginError">⛔ Acceso no autorizado.</div>
             </form>
         </div>
     </div>
@@ -246,12 +246,12 @@
         </div>
         <div class="nav-tabs">
             <button class="nav-tab active" data-page="inicio">🏠 Inicio</button>
-            <button class="nav-tab" data-page="solicitar" id="tabSolicitar">🎟️ Solicitar</button>
-            <button class="nav-tab" data-page="pedidos">📋 Pedidos</button>
-            <button class="nav-tab" data-page="listado">📑 Listado</button>
+            <button class="nav-tab" data-page="solicitar" id="tabSolicitar">️ Solicitar</button>
+            <button class="nav-tab" data-page="pedidos"> Pedidos</button>
+            <button class="nav-tab" data-page="listado"> Listado</button>
             <button class="nav-tab" data-page="resumen">📊 Resumen</button>
             <button class="nav-tab" data-page="participantes">👥 Participantes</button>
-            <button class="nav-tab" data-page="ocr" id="tabOCR">📷 Lectura PDF</button>
+            <button class="nav-tab" data-page="ocr" id="tabOCR"> Lectura PDF</button>
             <button class="nav-tab" data-page="configuracion" id="tabConfig">⚙️ Config</button>
         </div>
 
@@ -275,7 +275,7 @@
                         <div class="stat-label">Dinero Recaudado</div>
                         <div class="stat-details">
                             <div class="stat-detail-row"><span>💰 Total:</span><span id="statTotalEsperado">0 €</span></div>
-                            <div class="stat-detail-row"><span> Cobrado:</span><span id="statCobrado">0 €</span></div>
+                            <div class="stat-detail-row"><span>💵 Cobrado:</span><span id="statCobrado">0 €</span></div>
                             <div class="stat-detail-row"><span>⏳ Pendiente:</span><span id="statPendienteCobro">0 €</span></div>
                         </div>
                     </div>
@@ -293,7 +293,7 @@
                     <div class="quick-action" id="qaSolicitar" onclick="irAPagina('solicitar')"><div class="qa-icon">🎟️</div><div class="qa-title">Solicitar</div></div>
                     <div class="quick-action" onclick="irAPagina('pedidos')"><div class="qa-icon">📋</div><div class="qa-title">Pedidos</div></div>
                     <div class="quick-action" onclick="irAPagina('listado')"><div class="qa-icon">📑</div><div class="qa-title">Listado</div></div>
-                    <div class="quick-action" id="qaOCR" onclick="irAPagina('ocr')"><div class="qa-icon">📷</div><div class="qa-title">Lectura PDF</div></div>
+                    <div class="quick-action" id="qaOCR" onclick="irAPagina('ocr')"><div class="qa-icon"></div><div class="qa-title">Lectura PDF</div></div>
                     <div class="quick-action" onclick="irAPagina('resumen')"><div class="qa-icon">📊</div><div class="qa-title">Resumen</div></div>
                     <div class="quick-action" onclick="irAPagina('participantes')"><div class="qa-icon">👥</div><div class="qa-title">Participantes</div></div>
                 </div>
@@ -405,7 +405,7 @@
                         </table>
                     </div>
                     <div class="empty-state" id="emptyState">
-                        <div class="empty-icon"></div>
+                        <div class="empty-icon">🎰</div>
                         <h3>Sin pedidos aún</h3>
                         <p>Añade el primer pedido desde "Solicitar"</p>
                     </div>
@@ -414,7 +414,7 @@
 
             <div class="section-page" id="page-listado">
                 <div class="content-card">
-                    <h2 class="section-title">📑 Listado General</h2>
+                    <h2 class="section-title"> Listado General</h2>
                     <div class="alert-info">💡 Haz clic en cualquier cabecera para ordenar.</div>
                     <div class="sort-controls">
                         <div class="form-group">
@@ -434,7 +434,7 @@
                         <div class="form-group">
                             <label for="ordenDireccion">Dirección</label>
                             <select id="ordenDireccion" onchange="renderizarListadoGeneral()">
-                                <option value="asc">⬆️ Ascendente (A-Z)</option>
+                                <option value="asc">️ Ascendente (A-Z)</option>
                                 <option value="desc">⬇️ Descendente (Z-A)</option>
                             </select>
                         </div>
@@ -468,7 +468,7 @@
                         </div>
                     </div>
                     <div class="export-buttons" style="margin-bottom: 15px;">
-                        <button class="btn btn-export" onclick="exportarListadoGeneralPDF()"> PDF</button>
+                        <button class="btn btn-export" onclick="exportarListadoGeneralPDF()">📄 PDF</button>
                         <button class="btn btn-export" onclick="exportarListadoGeneralCSV()">📊 CSV</button>
                         <button class="btn btn-export" onclick="imprimirListadoGeneral()">🖨️ Imprimir</button>
                     </div>
@@ -495,7 +495,7 @@
                         </table>
                     </div>
                     <div class="empty-state" id="emptyListadoGeneral">
-                        <div class="empty-icon">📑</div>
+                        <div class="empty-icon"></div>
                         <h3>Sin datos</h3>
                         <p>No hay pedidos o no coinciden con los filtros</p>
                     </div>
@@ -693,7 +693,7 @@
     <div class="modal-overlay" id="modalNuevoEmpleado">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>➕ Dar de alta nuevo empleado</h3>
+                <h3> Dar de alta nuevo empleado</h3>
                 <button class="close-btn" onclick="cerrarModalEmpleado()">✕</button>
             </div>
             <form id="nuevoEmpleadoForm">
@@ -881,7 +881,7 @@
                     await dbRef.empleados.set(empleadosObj);
 
                     await dbRef.inicializado.set({
-                        fecha: new Date().toISOString(), version: '10.0',
+                        fecha: new Date().toISOString(), version: '11.0',
                         empleadosCargados: EMPLEADOS_INICIALES.length
                     });
                 }
@@ -976,7 +976,7 @@
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             if (!datosCargados) {
-                document.getElementById('loginError').textContent = ' Cargando datos... espera un momento.';
+                document.getElementById('loginError').textContent = '⏳ Cargando datos... espera un momento.';
                 document.getElementById('loginError').classList.add('show');
                 return;
             }
@@ -1252,7 +1252,7 @@
                         actualizarEmpleados();
                         alert('✅ Sección "' + nombreTrim + '" creada correctamente.');
                     } else {
-                        alert('⚠️ Esa sección ya existe en este servicio.');
+                        alert('️ Esa sección ya existe en este servicio.');
                         select.value = '';
                     }
                 } else {
@@ -1296,7 +1296,7 @@
 
         document.getElementById('nuevoEmpleadoForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
             const nombre = document.getElementById('nuevoEmpNombre').value.trim();
             const telefono = document.getElementById('nuevoEmpTelefono').value.trim();
             const servicio = document.getElementById('servicio').value;
@@ -1391,7 +1391,7 @@
             }
             empty.style.display = 'none'; table.style.display = 'block';
             tbody.innerHTML = pedidosFiltrados.map(p => {
-                const quienRecogeHtml = p.quienRecoge ? '<span class="badge badge-collected"> ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
+                const quienRecogeHtml = p.quienRecoge ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
                 const accionesHtml = esAdmin 
                     ? '<div class="actions-cell"><button class="btn btn-edit" onclick="editarPedido(\'' + p.id + '\')">✏️</button><button class="btn btn-delete" onclick="eliminarPedido(\'' + p.id + '\')">🗑️</button></div>'
                     : '<span style="color:#999; font-size:0.85em;">—</span>';
@@ -1418,7 +1418,7 @@
 
         document.getElementById('pedidoForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
             const empleadoId = document.getElementById('empleado').value;
             const numDecimos = parseInt(document.getElementById('numDecimos').value) || 2;
             const servicio = document.getElementById('servicio').value;
@@ -1431,7 +1431,7 @@
             } else { showToast('⚠️', 'Selecciona un empleado válido', true); return; }
             const validacion = validarMaximoDecimos(nombre, numDecimos);
             if (!validacion.valido) {
-                let mensaje = ' ' + nombre + ' ya tiene ' + validacion.acumulados + ' décimo(s). ';
+                let mensaje = '🚫 ' + nombre + ' ya tiene ' + validacion.acumulados + ' décimo(s). ';
                 mensaje += 'Con ' + validacion.nuevos + ' nuevos llegaría a ' + validacion.total + ', pero el límite es ' + validacion.maximo + '. ';
                 if (validacion.disponibles > 0) mensaje += ' Aún puede solicitar ' + validacion.disponibles + ' más.';
                 else mensaje += 'Ya ha alcanzado el máximo.';
@@ -1453,7 +1453,7 @@
             this.reset();
             establecerFechaHoraActual();
             actualizarSelectServicios();
-            showToast('✅', '🎟️ ¡Décimo(s) de ' + nombre + ' registrado(s)!');
+            showToast('✅', '️ ¡Décimo(s) de ' + nombre + ' registrado(s)!');
         });
 
         function togglePagado(id) {
@@ -1462,12 +1462,12 @@
             if (p) {
                 p.pagado = !p.pagado;
                 firebaseGuardarPedido(p);
-                showToast(p.pagado ? '💰' : '', p.pagado ? '¡' + p.nombre + ' ha pagado!' : 'Pago pendiente de ' + p.nombre + '.');
+                showToast(p.pagado ? '💰' : '⏳', p.pagado ? '¡' + p.nombre + ' ha pagado!' : 'Pago pendiente de ' + p.nombre + '.');
             }
         }
 
         function toggleRecogido(id) {
-            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
             const p = pedidos.find(x => x.id === id);
             if (p) {
                 p.recogido = !p.recogido;
@@ -1477,11 +1477,11 @@
         }
 
         function eliminarPedido(id) {
-            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
             const p = pedidos.find(x => x.id === id);
             if (p && confirm('¿Eliminar el pedido de ' + p.nombre + '?')) {
                 firebaseEliminarPedido(id);
-                showToast('️', 'Pedido eliminado.');
+                showToast('🗑️', 'Pedido eliminado.');
             }
         }
 
@@ -1602,7 +1602,7 @@
             }).join('');
             document.querySelectorAll('.sort-icon').forEach(el => el.textContent = '');
             const sortIcon = document.getElementById('sort-' + ordenarPor);
-            if (sortIcon) sortIcon.textContent = ordenDireccion === 'asc' ? '⬆️' : '️';
+            if (sortIcon) sortIcon.textContent = ordenDireccion === 'asc' ? '️' : '⬇️';
         }
 
         function ordenarListado(campo) {
@@ -1698,7 +1698,7 @@
             const numDecimos = parseInt(document.getElementById('ocrDecimos').value);
             if (!servicio) { showToast('⚠️', 'Selecciona un servicio', true); return; }
             if (!fileInput.files || fileInput.files.length === 0) { showToast('⚠️', 'Selecciona un archivo', true); return; }
-            if (!numDecimos || numDecimos < 1) { showToast('⚠️', 'Introduce nº válido de décimos', true); return; }
+            if (!numDecimos || numDecimos < 1) { showToast('️', 'Introduce nº válido de décimos', true); return; }
             
             const file = fileInput.files[0];
             const progressContainer = document.getElementById('ocrProgressContainer');
@@ -1710,7 +1710,7 @@
             progressContainer.style.display = 'block';
             resultContainer.style.display = 'none';
             btnProcesar.disabled = true;
-            btnProcesar.textContent = ' Procesando...';
+            btnProcesar.textContent = '⏳ Procesando...';
             
             let texto = '';
             
@@ -1756,7 +1756,7 @@
                         logger: m => {
                             if (m.status === 'recognizing text') {
                                 const progress = Math.round(m.progress * 100);
-                                statusEl.textContent = '🔍 Reconociendo texto... ' + progress + '%';
+                                statusEl.textContent = ' Reconociendo texto... ' + progress + '%';
                                 progressFill.style.width = (20 + progress * 0.65) + '%';
                             }
                         }
@@ -1768,7 +1768,7 @@
                     throw new Error('Formato no soportado. Usa PDF o imagen.');
                 }
                 
-                statusEl.textContent = '🔎 Buscando empleados...';
+                statusEl.textContent = ' Buscando empleados...';
                 progressFill.style.width = '90%';
                 
                 const resultado = buscarEmpleadosEnTexto(texto, servicio);
@@ -1792,10 +1792,10 @@
             } catch (error) {
                 console.error('Error OCR:', error);
                 statusEl.textContent = '❌ Error: ' + (error.message || 'desconocido');
-                showToast('⚠️', 'Error al procesar: ' + (error.message || 'archivo no válido'), true);
+                showToast('️', 'Error al procesar: ' + (error.message || 'archivo no válido'), true);
             } finally {
                 btnProcesar.disabled = false;
-                btnProcesar.textContent = '🔍 Procesar archivo';
+                btnProcesar.textContent = ' Procesar archivo';
             }
         }
 
@@ -1816,7 +1816,7 @@
             }
             
             if (resultado.noEncontrados.length > 0) {
-                html += '<h4 style="margin-top:15px; color:#c41e3a;">⚠️ Empleados NO encontrados (' + resultado.noEncontrados.length + '):</h4>';
+                html += '<h4 style="margin-top:15px; color:#c41e3a;">️ Empleados NO encontrados (' + resultado.noEncontrados.length + '):</h4>';
                 html += '<div style="font-size:0.8em; color:#666; margin-bottom:10px;">Pulsa "➕ Crear" para darlos de alta y crear su pedido automáticamente. Se te pedirá confirmación.</div>';
                 resultado.noEncontrados.forEach((emp, idx) => {
                     const decimos = emp.decimosPDF || window.ocrResultado.numDecimos || 2;
@@ -1863,7 +1863,7 @@
                 const seccionNombre = prompt('📂 Sección para "' + nombreDetectado + '":\n\nSecciones disponibles:\n' + listaSecciones + '\n\nEscribe el nombre de una sección existente o una nueva:', seccionesDelServicio[0].nombre);
                 
                 if (!seccionNombre || !seccionNombre.trim()) {
-                    showToast('⚠️', 'Se necesita una sección.', true);
+                    showToast('️', 'Se necesita una sección.', true);
                     return;
                 }
                 
@@ -1884,9 +1884,9 @@
                     }
                 }
             } else {
-                seccion = prompt(' Introduce la sección para "' + nombreDetectado + '":');
+                seccion = prompt('📂 Introduce la sección para "' + nombreDetectado + '":');
                 if (!seccion || !seccion.trim()) {
-                    showToast('️', 'Se necesita una sección.', true);
+                    showToast('⚠️', 'Se necesita una sección.', true);
                     return;
                 }
                 seccion = seccion.trim().toUpperCase();
@@ -1942,155 +1942,140 @@
             showToast('✅', '"' + nombreDetectado + '" creado y pedido registrado (' + decimosDetectados + ' décimos)');
         }
 
-function buscarEmpleadosEnTexto(texto, servicio) {
-    const encontrados = [];
-    const noEncontrados = [];
-    const nombresProcesados = new Set();
-    
-    const empleadosDelServicio = empleados.filter(e => e.servicio === servicio);
-    
-    // 1️⃣ Primero buscar empleados existentes en TODO el texto
-    empleadosDelServicio.forEach(emp => {
-        const nombreNorm = emp.nombre.toLowerCase()
-            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-            .replace(/[^a-z\s]/g, '')
-            .replace(/\s+/g, ' ').trim();
-        
-        const palabras = nombreNorm.split(' ').filter(p => p.length > 2);
-        if (palabras.length < 2) return;
-        
-        const textoNorm = texto.toLowerCase()
-            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-            .replace(/[^a-z\s]/g, '')
-            .replace(/\s+/g, ' ');
-        
-        const palabrasEncontradas = palabras.filter(p => textoNorm.includes(p));
-        const umbral = Math.max(2, Math.ceil(palabras.length * 0.7));
-        if (palabrasEncontradas.length >= umbral && !nombresProcesados.has(emp.nombre)) {
-            encontrados.push({ ...emp, decimosPDF: 2 });
-            nombresProcesados.add(emp.nombre);
-        }
-    });
-    
-    // 2️⃣ Detectar nombres propios en el texto con múltiples estrategias
-    const lineas = texto.split('\n').map(l => l.trim()).filter(l => l.length > 3);
-    const empleadosDetectados = [];
-    
-    // Estrategia A: Buscar líneas que contengan un patrón de nombre + apellidos + número al final
-    // Ejemplo: "PABLO ALBARADO FERNÁNDEZ DESARROLLO RURAL Y MEDIO AMBIENTE MONTEL 1"
-    const regexLineaCompleta = /^([A-ZÁÉÍÓÚÑÜ][A-ZÁÉÍÓÚÑÜ\s]{2,}?)\s+\d{1,2}\s*$/;
-    
-    lineas.forEach(linea => {
-        // Buscar número al final de la línea (1 o 2 décimos)
-        const matchNumero = linea.match(/\s+(\d{1,2})\s*$/);
-        const decimos = matchNumero ? parseInt(matchNumero[1]) : 2;
-        
-        // Quitar el número del final para analizar el nombre
-        const lineaSinNumero = matchNumero ? linea.replace(/\s+\d{1,2}\s*$/, '') : linea;
-        
-        // Buscar secuencia de palabras en mayúsculas que parezcan nombre propio (2-4 palabras)
-        const palabras = lineaSinNumero.split(/\s+/).filter(p => p.length > 0);
-        
-        // Buscar el inicio del nombre (primera palabra en mayúsculas que no sea un encabezado)
-        const encabezados = ['NOMBRE', 'APELLIDOS', 'SERVICIO', 'SECCIÓN', 'CANTIDAD', 'TOTAL', 'PAGINA', 'FECHA', 'HORA', 'DECIMOS', 'IMPORTE', 'LOTERIA', 'NAVIDAD', 'ESCUELA', 'TALLER', 'RELACIÓN', 'PERSONAL', 'CENTRO', 'TRABAJO'];
-        
-        let inicioNombre = -1;
-        for (let i = 0; i < palabras.length; i++) {
-            const palabra = palabras[i].toUpperCase();
-            if (/^[A-ZÁÉÍÓÚÑÜ][A-ZÁÉÍÓÚÑÜ\s]*$/.test(palabra) && !encabezados.includes(palabra) && palabra.length >= 2) {
-                // Verificar que no sea parte del servicio (palabras muy comunes)
-                const palabrasServicio = ['DESARROLLO', 'RURAL', 'MEDIO', 'AMBIENTE', 'MONTEL', 'SAN', 'ISIDRO', 'CAYETANO', 'VIVERO', 'RIBASECA', 'BUSTILLO', 'PÁRAMO', 'PARQUE', 'AFE', 'APICULTURA', 'VIVEROS', 'FORESTALES', 'T.', 'DE', 'LA', 'DEL', 'LOS', 'Y'];
-                if (!palabrasServicio.includes(palabra) || i === 0) {
-                    inicioNombre = i;
-                    break;
-                }
-            }
-        }
-        
-        if (inicioNombre >= 0) {
-            // Tomar 2-4 palabras como nombre completo
-            const numPalabrasNombre = Math.min(4, palabras.length - inicioNombre);
-            const nombreCompleto = palabras.slice(inicioNombre, inicioNombre + numPalabrasNombre).join(' ');
+        function buscarEmpleadosEnTexto(texto, servicio) {
+            const encontrados = [];
+            const noEncontrados = [];
+            const nombresProcesados = new Set();
             
-            if (nombreCompleto.split(' ').length >= 2 && nombreCompleto.length >= 6) {
+            const empleadosDelServicio = empleados.filter(e => e.servicio === servicio);
+            
+            // 1️⃣ Primero buscar empleados existentes en TODO el texto
+            empleadosDelServicio.forEach(emp => {
+                const nombreNorm = emp.nombre.toLowerCase()
+                    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                    .replace(/[^a-z\s]/g, '')
+                    .replace(/\s+/g, ' ').trim();
+                
+                const palabras = nombreNorm.split(' ').filter(p => p.length > 2);
+                if (palabras.length < 2) return;
+                
+                const textoNorm = texto.toLowerCase()
+                    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                    .replace(/[^a-z\s]/g, '')
+                    .replace(/\s+/g, ' ');
+                
+                const palabrasEncontradas = palabras.filter(p => textoNorm.includes(p));
+                const umbral = Math.max(2, Math.ceil(palabras.length * 0.7));
+                if (palabrasEncontradas.length >= umbral && !nombresProcesados.has(emp.nombre)) {
+                    encontrados.push({ ...emp, decimosPDF: 2 });
+                    nombresProcesados.add(emp.nombre);
+                }
+            });
+            
+            // 2️⃣ Detectar formato de tabla con | (todas las páginas)
+            // Filtrar líneas válidas: empiezan con | y NO son separadores
+            const todasLasLineas = texto.split('\n').map(l => l.trim());
+            const lineasValidas = todasLasLineas.filter(l => {
+                if (!l.startsWith('|')) return false;
+                if (l.includes('---')) return false;
+                const contenido = l.replace(/^\|\s*/, '').trim();
+                if (contenido.length < 1) return false;
+                return true;
+            });
+            
+            const empleadosDetectados = [];
+            
+            // Buscar patrón de 5 líneas consecutivas: NOMBRE | APELLIDOS | SERVICIO | CENTRO | DÉCIMOS
+            for (let i = 0; i < lineasValidas.length - 4; i++) {
+                const l1 = lineasValidas[i].replace(/^\|\s*/, '').trim();
+                const l2 = lineasValidas[i + 1].replace(/^\|\s*/, '').trim();
+                const l3 = lineasValidas[i + 2].replace(/^\|\s*/, '').trim();
+                const l4 = lineasValidas[i + 3].replace(/^\|\s*/, '').trim();
+                const l5 = lineasValidas[i + 4].replace(/^\|\s*/, '').trim();
+                
+                // La última línea debe ser 1 o 2 (décimos)
+                const decimos = parseInt(l5);
+                if (isNaN(decimos) || (decimos !== 1 && decimos !== 2)) continue;
+                
+                // La tercera línea debe contener "DESARROLLO" o ser el servicio
+                if (!l3.toUpperCase().includes('DESARROLLO') && !l3.toUpperCase().includes('RURAL') && !l3.toUpperCase().includes('MEDIO')) continue;
+                
+                // Validar que l1 y l2 parecen nombre y apellidos
+                if (l1.length < 2 || l2.length < 4) continue;
+                
+                // Ignorar encabezados
+                const encabezados = ['NOMBRE', 'APELLIDOS', 'SERVICIO', 'SECCIÓN', 'CANTIDAD', 'TOTAL', 'CENTRO', 'TRABAJO', 'DÉCIMOS', 'DECIMOS', 'RELACIÓN', 'PERSONAL'];
+                if (encabezados.some(e => l1.toUpperCase().includes(e))) continue;
+                if (encabezados.some(e => l2.toUpperCase().includes(e))) continue;
+                
+                const nombreCompleto = (l1 + ' ' + l2).toUpperCase().trim();
+                
                 empleadosDetectados.push({
-                    nombre: nombreCompleto.toUpperCase(),
+                    nombre: nombreCompleto,
                     decimos: decimos
                 });
-            }
-        }
-    });
-    
-    // Estrategia B: Si no detectó nada, buscar nombres en líneas consecutivas
-    // (cuando PDF.js separa nombre y apellidos en líneas diferentes)
-    if (empleadosDetectados.length === 0) {
-        for (let i = 0; i < lineas.length - 1; i++) {
-            const linea1 = lineas[i];
-            const linea2 = lineas[i + 1];
-            const linea3 = lineas[i + 2];
-            
-            // Patrón: línea con nombre corto + línea con apellidos + línea con número
-            const esNombreCorto = /^[A-ZÁÉÍÓÚÑÜ][A-ZÁÉÍÓÚÑÜ\s]{1,15}$/.test(linea1);
-            const esApellidos = /^[A-ZÁÉÍÓÚÑÜ][A-ZÁÉÍÓÚÑÜ\s]{5,}$/.test(linea2);
-            const matchNum = linea3 ? linea3.match(/^\s*(\d{1,2})\s*$/) : null;
-            
-            if (esNombreCorto && esApellidos) {
-                const nombreCompleto = (linea1 + ' ' + linea2).toUpperCase().trim();
-                const decimos = matchNum ? parseInt(matchNum[1]) : 2;
                 
-                const encabezados = ['NOMBRE', 'APELLIDOS', 'SERVICIO', 'SECCIÓN', 'CANTIDAD'];
-                if (!encabezados.some(e => nombreCompleto.includes(e))) {
-                    empleadosDetectados.push({
-                        nombre: nombreCompleto,
-                        decimos: decimos
-                    });
-                }
+                i += 4; // Saltar las 4 líneas siguientes
             }
-        }
-    }
-    
-    // 3️⃣ Procesar empleados detectados: buscar en BD o agregar a "no encontrados"
-    empleadosDetectados.forEach(empDetectado => {
-        const nombreNorm = empDetectado.nombre.toLowerCase()
-            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-            .replace(/[^a-z\s]/g, '')
-            .replace(/\s+/g, ' ').trim();
-        
-        // Ya fue encontrado en paso 1?
-        if (nombresProcesados.has(empDetectado.nombre)) return;
-        
-        // Buscar coincidencia en empleados del servicio
-        let empleadoEncontrado = null;
-        
-        for (const emp of empleadosDelServicio) {
-            const empNorm = emp.nombre.toLowerCase()
-                .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-                .replace(/[^a-z\s]/g, '')
-                .replace(/\s+/g, ' ').trim();
             
-            if (empNorm === nombreNorm || empNorm.includes(nombreNorm) || nombreNorm.includes(empNorm)) {
-                empleadoEncontrado = emp;
-                break;
+            // 3️⃣ Si no detectó nada con el patrón de 5 líneas, buscar formato "listado 3.pdf"
+            if (empleadosDetectados.length === 0) {
+                todasLasLineas.forEach(linea => {
+                    const match = linea.match(/^([A-ZÁÉÍÓÚÑÜ][A-ZÁÉÍÓÚÑÜ\s]{5,}?)\s+\d{1,2}\s*$/);
+                    if (match) {
+                        const nombreCompleto = match[1].trim();
+                        const decimosStr = linea.match(/\s+(\d{1,2})\s*$/);
+                        const decimos = decimosStr ? parseInt(decimosStr[1]) : 2;
+                        
+                        const encabezados = ['NOMBRE', 'APELLIDOS', 'SERVICIO', 'SECCIÓN', 'CANTIDAD', 'TOTAL', 'RELACIÓN', 'PERSONAL'];
+                        if (!encabezados.some(e => nombreCompleto.toUpperCase().includes(e))) {
+                            empleadosDetectados.push({ nombre: nombreCompleto, decimos: decimos });
+                        }
+                    }
+                });
             }
-        }
-        
-        if (empleadoEncontrado && !nombresProcesados.has(empleadoEncontrado.nombre)) {
-            encontrados.push({
-                ...empleadoEncontrado,
-                decimosPDF: empDetectado.decimos
+            
+            // 4️⃣ Procesar empleados detectados
+            empleadosDetectados.forEach(empDetectado => {
+                const nombreNorm = empDetectado.nombre.toLowerCase()
+                    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                    .replace(/[^a-z\s]/g, '')
+                    .replace(/\s+/g, ' ').trim();
+                
+                if (nombresProcesados.has(empDetectado.nombre)) return;
+                
+                let empleadoEncontrado = null;
+                
+                for (const emp of empleadosDelServicio) {
+                    const empNorm = emp.nombre.toLowerCase()
+                        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                        .replace(/[^a-z\s]/g, '')
+                        .replace(/\s+/g, ' ').trim();
+                    
+                    if (empNorm === nombreNorm || empNorm.includes(nombreNorm) || nombreNorm.includes(empNorm)) {
+                        empleadoEncontrado = emp;
+                        break;
+                    }
+                }
+                
+                if (empleadoEncontrado && !nombresProcesados.has(empleadoEncontrado.nombre)) {
+                    encontrados.push({
+                        ...empleadoEncontrado,
+                        decimosPDF: empDetectado.decimos
+                    });
+                    nombresProcesados.add(empleadoEncontrado.nombre);
+                } else if (!nombresProcesados.has(empDetectado.nombre)) {
+                    noEncontrados.push({
+                        nombre: empDetectado.nombre,
+                        decimosPDF: empDetectado.decimos
+                    });
+                    nombresProcesados.add(empDetectado.nombre);
+                }
             });
-            nombresProcesados.add(empleadoEncontrado.nombre);
-        } else if (!nombresProcesados.has(empDetectado.nombre)) {
-            noEncontrados.push({
-                nombre: empDetectado.nombre,
-                decimosPDF: empDetectado.decimos
-            });
-            nombresProcesados.add(empDetectado.nombre);
+            
+            return { encontrados, noEncontrados };
         }
-    });
-    
-    return { encontrados, noEncontrados };
-}
+
         function confirmarPedidosOCR() {
             if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
             const resultado = window.ocrResultado;
@@ -2158,7 +2143,7 @@ function buscarEmpleadosEnTexto(texto, servicio) {
             const { id, ...datos } = pedido;
             dbRef.pedidos.child(id).set(datos)
                 .then(() => setSyncStatus('online'))
-                .catch((err) => { setSyncStatus('offline', '❌ Error'); showToast('⚠️', 'No se pudo guardar', true); });
+                .catch((err) => { setSyncStatus('offline', '❌ Error'); showToast('️', 'No se pudo guardar', true); });
         }
 
         function firebaseEliminarPedido(id) {
@@ -2269,7 +2254,7 @@ function buscarEmpleadosEnTexto(texto, servicio) {
             const rows = pedidosExportar.map(p => [p.nombre, p.servicio||'-', p.seccion||'-', p.telefono||'-', p.numDecimos, (p.numDecimos*PRECIO_DECIMO).toLocaleString('es-ES')+'€', p.fechaSolicitud||'-', p.pagado?'Si':'No']);
             doc.autoTable(cols, rows, { startY: 36, theme: 'striped', headStyles: { fillColor: [26, 58, 92], fontSize: 7 }, bodyStyles: { fontSize: 7 } });
             doc.save('listado-general-loteria-2026.pdf');
-            showToast('📄', '📄 PDF generado.');
+            showToast('📄', ' PDF generado.');
         }
 
         function exportarListadoGeneralCSV() {
@@ -2279,7 +2264,7 @@ function buscarEmpleadosEnTexto(texto, servicio) {
             pedidosExportar.forEach(p => { csv += '"'+p.nombre+'","'+(p.servicio||'')+'","'+(p.seccion||'')+'","'+(p.telefono||'')+'",'+p.numDecimos+','+(p.numDecimos*PRECIO_DECIMO)+',"'+(p.fechaSolicitud||'')+'","'+(p.horaSolicitud||'')+'",'+(p.pagado?'Si':'No')+','+(p.recogido?'Si':'No')+'\n'; });
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'listado-general-2026.csv'; link.click();
-            showToast('', '📊 CSV generado.');
+            showToast('📊', '📊 CSV generado.');
         }
 
         function imprimirListadoGeneral() {
