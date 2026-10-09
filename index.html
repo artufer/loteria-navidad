@@ -1942,140 +1942,120 @@
             showToast('✅', '"' + nombreDetectado + '" creado y pedido registrado (' + decimosDetectados + ' décimos)');
         }
 
-        function buscarEmpleadosEnTexto(texto, servicio) {
-            const encontrados = [];
-            const noEncontrados = [];
-            const nombresProcesados = new Set();
-            
-            const empleadosDelServicio = empleados.filter(e => e.servicio === servicio);
-            
-            // 1️⃣ Primero buscar empleados existentes en TODO el texto
-            empleadosDelServicio.forEach(emp => {
-                const nombreNorm = emp.nombre.toLowerCase()
-                    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-                    .replace(/[^a-z\s]/g, '')
-                    .replace(/\s+/g, ' ').trim();
-                
-                const palabras = nombreNorm.split(' ').filter(p => p.length > 2);
-                if (palabras.length < 2) return;
-                
-                const textoNorm = texto.toLowerCase()
-                    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-                    .replace(/[^a-z\s]/g, '')
-                    .replace(/\s+/g, ' ');
-                
-                const palabrasEncontradas = palabras.filter(p => textoNorm.includes(p));
-                const umbral = Math.max(2, Math.ceil(palabras.length * 0.7));
-                if (palabrasEncontradas.length >= umbral && !nombresProcesados.has(emp.nombre)) {
-                    encontrados.push({ ...emp, decimosPDF: 2 });
-                    nombresProcesados.add(emp.nombre);
-                }
-            });
-            
-            // 2️⃣ Detectar formato de tabla con | (todas las páginas)
-            // Filtrar líneas válidas: empiezan con | y NO son separadores
-            const todasLasLineas = texto.split('\n').map(l => l.trim());
-            const lineasValidas = todasLasLineas.filter(l => {
-                if (!l.startsWith('|')) return false;
-                if (l.includes('---')) return false;
-                const contenido = l.replace(/^\|\s*/, '').trim();
-                if (contenido.length < 1) return false;
-                return true;
-            });
-            
-            const empleadosDetectados = [];
-            
-            // Buscar patrón de 5 líneas consecutivas: NOMBRE | APELLIDOS | SERVICIO | CENTRO | DÉCIMOS
-            for (let i = 0; i < lineasValidas.length - 4; i++) {
-                const l1 = lineasValidas[i].replace(/^\|\s*/, '').trim();
-                const l2 = lineasValidas[i + 1].replace(/^\|\s*/, '').trim();
-                const l3 = lineasValidas[i + 2].replace(/^\|\s*/, '').trim();
-                const l4 = lineasValidas[i + 3].replace(/^\|\s*/, '').trim();
-                const l5 = lineasValidas[i + 4].replace(/^\|\s*/, '').trim();
-                
-                // La última línea debe ser 1 o 2 (décimos)
-                const decimos = parseInt(l5);
-                if (isNaN(decimos) || (decimos !== 1 && decimos !== 2)) continue;
-                
-                // La tercera línea debe contener "DESARROLLO" o ser el servicio
-                if (!l3.toUpperCase().includes('DESARROLLO') && !l3.toUpperCase().includes('RURAL') && !l3.toUpperCase().includes('MEDIO')) continue;
-                
-                // Validar que l1 y l2 parecen nombre y apellidos
-                if (l1.length < 2 || l2.length < 4) continue;
-                
-                // Ignorar encabezados
-                const encabezados = ['NOMBRE', 'APELLIDOS', 'SERVICIO', 'SECCIÓN', 'CANTIDAD', 'TOTAL', 'CENTRO', 'TRABAJO', 'DÉCIMOS', 'DECIMOS', 'RELACIÓN', 'PERSONAL'];
-                if (encabezados.some(e => l1.toUpperCase().includes(e))) continue;
-                if (encabezados.some(e => l2.toUpperCase().includes(e))) continue;
-                
-                const nombreCompleto = (l1 + ' ' + l2).toUpperCase().trim();
-                
-                empleadosDetectados.push({
-                    nombre: nombreCompleto,
-                    decimos: decimos
-                });
-                
-                i += 4; // Saltar las 4 líneas siguientes
-            }
-            
-            // 3️⃣ Si no detectó nada con el patrón de 5 líneas, buscar formato "listado 3.pdf"
-            if (empleadosDetectados.length === 0) {
-                todasLasLineas.forEach(linea => {
-                    const match = linea.match(/^([A-ZÁÉÍÓÚÑÜ][A-ZÁÉÍÓÚÑÜ\s]{5,}?)\s+\d{1,2}\s*$/);
-                    if (match) {
-                        const nombreCompleto = match[1].trim();
-                        const decimosStr = linea.match(/\s+(\d{1,2})\s*$/);
-                        const decimos = decimosStr ? parseInt(decimosStr[1]) : 2;
-                        
-                        const encabezados = ['NOMBRE', 'APELLIDOS', 'SERVICIO', 'SECCIÓN', 'CANTIDAD', 'TOTAL', 'RELACIÓN', 'PERSONAL'];
-                        if (!encabezados.some(e => nombreCompleto.toUpperCase().includes(e))) {
-                            empleadosDetectados.push({ nombre: nombreCompleto, decimos: decimos });
-                        }
-                    }
-                });
-            }
-            
-            // 4️⃣ Procesar empleados detectados
-            empleadosDetectados.forEach(empDetectado => {
-                const nombreNorm = empDetectado.nombre.toLowerCase()
-                    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-                    .replace(/[^a-z\s]/g, '')
-                    .replace(/\s+/g, ' ').trim();
-                
-                if (nombresProcesados.has(empDetectado.nombre)) return;
-                
-                let empleadoEncontrado = null;
-                
-                for (const emp of empleadosDelServicio) {
-                    const empNorm = emp.nombre.toLowerCase()
-                        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-                        .replace(/[^a-z\s]/g, '')
-                        .replace(/\s+/g, ' ').trim();
-                    
-                    if (empNorm === nombreNorm || empNorm.includes(nombreNorm) || nombreNorm.includes(empNorm)) {
-                        empleadoEncontrado = emp;
-                        break;
-                    }
-                }
-                
-                if (empleadoEncontrado && !nombresProcesados.has(empleadoEncontrado.nombre)) {
-                    encontrados.push({
-                        ...empleadoEncontrado,
-                        decimosPDF: empDetectado.decimos
-                    });
-                    nombresProcesados.add(empleadoEncontrado.nombre);
-                } else if (!nombresProcesados.has(empDetectado.nombre)) {
-                    noEncontrados.push({
-                        nombre: empDetectado.nombre,
-                        decimosPDF: empDetectado.decimos
-                    });
-                    nombresProcesados.add(empDetectado.nombre);
-                }
-            });
-            
-            return { encontrados, noEncontrados };
+function buscarEmpleadosEnTexto(texto, servicio) {
+    const encontrados = [];
+    const noEncontrados = [];
+    const nombresProcesados = new Set();
+    
+    const empleadosDelServicio = empleados.filter(e => e.servicio === servicio);
+    
+    // 1️⃣ Primero buscar empleados existentes en TODO el texto
+    empleadosDelServicio.forEach(emp => {
+        const nombreNorm = emp.nombre.toLowerCase()
+            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z\s]/g, '')
+            .replace(/\s+/g, ' ').trim();
+        
+        const palabras = nombreNorm.split(' ').filter(p => p.length > 2);
+        if (palabras.length < 2) return;
+        
+        const textoNorm = texto.toLowerCase()
+            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z\s]/g, '')
+            .replace(/\s+/g, ' ');
+        
+        const palabrasEncontradas = palabras.filter(p => textoNorm.includes(p));
+        const umbral = Math.max(2, Math.ceil(palabras.length * 0.7));
+        if (palabrasEncontradas.length >= umbral && !nombresProcesados.has(emp.nombre)) {
+            encontrados.push({ ...emp, decimosPDF: 2 });
+            nombresProcesados.add(emp.nombre);
         }
-
+    });
+    
+    // 2️⃣ EXTRAER TODOS LOS EMPLEADOS DEL PDF (todas las páginas)
+    // Dividir el texto en bloques separados por líneas de separación
+    const bloques = texto.split(/\|?\s*---\|?/);
+    
+    const empleadosDetectados = [];
+    
+    bloques.forEach(bloque => {
+        // En cada bloque, buscar líneas que empiecen con |
+        const lineas = bloque.split('\n')
+            .map(l => l.trim())
+            .filter(l => l.startsWith('|') && l.length > 2);
+        
+        // Procesar líneas de 5 en 5 (Nombre | Apellidos | Servicio | Centro | Décimos)
+        for (let i = 0; i < lineas.length - 4; i += 5) {
+            const l1 = lineas[i].replace(/^\|\s*/, '').trim();
+            const l2 = lineas[i + 1].replace(/^\|\s*/, '').trim();
+            const l3 = lineas[i + 2].replace(/^\|\s*/, '').trim();
+            const l4 = lineas[i + 3].replace(/^\|\s*/, '').trim();
+            const l5 = lineas[i + 4].replace(/^\|\s*/, '').trim();
+            
+            // La última línea debe ser 1 o 2 (décimos)
+            const decimos = parseInt(l5);
+            if (isNaN(decimos) || (decimos !== 1 && decimos !== 2)) continue;
+            
+            // Validar que parece un nombre propio
+            if (l1.length < 2 || l2.length < 4) continue;
+            
+            // Ignorar encabezados
+            const encabezados = ['NOMBRE', 'APELLIDOS', 'SERVICIO', 'SECCIÓN', 'CANTIDAD', 'TOTAL', 'CENTRO', 'TRABAJO', 'DÉCIMOS', 'DECIMOS', 'RELACIÓN', 'PERSONAL', 'Nombre', 'Apellidos'];
+            if (encabezados.some(e => l1.toUpperCase() === e.toUpperCase())) continue;
+            if (encabezados.some(e => l2.toUpperCase() === e.toUpperCase())) continue;
+            
+            const nombreCompleto = (l1 + ' ' + l2).toUpperCase().trim();
+            
+            empleadosDetectados.push({
+                nombre: nombreCompleto,
+                decimos: decimos
+            });
+        }
+    });
+    
+    // 3️ Si no detectó nada con bloques, buscar formato alternativo
+    if (empleadosDetectados.length === 0) {
+        const todasLasLineas = texto.split('\n').map(l => l.trim());
+        const lineasValidas = todasLasLineas.filter(l => {
+            if (!l.startsWith('|')) return false;
+            if (l.includes('---')) return false;
+            const contenido = l.replace(/^\|\s*/, '').trim();
+            if (contenido.length < 1) return false;
+            return true;
+        });
+        
+        for (let i = 0; i < lineasValidas.length - 4; i += 5) {
+            const l1 = lineasValidas[i].replace(/^\|\s*/, '').trim();
+            const l2 = lineasValidas[i + 1].replace(/^\|\s*/, '').trim();
+            const l5 = lineasValidas[i + 4].replace(/^\|\s*/, '').trim();
+            
+            const decimos = parseInt(l5);
+            if (isNaN(decimos) || (decimos !== 1 && decimos !== 2)) continue;
+            if (l1.length < 2 || l2.length < 4) continue;
+            
+            const encabezados = ['NOMBRE', 'APELLIDOS', 'SERVICIO', 'SECCIÓN', 'CANTIDAD', 'TOTAL', 'CENTRO', 'TRABAJO', 'DÉCIMOS', 'DECIMOS', 'RELACIÓN', 'PERSONAL', 'Nombre', 'Apellidos'];
+            if (encabezados.some(e => l1.toUpperCase() === e.toUpperCase())) continue;
+            if (encabezados.some(e => l2.toUpperCase() === e.toUpperCase())) continue;
+            
+            const nombreCompleto = (l1 + ' ' + l2).toUpperCase().trim();
+            empleadosDetectados.push({ nombre: nombreCompleto, decimos: decimos });
+        }
+    }
+    
+    // 4️ Procesar empleados detectados
+    empleadosDetectados.forEach(empDetectado => {
+        const nombreNorm = empDetectado.nombre.toLowerCase()
+            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z\s]/g, '')
+            .replace(/\s+/g, ' ').trim();
+        
+        if (nombresProcesados.has(empDetectado.nombre)) return;
+        
+        let empleadoEncontrado = null;
+        
+        for (const emp of empleadosDelServicio) {
+            const empNorm = emp.nombre.toLowerCase()
+                .normalize('
         function confirmarPedidosOCR() {
             if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
             const resultado = window.ocrResultado;
