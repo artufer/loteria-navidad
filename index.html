@@ -1755,67 +1755,131 @@
             }).join('');
         }
 
-        async function procesarOCR() {
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
-            const fileInput = document.getElementById('ocrFile');
-            const servicio = document.getElementById('ocrServicio').value;
-            const numDecimos = parseInt(document.getElementById('ocrDecimos').value);
-            if (!servicio) { showToast('⚠️', 'Selecciona un servicio', true); return; }
-            if (!fileInput.files || fileInput.files.length === 0) { showToast('⚠️', 'Selecciona un archivo PDF', true); return; }
-            if (!numDecimos || numDecimos < 1) { showToast('⚠️', 'Introduce nº válido de décimos', true); return; }
-            const file = fileInput.files[0];
-            const progressContainer = document.getElementById('ocrProgressContainer');
-            const resultContainer = document.getElementById('ocrResultContainer');
-            const statusEl = document.getElementById('ocrStatus');
-            const progressFill = document.getElementById('ocrProgressFill');
-            const btnProcesar = document.getElementById('btnProcesarOCR');
-            progressContainer.style.display = 'block';
-            resultContainer.style.display = 'none';
-            btnProcesar.disabled = true;
-            btnProcesar.textContent = ' Procesando...';
-            try {
-                statusEl.textContent = '📖 Leyendo PDF...';
-                progressFill.style.width = '10%';
-                const result = await Tesseract.recognize(file, 'spa', {
-                    logger: m => {
-                        if (m.status === 'recognizing text') {
-                            const progress = Math.round(m.progress * 100);
-                            statusEl.textContent = ' Reconociendo texto... ' + progress + '%';
-                            progressFill.style.width = (10 + progress * 0.8) + '%';
-                        } else if (m.status) {
-                            statusEl.textContent = '📋 ' + m.status;
-                        }
-                    }
+async function procesarOCR() {
+    if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
+    const fileInput = document.getElementById('ocrFile');
+    const servicio = document.getElementById('ocrServicio').value;
+    const numDecimos = parseInt(document.getElementById('ocrDecimos').value);
+    if (!servicio) { showToast('⚠️', 'Selecciona un servicio', true); return; }
+    if (!fileInput.files || fileInput.files.length === 0) { showToast('⚠️', 'Selecciona un archivo', true); return; }
+    if (!numDecimos || numDecimos < 1) { showToast('⚠️', 'Introduce nº válido de décimos', true); return; }
+    
+    const file = fileInput.files[0];
+    const progressContainer = document.getElementById('ocrProgressContainer');
+    const resultContainer = document.getElementById('ocrResultContainer');
+    const statusEl = document.getElementById('ocrStatus');
+    const progressFill = document.getElementById('ocrProgressFill');
+    const btnProcesar = document.getElementById('btnProcesarOCR');
+    
+    progressContainer.style.display = 'block';
+    resultContainer.style.display = 'none';
+    btnProcesar.disabled = true;
+    btnProcesar.textContent = ' Procesando...';
+    
+    let texto = '';
+    
+    try {
+        // Detectar tipo de archivo
+        const esPDF = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+        const esImagen = file.type.startsWith('image/');
+        
+        if (esPDF) {
+            // 📄 PDF: usar PDF.js para extraer texto
+            statusEl.textContent = '📖 Leyendo PDF...';
+            progressFill.style.width = '20%';
+            
+            // Cargar PDF.js dinámicamente
+            if (!window.pdfjsLib) {
+                await new Promise((resolve, reject) => {
+                    const script = document.createElement('script');
+                    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+                    script.onload = resolve;
+                    script.onerror = reject;
+                    document.head.appendChild(script);
                 });
-                statusEl.textContent = '🔎 Analizando texto...';
-                progressFill.style.width = '95%';
-                const texto = result.data.text;
-                const empleadosEncontrados = buscarEmpleadosEnTexto(texto, servicio);
-                pedidosPendientesOCR = empleadosEncontrados.found.map(emp => ({ empleado: emp, numDecimos, servicio }));
-                progressFill.style.width = '100%';
-                statusEl.textContent = '✅ Proceso completado';
-                const resultList = document.getElementById('ocrResultList');
-                document.getElementById('ocrTotalDetectados').textContent = empleadosEncontrados.found.length;
-                let html = '<h4 style="margin-top:15px;">✅ Empleados encontrados (' + empleadosEncontrados.found.length + '):</h4>';
-                empleadosEncontrados.found.forEach(emp => {
-                    html += '<div class="ocr-result-item found">✅ ' + emp.nombre + ' - ' + emp.seccion + ' (Tel: ' + (emp.telefono || 'N/A') + ')</div>';
-                });
-                if (empleadosEncontrados.notFound.length > 0) {
-                    html += '<h4 style="margin-top:15px; color:#c41e3a;">❌ No encontrados (' + empleadosEncontrados.notFound.length + '):</h4>';
-                    empleadosEncontrados.notFound.forEach(n => { html += '<div class="ocr-result-item notfound">❌ ' + n + '</div>'; });
-                }
-                resultList.innerHTML = html;
-                resultContainer.style.display = 'block';
-                showToast('✅', empleadosEncontrados.found.length + ' empleados encontrados');
-            } catch (error) {
-                console.error(error);
-                statusEl.textContent = '❌ Error: ' + error.message;
-                showToast('⚠️', 'Error al procesar el PDF: ' + error.message, true);
-            } finally {
-                btnProcesar.disabled = false;
-                btnProcesar.textContent = '🔍 Procesar PDF';
+                pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
             }
+            
+            const arrayBuffer = await file.arrayBuffer();
+            const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+            const numPaginas = pdf.numPages;
+            
+            texto = '';
+            for (let i = 1; i <= numPaginas; i++) {
+                statusEl.textContent = '📖 Leyendo página ' + i + ' de ' + numPaginas + '...';
+                progressFill.style.width = (20 + (i / numPaginas) * 60) + '%';
+                const pagina = await pdf.getPage(i);
+                const contenido = await pagina.getTextContent();
+                const textoPagina = contenido.items.map(item => item.str).join(' ');
+                texto += textoPagina + '\n';
+            }
+            
+            statusEl.textContent = '✅ PDF leído correctamente';
+            progressFill.style.width = '85%';
+            
+        } else if (esImagen) {
+            // 🖼️ Imagen: usar Tesseract OCR
+            statusEl.textContent = ' Procesando imagen con OCR...';
+            progressFill.style.width = '20%';
+            
+            const result = await Tesseract.recognize(file, 'spa', {
+                logger: m => {
+                    if (m.status === 'recognizing text') {
+                        const progress = Math.round(m.progress * 100);
+                        statusEl.textContent = ' Reconociendo texto... ' + progress + '%';
+                        progressFill.style.width = (20 + progress * 0.65) + '%';
+                    } else if (m.status) {
+                        statusEl.textContent = '📋 ' + m.status;
+                    }
+                }
+            });
+            texto = result.data.text;
+            progressFill.style.width = '85%';
+            
+        } else {
+            throw new Error('Formato no soportado. Usa PDF o imagen (JPG, PNG).');
         }
+        
+        // Analizar texto
+        statusEl.textContent = '🔎 Analizando texto...';
+        progressFill.style.width = '90%';
+        
+        const empleadosEncontrados = buscarEmpleadosEnTexto(texto, servicio);
+        pedidosPendientesOCR = empleadosEncontrados.found.map(emp => ({ empleado: emp, numDecimos, servicio }));
+        
+        progressFill.style.width = '100%';
+        statusEl.textContent = '✅ Proceso completado';
+        
+        const resultList = document.getElementById('ocrResultList');
+        document.getElementById('ocrTotalDetectados').textContent = empleadosEncontrados.found.length;
+        
+        let html = '<h4 style="margin-top:15px;">✅ Empleados encontrados (' + empleadosEncontrados.found.length + '):</h4>';
+        empleadosEncontrados.found.forEach(emp => {
+            html += '<div class="ocr-result-item found">✅ ' + emp.nombre + ' - ' + emp.seccion + ' (Tel: ' + (emp.telefono || 'N/A') + ')</div>';
+        });
+        
+        if (empleadosEncontrados.notFound.length > 0) {
+            html += '<h4 style="margin-top:15px; color:#c41e3a;">❌ No encontrados (' + empleadosEncontrados.notFound.length + '):</h4>';
+            empleadosEncontrados.notFound.forEach(n => { html += '<div class="ocr-result-item notfound"> ' + n + '</div>'; });
+        }
+        
+        if (empleadosEncontrados.found.length === 0 && empleadosEncontrados.notFound.length === 0) {
+            html = '<div style="padding:15px; background:#fff3e0; border-radius:6px; margin-top:15px;">⚠️ No se detectaron nombres en el archivo. Verifica que el PDF/imagen contenga texto legible.</div>';
+        }
+        
+        resultList.innerHTML = html;
+        resultContainer.style.display = 'block';
+        showToast('✅', empleadosEncontrados.found.length + ' empleados encontrados');
+        
+    } catch (error) {
+        console.error('Error OCR:', error);
+        statusEl.textContent = '❌ Error: ' + (error.message || 'desconocido');
+        showToast('⚠️', 'Error al procesar: ' + (error.message || 'archivo no válido'), true);
+    } finally {
+        btnProcesar.disabled = false;
+        btnProcesar.textContent = '🔍 Procesar PDF';
+    }
+}
 
         function buscarEmpleadosEnTexto(texto, servicio) {
             const lineas = texto.split('\n').map(l => l.trim()).filter(l => l.length > 3);
