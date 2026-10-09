@@ -246,12 +246,12 @@
         </div>
         <div class="nav-tabs">
             <button class="nav-tab active" data-page="inicio">🏠 Inicio</button>
-            <button class="nav-tab" data-page="solicitar" id="tabSolicitar">️ Solicitar</button>
-            <button class="nav-tab" data-page="pedidos"> Pedidos</button>
+            <button class="nav-tab" data-page="solicitar" id="tabSolicitar">🎟️ Solicitar</button>
+            <button class="nav-tab" data-page="pedidos">📋 Pedidos</button>
             <button class="nav-tab" data-page="listado"> Listado</button>
-            <button class="nav-tab" data-page="resumen">📊 Resumen</button>
+            <button class="nav-tab" data-page="resumen"> Resumen</button>
             <button class="nav-tab" data-page="participantes">👥 Participantes</button>
-            <button class="nav-tab" data-page="ocr" id="tabOCR"> Lectura PDF</button>
+            <button class="nav-tab" data-page="ocr" id="tabOCR">📷 Lectura PDF</button>
             <button class="nav-tab" data-page="configuracion" id="tabConfig">⚙️ Config</button>
         </div>
 
@@ -293,7 +293,7 @@
                     <div class="quick-action" id="qaSolicitar" onclick="irAPagina('solicitar')"><div class="qa-icon">🎟️</div><div class="qa-title">Solicitar</div></div>
                     <div class="quick-action" onclick="irAPagina('pedidos')"><div class="qa-icon">📋</div><div class="qa-title">Pedidos</div></div>
                     <div class="quick-action" onclick="irAPagina('listado')"><div class="qa-icon">📑</div><div class="qa-title">Listado</div></div>
-                    <div class="quick-action" id="qaOCR" onclick="irAPagina('ocr')"><div class="qa-icon"></div><div class="qa-title">Lectura PDF</div></div>
+                    <div class="quick-action" id="qaOCR" onclick="irAPagina('ocr')"><div class="qa-icon">📷</div><div class="qa-title">Lectura PDF</div></div>
                     <div class="quick-action" onclick="irAPagina('resumen')"><div class="qa-icon">📊</div><div class="qa-title">Resumen</div></div>
                     <div class="quick-action" onclick="irAPagina('participantes')"><div class="qa-icon">👥</div><div class="qa-title">Participantes</div></div>
                 </div>
@@ -414,7 +414,7 @@
 
             <div class="section-page" id="page-listado">
                 <div class="content-card">
-                    <h2 class="section-title"> Listado General</h2>
+                    <h2 class="section-title">📑 Listado General</h2>
                     <div class="alert-info">💡 Haz clic en cualquier cabecera para ordenar.</div>
                     <div class="sort-controls">
                         <div class="form-group">
@@ -434,8 +434,8 @@
                         <div class="form-group">
                             <label for="ordenDireccion">Dirección</label>
                             <select id="ordenDireccion" onchange="renderizarListadoGeneral()">
-                                <option value="asc">️ Ascendente (A-Z)</option>
-                                <option value="desc">⬇️ Descendente (Z-A)</option>
+                                <option value="asc">⬆️ Ascendente (A-Z)</option>
+                                <option value="desc">️ Descendente (Z-A)</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -455,7 +455,7 @@
                             <select id="filtroPagadoListado" onchange="renderizarListadoGeneral()">
                                 <option value="">Todos</option>
                                 <option value="pagado">✓ Pagados</option>
-                                <option value="pendiente"> Pendientes</option>
+                                <option value="pendiente">⏳ Pendientes</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -470,7 +470,7 @@
                     <div class="export-buttons" style="margin-bottom: 15px;">
                         <button class="btn btn-export" onclick="exportarListadoGeneralPDF()">📄 PDF</button>
                         <button class="btn btn-export" onclick="exportarListadoGeneralCSV()">📊 CSV</button>
-                        <button class="btn btn-export" onclick="imprimirListadoGeneral()">🖨️ Imprimir</button>
+                        <button class="btn btn-export" onclick="imprimirListadoGeneral()">️ Imprimir</button>
                     </div>
                     <div class="table-container" id="listadoGeneralContainer" style="display:none;">
                         <table>
@@ -495,7 +495,7 @@
                         </table>
                     </div>
                     <div class="empty-state" id="emptyListadoGeneral">
-                        <div class="empty-icon"></div>
+                        <div class="empty-icon">📑</div>
                         <h3>Sin datos</h3>
                         <p>No hay pedidos o no coinciden con los filtros</p>
                     </div>
@@ -574,7 +574,7 @@
                 <div class="content-card">
                     <div id="bannerOCR" class="readonly-banner" style="display:none;">🔒 Solo el administrador puede usar esta función.</div>
                     <h2 class="section-title">📷 Lectura de PDF Escaneado</h2>
-                    <div class="alert-info">📋 Sube el PDF escaneado del listado de un servicio. El sistema leerá los nombres, buscará los empleados en la base de datos y creará automáticamente los pedidos. Si un empleado no existe, podrás crearlo al momento.</div>
+                    <div class="alert-info"> Sube el PDF escaneado del listado de un servicio. El sistema leerá los nombres, buscará los empleados en la base de datos y creará automáticamente los pedidos. Si un empleado no existe, podrás crearlo al momento.</div>
                     <div id="ocrFormContainer">
                         <div class="form-grid">
                             <div class="form-group">
@@ -647,15 +647,15 @@
                                 <label for="nuevaClave">Nueva contraseña *</label>
                                 <input type="password" id="nuevaClave" placeholder="Mínimo 4 caracteres">
                             </div>
-                            <button type="button" class="btn btn-primary btn-small" onclick="cambiarMiClave()" style="align-self: flex-end;"> Guardar</button>
+                            <button type="button" class="btn btn-primary btn-small" onclick="cambiarMiClave()" style="align-self: flex-end;">💾 Guardar</button>
                         </div>
                     </div>
                     <div class="config-block">
                         <h3>💾 Copia de seguridad</h3>
                         <div class="alert-info">Exporta o importa todos los datos de la aplicación.</div>
                         <div class="config-row">
-                            <button type="button" class="btn btn-primary btn-small" onclick="exportarDatosJSON()"> Exportar datos</button>
-                            <button type="button" class="btn btn-success btn-small" onclick="document.getElementById('importarFile').click()"> Importar datos</button>
+                            <button type="button" class="btn btn-primary btn-small" onclick="exportarDatosJSON()">📤 Exportar datos</button>
+                            <button type="button" class="btn btn-success btn-small" onclick="document.getElementById('importarFile').click()">📥 Importar datos</button>
                             <input type="file" id="importarFile" accept=".json" style="display:none" onchange="importarDatosJSON(event)">
                         </div>
                     </div>
@@ -667,8 +667,8 @@
     <div class="modal-overlay" id="modalEditar">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>️ Editar Pedido</h3>
-                <button class="close-btn" onclick="cerrarModal()">✕</button>
+                <h3>✏️ Editar Pedido</h3>
+                <button class="close-btn" onclick="cerrarModal()"></button>
             </div>
             <form id="editarForm">
                 <input type="hidden" id="editarId">
@@ -693,7 +693,7 @@
     <div class="modal-overlay" id="modalNuevoEmpleado">
         <div class="modal-content">
             <div class="modal-header">
-                <h3> Dar de alta nuevo empleado</h3>
+                <h3>➕ Dar de alta nuevo empleado</h3>
                 <button class="close-btn" onclick="cerrarModalEmpleado()">✕</button>
             </div>
             <form id="nuevoEmpleadoForm">
@@ -881,7 +881,7 @@
                     await dbRef.empleados.set(empleadosObj);
 
                     await dbRef.inicializado.set({
-                        fecha: new Date().toISOString(), version: '11.0',
+                        fecha: new Date().toISOString(), version: '12.0',
                         empleadosCargados: EMPLEADOS_INICIALES.length
                     });
                 }
@@ -976,7 +976,7 @@
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             if (!datosCargados) {
-                document.getElementById('loginError').textContent = '⏳ Cargando datos... espera un momento.';
+                document.getElementById('loginError').textContent = ' Cargando datos... espera un momento.';
                 document.getElementById('loginError').classList.add('show');
                 return;
             }
@@ -1086,7 +1086,7 @@
 
         function cambiarMiClave() {
             const nueva = document.getElementById('nuevaClave').value.trim();
-            if (!nueva) { showToast('⚠️', 'Introduce la nueva contraseña.'); return; }
+            if (!nueva) { showToast('️', 'Introduce la nueva contraseña.'); return; }
             if (nueva.length < 4) { showToast('⚠️', 'Mínimo 4 caracteres.'); return; }
             if (usuarios[usuarioActual]) {
                 usuarios[usuarioActual].clave = nueva;
@@ -1130,7 +1130,7 @@
             list.innerHTML = keys.map(u => {
                 const user = usuarios[u];
                 const rolBadge = user.rol === 'admin' ? '<span class="role-badge role-admin">admin</span>' : '<span class="role-badge role-consulta">consulta</span>';
-                const btnEliminar = u === USUARIO_ADMIN ? '' : '<button class="btn btn-delete btn-small" onclick="eliminarUsuario(\'' + u + '\')">🗑️</button>';
+                const btnEliminar = u === USUARIO_ADMIN ? '' : '<button class="btn btn-delete btn-small" onclick="eliminarUsuario(\'' + u + '\')">️</button>';
                 return '<li><span>👤 ' + u + ' ' + rolBadge + '</span>' + btnEliminar + '</li>';
             }).join('');
         }
@@ -1166,7 +1166,7 @@
         function irAPagina(page) {
             const esAdmin = rolActual === 'admin';
             if (!esAdmin && (page === 'solicitar' || page === 'ocr' || page === 'configuracion')) {
-                showToast('', 'Solo el administrador puede acceder.', true);
+                showToast('🔒', 'Solo el administrador puede acceder.', true);
                 page = 'inicio';
             }
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
@@ -1252,7 +1252,7 @@
                         actualizarEmpleados();
                         alert('✅ Sección "' + nombreTrim + '" creada correctamente.');
                     } else {
-                        alert('️ Esa sección ya existe en este servicio.');
+                        alert('⚠️ Esa sección ya existe en este servicio.');
                         select.value = '';
                     }
                 } else {
@@ -1393,7 +1393,7 @@
             tbody.innerHTML = pedidosFiltrados.map(p => {
                 const quienRecogeHtml = p.quienRecoge ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
                 const accionesHtml = esAdmin 
-                    ? '<div class="actions-cell"><button class="btn btn-edit" onclick="editarPedido(\'' + p.id + '\')">✏️</button><button class="btn btn-delete" onclick="eliminarPedido(\'' + p.id + '\')">🗑️</button></div>'
+                    ? '<div class="actions-cell"><button class="btn btn-edit" onclick="editarPedido(\'' + p.id + '\')">✏️</button><button class="btn btn-delete" onclick="eliminarPedido(\'' + p.id + '\')">️</button></div>'
                     : '<span style="color:#999; font-size:0.85em;">—</span>';
                 const checkboxDisabled = !esAdmin ? 'disabled' : '';
                 return '<tr>' +
@@ -1418,7 +1418,7 @@
 
         document.getElementById('pedidoForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
             const empleadoId = document.getElementById('empleado').value;
             const numDecimos = parseInt(document.getElementById('numDecimos').value) || 2;
             const servicio = document.getElementById('servicio').value;
@@ -1431,7 +1431,7 @@
             } else { showToast('⚠️', 'Selecciona un empleado válido', true); return; }
             const validacion = validarMaximoDecimos(nombre, numDecimos);
             if (!validacion.valido) {
-                let mensaje = '🚫 ' + nombre + ' ya tiene ' + validacion.acumulados + ' décimo(s). ';
+                let mensaje = ' ' + nombre + ' ya tiene ' + validacion.acumulados + ' décimo(s). ';
                 mensaje += 'Con ' + validacion.nuevos + ' nuevos llegaría a ' + validacion.total + ', pero el límite es ' + validacion.maximo + '. ';
                 if (validacion.disponibles > 0) mensaje += ' Aún puede solicitar ' + validacion.disponibles + ' más.';
                 else mensaje += 'Ya ha alcanzado el máximo.';
@@ -1453,7 +1453,7 @@
             this.reset();
             establecerFechaHoraActual();
             actualizarSelectServicios();
-            showToast('✅', '️ ¡Décimo(s) de ' + nombre + ' registrado(s)!');
+            showToast('✅', '🎟️ ¡Décimo(s) de ' + nombre + ' registrado(s)!');
         });
 
         function togglePagado(id) {
@@ -1462,12 +1462,12 @@
             if (p) {
                 p.pagado = !p.pagado;
                 firebaseGuardarPedido(p);
-                showToast(p.pagado ? '💰' : '⏳', p.pagado ? '¡' + p.nombre + ' ha pagado!' : 'Pago pendiente de ' + p.nombre + '.');
+                showToast(p.pagado ? '💰' : '', p.pagado ? '¡' + p.nombre + ' ha pagado!' : 'Pago pendiente de ' + p.nombre + '.');
             }
         }
 
         function toggleRecogido(id) {
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
             const p = pedidos.find(x => x.id === id);
             if (p) {
                 p.recogido = !p.recogido;
@@ -1477,16 +1477,16 @@
         }
 
         function eliminarPedido(id) {
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
             const p = pedidos.find(x => x.id === id);
             if (p && confirm('¿Eliminar el pedido de ' + p.nombre + '?')) {
                 firebaseEliminarPedido(id);
-                showToast('🗑️', 'Pedido eliminado.');
+                showToast('️', 'Pedido eliminado.');
             }
         }
 
         function editarPedido(id) {
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
             const p = pedidos.find(x => x.id === id);
             if (!p) return;
             actualizarSelectServicios();
@@ -1535,7 +1535,7 @@
                 p.quienRecoge = document.getElementById('editarQuienRecoge').value.trim();
                 firebaseGuardarPedido(p);
                 cerrarModal();
-                showToast('✅', '✏️ Pedido actualizado.');
+                showToast('✅', '️ Pedido actualizado.');
             }
         });
 
@@ -1583,7 +1583,7 @@
             tbody.innerHTML = pedidosFiltrados.map(p => {
                 const pagadoBadge = p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7;">✓ Pagado</span>' : '<span class="badge" style="background:#ffebee; color:#c41e3a; border:1px solid #ef9a9a;">⏳ Pendiente</span>';
                 const recogidoBadge = p.recogido ? '<span class="badge" style="background:#e3f2fd; color:#1976d2; border:1px solid #90caf9;">✓ Recogido</span>' : '<span class="badge badge-pending">⏳ Pendiente</span>';
-                const quienRecogeHtml = p.quienRecoge ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
+                const quienRecogeHtml = p.quienRecoge ? '<span class="badge badge-collected"> ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
                 return '<tr>' +
                     '<td class="nombre-cell" title="' + p.nombre + '">' + p.nombre + '</td>' +
                     '<td title="' + (p.servicio || '') + '">' + (p.servicio || '-') + '</td>' +
@@ -1670,7 +1670,7 @@
             }
             empty.style.display = 'none'; cont.style.display = 'block';
             tbody.innerHTML = pedidosFiltrados.map(p => {
-                const pagadoBadge = p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7;">✓ Pagado</span>' : '<span class="badge" style="background:#ffebee; color:#c41e3a; border:1px solid #ef9a9a;">⏳ Pendiente</span>';
+                const pagadoBadge = p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7;">✓ Pagado</span>' : '<span class="badge" style="background:#ffebee; color:#c41e3a; border:1px solid #ef9a9a;"> Pendiente</span>';
                 const recogidoBadge = p.recogido ? '<span class="badge" style="background:#e3f2fd; color:#1976d2; border:1px solid #90caf9;">✓ Recogido</span>' : '<span class="badge badge-pending">⏳ Pendiente</span>';
                 const recogidoPor = p.quienRecoge ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
                 return '<tr>' +
@@ -1698,7 +1698,7 @@
             const numDecimos = parseInt(document.getElementById('ocrDecimos').value);
             if (!servicio) { showToast('⚠️', 'Selecciona un servicio', true); return; }
             if (!fileInput.files || fileInput.files.length === 0) { showToast('⚠️', 'Selecciona un archivo', true); return; }
-            if (!numDecimos || numDecimos < 1) { showToast('️', 'Introduce nº válido de décimos', true); return; }
+            if (!numDecimos || numDecimos < 1) { showToast('⚠️', 'Introduce nº válido de décimos', true); return; }
             
             const file = fileInput.files[0];
             const progressContainer = document.getElementById('ocrProgressContainer');
@@ -1710,7 +1710,7 @@
             progressContainer.style.display = 'block';
             resultContainer.style.display = 'none';
             btnProcesar.disabled = true;
-            btnProcesar.textContent = '⏳ Procesando...';
+            btnProcesar.textContent = ' Procesando...';
             
             let texto = '';
             
@@ -1719,7 +1719,7 @@
                 const esImagen = file.type.startsWith('image/');
                 
                 if (esPDF) {
-                    statusEl.textContent = '📖 Leyendo PDF...';
+                    statusEl.textContent = ' Leyendo PDF...';
                     progressFill.style.width = '20%';
                     
                     if (!window.pdfjsLib) {
@@ -1756,7 +1756,7 @@
                         logger: m => {
                             if (m.status === 'recognizing text') {
                                 const progress = Math.round(m.progress * 100);
-                                statusEl.textContent = ' Reconociendo texto... ' + progress + '%';
+                                statusEl.textContent = '🔍 Reconociendo texto... ' + progress + '%';
                                 progressFill.style.width = (20 + progress * 0.65) + '%';
                             }
                         }
@@ -1768,7 +1768,7 @@
                     throw new Error('Formato no soportado. Usa PDF o imagen.');
                 }
                 
-                statusEl.textContent = ' Buscando empleados...';
+                statusEl.textContent = '🔎 Buscando empleados...';
                 progressFill.style.width = '90%';
                 
                 const resultado = buscarEmpleadosEnTexto(texto, servicio);
@@ -1792,10 +1792,10 @@
             } catch (error) {
                 console.error('Error OCR:', error);
                 statusEl.textContent = '❌ Error: ' + (error.message || 'desconocido');
-                showToast('️', 'Error al procesar: ' + (error.message || 'archivo no válido'), true);
+                showToast('⚠️', 'Error al procesar: ' + (error.message || 'archivo no válido'), true);
             } finally {
                 btnProcesar.disabled = false;
-                btnProcesar.textContent = ' Procesar archivo';
+                btnProcesar.textContent = '🔍 Procesar archivo';
             }
         }
 
@@ -1816,7 +1816,7 @@
             }
             
             if (resultado.noEncontrados.length > 0) {
-                html += '<h4 style="margin-top:15px; color:#c41e3a;">️ Empleados NO encontrados (' + resultado.noEncontrados.length + '):</h4>';
+                html += '<h4 style="margin-top:15px; color:#c41e3a;">⚠️ Empleados NO encontrados (' + resultado.noEncontrados.length + '):</h4>';
                 html += '<div style="font-size:0.8em; color:#666; margin-bottom:10px;">Pulsa "➕ Crear" para darlos de alta y crear su pedido automáticamente. Se te pedirá confirmación.</div>';
                 resultado.noEncontrados.forEach((emp, idx) => {
                     const decimos = emp.decimosPDF || window.ocrResultado.numDecimos || 2;
@@ -1845,7 +1845,7 @@
             if (!confirm('¿Deseas crear el empleado "' + nombreDetectado + '" y registrar su pedido de ' + decimosDetectados + ' décimo(s)?\n\nPulsa ACEPTAR para crearlo o CANCELAR para omitirlo.')) {
                 resultado.noEncontrados.splice(idx, 1);
                 mostrarResultadosOCR(resultado);
-                showToast('⚠️', 'Empleado "' + nombreDetectado + '" omitido.');
+                showToast('️', 'Empleado "' + nombreDetectado + '" omitido.');
                 return;
             }
             
@@ -1863,7 +1863,7 @@
                 const seccionNombre = prompt('📂 Sección para "' + nombreDetectado + '":\n\nSecciones disponibles:\n' + listaSecciones + '\n\nEscribe el nombre de una sección existente o una nueva:', seccionesDelServicio[0].nombre);
                 
                 if (!seccionNombre || !seccionNombre.trim()) {
-                    showToast('️', 'Se necesita una sección.', true);
+                    showToast('⚠️', 'Se necesita una sección.', true);
                     return;
                 }
                 
@@ -1886,7 +1886,7 @@
             } else {
                 seccion = prompt('📂 Introduce la sección para "' + nombreDetectado + '":');
                 if (!seccion || !seccion.trim()) {
-                    showToast('⚠️', 'Se necesita una sección.', true);
+                    showToast('️', 'Se necesita una sección.', true);
                     return;
                 }
                 seccion = seccion.trim().toUpperCase();
@@ -1972,70 +1972,45 @@
                 }
             });
             
-            // 2️⃣ Detectar formato de tabla con | (todas las páginas)
-            // Filtrar líneas válidas: empiezan con | y NO son separadores
-            const todasLasLineas = texto.split('\n').map(l => l.trim());
-            const lineasValidas = todasLasLineas.filter(l => {
-                if (!l.startsWith('|')) return false;
-                if (l.includes('---')) return false;
-                const contenido = l.replace(/^\|\s*/, '').trim();
-                if (contenido.length < 1) return false;
-                return true;
-            });
-            
+            // 2️⃣ Dividir el texto en bloques separados por líneas de separación
+            const bloques = texto.split(/\|\s*---\|---\|---\|---\|---\s*\|/);
             const empleadosDetectados = [];
             
-            // Buscar patrón de 5 líneas consecutivas: NOMBRE | APELLIDOS | SERVICIO | CENTRO | DÉCIMOS
-            for (let i = 0; i < lineasValidas.length - 4; i++) {
-                const l1 = lineasValidas[i].replace(/^\|\s*/, '').trim();
-                const l2 = lineasValidas[i + 1].replace(/^\|\s*/, '').trim();
-                const l3 = lineasValidas[i + 2].replace(/^\|\s*/, '').trim();
-                const l4 = lineasValidas[i + 3].replace(/^\|\s*/, '').trim();
-                const l5 = lineasValidas[i + 4].replace(/^\|\s*/, '').trim();
+            bloques.forEach(bloque => {
+                const lineas = bloque.split('\n').map(l => l.trim()).filter(l => l.startsWith('|'));
                 
-                // La última línea debe ser 1 o 2 (décimos)
-                const decimos = parseInt(l5);
-                if (isNaN(decimos) || (decimos !== 1 && decimos !== 2)) continue;
-                
-                // La tercera línea debe contener "DESARROLLO" o ser el servicio
-                if (!l3.toUpperCase().includes('DESARROLLO') && !l3.toUpperCase().includes('RURAL') && !l3.toUpperCase().includes('MEDIO')) continue;
-                
-                // Validar que l1 y l2 parecen nombre y apellidos
-                if (l1.length < 2 || l2.length < 4) continue;
-                
-                // Ignorar encabezados
-                const encabezados = ['NOMBRE', 'APELLIDOS', 'SERVICIO', 'SECCIÓN', 'CANTIDAD', 'TOTAL', 'CENTRO', 'TRABAJO', 'DÉCIMOS', 'DECIMOS', 'RELACIÓN', 'PERSONAL'];
-                if (encabezados.some(e => l1.toUpperCase().includes(e))) continue;
-                if (encabezados.some(e => l2.toUpperCase().includes(e))) continue;
-                
-                const nombreCompleto = (l1 + ' ' + l2).toUpperCase().trim();
-                
-                empleadosDetectados.push({
-                    nombre: nombreCompleto,
-                    decimos: decimos
-                });
-                
-                i += 4; // Saltar las 4 líneas siguientes
-            }
-            
-            // 3️⃣ Si no detectó nada con el patrón de 5 líneas, buscar formato "listado 3.pdf"
-            if (empleadosDetectados.length === 0) {
-                todasLasLineas.forEach(linea => {
-                    const match = linea.match(/^([A-ZÁÉÍÓÚÑÜ][A-ZÁÉÍÓÚÑÜ\s]{5,}?)\s+\d{1,2}\s*$/);
-                    if (match) {
-                        const nombreCompleto = match[1].trim();
-                        const decimosStr = linea.match(/\s+(\d{1,2})\s*$/);
-                        const decimos = decimosStr ? parseInt(decimosStr[1]) : 2;
-                        
-                        const encabezados = ['NOMBRE', 'APELLIDOS', 'SERVICIO', 'SECCIÓN', 'CANTIDAD', 'TOTAL', 'RELACIÓN', 'PERSONAL'];
-                        if (!encabezados.some(e => nombreCompleto.toUpperCase().includes(e))) {
-                            empleadosDetectados.push({ nombre: nombreCompleto, decimos: decimos });
-                        }
+                // Procesar cada grupo de 5 líneas consecutivas
+                for (let i = 0; i < lineas.length - 4; i++) {
+                    const l1 = lineas[i].replace(/^\|\s*/, '').trim();
+                    const l2 = lineas[i + 1].replace(/^\|\s*/, '').trim();
+                    const l3 = lineas[i + 2].replace(/^\|\s*/, '').trim();
+                    const l4 = lineas[i + 3].replace(/^\|\s*/, '').trim();
+                    const l5 = lineas[i + 4].replace(/^\|\s*/, '').trim();
+                    
+                    // Verificar que l5 sea un número (1 o 2 décimos)
+                    const decimos = parseInt(l5);
+                    if (isNaN(decimos) || (decimos !== 1 && decimos !== 2)) continue;
+                    
+                    // Verificar que l3 contenga el servicio correcto
+                    if (!l3.toUpperCase().includes('DESARROLLO') && !l3.toUpperCase().includes('RURAL')) continue;
+                    
+                    // Ignorar encabezados
+                    const encabezados = ['NOMBRE', 'APELLIDOS', 'SERVICIO', 'CENTRO', 'DÉCIMOS', 'DECIMOS'];
+                    if (encabezados.some(e => l1.toUpperCase().includes(e))) continue;
+                    if (encabezados.some(e => l2.toUpperCase().includes(e))) continue;
+                    
+                    const nombreCompleto = (l1 + ' ' + l2).toUpperCase().trim();
+                    
+                    if (nombreCompleto.length >= 10) {
+                        empleadosDetectados.push({
+                            nombre: nombreCompleto,
+                            decimos: decimos
+                        });
                     }
-                });
-            }
+                }
+            });
             
-            // 4️⃣ Procesar empleados detectados
+            // 3️⃣ Procesar empleados detectados
             empleadosDetectados.forEach(empDetectado => {
                 const nombreNorm = empDetectado.nombre.toLowerCase()
                     .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -2077,7 +2052,7 @@
         }
 
         function confirmarPedidosOCR() {
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
             const resultado = window.ocrResultado;
             if (!resultado || resultado.encontrados.length === 0) {
                 showToast('⚠️', 'No hay empleados encontrados para procesar. Crea primero los que faltan.', true);
@@ -2143,7 +2118,7 @@
             const { id, ...datos } = pedido;
             dbRef.pedidos.child(id).set(datos)
                 .then(() => setSyncStatus('online'))
-                .catch((err) => { setSyncStatus('offline', '❌ Error'); showToast('️', 'No se pudo guardar', true); });
+                .catch((err) => { setSyncStatus('offline', '❌ Error'); showToast('⚠️', 'No se pudo guardar', true); });
         }
 
         function firebaseEliminarPedido(id) {
@@ -2181,7 +2156,7 @@
             link.href = URL.createObjectURL(blob);
             link.download = 'loteria-navidad-backup-' + new Date().toISOString().slice(0,10) + '.json';
             link.click();
-            showToast('📤', '📤 Copia de seguridad exportada.');
+            showToast('', '📤 Copia de seguridad exportada.');
         }
 
         function importarDatosJSON(event) {
@@ -2264,7 +2239,7 @@
             pedidosExportar.forEach(p => { csv += '"'+p.nombre+'","'+(p.servicio||'')+'","'+(p.seccion||'')+'","'+(p.telefono||'')+'",'+p.numDecimos+','+(p.numDecimos*PRECIO_DECIMO)+',"'+(p.fechaSolicitud||'')+'","'+(p.horaSolicitud||'')+'",'+(p.pagado?'Si':'No')+','+(p.recogido?'Si':'No')+'\n'; });
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'listado-general-2026.csv'; link.click();
-            showToast('📊', '📊 CSV generado.');
+            showToast('📊', ' CSV generado.');
         }
 
         function imprimirListadoGeneral() {
@@ -2307,7 +2282,7 @@
             pedidosExportar.forEach(p => { csv += '"'+p.nombre+'","'+(p.servicio||'')+'","'+(p.seccion||'')+'","'+(p.telefono||'')+'",'+p.numDecimos+','+(p.numDecimos*PRECIO_DECIMO)+',"'+(p.fechaSolicitud||'')+'","'+(p.horaSolicitud||'')+'",'+(p.pagado?'Si':'No')+','+(p.recogido?'Si':'No')+'\n'; });
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'pedidos-2026.csv'; link.click();
-            showToast('📊', '📊 CSV generado.');
+            showToast('', '📊 CSV generado.');
         }
 
         function imprimirListado() {
