@@ -219,7 +219,7 @@
                     <input type="password" id="loginClave" placeholder="Introduce tu contraseña" required autocomplete="current-password">
                 </div>
                 <button type="submit" class="btn-login">Iniciar sesión</button>
-                <div class="login-error" id="loginError"> Acceso no autorizado.</div>
+                <div class="login-error" id="loginError">⛔ Acceso no autorizado.</div>
             </form>
         </div>
     </div>
@@ -247,7 +247,7 @@
             <button class="nav-tab" data-page="solicitar" id="tabSolicitar">🎟️ Solicitar</button>
             <button class="nav-tab" data-page="pedidos">📋 Pedidos</button>
             <button class="nav-tab" data-page="listado">📑 Listado</button>
-            <button class="nav-tab" data-page="resumen">📊 Resumen</button>
+            <button class="nav-tab" data-page="resumen"> Resumen</button>
             <button class="nav-tab" data-page="participantes"> Participantes</button>
             <button class="nav-tab" data-page="ocr" id="tabOCR">📷 Lectura PDF</button>
             <button class="nav-tab" data-page="configuracion" id="tabConfig">⚙️ Config</button>
@@ -291,7 +291,7 @@
                     <div class="quick-action" id="qaSolicitar" onclick="irAPagina('solicitar')"><div class="qa-icon">🎟️</div><div class="qa-title">Solicitar</div></div>
                     <div class="quick-action" onclick="irAPagina('pedidos')"><div class="qa-icon">📋</div><div class="qa-title">Pedidos</div></div>
                     <div class="quick-action" onclick="irAPagina('listado')"><div class="qa-icon"></div><div class="qa-title">Listado</div></div>
-                    <div class="quick-action" id="qaOCR" onclick="irAPagina('ocr')"><div class="qa-icon"></div><div class="qa-title">Lectura PDF</div></div>
+                    <div class="quick-action" id="qaOCR" onclick="irAPagina('ocr')"><div class="qa-icon">📷</div><div class="qa-title">Lectura PDF</div></div>
                     <div class="quick-action" onclick="irAPagina('resumen')"><div class="qa-icon">📊</div><div class="qa-title">Resumen</div></div>
                     <div class="quick-action" onclick="irAPagina('participantes')"><div class="qa-icon">👥</div><div class="qa-title">Participantes</div></div>
                 </div>
@@ -299,8 +299,8 @@
 
             <div class="section-page" id="page-solicitar">
                 <div class="content-card">
-                    <div id="bannerSolicitar" class="readonly-banner" style="display:none;">🔒 Modo consulta: No puedes crear pedidos.</div>
-                    <h2 class="section-title">️ Solicitar Décimos</h2>
+                    <div id="bannerSolicitar" class="readonly-banner" style="display:none;"> Modo consulta: No puedes crear pedidos.</div>
+                    <h2 class="section-title">🎟️ Solicitar Décimos</h2>
                     <form id="pedidoForm">
                         <div class="form-grid">
                             <div class="form-group">
@@ -311,7 +311,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="seccion">Sección *</label>
-                                <select id="seccion" required onchange="actualizarEmpleados()">
+                                <select id="seccion" required onchange="onSeccionChange()">
                                     <option value="">-- Selecciona una sección --</option>
                                 </select>
                             </div>
@@ -403,7 +403,7 @@
                         </table>
                     </div>
                     <div class="empty-state" id="emptyState">
-                        <div class="empty-icon"></div>
+                        <div class="empty-icon">🎰</div>
                         <h3>Sin pedidos aún</h3>
                         <p>Añade el primer pedido desde "Solicitar"</p>
                     </div>
@@ -493,7 +493,7 @@
                         </table>
                     </div>
                     <div class="empty-state" id="emptyListadoGeneral">
-                        <div class="empty-icon"></div>
+                        <div class="empty-icon">📑</div>
                         <h3>Sin datos</h3>
                         <p>No hay pedidos o no coinciden con los filtros</p>
                     </div>
@@ -590,7 +590,7 @@
                             <label for="ocrFile">Seleccionar PDF escaneado *</label>
                             <input type="file" id="ocrFile" accept=".pdf,image/*" style="padding: 10px;">
                         </div>
-                        <button type="button" class="btn btn-primary" onclick="procesarOCR()" id="btnProcesarOCR"> Procesar PDF</button>
+                        <button type="button" class="btn btn-primary" onclick="procesarOCR()" id="btnProcesarOCR">🔍 Procesar PDF</button>
                     </div>
                     <div id="ocrProgressContainer" style="display:none;">
                         <div class="ocr-progress">
@@ -649,7 +649,7 @@
                         </div>
                     </div>
                     <div class="config-block">
-                        <h3>💾 Copia de seguridad</h3>
+                        <h3> Copia de seguridad</h3>
                         <div class="alert-info">Exporta o importa todos los datos de la aplicación.</div>
                         <div class="config-row">
                             <button type="button" class="btn btn-primary btn-small" onclick="exportarDatosJSON()">📤 Exportar datos</button>
@@ -707,28 +707,6 @@
         </div>
     </div>
 
-    <!-- Modal Nueva Sección -->
-    <div class="modal-overlay" id="modalNuevaSeccion">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>➕ Crear nueva sección</h3>
-                <button class="close-btn" onclick="cerrarModalNuevaSeccion()">✕</button>
-            </div>
-            <div class="form-group" style="margin-bottom: 12px;">
-                <label>Servicio seleccionado:</label>
-                <input type="text" id="nuevaSeccionServicioInfo" disabled style="background: #f0f2f5;">
-            </div>
-            <div class="form-group" style="margin-bottom: 12px;">
-                <label for="nombreNuevaSeccion">Nombre de la nueva sección *</label>
-                <input type="text" id="nombreNuevaSeccion" placeholder="Ej: NUEVA SECCIÓN" required style="text-transform: uppercase; font-weight: 600;">
-            </div>
-            <div class="modal-actions">
-                <button type="button" class="btn btn-cancel" onclick="cerrarModalNuevaSeccion()">Cancelar</button>
-                <button type="button" class="btn btn-save" onclick="confirmarNuevaSeccion()">✅ Crear sección</button>
-            </div>
-        </div>
-    </div>
-
     <div class="toast" id="toast">
         <span class="toast-icon" id="toastIcon">✅</span>
         <span class="toast-text" id="toastText">Notificación</span>
@@ -765,7 +743,7 @@
             inicializado: db.ref('loteria/inicializado')
         };
 
-        // ⚠️ CONFIGURACIÓN PRINCIPAL
+        // ️ CONFIGURACIÓN PRINCIPAL
         const USUARIO_ADMIN = 'artufer';
         const CLAVE_DEFECTO = 'admin123';
         const PRECIO_DECIMO = 20;
@@ -1026,7 +1004,7 @@
                 if (box) { box.className = 'alert-info'; box.innerHTML = '🔄 ' + (text || 'Guardando...'); }
             } else if (status === 'offline') {
                 dot.classList.add('offline');
-                txt.textContent = text || '️ Sin conexión';
+                txt.textContent = text || '⚠️ Sin conexión';
                 if (box) { box.className = 'alert-info'; box.innerHTML = '⚠️ ' + (text || 'Sin conexión'); }
             }
         }
@@ -1076,13 +1054,13 @@
                 await dbRef.empleados.set(empleadosObj);
 
                 await dbRef.inicializado.set({
-                    fecha: new Date().toISOString(), version: '5.0',
+                    fecha: new Date().toISOString(), version: '6.0',
                     empleadosCargados: EMPLEADOS_INICIALES.length
                 });
                 showToast('✅', 'Datos cargados (' + EMPLEADOS_INICIALES.length + ' empleados)');
             }
 
-            // ⚠️ SIEMPRE garantizar que artufer existe como admin
+            // ️ SIEMPRE garantizar que artufer existe como admin
             loadingText.textContent = 'Verificando administrador...';
             const adminSnap = await dbRef.usuarios.child(USUARIO_ADMIN).once('value');
             if (!adminSnap.val()) {
@@ -1117,7 +1095,7 @@
             const data = snapshot.val();
             secciones = data ? Object.keys(data).map(key => data[key]) : [];
             localStorage.setItem('seccionesLoteria', JSON.stringify(secciones));
-            if (firebaseReady) actualizarFiltrosSeccion();
+            if (firebaseReady) { actualizarFiltrosSeccion(); }
         });
 
         dbRef.empleados.on('value', (snapshot) => {
@@ -1212,21 +1190,48 @@
 
         function aplicarPermisosRol() {
             const esAdmin = rolActual === 'admin';
-            document.getElementById('tabSolicitar').classList.toggle('hidden', !esAdmin);
-            document.getElementById('tabOCR').classList.toggle('hidden', !esAdmin);
-            document.getElementById('tabConfig').classList.toggle('hidden', !esAdmin);
-            document.getElementById('qaSolicitar').classList.toggle('disabled', !esAdmin);
-            document.getElementById('qaOCR').classList.toggle('disabled', !esAdmin);
-            document.getElementById('bannerSolicitar').style.display = esAdmin ? 'none' : 'flex';
-            document.getElementById('bannerOCR').style.display = esAdmin ? 'none' : 'flex';
+            
+            // Mostrar/ocultar pestañas
+            const tabSolicitar = document.getElementById('tabSolicitar');
+            const tabOCR = document.getElementById('tabOCR');
+            const tabConfig = document.getElementById('tabConfig');
+            if (tabSolicitar) tabSolicitar.classList.toggle('hidden', !esAdmin);
+            if (tabOCR) tabOCR.classList.toggle('hidden', !esAdmin);
+            if (tabConfig) tabConfig.classList.toggle('hidden', !esAdmin);
+            
+            // Quick actions
+            const qaSolicitar = document.getElementById('qaSolicitar');
+            const qaOCR = document.getElementById('qaOCR');
+            if (qaSolicitar) qaSolicitar.classList.toggle('disabled', !esAdmin);
+            if (qaOCR) qaOCR.classList.toggle('disabled', !esAdmin);
+            
+            // Banners
+            const bannerSolicitar = document.getElementById('bannerSolicitar');
+            const bannerOCR = document.getElementById('bannerOCR');
+            if (bannerSolicitar) bannerSolicitar.style.display = esAdmin ? 'none' : 'flex';
+            if (bannerOCR) bannerOCR.style.display = esAdmin ? 'none' : 'flex';
+            
+            // Formulario solicitar
             const formSolicitar = document.getElementById('pedidoForm');
-            const inputsSolicitar = formSolicitar.querySelectorAll('input, select, button');
-            inputsSolicitar.forEach(el => { el.disabled = !esAdmin; });
-            document.getElementById('btnAñadirPedido').style.display = esAdmin ? 'inline-flex' : 'none';
-            document.getElementById('ocrFormContainer').style.display = esAdmin ? 'block' : 'none';
-            document.getElementById('configUsuariosBlock').style.display = esAdmin ? 'block' : 'none';
+            if (formSolicitar) {
+                const inputsSolicitar = formSolicitar.querySelectorAll('input, select, button');
+                inputsSolicitar.forEach(el => { el.disabled = !esAdmin; });
+            }
+            const btnAñadir = document.getElementById('btnAñadirPedido');
+            if (btnAñadir) btnAñadir.style.display = esAdmin ? 'inline-flex' : 'none';
+            
+            // OCR
+            const ocrForm = document.getElementById('ocrFormContainer');
+            if (ocrForm) ocrForm.style.display = esAdmin ? 'block' : 'none';
+            
+            // Config usuarios (solo admin)
+            const configUsuarios = document.getElementById('configUsuariosBlock');
+            if (configUsuarios) configUsuarios.style.display = esAdmin ? 'block' : 'none';
+            
+            // Columna acciones
             document.querySelectorAll('.accion-col').forEach(el => { el.style.display = esAdmin ? '' : 'none'; });
             
+            // Si no es admin y está en página restringida, ir a inicio
             const paginaActual = document.querySelector('.section-page.active');
             if (paginaActual && !esAdmin) {
                 const pageId = paginaActual.id;
@@ -1317,7 +1322,7 @@
         }
 
         function eliminarUsuario(nombre) {
-            if (nombre === USUARIO_ADMIN) { showToast('⚠️', 'No se puede eliminar al administrador.'); return; }
+            if (nombre === USUARIO_ADMIN) { showToast('️', 'No se puede eliminar al administrador.'); return; }
             if (nombre === usuarioActual) { showToast('⚠️', 'No puedes eliminar tu propio usuario.'); return; }
             if (confirm('¿Eliminar al usuario "' + nombre + '"?')) {
                 delete usuarios[nombre];
@@ -1339,7 +1344,7 @@
                     ? '<span class="role-badge role-admin">admin</span>' 
                     : '<span class="role-badge role-consulta">consulta</span>';
                 const btnEliminar = u === USUARIO_ADMIN ? '' : '<button class="btn btn-delete btn-small" onclick="eliminarUsuario(\'' + u + '\')">🗑️</button>';
-                return '<li><span> ' + u + ' ' + rolBadge + '</span>' + btnEliminar + '</li>';
+                return '<li><span>👤 ' + u + ' ' + rolBadge + '</span>' + btnEliminar + '</li>';
             }).join('');
         }
 
@@ -1360,7 +1365,7 @@
             establecerFechaHoraActual();
             
             firebaseReady = true;
-            setSyncStatus('syncing', ' Conectando...');
+            setSyncStatus('syncing', '🌐 Conectando...');
         }
 
         function establecerFechaHoraActual() {
@@ -1429,6 +1434,7 @@
             });
         }
 
+        // ⚠️ FUNCIÓN CLAVE: actualizar secciones con prompt para nueva sección
         function actualizarSecciones() {
             const servicio = document.getElementById('servicio').value;
             const select = document.getElementById('seccion');
@@ -1441,60 +1447,40 @@
             html += '<option value="__nueva__">➕ Nueva sección...</option>';
             select.innerHTML = html;
             if (valorActual && valorActual !== '__nueva__') select.value = valorActual;
-            
-            // Si selecciona "Nueva sección...", abrir modal
-            if (select.value === '__nueva__') {
+            actualizarEmpleados();
+        }
+
+        // ⚠️ LISTENER para detectar cuando se selecciona "Nueva sección..."
+        document.getElementById('seccion').addEventListener('change', function() {
+            if (this.value === '__nueva__') {
+                const servicio = document.getElementById('servicio').value;
                 if (!servicio) {
-                    showToast('⚠️', 'Primero selecciona un servicio.', true);
-                    select.value = '';
+                    alert('⚠️ Primero selecciona un servicio.');
+                    this.value = '';
                     return;
                 }
-                document.getElementById('nuevaSeccionServicioInfo').value = servicio;
-                document.getElementById('nombreNuevaSeccion').value = '';
-                document.getElementById('modalNuevaSeccion').classList.add('active');
-                setTimeout(() => document.getElementById('nombreNuevaSeccion').focus(), 100);
+                const nombreNueva = prompt('Introduce el nombre de la nueva sección para el servicio "' + servicio + '":');
+                if (nombreNueva && nombreNueva.trim()) {
+                    const nombreTrim = nombreNueva.trim().toUpperCase();
+                    const existe = secciones.some(s => s.servicio === servicio && s.nombre.toLowerCase() === nombreTrim.toLowerCase());
+                    if (!existe) {
+                        secciones.push({ nombre: nombreTrim, servicio: servicio });
+                        const obj = {};
+                        secciones.forEach((s, i) => { obj[i] = s; });
+                        dbRef.secciones.set(obj);
+                        actualizarSecciones();
+                        this.value = nombreTrim;
+                        actualizarEmpleados();
+                        alert('✅ Sección "' + nombreTrim + '" creada correctamente.');
+                    } else {
+                        alert('⚠️ Esa sección ya existe en este servicio.');
+                        this.value = '';
+                    }
+                } else {
+                    this.value = '';
+                }
             }
-            actualizarEmpleados();
-        }
-
-        function cerrarModalNuevaSeccion() {
-            document.getElementById('modalNuevaSeccion').classList.remove('active');
-            const select = document.getElementById('seccion');
-            select.value = '';
-            actualizarEmpleados();
-        }
-
-        function confirmarNuevaSeccion() {
-            const servicio = document.getElementById('nuevaSeccionServicioInfo').value;
-            const nombre = document.getElementById('nombreNuevaSeccion').value.trim();
-            
-            if (!nombre) {
-                showToast('️', 'Introduce el nombre de la sección.', true);
-                document.getElementById('nombreNuevaSeccion').focus();
-                return;
-            }
-            
-            const existe = secciones.some(s => s.servicio === servicio && s.nombre.toLowerCase() === nombre.toLowerCase());
-            if (existe) {
-                showToast('⚠️', 'Esa sección ya existe en este servicio.', true);
-                return;
-            }
-            
-            secciones.push({ nombre: nombre, servicio: servicio });
-            const obj = {};
-            secciones.forEach((s, i) => { obj[i] = s; });
-            dbRef.secciones.set(obj);
-            
-            cerrarModalNuevaSeccion();
-            
-            setTimeout(() => {
-                const select = document.getElementById('seccion');
-                select.value = nombre;
-                actualizarEmpleados();
-            }, 200);
-            
-            showToast('✅', 'Sección "' + nombre + '" creada correctamente.');
-        }
+        });
 
         function actualizarEmpleados() {
             const servicio = document.getElementById('servicio').value;
@@ -1628,7 +1614,7 @@
             tbody.innerHTML = pedidosFiltrados.map(p => {
                 const quienRecogeHtml = p.quienRecoge ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
                 const accionesHtml = esAdmin 
-                    ? '<div class="actions-cell"><button class="btn btn-edit" onclick="editarPedido(\'' + p.id + '\')">✏️</button><button class="btn btn-delete" onclick="eliminarPedido(\'' + p.id + '\')">🗑️</button></div>'
+                    ? '<div class="actions-cell"><button class="btn btn-edit" onclick="editarPedido(\'' + p.id + '\')">✏️</button><button class="btn btn-delete" onclick="eliminarPedido(\'' + p.id + '\')">️</button></div>'
                     : '<span style="color:#999; font-size:0.85em;">—</span>';
                 const checkboxDisabled = !esAdmin ? 'disabled' : '';
                 return '<tr>' +
@@ -1666,7 +1652,7 @@
             } else { showToast('⚠️', 'Selecciona un empleado válido', true); return; }
             const validacion = validarMaximoDecimos(nombre, numDecimos);
             if (!validacion.valido) {
-                let mensaje = ' ' + nombre + ' ya tiene ' + validacion.acumulados + ' décimo(s). ';
+                let mensaje = '🚫 ' + nombre + ' ya tiene ' + validacion.acumulados + ' décimo(s). ';
                 mensaje += 'Con ' + validacion.nuevos + ' nuevos llegaría a ' + validacion.total + ', pero el límite es ' + validacion.maximo + '. ';
                 if (validacion.disponibles > 0) mensaje += ' Aún puede solicitar ' + validacion.disponibles + ' más.';
                 else mensaje += 'Ya ha alcanzado el máximo.';
@@ -1697,12 +1683,12 @@
             if (p) {
                 p.pagado = !p.pagado;
                 firebaseGuardarPedido(p);
-                showToast(p.pagado ? '💰' : '⏳', p.pagado ? '¡' + p.nombre + ' ha pagado!' : 'Pago pendiente de ' + p.nombre + '.');
+                showToast(p.pagado ? '💰' : '', p.pagado ? '¡' + p.nombre + ' ha pagado!' : 'Pago pendiente de ' + p.nombre + '.');
             }
         }
 
         function toggleRecogido(id) {
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
             const p = pedidos.find(x => x.id === id);
             if (p) {
                 p.recogido = !p.recogido;
@@ -1712,11 +1698,11 @@
         }
 
         function eliminarPedido(id) {
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
             const p = pedidos.find(x => x.id === id);
             if (p && confirm('¿Eliminar el pedido de ' + p.nombre + '?')) {
                 firebaseEliminarPedido(id);
-                showToast('🗑️', 'Pedido eliminado.');
+                showToast('️', 'Pedido eliminado.');
             }
         }
 
@@ -1837,7 +1823,7 @@
             }).join('');
             document.querySelectorAll('.sort-icon').forEach(el => el.textContent = '');
             const sortIcon = document.getElementById('sort-' + ordenarPor);
-            if (sortIcon) sortIcon.textContent = ordenDireccion === 'asc' ? '⬆️' : '⬇️';
+            if (sortIcon) sortIcon.textContent = ordenDireccion === 'asc' ? '⬆️' : '️';
         }
 
         function ordenarListado(campo) {
@@ -1933,7 +1919,7 @@
             const numDecimos = parseInt(document.getElementById('ocrDecimos').value);
             if (!servicio) { showToast('⚠️', 'Selecciona un servicio', true); return; }
             if (!fileInput.files || fileInput.files.length === 0) { showToast('⚠️', 'Selecciona un archivo PDF', true); return; }
-            if (!numDecimos || numDecimos < 1) { showToast('⚠️', 'Introduce nº válido de décimos', true); return; }
+            if (!numDecimos || numDecimos < 1) { showToast('️', 'Introduce nº válido de décimos', true); return; }
             const file = fileInput.files[0];
             const progressContainer = document.getElementById('ocrProgressContainer');
             const resultContainer = document.getElementById('ocrResultContainer');
@@ -1945,7 +1931,7 @@
             btnProcesar.disabled = true;
             btnProcesar.textContent = '⏳ Procesando...';
             try {
-                statusEl.textContent = '📖 Leyendo PDF...';
+                statusEl.textContent = ' Leyendo PDF...';
                 progressFill.style.width = '10%';
                 const result = await Tesseract.recognize(file, 'spa', {
                     logger: m => {
@@ -1980,11 +1966,11 @@
                 showToast('✅', empleadosEncontrados.found.length + ' empleados encontrados');
             } catch (error) {
                 console.error(error);
-                statusEl.textContent = ' Error: ' + error.message;
+                statusEl.textContent = '❌ Error: ' + error.message;
                 showToast('⚠️', 'Error al procesar el PDF: ' + error.message, true);
             } finally {
                 btnProcesar.disabled = false;
-                btnProcesar.textContent = ' Procesar PDF';
+                btnProcesar.textContent = '🔍 Procesar PDF';
             }
         }
 
@@ -2068,7 +2054,7 @@
             link.href = URL.createObjectURL(blob);
             link.download = 'loteria-navidad-backup-' + new Date().toISOString().slice(0,10) + '.json';
             link.click();
-            showToast('📤', ' Copia de seguridad exportada.');
+            showToast('', '📤 Copia de seguridad exportada.');
         }
 
         function importarDatosJSON(event) {
@@ -2141,7 +2127,7 @@
             const rows = pedidosExportar.map(p => [p.nombre, p.servicio||'-', p.seccion||'-', p.telefono||'-', p.numDecimos, (p.numDecimos*PRECIO_DECIMO).toLocaleString('es-ES')+'€', p.fechaSolicitud||'-', p.pagado?'Si':'No']);
             doc.autoTable(cols, rows, { startY: 36, theme: 'striped', headStyles: { fillColor: [26, 58, 92], fontSize: 7 }, bodyStyles: { fontSize: 7 } });
             doc.save('listado-general-loteria-2026.pdf');
-            showToast('📄', '📄 PDF generado.');
+            showToast('📄', ' PDF generado.');
         }
 
         function exportarListadoGeneralCSV() {
@@ -2180,7 +2166,7 @@
             const rows = pedidosExportar.map(p => [p.nombre, p.servicio||'-', p.seccion||'-', p.telefono||'-', p.numDecimos, (p.numDecimos*PRECIO_DECIMO)+'€', p.fechaSolicitud||'-', p.pagado?'Si':'No']);
             doc.autoTable(cols, rows, { startY: 36, theme: 'striped', headStyles: { fillColor: [26, 58, 92], fontSize: 7 }, bodyStyles: { fontSize: 7 } });
             doc.save('pedidos-loteria-2026.pdf');
-            showToast('', '📄 PDF generado.');
+            showToast('📄', '📄 PDF generado.');
         }
 
         function exportarCSV() {
@@ -2194,7 +2180,7 @@
             pedidosExportar.forEach(p => { csv += '"'+p.nombre+'","'+(p.servicio||'')+'","'+(p.seccion||'')+'","'+(p.telefono||'')+'",'+p.numDecimos+','+(p.numDecimos*PRECIO_DECIMO)+',"'+(p.fechaSolicitud||'')+'","'+(p.horaSolicitud||'')+'",'+(p.pagado?'Si':'No')+','+(p.recogido?'Si':'No')+'\n'; });
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'pedidos-2026.csv'; link.click();
-            showToast('📊', '📊 CSV generado.');
+            showToast('', '📊 CSV generado.');
         }
 
         function imprimirListado() {
