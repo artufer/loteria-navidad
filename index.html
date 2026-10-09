@@ -1942,122 +1942,155 @@
             showToast('✅', '"' + nombreDetectado + '" creado y pedido registrado (' + decimosDetectados + ' décimos)');
         }
 
-        function buscarEmpleadosEnTexto(texto, servicio) {
-            const encontrados = [];
-            const noEncontrados = [];
-            const nombresProcesados = new Set();
-            
-            const empleadosDelServicio = empleados.filter(e => e.servicio === servicio);
-            
-            // 1️⃣ Detectar formato de tabla con columnas separadas por |
-            const lineasTabla = texto.split('\n').filter(l => l.includes('|'));
-            const empleadosDetectados = [];
-            
-            lineasTabla.forEach(linea => {
-                const lineaLimpia = linea.replace(/\|/g, '|').trim();
-                if (!lineaLimpia || lineaLimpia.startsWith('| ---')) return;
-                
-                const columnas = lineaLimpia.split('|').map(c => c.trim()).filter(c => c.length > 0);
-                
-                if (columnas.length >= 4) {
-                    const nombre = columnas[0];
-                    const apellidos = columnas[1];
-                    const decimosStr = columnas[columnas.length - 1] || '2';
-                    const decimos = parseInt(decimosStr) || 2;
-                    
-                    if (nombre && apellidos && nombre.length >= 2 && apellidos.length >= 4) {
-                        if (nombre.toUpperCase() === 'NOMBRE' || nombre.toUpperCase() === 'APELLIDOS') return;
-                        if (nombre.toUpperCase() === 'SERVICIO' || nombre.toUpperCase() === 'SECCIÓN') return;
-                        
-                        const nombreCompleto = (nombre + ' ' + apellidos).toUpperCase().trim();
-                        
-                        empleadosDetectados.push({
-                            nombre: nombreCompleto,
-                            decimos: decimos,
-                            linea: lineaLimpia
-                        });
-                    }
-                }
-            });
-            
-            // 2️⃣ Si no detectó tabla, buscar nombres en mayúsculas (formato antiguo)
-            if (empleadosDetectados.length === 0) {
-                const lineas = texto.split('\n').map(l => l.trim()).filter(l => l.length > 2);
-                const regexMayusculas = /^[A-ZÁÉÍÓÚÑÜ][A-ZÁÉÍÓÚÑÜ\s]+$/;
-                const nombresMayusculas = [];
-                
-                lineas.forEach(linea => {
-                    const lineaLimpia = linea.trim();
-                    if (regexMayusculas.test(lineaLimpia)) {
-                        const palabrasIgnorar = ['NOMBRE', 'APELLIDOS', 'SERVICIO', 'SECCIÓN', 'CANTIDAD', 'TOTAL', 'PAGINA', 'FECHA', 'HORA', 'DECIMOS', 'IMPORTE', 'LOTERIA', 'NAVIDAD', 'ESCUELA', 'TALLER'];
-                        if (!palabrasIgnorar.some(p => lineaLimpia.toUpperCase().includes(p))) {
-                            nombresMayusculas.push(lineaLimpia);
-                        }
-                    }
-                });
-                
-                const yaProcesados = new Set();
-                for (let i = 0; i < nombresMayusculas.length; i++) {
-                    const linea = nombresMayusculas[i];
-                    const palabras = linea.split(/\s+/).filter(p => p.length > 0);
-                    
-                    if (palabras.length >= 2 && palabras.length <= 4) {
-                        if (!yaProcesados.has(linea)) {
-                            empleadosDetectados.push({ nombre: linea, decimos: 2, linea: linea });
-                            yaProcesados.add(linea);
-                        }
-                    } else if (palabras.length === 1 && i + 1 < nombresMayusculas.length) {
-                        const siguienteLinea = nombresMayusculas[i + 1];
-                        const nombreCompleto = linea + ' ' + siguienteLinea;
-                        if (!yaProcesados.has(nombreCompleto)) {
-                            empleadosDetectados.push({ nombre: nombreCompleto, decimos: 2, linea: nombreCompleto });
-                            yaProcesados.add(nombreCompleto);
-                            yaProcesados.add(siguienteLinea);
-                        }
-                        i++;
-                    }
+function buscarEmpleadosEnTexto(texto, servicio) {
+    const encontrados = [];
+    const noEncontrados = [];
+    const nombresProcesados = new Set();
+    
+    const empleadosDelServicio = empleados.filter(e => e.servicio === servicio);
+    
+    // 1️⃣ Primero buscar empleados existentes en TODO el texto
+    empleadosDelServicio.forEach(emp => {
+        const nombreNorm = emp.nombre.toLowerCase()
+            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z\s]/g, '')
+            .replace(/\s+/g, ' ').trim();
+        
+        const palabras = nombreNorm.split(' ').filter(p => p.length > 2);
+        if (palabras.length < 2) return;
+        
+        const textoNorm = texto.toLowerCase()
+            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z\s]/g, '')
+            .replace(/\s+/g, ' ');
+        
+        const palabrasEncontradas = palabras.filter(p => textoNorm.includes(p));
+        const umbral = Math.max(2, Math.ceil(palabras.length * 0.7));
+        if (palabrasEncontradas.length >= umbral && !nombresProcesados.has(emp.nombre)) {
+            encontrados.push({ ...emp, decimosPDF: 2 });
+            nombresProcesados.add(emp.nombre);
+        }
+    });
+    
+    // 2️⃣ Detectar nombres propios en el texto con múltiples estrategias
+    const lineas = texto.split('\n').map(l => l.trim()).filter(l => l.length > 3);
+    const empleadosDetectados = [];
+    
+    // Estrategia A: Buscar líneas que contengan un patrón de nombre + apellidos + número al final
+    // Ejemplo: "PABLO ALBARADO FERNÁNDEZ DESARROLLO RURAL Y MEDIO AMBIENTE MONTEL 1"
+    const regexLineaCompleta = /^([A-ZÁÉÍÓÚÑÜ][A-ZÁÉÍÓÚÑÜ\s]{2,}?)\s+\d{1,2}\s*$/;
+    
+    lineas.forEach(linea => {
+        // Buscar número al final de la línea (1 o 2 décimos)
+        const matchNumero = linea.match(/\s+(\d{1,2})\s*$/);
+        const decimos = matchNumero ? parseInt(matchNumero[1]) : 2;
+        
+        // Quitar el número del final para analizar el nombre
+        const lineaSinNumero = matchNumero ? linea.replace(/\s+\d{1,2}\s*$/, '') : linea;
+        
+        // Buscar secuencia de palabras en mayúsculas que parezcan nombre propio (2-4 palabras)
+        const palabras = lineaSinNumero.split(/\s+/).filter(p => p.length > 0);
+        
+        // Buscar el inicio del nombre (primera palabra en mayúsculas que no sea un encabezado)
+        const encabezados = ['NOMBRE', 'APELLIDOS', 'SERVICIO', 'SECCIÓN', 'CANTIDAD', 'TOTAL', 'PAGINA', 'FECHA', 'HORA', 'DECIMOS', 'IMPORTE', 'LOTERIA', 'NAVIDAD', 'ESCUELA', 'TALLER', 'RELACIÓN', 'PERSONAL', 'CENTRO', 'TRABAJO'];
+        
+        let inicioNombre = -1;
+        for (let i = 0; i < palabras.length; i++) {
+            const palabra = palabras[i].toUpperCase();
+            if (/^[A-ZÁÉÍÓÚÑÜ][A-ZÁÉÍÓÚÑÜ\s]*$/.test(palabra) && !encabezados.includes(palabra) && palabra.length >= 2) {
+                // Verificar que no sea parte del servicio (palabras muy comunes)
+                const palabrasServicio = ['DESARROLLO', 'RURAL', 'MEDIO', 'AMBIENTE', 'MONTEL', 'SAN', 'ISIDRO', 'CAYETANO', 'VIVERO', 'RIBASECA', 'BUSTILLO', 'PÁRAMO', 'PARQUE', 'AFE', 'APICULTURA', 'VIVEROS', 'FORESTALES', 'T.', 'DE', 'LA', 'DEL', 'LOS', 'Y'];
+                if (!palabrasServicio.includes(palabra) || i === 0) {
+                    inicioNombre = i;
+                    break;
                 }
             }
-            
-            // 3️⃣ Buscar cada empleado detectado en la base de datos
-            empleadosDetectados.forEach(empDetectado => {
-                const nombreNorm = empDetectado.nombre.toLowerCase()
-                    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-                    .replace(/[^a-z\s]/g, '')
-                    .replace(/\s+/g, ' ').trim();
-                
-                let empleadoEncontrado = null;
-                
-                for (const emp of empleadosDelServicio) {
-                    const empNorm = emp.nombre.toLowerCase()
-                        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-                        .replace(/[^a-z\s]/g, '')
-                        .replace(/\s+/g, ' ').trim();
-                    
-                    if (empNorm === nombreNorm || empNorm.includes(nombreNorm) || nombreNorm.includes(empNorm)) {
-                        empleadoEncontrado = emp;
-                        break;
-                    }
-                }
-                
-                if (empleadoEncontrado && !nombresProcesados.has(empleadoEncontrado.nombre)) {
-                    encontrados.push({
-                        ...empleadoEncontrado,
-                        decimosPDF: empDetectado.decimos
-                    });
-                    nombresProcesados.add(empleadoEncontrado.nombre);
-                } else if (!nombresProcesados.has(empDetectado.nombre)) {
-                    noEncontrados.push({
-                        nombre: empDetectado.nombre,
-                        decimosPDF: empDetectado.decimos
-                    });
-                    nombresProcesados.add(empDetectado.nombre);
-                }
-            });
-            
-            return { encontrados, noEncontrados };
         }
-
+        
+        if (inicioNombre >= 0) {
+            // Tomar 2-4 palabras como nombre completo
+            const numPalabrasNombre = Math.min(4, palabras.length - inicioNombre);
+            const nombreCompleto = palabras.slice(inicioNombre, inicioNombre + numPalabrasNombre).join(' ');
+            
+            if (nombreCompleto.split(' ').length >= 2 && nombreCompleto.length >= 6) {
+                empleadosDetectados.push({
+                    nombre: nombreCompleto.toUpperCase(),
+                    decimos: decimos
+                });
+            }
+        }
+    });
+    
+    // Estrategia B: Si no detectó nada, buscar nombres en líneas consecutivas
+    // (cuando PDF.js separa nombre y apellidos en líneas diferentes)
+    if (empleadosDetectados.length === 0) {
+        for (let i = 0; i < lineas.length - 1; i++) {
+            const linea1 = lineas[i];
+            const linea2 = lineas[i + 1];
+            const linea3 = lineas[i + 2];
+            
+            // Patrón: línea con nombre corto + línea con apellidos + línea con número
+            const esNombreCorto = /^[A-ZÁÉÍÓÚÑÜ][A-ZÁÉÍÓÚÑÜ\s]{1,15}$/.test(linea1);
+            const esApellidos = /^[A-ZÁÉÍÓÚÑÜ][A-ZÁÉÍÓÚÑÜ\s]{5,}$/.test(linea2);
+            const matchNum = linea3 ? linea3.match(/^\s*(\d{1,2})\s*$/) : null;
+            
+            if (esNombreCorto && esApellidos) {
+                const nombreCompleto = (linea1 + ' ' + linea2).toUpperCase().trim();
+                const decimos = matchNum ? parseInt(matchNum[1]) : 2;
+                
+                const encabezados = ['NOMBRE', 'APELLIDOS', 'SERVICIO', 'SECCIÓN', 'CANTIDAD'];
+                if (!encabezados.some(e => nombreCompleto.includes(e))) {
+                    empleadosDetectados.push({
+                        nombre: nombreCompleto,
+                        decimos: decimos
+                    });
+                }
+            }
+        }
+    }
+    
+    // 3️⃣ Procesar empleados detectados: buscar en BD o agregar a "no encontrados"
+    empleadosDetectados.forEach(empDetectado => {
+        const nombreNorm = empDetectado.nombre.toLowerCase()
+            .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+            .replace(/[^a-z\s]/g, '')
+            .replace(/\s+/g, ' ').trim();
+        
+        // Ya fue encontrado en paso 1?
+        if (nombresProcesados.has(empDetectado.nombre)) return;
+        
+        // Buscar coincidencia en empleados del servicio
+        let empleadoEncontrado = null;
+        
+        for (const emp of empleadosDelServicio) {
+            const empNorm = emp.nombre.toLowerCase()
+                .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                .replace(/[^a-z\s]/g, '')
+                .replace(/\s+/g, ' ').trim();
+            
+            if (empNorm === nombreNorm || empNorm.includes(nombreNorm) || nombreNorm.includes(empNorm)) {
+                empleadoEncontrado = emp;
+                break;
+            }
+        }
+        
+        if (empleadoEncontrado && !nombresProcesados.has(empleadoEncontrado.nombre)) {
+            encontrados.push({
+                ...empleadoEncontrado,
+                decimosPDF: empDetectado.decimos
+            });
+            nombresProcesados.add(empleadoEncontrado.nombre);
+        } else if (!nombresProcesados.has(empDetectado.nombre)) {
+            noEncontrados.push({
+                nombre: empDetectado.nombre,
+                decimosPDF: empDetectado.decimos
+            });
+            nombresProcesados.add(empDetectado.nombre);
+        }
+    });
+    
+    return { encontrados, noEncontrados };
+}
         function confirmarPedidosOCR() {
             if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
             const resultado = window.ocrResultado;
