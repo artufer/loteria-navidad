@@ -141,6 +141,7 @@
         .config-row .form-group { flex: 1; margin-bottom: 0; min-width: 180px; }
         .alert-info { background: #e3f2fd; border-left: 4px solid #1976d2; padding: 10px 12px; border-radius: 6px; margin-bottom: 12px; font-size: 0.82em; color: #0d47a1; }
         .alert-success { background: #e8f5e9; border-left: 4px solid #2e7d32; padding: 10px 12px; border-radius: 6px; margin-bottom: 12px; font-size: 0.82em; color: #1b5e20; }
+        .alert-warning { background: #fff3e0; border-left: 4px solid #e65100; padding: 10px 12px; border-radius: 6px; margin-bottom: 12px; font-size: 0.82em; color: #e65100; }
         .dashboard-welcome { background: linear-gradient(135deg, #1a3a5c 0%, #2a4a6c 100%); color: white; padding: 25px 20px; border-radius: 12px; margin-bottom: 15px; text-align: center; }
         .dashboard-welcome .welcome-date { font-size: 1.5em; font-weight: 700; letter-spacing: 0.5px; }
         .quick-actions { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 15px; }
@@ -161,11 +162,11 @@
         .ocr-progress-bar { width: 100%; height: 20px; background: #e0e2e5; border-radius: 10px; overflow: hidden; margin: 10px 0; }
         .ocr-progress-fill { height: 100%; background: linear-gradient(90deg, #1a3a5c, #2a4a6c); transition: width 0.3s; border-radius: 10px; }
         .ocr-status { font-size: 0.85em; color: #555; text-align: center; }
-        .ocr-result { background: #e8f5e9; border: 1px solid #a5d6a7; border-radius: 8px; padding: 15px; margin: 15px 0; max-height: 300px; overflow-y: auto; }
-        .ocr-result h4 { color: #2e7d32; margin-bottom: 10px; font-size: 0.95em; }
-        .ocr-result-item { padding: 6px 10px; background: white; border-radius: 4px; margin-bottom: 5px; font-size: 0.82em; display: flex; justify-content: space-between; align-items: center; }
+        .ocr-result { background: #f8f9fa; border: 1px solid #e0e2e5; border-radius: 8px; padding: 15px; margin: 15px 0; max-height: 400px; overflow-y: auto; }
+        .ocr-result h4 { color: #1a3a5c; margin-bottom: 10px; font-size: 0.95em; }
+        .ocr-result-item { padding: 8px 10px; background: white; border-radius: 4px; margin-bottom: 6px; font-size: 0.82em; display: flex; justify-content: space-between; align-items: center; }
         .ocr-result-item.found { border-left: 3px solid #2e7d32; }
-        .ocr-result-item.notfound { border-left: 3px solid #c41e3a; opacity: 0.7; }
+        .ocr-result-item.notfound { border-left: 3px solid #c41e3a; background: #fff5f5; }
         .user-list { list-style: none; margin-top: 10px; }
         .user-list li { display: flex; justify-content: space-between; align-items: center; padding: 8px 12px; background: white; border: 1px solid #e0e2e5; border-radius: 6px; margin-bottom: 6px; font-size: 0.85em; }
         .user-list li span { font-weight: 500; }
@@ -220,7 +221,7 @@
                     <input type="password" id="loginClave" placeholder="Introduce tu contraseña" required autocomplete="current-password">
                 </div>
                 <button type="submit" class="btn-login" id="btnLogin">Iniciar sesión</button>
-                <div class="login-error" id="loginError"> Acceso no autorizado.</div>
+                <div class="login-error" id="loginError">⛔ Acceso no autorizado.</div>
             </form>
         </div>
     </div>
@@ -413,7 +414,7 @@
 
             <div class="section-page" id="page-listado">
                 <div class="content-card">
-                    <h2 class="section-title">📑 Listado General</h2>
+                    <h2 class="section-title"> Listado General</h2>
                     <div class="alert-info">💡 Haz clic en cualquier cabecera para ordenar.</div>
                     <div class="sort-controls">
                         <div class="form-group">
@@ -433,8 +434,8 @@
                         <div class="form-group">
                             <label for="ordenDireccion">Dirección</label>
                             <select id="ordenDireccion" onchange="renderizarListadoGeneral()">
-                                <option value="asc">⬆️ Ascendente (A-Z)</option>
-                                <option value="desc">⬇️ Descendente (Z-A)</option>
+                                <option value="asc">️ Ascendente (A-Z)</option>
+                                <option value="desc">️ Descendente (Z-A)</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -454,7 +455,7 @@
                             <select id="filtroPagadoListado" onchange="renderizarListadoGeneral()">
                                 <option value="">Todos</option>
                                 <option value="pagado">✓ Pagados</option>
-                                <option value="pendiente">⏳ Pendientes</option>
+                                <option value="pendiente"> Pendientes</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -469,7 +470,7 @@
                     <div class="export-buttons" style="margin-bottom: 15px;">
                         <button class="btn btn-export" onclick="exportarListadoGeneralPDF()">📄 PDF</button>
                         <button class="btn btn-export" onclick="exportarListadoGeneralCSV()"> CSV</button>
-                        <button class="btn btn-export" onclick="imprimirListadoGeneral()">🖨️ Imprimir</button>
+                        <button class="btn btn-export" onclick="imprimirListadoGeneral()">️ Imprimir</button>
                     </div>
                     <div class="table-container" id="listadoGeneralContainer" style="display:none;">
                         <table>
@@ -573,7 +574,7 @@
                 <div class="content-card">
                     <div id="bannerOCR" class="readonly-banner" style="display:none;">🔒 Solo el administrador puede usar esta función.</div>
                     <h2 class="section-title">📷 Lectura de PDF Escaneado</h2>
-                    <div class="alert-info">📋 Sube el PDF escaneado del listado de un servicio. El sistema leerá los nombres y creará automáticamente los pedidos.</div>
+                    <div class="alert-info">📋 Sube el PDF escaneado del listado de un servicio. El sistema leerá los nombres, buscará los empleados en la base de datos y creará automáticamente los pedidos. Si un empleado no existe, podrás crearlo al momento.</div>
                     <div id="ocrFormContainer">
                         <div class="form-grid">
                             <div class="form-group">
@@ -588,10 +589,10 @@
                             </div>
                         </div>
                         <div class="form-group" style="margin-bottom: 15px;">
-                            <label for="ocrFile">Seleccionar PDF escaneado *</label>
+                            <label for="ocrFile">Seleccionar PDF o imagen *</label>
                             <input type="file" id="ocrFile" accept=".pdf,image/*" style="padding: 10px;">
                         </div>
-                        <button type="button" class="btn btn-primary" onclick="procesarOCR()" id="btnProcesarOCR">🔍 Procesar PDF</button>
+                        <button type="button" class="btn btn-primary" onclick="procesarOCR()" id="btnProcesarOCR">🔍 Procesar archivo</button>
                     </div>
                     <div id="ocrProgressContainer" style="display:none;">
                         <div class="ocr-progress">
@@ -603,12 +604,12 @@
                     </div>
                     <div id="ocrResultContainer" style="display:none;">
                         <div class="ocr-result">
-                            <h4>📋 Empleados detectados: <span id="ocrTotalDetectados">0</span></h4>
+                            <h4>📋 Resultados del análisis: <span id="ocrTotalDetectados">0</span></h4>
                             <div id="ocrResultList"></div>
                         </div>
-                        <div style="margin-top: 15px; display: flex; gap: 10px;">
-                            <button type="button" class="btn btn-success" onclick="confirmarPedidosOCR()">✅ Confirmar y crear pedidos</button>
-                            <button type="button" class="btn btn-cancel" onclick="cancelarOCR()">❌ Cancelar</button>
+                        <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+                            <button type="button" class="btn btn-success" onclick="confirmarPedidosOCR()">✅ Crear pedidos de encontrados</button>
+                            <button type="button" class="btn btn-cancel" onclick="cancelarOCR()"> Cancelar</button>
                         </div>
                     </div>
                 </div>
@@ -646,15 +647,15 @@
                                 <label for="nuevaClave">Nueva contraseña *</label>
                                 <input type="password" id="nuevaClave" placeholder="Mínimo 4 caracteres">
                             </div>
-                            <button type="button" class="btn btn-primary btn-small" onclick="cambiarMiClave()" style="align-self: flex-end;">💾 Guardar</button>
+                            <button type="button" class="btn btn-primary btn-small" onclick="cambiarMiClave()" style="align-self: flex-end;"> Guardar</button>
                         </div>
                     </div>
                     <div class="config-block">
                         <h3>💾 Copia de seguridad</h3>
                         <div class="alert-info">Exporta o importa todos los datos de la aplicación.</div>
                         <div class="config-row">
-                            <button type="button" class="btn btn-primary btn-small" onclick="exportarDatosJSON()">📤 Exportar datos</button>
-                            <button type="button" class="btn btn-success btn-small" onclick="document.getElementById('importarFile').click()">📥 Importar datos</button>
+                            <button type="button" class="btn btn-primary btn-small" onclick="exportarDatosJSON()"> Exportar datos</button>
+                            <button type="button" class="btn btn-success btn-small" onclick="document.getElementById('importarFile').click()"> Importar datos</button>
                             <input type="file" id="importarFile" accept=".json" style="display:none" onchange="importarDatosJSON(event)">
                         </div>
                     </div>
@@ -663,12 +664,11 @@
         </div>
     </div>
 
-    <!-- Modal Editar Pedido -->
     <div class="modal-overlay" id="modalEditar">
         <div class="modal-content">
             <div class="modal-header">
                 <h3>✏️ Editar Pedido</h3>
-                <button class="close-btn" onclick="cerrarModal()"></button>
+                <button class="close-btn" onclick="cerrarModal()">✕</button>
             </div>
             <form id="editarForm">
                 <input type="hidden" id="editarId">
@@ -690,12 +690,11 @@
         </div>
     </div>
 
-    <!-- Modal Nuevo Empleado -->
     <div class="modal-overlay" id="modalNuevoEmpleado">
         <div class="modal-content">
             <div class="modal-header">
                 <h3>➕ Dar de alta nuevo empleado</h3>
-                <button class="close-btn" onclick="cerrarModalEmpleado()"></button>
+                <button class="close-btn" onclick="cerrarModalEmpleado()">✕</button>
             </div>
             <form id="nuevoEmpleadoForm">
                 <div class="form-group" style="margin-bottom: 12px;"><label for="nuevoEmpNombre">Nombre y Apellidos *</label><input type="text" id="nuevoEmpNombre" required></div>
@@ -759,7 +758,7 @@
         let usuarioActual = null;
         let rolActual = 'consulta';
         let pedidosPendientesOCR = [];
-        let datosCargados = false; // ️ NUEVO: flag para saber si los datos están listos
+        let datosCargados = false;
 
         const EMPLEADOS_INICIALES = [
             {nombre:"M.CARMEN CORDERO GONZALEZ",telefono:"1449",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MEDIO AMBIENTE"},
@@ -833,7 +832,7 @@
             } else if (status === 'offline') {
                 dot.classList.add('offline');
                 txt.textContent = text || '⚠️ Sin conexión';
-                if (box) { box.className = 'alert-info'; box.innerHTML = '⚠️ ' + (text || 'Sin conexión'); }
+                if (box) { box.className = 'alert-info'; box.innerHTML = '️ ' + (text || 'Sin conexión'); }
             }
         }
 
@@ -848,12 +847,9 @@
 
         function generarId() { return Date.now().toString(36) + Math.random().toString(36).substr(2); }
 
-        // ⚠️ CARGA INICIAL: espera a que TODO esté listo antes de mostrar login
         async function iniciarAplicacion() {
             const loadingText = document.getElementById('loadingText');
-            
             try {
-                // 1. Cargar datos iniciales si no existen
                 loadingText.textContent = 'Verificando datos...';
                 const snapshot = await dbRef.inicializado.once('value');
                 if (!snapshot.val()) {
@@ -885,12 +881,11 @@
                     await dbRef.empleados.set(empleadosObj);
 
                     await dbRef.inicializado.set({
-                        fecha: new Date().toISOString(), version: '7.0',
+                        fecha: new Date().toISOString(), version: '9.0',
                         empleadosCargados: EMPLEADOS_INICIALES.length
                     });
                 }
 
-                // 2. Garantizar que artufer existe como admin
                 loadingText.textContent = 'Verificando administrador...';
                 const adminSnap = await dbRef.usuarios.child(USUARIO_ADMIN).once('value');
                 if (!adminSnap.val()) {
@@ -907,13 +902,11 @@
                     }
                 }
 
-                // 3. Cargar usuarios UNA VEZ (síncrono)
                 loadingText.textContent = 'Cargando usuarios...';
                 const usuariosSnap = await dbRef.usuarios.once('value');
                 usuarios = usuariosSnap.val() || {};
                 localStorage.setItem('usuariosLoteria', JSON.stringify(usuarios));
 
-                // 4. Cargar servicios, secciones, empleados, pedidos
                 loadingText.textContent = 'Cargando datos...';
                 const [servSnap, secSnap, empSnap, pedSnap] = await Promise.all([
                     dbRef.servicios.once('value'),
@@ -932,17 +925,11 @@
                 localStorage.setItem('empleadosLoteria', JSON.stringify(empleados));
                 localStorage.setItem('pedidosLoteria', JSON.stringify(pedidos));
 
-                // 5. Marcar datos como cargados
                 datosCargados = true;
                 firebaseReady = true;
 
-                // 6. Ocultar loading
                 document.getElementById('loadingOverlay').classList.add('hidden');
-
-                // 7. Configurar listeners en tiempo real (para actualizaciones futuras)
                 configurarListenersTiempoReal();
-
-                // 8. Verificar sesión o mostrar login
                 verificarSesion();
 
             } catch (error) {
@@ -954,78 +941,50 @@
         function configurarListenersTiempoReal() {
             dbRef.usuarios.on('value', (snapshot) => {
                 const data = snapshot.val();
-                if (data) {
-                    usuarios = data;
-                    localStorage.setItem('usuariosLoteria', JSON.stringify(usuarios));
-                }
+                if (data) { usuarios = data; localStorage.setItem('usuariosLoteria', JSON.stringify(usuarios)); }
             });
-
             dbRef.servicios.on('value', (snapshot) => {
                 const data = snapshot.val();
-                if (data) {
-                    servicios = Object.keys(data).map(key => data[key]);
-                    localStorage.setItem('serviciosLoteria', JSON.stringify(servicios));
-                    if (firebaseReady) { actualizarSelectServicios(); actualizarFiltrosServicio(); }
-                }
+                if (data) { servicios = Object.keys(data).map(key => data[key]); localStorage.setItem('serviciosLoteria', JSON.stringify(servicios)); if (firebaseReady) { actualizarSelectServicios(); actualizarFiltrosServicio(); } }
             });
-
             dbRef.secciones.on('value', (snapshot) => {
                 const data = snapshot.val();
-                if (data) {
-                    secciones = Object.keys(data).map(key => data[key]);
-                    localStorage.setItem('seccionesLoteria', JSON.stringify(secciones));
-                    if (firebaseReady) actualizarFiltrosSeccion();
-                }
+                if (data) { secciones = Object.keys(data).map(key => data[key]); localStorage.setItem('seccionesLoteria', JSON.stringify(secciones)); if (firebaseReady) actualizarFiltrosSeccion(); }
             });
-
             dbRef.empleados.on('value', (snapshot) => {
                 const data = snapshot.val();
-                if (data) {
-                    empleados = Object.keys(data).map(key => ({ id: key, ...data[key] }));
-                    localStorage.setItem('empleadosLoteria', JSON.stringify(empleados));
-                }
+                if (data) { empleados = Object.keys(data).map(key => ({ id: key, ...data[key] })); localStorage.setItem('empleadosLoteria', JSON.stringify(empleados)); }
             });
-
             dbRef.pedidos.on('value', (snapshot) => {
                 const data = snapshot.val();
                 pedidos = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
                 localStorage.setItem('pedidosLoteria', JSON.stringify(pedidos));
                 if (firebaseReady) { renderizarTabla(); renderizarListadoGeneral(); actualizarEstadisticas(); }
-            }, (error) => {
-                console.error('Error pedidos:', error);
-                setSyncStatus('offline', '❌ Error');
             });
-
             dbRef.config.on('value', (snapshot) => {
                 const data = snapshot.val();
                 if (data) config = { ...config, ...data };
                 config.maxDecimos = MAX_DECIMOS;
                 localStorage.setItem('configLoteria', JSON.stringify(config));
             });
-
             db.ref('.info/connected').on('value', (snapshot) => {
                 if (snapshot.val() === true) setSyncStatus('online');
                 else setSyncStatus('offline', '📡 Sin conexión');
             });
         }
 
-        // ===== LOGIN =====
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            
-            // ⚠️ Verificar que los datos están cargados
             if (!datosCargados) {
                 document.getElementById('loginError').textContent = ' Cargando datos... espera un momento.';
                 document.getElementById('loginError').classList.add('show');
                 return;
             }
-            
             const usuario = document.getElementById('loginUsuario').value.trim();
             const clave = document.getElementById('loginClave').value;
 
             if (usuarios[usuario] && usuarios[usuario].clave === clave) {
                 usuarioActual = usuario;
-                // ⚠️ FORZAR admin para artufer SIEMPRE
                 rolActual = (usuario === USUARIO_ADMIN) ? 'admin' : (usuarios[usuario].rol || 'consulta');
                 
                 document.getElementById('loginOverlay').classList.add('hidden');
@@ -1041,31 +1000,27 @@
                 aplicarPermisosRol();
                 initApp();
             } else {
-                document.getElementById('loginError').textContent = ' Usuario o contraseña incorrectos.';
+                document.getElementById('loginError').textContent = '⛔ Usuario o contraseña incorrectos.';
                 document.getElementById('loginError').classList.add('show');
             }
         });
 
         function aplicarPermisosRol() {
             const esAdmin = rolActual === 'admin';
-            
             const tabSolicitar = document.getElementById('tabSolicitar');
             const tabOCR = document.getElementById('tabOCR');
             const tabConfig = document.getElementById('tabConfig');
             if (tabSolicitar) tabSolicitar.classList.toggle('hidden', !esAdmin);
             if (tabOCR) tabOCR.classList.toggle('hidden', !esAdmin);
             if (tabConfig) tabConfig.classList.toggle('hidden', !esAdmin);
-            
             const qaSolicitar = document.getElementById('qaSolicitar');
             const qaOCR = document.getElementById('qaOCR');
             if (qaSolicitar) qaSolicitar.classList.toggle('disabled', !esAdmin);
             if (qaOCR) qaOCR.classList.toggle('disabled', !esAdmin);
-            
             const bannerSolicitar = document.getElementById('bannerSolicitar');
             const bannerOCR = document.getElementById('bannerOCR');
             if (bannerSolicitar) bannerSolicitar.style.display = esAdmin ? 'none' : 'flex';
             if (bannerOCR) bannerOCR.style.display = esAdmin ? 'none' : 'flex';
-            
             const formSolicitar = document.getElementById('pedidoForm');
             if (formSolicitar) {
                 const inputsSolicitar = formSolicitar.querySelectorAll('input, select, button');
@@ -1073,15 +1028,11 @@
             }
             const btnAñadir = document.getElementById('btnAñadirPedido');
             if (btnAñadir) btnAñadir.style.display = esAdmin ? 'inline-flex' : 'none';
-            
             const ocrForm = document.getElementById('ocrFormContainer');
             if (ocrForm) ocrForm.style.display = esAdmin ? 'block' : 'none';
-            
             const configUsuarios = document.getElementById('configUsuariosBlock');
             if (configUsuarios) configUsuarios.style.display = esAdmin ? 'block' : 'none';
-            
             document.querySelectorAll('.accion-col').forEach(el => { el.style.display = esAdmin ? '' : 'none'; });
-            
             const paginaActual = document.querySelector('.section-page.active');
             if (paginaActual && !esAdmin) {
                 const pageId = paginaActual.id;
@@ -1107,19 +1058,15 @@
         function verificarSesion() {
             if (localStorage.getItem('loteriaSesionActiva') === 'true') {
                 usuarioActual = localStorage.getItem('loteriaUsuarioActivo');
-                
-                // ⚠️ FORZAR admin para artufer SIEMPRE
                 if (usuarioActual === USUARIO_ADMIN) {
                     rolActual = 'admin';
                 } else {
                     rolActual = localStorage.getItem('loteriaRolActivo') || 'consulta';
                 }
-                
                 if (usuarioActual && usuarios[usuarioActual]) {
                     if (usuarioActual !== USUARIO_ADMIN && usuarios[usuarioActual].rol) {
                         rolActual = usuarios[usuarioActual].rol;
                     }
-                    
                     localStorage.setItem('loteriaRolActivo', rolActual);
                     document.getElementById('loginOverlay').classList.add('hidden');
                     document.getElementById('appContainer').classList.add('visible');
@@ -1152,17 +1099,10 @@
         function agregarUsuario() {
             const nombre = document.getElementById('nuevoUsuarioNombre').value.trim();
             const clave = document.getElementById('nuevoUsuarioClave').value;
-            
             if (!nombre) { showToast('⚠️', 'Introduce el nombre de usuario.'); return; }
             if (!clave || clave.length < 4) { showToast('⚠️', 'La contraseña debe tener mínimo 4 caracteres.'); return; }
             if (usuarios[nombre]) { showToast('⚠️', 'Ese usuario ya existe.'); return; }
-            
-            usuarios[nombre] = {
-                clave: clave,
-                rol: 'consulta',
-                nombre: nombre,
-                fechaCreacion: new Date().toISOString()
-            };
+            usuarios[nombre] = { clave: clave, rol: 'consulta', nombre: nombre, fechaCreacion: new Date().toISOString() };
             firebaseGuardarUsuarios();
             document.getElementById('nuevoUsuarioNombre').value = '';
             document.getElementById('nuevoUsuarioClave').value = '';
@@ -1172,7 +1112,7 @@
 
         function eliminarUsuario(nombre) {
             if (nombre === USUARIO_ADMIN) { showToast('⚠️', 'No se puede eliminar al administrador.'); return; }
-            if (nombre === usuarioActual) { showToast('⚠️', 'No puedes eliminar tu propio usuario.'); return; }
+            if (nombre === usuarioActual) { showToast('️', 'No puedes eliminar tu propio usuario.'); return; }
             if (confirm('¿Eliminar al usuario "' + nombre + '"?')) {
                 delete usuarios[nombre];
                 firebaseGuardarUsuarios();
@@ -1189,9 +1129,7 @@
             empty.style.display = 'none';
             list.innerHTML = keys.map(u => {
                 const user = usuarios[u];
-                const rolBadge = user.rol === 'admin' 
-                    ? '<span class="role-badge role-admin">admin</span>' 
-                    : '<span class="role-badge role-consulta">consulta</span>';
+                const rolBadge = user.rol === 'admin' ? '<span class="role-badge role-admin">admin</span>' : '<span class="role-badge role-consulta">consulta</span>';
                 const btnEliminar = u === USUARIO_ADMIN ? '' : '<button class="btn btn-delete btn-small" onclick="eliminarUsuario(\'' + u + '\')">🗑️</button>';
                 return '<li><span>👤 ' + u + ' ' + rolBadge + '</span>' + btnEliminar + '</li>';
             }).join('');
@@ -1199,7 +1137,6 @@
 
         function initApp() {
             config.maxDecimos = MAX_DECIMOS;
-            
             actualizarSelectServicios();
             actualizarFiltrosServicio();
             actualizarFiltrosSeccion();
@@ -1208,7 +1145,6 @@
             renderizarListaUsuarios();
             actualizarFechaBienvenida();
             establecerFechaHoraActual();
-            
             setSyncStatus('online', '✅ Conectado');
         }
 
@@ -1360,7 +1296,7 @@
 
         document.getElementById('nuevoEmpleadoForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
             const nombre = document.getElementById('nuevoEmpNombre').value.trim();
             const telefono = document.getElementById('nuevoEmpTelefono').value.trim();
             const servicio = document.getElementById('servicio').value;
@@ -1457,7 +1393,7 @@
             tbody.innerHTML = pedidosFiltrados.map(p => {
                 const quienRecogeHtml = p.quienRecoge ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
                 const accionesHtml = esAdmin 
-                    ? '<div class="actions-cell"><button class="btn btn-edit" onclick="editarPedido(\'' + p.id + '\')">✏️</button><button class="btn btn-delete" onclick="eliminarPedido(\'' + p.id + '\')">️</button></div>'
+                    ? '<div class="actions-cell"><button class="btn btn-edit" onclick="editarPedido(\'' + p.id + '\')">✏️</button><button class="btn btn-delete" onclick="eliminarPedido(\'' + p.id + '\')">🗑️</button></div>'
                     : '<span style="color:#999; font-size:0.85em;">—</span>';
                 const checkboxDisabled = !esAdmin ? 'disabled' : '';
                 return '<tr>' +
@@ -1482,7 +1418,7 @@
 
         document.getElementById('pedidoForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
             const empleadoId = document.getElementById('empleado').value;
             const numDecimos = parseInt(document.getElementById('numDecimos').value) || 2;
             const servicio = document.getElementById('servicio').value;
@@ -1536,7 +1472,7 @@
             if (p) {
                 p.recogido = !p.recogido;
                 firebaseGuardarPedido(p);
-                showToast(p.recogido ? '' : '⏳', p.recogido ? 'Décimos entregados a ' + p.nombre + '.' : 'Entrega pendiente a ' + p.nombre + '.');
+                showToast(p.recogido ? '📦' : '⏳', p.recogido ? 'Décimos entregados a ' + p.nombre + '.' : 'Entrega pendiente a ' + p.nombre + '.');
             }
         }
 
@@ -1666,7 +1602,7 @@
             }).join('');
             document.querySelectorAll('.sort-icon').forEach(el => el.textContent = '');
             const sortIcon = document.getElementById('sort-' + ordenarPor);
-            if (sortIcon) sortIcon.textContent = ordenDireccion === 'asc' ? '️' : '⬇️';
+            if (sortIcon) sortIcon.textContent = ordenDireccion === 'asc' ? '⬆️' : '️';
         }
 
         function ordenarListado(campo) {
@@ -1755,191 +1691,415 @@
             }).join('');
         }
 
-async function procesarOCR() {
-    if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
-    const fileInput = document.getElementById('ocrFile');
-    const servicio = document.getElementById('ocrServicio').value;
-    const numDecimos = parseInt(document.getElementById('ocrDecimos').value);
-    if (!servicio) { showToast('⚠️', 'Selecciona un servicio', true); return; }
-    if (!fileInput.files || fileInput.files.length === 0) { showToast('⚠️', 'Selecciona un archivo', true); return; }
-    if (!numDecimos || numDecimos < 1) { showToast('⚠️', 'Introduce nº válido de décimos', true); return; }
-    
-    const file = fileInput.files[0];
-    const progressContainer = document.getElementById('ocrProgressContainer');
-    const resultContainer = document.getElementById('ocrResultContainer');
-    const statusEl = document.getElementById('ocrStatus');
-    const progressFill = document.getElementById('ocrProgressFill');
-    const btnProcesar = document.getElementById('btnProcesarOCR');
-    
-    progressContainer.style.display = 'block';
-    resultContainer.style.display = 'none';
-    btnProcesar.disabled = true;
-    btnProcesar.textContent = ' Procesando...';
-    
-    let texto = '';
-    
-    try {
-        // Detectar tipo de archivo
-        const esPDF = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
-        const esImagen = file.type.startsWith('image/');
-        
-        if (esPDF) {
-            // 📄 PDF: usar PDF.js para extraer texto
-            statusEl.textContent = '📖 Leyendo PDF...';
-            progressFill.style.width = '20%';
+        async function procesarOCR() {
+            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
+            const fileInput = document.getElementById('ocrFile');
+            const servicio = document.getElementById('ocrServicio').value;
+            const numDecimos = parseInt(document.getElementById('ocrDecimos').value);
+            if (!servicio) { showToast('⚠️', 'Selecciona un servicio', true); return; }
+            if (!fileInput.files || fileInput.files.length === 0) { showToast('⚠️', 'Selecciona un archivo', true); return; }
+            if (!numDecimos || numDecimos < 1) { showToast('⚠️', 'Introduce nº válido de décimos', true); return; }
             
-            // Cargar PDF.js dinámicamente
-            if (!window.pdfjsLib) {
-                await new Promise((resolve, reject) => {
-                    const script = document.createElement('script');
-                    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
-                    script.onload = resolve;
-                    script.onerror = reject;
-                    document.head.appendChild(script);
+            const file = fileInput.files[0];
+            const progressContainer = document.getElementById('ocrProgressContainer');
+            const resultContainer = document.getElementById('ocrResultContainer');
+            const statusEl = document.getElementById('ocrStatus');
+            const progressFill = document.getElementById('ocrProgressFill');
+            const btnProcesar = document.getElementById('btnProcesarOCR');
+            
+            progressContainer.style.display = 'block';
+            resultContainer.style.display = 'none';
+            btnProcesar.disabled = true;
+            btnProcesar.textContent = ' Procesando...';
+            
+            let texto = '';
+            
+            try {
+                const esPDF = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
+                const esImagen = file.type.startsWith('image/');
+                
+                if (esPDF) {
+                    statusEl.textContent = '📖 Leyendo PDF...';
+                    progressFill.style.width = '20%';
+                    
+                    if (!window.pdfjsLib) {
+                        await new Promise((resolve, reject) => {
+                            const script = document.createElement('script');
+                            script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js';
+                            script.onload = resolve;
+                            script.onerror = reject;
+                            document.head.appendChild(script);
+                        });
+                        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+                    }
+                    
+                    const arrayBuffer = await file.arrayBuffer();
+                    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                    const numPaginas = pdf.numPages;
+                    
+                    texto = '';
+                    for (let i = 1; i <= numPaginas; i++) {
+                        statusEl.textContent = '📖 Leyendo página ' + i + ' de ' + numPaginas + '...';
+                        progressFill.style.width = (20 + (i / numPaginas) * 60) + '%';
+                        const pagina = await pdf.getPage(i);
+                        const contenido = await pagina.getTextContent();
+                        const textoPagina = contenido.items.map(item => item.str).join(' ');
+                        texto += textoPagina + '\n';
+                    }
+                    progressFill.style.width = '85%';
+                    
+                } else if (esImagen) {
+                    statusEl.textContent = '🖼️ Procesando imagen con OCR...';
+                    progressFill.style.width = '20%';
+                    
+                    const result = await Tesseract.recognize(file, 'spa', {
+                        logger: m => {
+                            if (m.status === 'recognizing text') {
+                                const progress = Math.round(m.progress * 100);
+                                statusEl.textContent = '🔍 Reconociendo texto... ' + progress + '%';
+                                progressFill.style.width = (20 + progress * 0.65) + '%';
+                            }
+                        }
+                    });
+                    texto = result.data.text;
+                    progressFill.style.width = '85%';
+                    
+                } else {
+                    throw new Error('Formato no soportado. Usa PDF o imagen.');
+                }
+                
+                statusEl.textContent = '🔎 Buscando empleados...';
+                progressFill.style.width = '90%';
+                
+                const resultado = buscarEmpleadosEnTexto(texto, servicio);
+                
+                progressFill.style.width = '100%';
+                statusEl.textContent = '✅ Análisis completado';
+                
+                window.ocrResultado = {
+                    encontrados: resultado.encontrados,
+                    noEncontrados: resultado.noEncontrados,
+                    servicio: servicio,
+                    numDecimos: numDecimos
+                };
+                
+                mostrarResultadosOCR(resultado);
+                resultContainer.style.display = 'block';
+                
+                const total = resultado.encontrados.length + resultado.noEncontrados.length;
+                showToast('✅', total + ' nombres detectados (' + resultado.encontrados.length + ' encontrados, ' + resultado.noEncontrados.length + ' por crear)');
+                
+            } catch (error) {
+                console.error('Error OCR:', error);
+                statusEl.textContent = '❌ Error: ' + (error.message || 'desconocido');
+                showToast('⚠️', 'Error al procesar: ' + (error.message || 'archivo no válido'), true);
+            } finally {
+                btnProcesar.disabled = false;
+                btnProcesar.textContent = '🔍 Procesar archivo';
+            }
+        }
+
+        function mostrarResultadosOCR(resultado) {
+            const resultList = document.getElementById('ocrResultList');
+            document.getElementById('ocrTotalDetectados').textContent = resultado.encontrados.length + resultado.noEncontrados.length;
+            
+            let html = '';
+            
+            if (resultado.encontrados.length > 0) {
+                html += '<h4 style="margin-top:15px; color:#2e7d32;">✅ Empleados encontrados en la base de datos (' + resultado.encontrados.length + '):</h4>';
+                html += '<div style="font-size:0.8em; color:#666; margin-bottom:10px;">Se crearán automáticamente los pedidos al confirmar.</div>';
+                resultado.encontrados.forEach(emp => {
+                    html += '<div class="ocr-result-item found">✅ <strong>' + emp.nombre + '</strong> - ' + emp.seccion + ' (Tel: ' + (emp.telefono || 'N/A') + ') → ' + resultado.numDecimos + ' décimos</div>';
                 });
-                pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
             }
             
-            const arrayBuffer = await file.arrayBuffer();
-            const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-            const numPaginas = pdf.numPages;
-            
-            texto = '';
-            for (let i = 1; i <= numPaginas; i++) {
-                statusEl.textContent = '📖 Leyendo página ' + i + ' de ' + numPaginas + '...';
-                progressFill.style.width = (20 + (i / numPaginas) * 60) + '%';
-                const pagina = await pdf.getPage(i);
-                const contenido = await pagina.getTextContent();
-                const textoPagina = contenido.items.map(item => item.str).join(' ');
-                texto += textoPagina + '\n';
+            if (resultado.noEncontrados.length > 0) {
+                html += '<h4 style="margin-top:15px; color:#c41e3a;">⚠️ Empleados NO encontrados (' + resultado.noEncontrados.length + '):</h4>';
+                html += '<div style="font-size:0.8em; color:#666; margin-bottom:10px;">Pulsa "➕ Crear" para darlos de alta y crear su pedido automáticamente. Se te pedirá confirmación.</div>';
+                resultado.noEncontrados.forEach((nombre, idx) => {
+                    html += '<div class="ocr-result-item notfound" style="flex-direction:column; align-items:flex-start; gap:6px;">' +
+                        '<div>❌ <strong>' + nombre + '</strong> - No existe en el servicio seleccionado</div>' +
+                        '<button class="btn btn-success btn-small" onclick="crearEmpleadoDesdeOCR(' + idx + ')" style="align-self:flex-end;">➕ Crear empleado y pedido</button>' +
+                        '</div>';
+                });
             }
             
-            statusEl.textContent = '✅ PDF leído correctamente';
-            progressFill.style.width = '85%';
+            if (resultado.encontrados.length === 0 && resultado.noEncontrados.length === 0) {
+                html = '<div style="padding:15px; background:#fff3e0; border-radius:6px; margin-top:15px;">⚠️ No se detectaron nombres en el archivo. Verifica que el PDF/imagen contenga texto legible.</div>';
+            }
             
-        } else if (esImagen) {
-            // 🖼️ Imagen: usar Tesseract OCR
-            statusEl.textContent = ' Procesando imagen con OCR...';
-            progressFill.style.width = '20%';
+            resultList.innerHTML = html;
+        }
+
+        function crearEmpleadoDesdeOCR(idx) {
+            const resultado = window.ocrResultado;
+            if (!resultado || !resultado.noEncontrados[idx]) return;
             
-            const result = await Tesseract.recognize(file, 'spa', {
-                logger: m => {
-                    if (m.status === 'recognizing text') {
-                        const progress = Math.round(m.progress * 100);
-                        statusEl.textContent = ' Reconociendo texto... ' + progress + '%';
-                        progressFill.style.width = (20 + progress * 0.65) + '%';
-                    } else if (m.status) {
-                        statusEl.textContent = '📋 ' + m.status;
+            const nombreDetectado = resultado.noEncontrados[idx];
+            
+            // Confirmar si quiere crear este empleado
+            if (!confirm('¿Deseas crear el empleado "' + nombreDetectado + '" y registrar su pedido de ' + resultado.numDecimos + ' décimo(s)?\n\nPulsa ACEPTAR para crearlo o CANCELAR para omitirlo.')) {
+                resultado.noEncontrados.splice(idx, 1);
+                mostrarResultadosOCR(resultado);
+                showToast('️', 'Empleado "' + nombreDetectado + '" omitido.');
+                return;
+            }
+            
+            const telefono = prompt('📞 Introduce el teléfono de "' + nombreDetectado + '":');
+            if (!telefono || !telefono.trim()) {
+                showToast('⚠️', 'Se necesita el teléfono para crear el empleado.', true);
+                return;
+            }
+            
+            const seccionesDelServicio = secciones.filter(s => s.servicio === resultado.servicio);
+            let seccion = '';
+            
+            if (seccionesDelServicio.length > 0) {
+                const listaSecciones = seccionesDelServicio.map(s => '- ' + s.nombre).join('\n');
+                const seccionNombre = prompt('📂 Sección para "' + nombreDetectado + '":\n\nSecciones disponibles:\n' + listaSecciones + '\n\nEscribe el nombre de una sección existente o una nueva:', seccionesDelServicio[0].nombre);
+                
+                if (!seccionNombre || !seccionNombre.trim()) {
+                    showToast('⚠️', 'Se necesita una sección.', true);
+                    return;
+                }
+                
+                seccion = seccionNombre.trim().toUpperCase();
+                
+                const existe = secciones.some(s => s.servicio === resultado.servicio && s.nombre.toLowerCase() === seccion.toLowerCase());
+                
+                if (!existe) {
+                    if (confirm('⚠️ La sección "' + seccion + '" NO existe en el servicio "' + resultado.servicio + '".\n\n¿Deseas crearla automáticamente?')) {
+                        secciones.push({ nombre: seccion, servicio: resultado.servicio });
+                        const obj = {};
+                        secciones.forEach((s, i) => { obj[i] = s; });
+                        dbRef.secciones.set(obj);
+                        showToast('✅', 'Sección "' + seccion + '" creada correctamente.');
+                    } else {
+                        showToast('⚠️', 'Operación cancelada. La sección no fue creada.', true);
+                        return;
                     }
                 }
-            });
-            texto = result.data.text;
-            progressFill.style.width = '85%';
+            } else {
+                seccion = prompt('📂 Introduce la sección para "' + nombreDetectado + '":');
+                if (!seccion || !seccion.trim()) {
+                    showToast('⚠️', 'Se necesita una sección.', true);
+                    return;
+                }
+                seccion = seccion.trim().toUpperCase();
+                if (!secciones.some(s => s.servicio === resultado.servicio && s.nombre === seccion)) {
+                    if (confirm('⚠️ La sección "' + seccion + '" NO existe. ¿Deseas crearla?')) {
+                        secciones.push({ nombre: seccion, servicio: resultado.servicio });
+                        const obj = {};
+                        secciones.forEach((s, i) => { obj[i] = s; });
+                        dbRef.secciones.set(obj);
+                    } else {
+                        showToast('️', 'Operación cancelada.', true);
+                        return;
+                    }
+                }
+            }
             
-        } else {
-            throw new Error('Formato no soportado. Usa PDF o imagen (JPG, PNG).');
+            const nuevoEmpleado = {
+                nombre: nombreDetectado,
+                telefono: telefono.trim(),
+                servicio: resultado.servicio,
+                seccion: seccion,
+                activo: true,
+                fechaAlta: new Date().toISOString().split('T')[0]
+            };
+            const idEmp = generarId();
+            dbRef.empleados.child(idEmp).set(nuevoEmpleado);
+            
+            const fechaHoy = new Date().toISOString().split('T')[0];
+            const horaAhora = new Date().toTimeString().slice(0, 5);
+            const nuevoPedido = {
+                nombre: nombreDetectado,
+                servicio: resultado.servicio,
+                seccion: seccion,
+                telefono: telefono.trim(),
+                numDecimos: resultado.numDecimos,
+                fechaSolicitud: fechaHoy,
+                horaSolicitud: horaAhora,
+                fechaEntrega: '',
+                horaEntrega: '',
+                quienRecoge: '',
+                pagado: false,
+                recogido: false,
+                fecha: new Date().toLocaleDateString('es-ES'),
+                creadoPor: usuarioActual,
+                creadoViaOCR: true
+            };
+            const idPed = generarId();
+            dbRef.pedidos.child(idPed).set(nuevoPedido);
+            
+            resultado.noEncontrados.splice(idx, 1);
+            mostrarResultadosOCR(resultado);
+            
+            showToast('✅', '"' + nombreDetectado + '" creado y pedido registrado (' + resultado.numDecimos + ' décimos)');
         }
-        
-        // Analizar texto
-        statusEl.textContent = '🔎 Analizando texto...';
-        progressFill.style.width = '90%';
-        
-        const empleadosEncontrados = buscarEmpleadosEnTexto(texto, servicio);
-        pedidosPendientesOCR = empleadosEncontrados.found.map(emp => ({ empleado: emp, numDecimos, servicio }));
-        
-        progressFill.style.width = '100%';
-        statusEl.textContent = '✅ Proceso completado';
-        
-        const resultList = document.getElementById('ocrResultList');
-        document.getElementById('ocrTotalDetectados').textContent = empleadosEncontrados.found.length;
-        
-        let html = '<h4 style="margin-top:15px;">✅ Empleados encontrados (' + empleadosEncontrados.found.length + '):</h4>';
-        empleadosEncontrados.found.forEach(emp => {
-            html += '<div class="ocr-result-item found">✅ ' + emp.nombre + ' - ' + emp.seccion + ' (Tel: ' + (emp.telefono || 'N/A') + ')</div>';
-        });
-        
-        if (empleadosEncontrados.notFound.length > 0) {
-            html += '<h4 style="margin-top:15px; color:#c41e3a;">❌ No encontrados (' + empleadosEncontrados.notFound.length + '):</h4>';
-            empleadosEncontrados.notFound.forEach(n => { html += '<div class="ocr-result-item notfound"> ' + n + '</div>'; });
-        }
-        
-        if (empleadosEncontrados.found.length === 0 && empleadosEncontrados.notFound.length === 0) {
-            html = '<div style="padding:15px; background:#fff3e0; border-radius:6px; margin-top:15px;">⚠️ No se detectaron nombres en el archivo. Verifica que el PDF/imagen contenga texto legible.</div>';
-        }
-        
-        resultList.innerHTML = html;
-        resultContainer.style.display = 'block';
-        showToast('✅', empleadosEncontrados.found.length + ' empleados encontrados');
-        
-    } catch (error) {
-        console.error('Error OCR:', error);
-        statusEl.textContent = '❌ Error: ' + (error.message || 'desconocido');
-        showToast('⚠️', 'Error al procesar: ' + (error.message || 'archivo no válido'), true);
-    } finally {
-        btnProcesar.disabled = false;
-        btnProcesar.textContent = '🔍 Procesar PDF';
-    }
-}
 
         function buscarEmpleadosEnTexto(texto, servicio) {
-            const lineas = texto.split('\n').map(l => l.trim()).filter(l => l.length > 3);
-            const found = [];
-            const notFound = [];
+            const encontrados = [];
+            const noEncontrados = [];
             const nombresProcesados = new Set();
+            
             const empleadosDelServicio = empleados.filter(e => e.servicio === servicio);
+            
+            // Limpiar texto: quitar caracteres de tabla y normalizar
+            const textoLimpio = texto.replace(/\|/g, ' ').replace(/\t/g, ' ');
+            const lineas = textoLimpio.split('\n').map(l => l.trim()).filter(l => l.length > 2);
+            
+            // 1️⃣ Buscar empleados existentes en el texto
             empleadosDelServicio.forEach(emp => {
-                const nombreNormalizado = emp.nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z\s]/g, '');
-                const palabras = nombreNormalizado.split(/\s+/).filter(p => p.length > 2);
+                const nombreNorm = emp.nombre.toLowerCase()
+                    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                    .replace(/[^a-z\s]/g, '')
+                    .replace(/\s+/g, ' ').trim();
+                
+                const palabras = nombreNorm.split(' ').filter(p => p.length > 2);
+                if (palabras.length < 2) return;
+                
                 for (const linea of lineas) {
-                    const lineaNormalizada = linea.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z\s]/g, '');
-                    const palabrasEncontradas = palabras.filter(p => lineaNormalizada.includes(p));
-                    if (palabrasEncontradas.length >= 2 && !nombresProcesados.has(emp.nombre)) {
-                        found.push(emp);
+                    const lineaNorm = linea.toLowerCase()
+                        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                        .replace(/[^a-z\s]/g, '')
+                        .replace(/\s+/g, ' ').trim();
+                    
+                    const palabrasEncontradas = palabras.filter(p => lineaNorm.includes(p));
+                    const umbral = Math.max(2, Math.ceil(palabras.length * 0.7));
+                    if (palabrasEncontradas.length >= umbral && !nombresProcesados.has(emp.nombre)) {
+                        encontrados.push(emp);
                         nombresProcesados.add(emp.nombre);
                         break;
                     }
                 }
             });
-            const nombresMayusculas = texto.match(/[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+(?:\s+[A-ZÁÉÍÓÚÑ][a-záéíóúñ]+){1,3}/g) || [];
-            nombresMayusculas.forEach(n => {
-                const nNorm = n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-                const yaEncontrado = found.some(e => {
-                    const eNorm = e.nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-                    return eNorm.includes(nNorm) || nNorm.includes(eNorm);
-                });
-                if (!yaEncontrado && !nombresProcesados.has(n)) {
-                    notFound.push(n);
-                    nombresProcesados.add(n);
+            
+            // 2️⃣ Detectar nombres en MAYÚSCULAS (formato de los PDFs)
+            const regexMayusculas = /^[A-ZÁÉÍÓÚÑÜ][A-ZÁÉÍÓÚÑÜ\s]+$/;
+            const nombresMayusculas = [];
+            
+            lineas.forEach(linea => {
+                const lineaLimpia = linea.trim();
+                if (regexMayusculas.test(lineaLimpia)) {
+                    const palabrasIgnorar = ['NOMBRE', 'APELLIDOS', 'SERVICIO', 'SECCIÓN', 'CANTIDAD', 'TOTAL', 'PAGINA', 'FECHA', 'HORA', 'DECIMOS', 'IMPORTE', 'LOTERIA', 'NAVIDAD', 'ESCUELA', 'TALLER'];
+                    if (!palabrasIgnorar.some(p => lineaLimpia.toUpperCase().includes(p))) {
+                        nombresMayusculas.push(lineaLimpia);
+                    }
                 }
             });
-            return { found, notFound };
+            
+            // 3️⃣ Combinar líneas consecutivas (NOMBRE + APELLIDOS en columnas separadas)
+            const nombresCompletos = [];
+            const yaProcesados = new Set();
+            
+            for (let i = 0; i < nombresMayusculas.length; i++) {
+                const linea = nombresMayusculas[i];
+                const palabras = linea.split(/\s+/).filter(p => p.length > 0);
+                
+                if (palabras.length >= 2 && palabras.length <= 4) {
+                    if (!yaProcesados.has(linea)) {
+                        nombresCompletos.push(linea);
+                        yaProcesados.add(linea);
+                    }
+                } else if (palabras.length === 1 && i + 1 < nombresMayusculas.length) {
+                    const siguienteLinea = nombresMayusculas[i + 1];
+                    const nombreCompleto = linea + ' ' + siguienteLinea;
+                    if (!yaProcesados.has(nombreCompleto)) {
+                        nombresCompletos.push(nombreCompleto);
+                        yaProcesados.add(nombreCompleto);
+                        yaProcesados.add(siguienteLinea);
+                    }
+                    i++;
+                }
+            }
+            
+            // 4️ Filtrar y agregar nombres no encontrados
+            const palabrasGenericas = [
+                'servicio', 'seccion', 'telefono', 'fecha', 'hora', 'numero', 'total', 
+                'pagina', 'pagado', 'pendiente', 'recogido', 'importe', 'decimos', 
+                'pedido', 'empleado', 'administrador', 'consulta', 'general', 'especial',
+                'nombre', 'apellidos', 'cantidad', 'desarrollo', 'rural', 'apicultura', 
+                'viveros', 'forestales', 'afe', 'cooperacion', 'derechos', 'sociales',
+                'asuntos', 'archivo', 'imprenta', 'centros', 'atencion', 'ilc', 'sepeis',
+                'escuela', 'taller', 'loteria', 'navidad', 'pabellon', 'nino', 'jesus'
+            ];
+            
+            nombresCompletos.forEach(nombre => {
+                const nombreNorm = nombre.toLowerCase()
+                    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                    .replace(/\s+/g, ' ').trim();
+                
+                const yaEncontrado = encontrados.some(e => {
+                    const eNorm = e.nombre.toLowerCase()
+                        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+                        .replace(/\s+/g, ' ').trim();
+                    return eNorm === nombreNorm || eNorm.includes(nombreNorm) || nombreNorm.includes(eNorm);
+                });
+                
+                if (yaEncontrado || nombresProcesados.has(nombre)) return;
+                
+                const primeraPalabra = nombre.split(' ')[0].toLowerCase();
+                if (palabrasGenericas.includes(primeraPalabra)) return;
+                
+                if (nombre.split(' ').length >= 2 && nombre.length >= 8) {
+                    noEncontrados.push(nombre);
+                    nombresProcesados.add(nombre);
+                }
+            });
+            
+            return { encontrados, noEncontrados };
         }
 
         function confirmarPedidosOCR() {
             if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
-            if (pedidosPendientesOCR.length === 0) { showToast('⚠️', 'No hay empleados para procesar'); return; }
+            const resultado = window.ocrResultado;
+            if (!resultado || resultado.encontrados.length === 0) {
+                showToast('⚠️', 'No hay empleados encontrados para procesar. Crea primero los que faltan.', true);
+                return;
+            }
+            
             let creados = 0;
             let omitidos = 0;
             const fechaHoy = new Date().toISOString().split('T')[0];
             const horaAhora = new Date().toTimeString().slice(0, 5);
-            pedidosPendientesOCR.forEach(item => {
-                const emp = item.empleado;
-                const validacion = validarMaximoDecimos(emp.nombre, item.numDecimos);
-                if (!validacion.valido) { omitidos++; return; }
+            
+            resultado.encontrados.forEach(emp => {
+                const validacion = validarMaximoDecimos(emp.nombre, resultado.numDecimos);
+                if (!validacion.valido) {
+                    omitidos++;
+                    return;
+                }
+                
                 const nuevo = {
-                    nombre: emp.nombre, servicio: item.servicio, seccion: emp.seccion,
-                    telefono: emp.telefono || '', numDecimos: item.numDecimos,
-                    fechaSolicitud: fechaHoy, horaSolicitud: horaAhora,
-                    fechaEntrega: '', horaEntrega: '', quienRecoge: '',
-                    pagado: false, recogido: false,
+                    nombre: emp.nombre,
+                    servicio: resultado.servicio,
+                    seccion: emp.seccion,
+                    telefono: emp.telefono || '',
+                    numDecimos: resultado.numDecimos,
+                    fechaSolicitud: fechaHoy,
+                    horaSolicitud: horaAhora,
+                    fechaEntrega: '',
+                    horaEntrega: '',
+                    quienRecoge: '',
+                    pagado: false,
+                    recogido: false,
                     fecha: new Date().toLocaleDateString('es-ES'),
-                    creadoPor: usuarioActual, creadoViaOCR: true
+                    creadoPor: usuarioActual,
+                    creadoViaOCR: true
                 };
+                
                 const id = generarId();
                 dbRef.pedidos.child(id).set(nuevo);
                 creados++;
             });
-            showToast('✅', creados + ' pedidos creados' + (omitidos > 0 ? ' (' + omitidos + ' omitidos)' : ''));
+            
+            const noEncontradosRestantes = resultado.noEncontrados.length;
+            let mensaje = '✅ ' + creados + ' pedidos creados automáticamente';
+            if (omitidos > 0) mensaje += ' (' + omitidos + ' omitidos por límite)';
+            if (noEncontradosRestantes > 0) mensaje += '. Quedan ' + noEncontradosRestantes + ' empleados por crear manualmente.';
+            
+            showToast('✅', mensaje);
             cancelarOCR();
         }
 
@@ -1968,11 +2128,11 @@ async function procesarOCR() {
         }
 
         function firebaseGuardarEmpleado(empleado) {
-            setSyncStatus('syncing', ' Guardando empleado...');
+            setSyncStatus('syncing', '🔄 Guardando empleado...');
             const { id, ...datos } = empleado;
             dbRef.empleados.child(id).set(datos)
                 .then(() => setSyncStatus('online'))
-                .catch((err) => { setSyncStatus('offline', ' Error'); });
+                .catch((err) => { setSyncStatus('offline', '❌ Error'); });
         }
 
         function firebaseGuardarConfig() {
@@ -1987,7 +2147,7 @@ async function procesarOCR() {
         }
 
         function exportarDatosJSON() {
-            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
             const datos = { pedidos, empleados, servicios, secciones, usuarios, config, fechaExportacion: new Date().toISOString() };
             const json = JSON.stringify(datos, null, 2);
             const blob = new Blob([json], { type: 'application/json' });
@@ -1995,7 +2155,7 @@ async function procesarOCR() {
             link.href = URL.createObjectURL(blob);
             link.download = 'loteria-navidad-backup-' + new Date().toISOString().slice(0,10) + '.json';
             link.click();
-            showToast('📤', '📤 Copia de seguridad exportada.');
+            showToast('', '📤 Copia de seguridad exportada.');
         }
 
         function importarDatosJSON(event) {
@@ -2068,22 +2228,22 @@ async function procesarOCR() {
             const rows = pedidosExportar.map(p => [p.nombre, p.servicio||'-', p.seccion||'-', p.telefono||'-', p.numDecimos, (p.numDecimos*PRECIO_DECIMO).toLocaleString('es-ES')+'€', p.fechaSolicitud||'-', p.pagado?'Si':'No']);
             doc.autoTable(cols, rows, { startY: 36, theme: 'striped', headStyles: { fillColor: [26, 58, 92], fontSize: 7 }, bodyStyles: { fontSize: 7 } });
             doc.save('listado-general-loteria-2026.pdf');
-            showToast('📄', '📄 PDF generado.');
+            showToast('📄', ' PDF generado.');
         }
 
         function exportarListadoGeneralCSV() {
             const pedidosExportar = getPedidosFiltradosListado();
-            if (pedidosExportar.length === 0) { showToast('️', 'No hay pedidos'); return; }
+            if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos'); return; }
             let csv = '\uFEFFNombre,Servicio,Seccion,Telefono,N Decimos,Importe,Fecha Sol.,Hora Sol.,Pagado,Recogido\n';
             pedidosExportar.forEach(p => { csv += '"'+p.nombre+'","'+(p.servicio||'')+'","'+(p.seccion||'')+'","'+(p.telefono||'')+'",'+p.numDecimos+','+(p.numDecimos*PRECIO_DECIMO)+',"'+(p.fechaSolicitud||'')+'","'+(p.horaSolicitud||'')+'",'+(p.pagado?'Si':'No')+','+(p.recogido?'Si':'No')+'\n'; });
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'listado-general-2026.csv'; link.click();
-            showToast('', '📊 CSV generado.');
+            showToast('📊', '📊 CSV generado.');
         }
 
         function imprimirListadoGeneral() {
             const pedidosExportar = getPedidosFiltradosListado();
-            if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos'); return; }
+            if (pedidosExportar.length === 0) { showToast('️', 'No hay pedidos'); return; }
             const v = window.open('', '', 'width=900,height=600');
             const tablaHTML = pedidosExportar.map(p => '<tr><td>'+p.nombre+'</td><td>'+(p.servicio||'-')+'</td><td>'+(p.seccion||'-')+'</td><td>'+(p.telefono||'-')+'</td><td>'+p.numDecimos+'</td><td>'+(p.numDecimos*PRECIO_DECIMO).toLocaleString('es-ES')+'€</td><td>'+(p.fechaSolicitud||'-')+'</td><td>'+(p.horaSolicitud||'-')+'</td><td>'+(p.pagado?'Si':'No')+'</td><td>'+(p.recogido?'Si':'No')+'</td></tr>').join('');
             v.document.write('<html><head><title>Listado General</title><style>body{font-family:Arial,sans-serif;padding:20px}h1{color:#1a3a5c}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{border:1px solid #ddd;padding:6px;font-size:0.85em}th{background:#1a3a5c;color:white}</style></head><body><h1>Listado General - Lotería 2026</h1><p>Fecha: '+new Date().toLocaleDateString('es-ES')+'</p><table><thead><tr><th>Nombre</th><th>Servicio</th><th>Sección</th><th>Teléfono</th><th>Décimos</th><th>Importe</th><th>Fecha Sol.</th><th>Hora Sol.</th><th>Pagado</th><th>Recogido</th></tr></thead><tbody>'+tablaHTML+'</tbody></table></body></html>');
@@ -2137,7 +2297,6 @@ async function procesarOCR() {
             v.document.close(); v.print();
         }
 
-        // ⚠️ INICIAR APLICACIÓN: carga TODO antes de mostrar login
         iniciarAplicacion();
     </script>
 </body>
