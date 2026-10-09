@@ -221,7 +221,7 @@
                     <input type="password" id="loginClave" placeholder="Introduce tu contraseña" required autocomplete="current-password">
                 </div>
                 <button type="submit" class="btn-login" id="btnLogin">Iniciar sesión</button>
-                <div class="login-error" id="loginError">⛔ Acceso no autorizado.</div>
+                <div class="login-error" id="loginError"> Acceso no autorizado.</div>
             </form>
         </div>
     </div>
@@ -250,7 +250,7 @@
             <button class="nav-tab" data-page="pedidos">📋 Pedidos</button>
             <button class="nav-tab" data-page="listado">📑 Listado</button>
             <button class="nav-tab" data-page="resumen">📊 Resumen</button>
-            <button class="nav-tab" data-page="participantes"> Participantes</button>
+            <button class="nav-tab" data-page="participantes">👥 Participantes</button>
             <button class="nav-tab" data-page="ocr" id="tabOCR">📷 Lectura PDF</button>
             <button class="nav-tab" data-page="configuracion" id="tabConfig">⚙️ Config</button>
         </div>
@@ -275,7 +275,7 @@
                         <div class="stat-label">Dinero Recaudado</div>
                         <div class="stat-details">
                             <div class="stat-detail-row"><span>💰 Total:</span><span id="statTotalEsperado">0 €</span></div>
-                            <div class="stat-detail-row"><span>💵 Cobrado:</span><span id="statCobrado">0 €</span></div>
+                            <div class="stat-detail-row"><span> Cobrado:</span><span id="statCobrado">0 €</span></div>
                             <div class="stat-detail-row"><span>⏳ Pendiente:</span><span id="statPendienteCobro">0 €</span></div>
                         </div>
                     </div>
@@ -405,7 +405,7 @@
                         </table>
                     </div>
                     <div class="empty-state" id="emptyState">
-                        <div class="empty-icon">🎰</div>
+                        <div class="empty-icon"></div>
                         <h3>Sin pedidos aún</h3>
                         <p>Añade el primer pedido desde "Solicitar"</p>
                     </div>
@@ -414,7 +414,7 @@
 
             <div class="section-page" id="page-listado">
                 <div class="content-card">
-                    <h2 class="section-title"> Listado General</h2>
+                    <h2 class="section-title">📑 Listado General</h2>
                     <div class="alert-info">💡 Haz clic en cualquier cabecera para ordenar.</div>
                     <div class="sort-controls">
                         <div class="form-group">
@@ -434,8 +434,8 @@
                         <div class="form-group">
                             <label for="ordenDireccion">Dirección</label>
                             <select id="ordenDireccion" onchange="renderizarListadoGeneral()">
-                                <option value="asc">️ Ascendente (A-Z)</option>
-                                <option value="desc">️ Descendente (Z-A)</option>
+                                <option value="asc">⬆️ Ascendente (A-Z)</option>
+                                <option value="desc">⬇️ Descendente (Z-A)</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -468,9 +468,9 @@
                         </div>
                     </div>
                     <div class="export-buttons" style="margin-bottom: 15px;">
-                        <button class="btn btn-export" onclick="exportarListadoGeneralPDF()">📄 PDF</button>
-                        <button class="btn btn-export" onclick="exportarListadoGeneralCSV()"> CSV</button>
-                        <button class="btn btn-export" onclick="imprimirListadoGeneral()">️ Imprimir</button>
+                        <button class="btn btn-export" onclick="exportarListadoGeneralPDF()"> PDF</button>
+                        <button class="btn btn-export" onclick="exportarListadoGeneralCSV()">📊 CSV</button>
+                        <button class="btn btn-export" onclick="imprimirListadoGeneral()">🖨️ Imprimir</button>
                     </div>
                     <div class="table-container" id="listadoGeneralContainer" style="display:none;">
                         <table>
@@ -584,7 +584,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="ocrDecimos">Nº de décimos por empleado *</label>
+                                <label for="ocrDecimos">Nº de décimos por defecto *</label>
                                 <input type="number" id="ocrDecimos" min="1" value="2" required>
                             </div>
                         </div>
@@ -609,7 +609,7 @@
                         </div>
                         <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
                             <button type="button" class="btn btn-success" onclick="confirmarPedidosOCR()">✅ Crear pedidos de encontrados</button>
-                            <button type="button" class="btn btn-cancel" onclick="cancelarOCR()"> Cancelar</button>
+                            <button type="button" class="btn btn-cancel" onclick="cancelarOCR()">❌ Cancelar</button>
                         </div>
                     </div>
                 </div>
@@ -667,7 +667,7 @@
     <div class="modal-overlay" id="modalEditar">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>✏️ Editar Pedido</h3>
+                <h3>️ Editar Pedido</h3>
                 <button class="close-btn" onclick="cerrarModal()">✕</button>
             </div>
             <form id="editarForm">
@@ -832,7 +832,7 @@
             } else if (status === 'offline') {
                 dot.classList.add('offline');
                 txt.textContent = text || '⚠️ Sin conexión';
-                if (box) { box.className = 'alert-info'; box.innerHTML = '️ ' + (text || 'Sin conexión'); }
+                if (box) { box.className = 'alert-info'; box.innerHTML = '⚠️ ' + (text || 'Sin conexión'); }
             }
         }
 
@@ -881,7 +881,7 @@
                     await dbRef.empleados.set(empleadosObj);
 
                     await dbRef.inicializado.set({
-                        fecha: new Date().toISOString(), version: '9.0',
+                        fecha: new Date().toISOString(), version: '10.0',
                         empleadosCargados: EMPLEADOS_INICIALES.length
                     });
                 }
@@ -1112,7 +1112,7 @@
 
         function eliminarUsuario(nombre) {
             if (nombre === USUARIO_ADMIN) { showToast('⚠️', 'No se puede eliminar al administrador.'); return; }
-            if (nombre === usuarioActual) { showToast('️', 'No puedes eliminar tu propio usuario.'); return; }
+            if (nombre === usuarioActual) { showToast('⚠️', 'No puedes eliminar tu propio usuario.'); return; }
             if (confirm('¿Eliminar al usuario "' + nombre + '"?')) {
                 delete usuarios[nombre];
                 firebaseGuardarUsuarios();
@@ -1166,7 +1166,7 @@
         function irAPagina(page) {
             const esAdmin = rolActual === 'admin';
             if (!esAdmin && (page === 'solicitar' || page === 'ocr' || page === 'configuracion')) {
-                showToast('🔒', 'Solo el administrador puede acceder.', true);
+                showToast('', 'Solo el administrador puede acceder.', true);
                 page = 'inicio';
             }
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
@@ -1234,7 +1234,7 @@
             if (select.value === '__nueva__') {
                 const servicio = document.getElementById('servicio').value;
                 if (!servicio) {
-                    alert('⚠️ Primero selecciona un servicio.');
+                    alert('️ Primero selecciona un servicio.');
                     select.value = '';
                     return;
                 }
@@ -1391,7 +1391,7 @@
             }
             empty.style.display = 'none'; table.style.display = 'block';
             tbody.innerHTML = pedidosFiltrados.map(p => {
-                const quienRecogeHtml = p.quienRecoge ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
+                const quienRecogeHtml = p.quienRecoge ? '<span class="badge badge-collected"> ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
                 const accionesHtml = esAdmin 
                     ? '<div class="actions-cell"><button class="btn btn-edit" onclick="editarPedido(\'' + p.id + '\')">✏️</button><button class="btn btn-delete" onclick="eliminarPedido(\'' + p.id + '\')">🗑️</button></div>'
                     : '<span style="color:#999; font-size:0.85em;">—</span>';
@@ -1418,7 +1418,7 @@
 
         document.getElementById('pedidoForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
             const empleadoId = document.getElementById('empleado').value;
             const numDecimos = parseInt(document.getElementById('numDecimos').value) || 2;
             const servicio = document.getElementById('servicio').value;
@@ -1431,7 +1431,7 @@
             } else { showToast('⚠️', 'Selecciona un empleado válido', true); return; }
             const validacion = validarMaximoDecimos(nombre, numDecimos);
             if (!validacion.valido) {
-                let mensaje = '🚫 ' + nombre + ' ya tiene ' + validacion.acumulados + ' décimo(s). ';
+                let mensaje = ' ' + nombre + ' ya tiene ' + validacion.acumulados + ' décimo(s). ';
                 mensaje += 'Con ' + validacion.nuevos + ' nuevos llegaría a ' + validacion.total + ', pero el límite es ' + validacion.maximo + '. ';
                 if (validacion.disponibles > 0) mensaje += ' Aún puede solicitar ' + validacion.disponibles + ' más.';
                 else mensaje += 'Ya ha alcanzado el máximo.';
@@ -1462,12 +1462,12 @@
             if (p) {
                 p.pagado = !p.pagado;
                 firebaseGuardarPedido(p);
-                showToast(p.pagado ? '💰' : '⏳', p.pagado ? '¡' + p.nombre + ' ha pagado!' : 'Pago pendiente de ' + p.nombre + '.');
+                showToast(p.pagado ? '💰' : '', p.pagado ? '¡' + p.nombre + ' ha pagado!' : 'Pago pendiente de ' + p.nombre + '.');
             }
         }
 
         function toggleRecogido(id) {
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
             const p = pedidos.find(x => x.id === id);
             if (p) {
                 p.recogido = !p.recogido;
@@ -1477,11 +1477,11 @@
         }
 
         function eliminarPedido(id) {
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
             const p = pedidos.find(x => x.id === id);
             if (p && confirm('¿Eliminar el pedido de ' + p.nombre + '?')) {
                 firebaseEliminarPedido(id);
-                showToast('🗑️', 'Pedido eliminado.');
+                showToast('️', 'Pedido eliminado.');
             }
         }
 
@@ -1535,7 +1535,7 @@
                 p.quienRecoge = document.getElementById('editarQuienRecoge').value.trim();
                 firebaseGuardarPedido(p);
                 cerrarModal();
-                showToast('✅', '️ Pedido actualizado.');
+                showToast('✅', '✏️ Pedido actualizado.');
             }
         });
 
@@ -1692,7 +1692,7 @@
         }
 
         async function procesarOCR() {
-            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
             const fileInput = document.getElementById('ocrFile');
             const servicio = document.getElementById('ocrServicio').value;
             const numDecimos = parseInt(document.getElementById('ocrDecimos').value);
@@ -1801,7 +1801,8 @@
 
         function mostrarResultadosOCR(resultado) {
             const resultList = document.getElementById('ocrResultList');
-            document.getElementById('ocrTotalDetectados').textContent = resultado.encontrados.length + resultado.noEncontrados.length;
+            const totalDetectados = resultado.encontrados.length + resultado.noEncontrados.length;
+            document.getElementById('ocrTotalDetectados').textContent = totalDetectados;
             
             let html = '';
             
@@ -1809,23 +1810,25 @@
                 html += '<h4 style="margin-top:15px; color:#2e7d32;">✅ Empleados encontrados en la base de datos (' + resultado.encontrados.length + '):</h4>';
                 html += '<div style="font-size:0.8em; color:#666; margin-bottom:10px;">Se crearán automáticamente los pedidos al confirmar.</div>';
                 resultado.encontrados.forEach(emp => {
-                    html += '<div class="ocr-result-item found">✅ <strong>' + emp.nombre + '</strong> - ' + emp.seccion + ' (Tel: ' + (emp.telefono || 'N/A') + ') → ' + resultado.numDecimos + ' décimos</div>';
+                    const decimos = emp.decimosPDF || window.ocrResultado.numDecimos || 2;
+                    html += '<div class="ocr-result-item found">✅ <strong>' + emp.nombre + '</strong> - ' + emp.seccion + ' (Tel: ' + (emp.telefono || 'N/A') + ') → <strong>' + decimos + ' décimo(s)</strong></div>';
                 });
             }
             
             if (resultado.noEncontrados.length > 0) {
                 html += '<h4 style="margin-top:15px; color:#c41e3a;">⚠️ Empleados NO encontrados (' + resultado.noEncontrados.length + '):</h4>';
                 html += '<div style="font-size:0.8em; color:#666; margin-bottom:10px;">Pulsa "➕ Crear" para darlos de alta y crear su pedido automáticamente. Se te pedirá confirmación.</div>';
-                resultado.noEncontrados.forEach((nombre, idx) => {
+                resultado.noEncontrados.forEach((emp, idx) => {
+                    const decimos = emp.decimosPDF || window.ocrResultado.numDecimos || 2;
                     html += '<div class="ocr-result-item notfound" style="flex-direction:column; align-items:flex-start; gap:6px;">' +
-                        '<div>❌ <strong>' + nombre + '</strong> - No existe en el servicio seleccionado</div>' +
+                        '<div>❌ <strong>' + emp.nombre + '</strong> - No existe en el servicio seleccionado → <strong>' + decimos + ' décimo(s)</strong></div>' +
                         '<button class="btn btn-success btn-small" onclick="crearEmpleadoDesdeOCR(' + idx + ')" style="align-self:flex-end;">➕ Crear empleado y pedido</button>' +
                         '</div>';
                 });
             }
             
             if (resultado.encontrados.length === 0 && resultado.noEncontrados.length === 0) {
-                html = '<div style="padding:15px; background:#fff3e0; border-radius:6px; margin-top:15px;">⚠️ No se detectaron nombres en el archivo. Verifica que el PDF/imagen contenga texto legible.</div>';
+                html = '<div style="padding:15px; background:#fff3e0; border-radius:6px; margin-top:15px;">⚠️ No se detectaron nombres en el archivo. Verifica que el PDF contenga texto legible.</div>';
             }
             
             resultList.innerHTML = html;
@@ -1835,13 +1838,14 @@
             const resultado = window.ocrResultado;
             if (!resultado || !resultado.noEncontrados[idx]) return;
             
-            const nombreDetectado = resultado.noEncontrados[idx];
+            const empDetectado = resultado.noEncontrados[idx];
+            const nombreDetectado = empDetectado.nombre;
+            const decimosDetectados = empDetectado.decimosPDF || resultado.numDecimos || 2;
             
-            // Confirmar si quiere crear este empleado
-            if (!confirm('¿Deseas crear el empleado "' + nombreDetectado + '" y registrar su pedido de ' + resultado.numDecimos + ' décimo(s)?\n\nPulsa ACEPTAR para crearlo o CANCELAR para omitirlo.')) {
+            if (!confirm('¿Deseas crear el empleado "' + nombreDetectado + '" y registrar su pedido de ' + decimosDetectados + ' décimo(s)?\n\nPulsa ACEPTAR para crearlo o CANCELAR para omitirlo.')) {
                 resultado.noEncontrados.splice(idx, 1);
                 mostrarResultadosOCR(resultado);
-                showToast('️', 'Empleado "' + nombreDetectado + '" omitido.');
+                showToast('⚠️', 'Empleado "' + nombreDetectado + '" omitido.');
                 return;
             }
             
@@ -1880,9 +1884,9 @@
                     }
                 }
             } else {
-                seccion = prompt('📂 Introduce la sección para "' + nombreDetectado + '":');
+                seccion = prompt(' Introduce la sección para "' + nombreDetectado + '":');
                 if (!seccion || !seccion.trim()) {
-                    showToast('⚠️', 'Se necesita una sección.', true);
+                    showToast('️', 'Se necesita una sección.', true);
                     return;
                 }
                 seccion = seccion.trim().toUpperCase();
@@ -1893,7 +1897,7 @@
                         secciones.forEach((s, i) => { obj[i] = s; });
                         dbRef.secciones.set(obj);
                     } else {
-                        showToast('️', 'Operación cancelada.', true);
+                        showToast('⚠️', 'Operación cancelada.', true);
                         return;
                     }
                 }
@@ -1917,7 +1921,7 @@
                 servicio: resultado.servicio,
                 seccion: seccion,
                 telefono: telefono.trim(),
-                numDecimos: resultado.numDecimos,
+                numDecimos: decimosDetectados,
                 fechaSolicitud: fechaHoy,
                 horaSolicitud: horaAhora,
                 fechaEntrega: '',
@@ -1935,7 +1939,7 @@
             resultado.noEncontrados.splice(idx, 1);
             mostrarResultadosOCR(resultado);
             
-            showToast('✅', '"' + nombreDetectado + '" creado y pedido registrado (' + resultado.numDecimos + ' décimos)');
+            showToast('✅', '"' + nombreDetectado + '" creado y pedido registrado (' + decimosDetectados + ' décimos)');
         }
 
         function buscarEmpleadosEnTexto(texto, servicio) {
@@ -1945,106 +1949,109 @@
             
             const empleadosDelServicio = empleados.filter(e => e.servicio === servicio);
             
-            // Limpiar texto: quitar caracteres de tabla y normalizar
-            const textoLimpio = texto.replace(/\|/g, ' ').replace(/\t/g, ' ');
-            const lineas = textoLimpio.split('\n').map(l => l.trim()).filter(l => l.length > 2);
+            // 1️⃣ Detectar formato de tabla con columnas separadas por |
+            const lineasTabla = texto.split('\n').filter(l => l.includes('|'));
+            const empleadosDetectados = [];
             
-            // 1️⃣ Buscar empleados existentes en el texto
-            empleadosDelServicio.forEach(emp => {
-                const nombreNorm = emp.nombre.toLowerCase()
+            lineasTabla.forEach(linea => {
+                const lineaLimpia = linea.replace(/\|/g, '|').trim();
+                if (!lineaLimpia || lineaLimpia.startsWith('| ---')) return;
+                
+                const columnas = lineaLimpia.split('|').map(c => c.trim()).filter(c => c.length > 0);
+                
+                if (columnas.length >= 4) {
+                    const nombre = columnas[0];
+                    const apellidos = columnas[1];
+                    const decimosStr = columnas[columnas.length - 1] || '2';
+                    const decimos = parseInt(decimosStr) || 2;
+                    
+                    if (nombre && apellidos && nombre.length >= 2 && apellidos.length >= 4) {
+                        if (nombre.toUpperCase() === 'NOMBRE' || nombre.toUpperCase() === 'APELLIDOS') return;
+                        if (nombre.toUpperCase() === 'SERVICIO' || nombre.toUpperCase() === 'SECCIÓN') return;
+                        
+                        const nombreCompleto = (nombre + ' ' + apellidos).toUpperCase().trim();
+                        
+                        empleadosDetectados.push({
+                            nombre: nombreCompleto,
+                            decimos: decimos,
+                            linea: lineaLimpia
+                        });
+                    }
+                }
+            });
+            
+            // 2️⃣ Si no detectó tabla, buscar nombres en mayúsculas (formato antiguo)
+            if (empleadosDetectados.length === 0) {
+                const lineas = texto.split('\n').map(l => l.trim()).filter(l => l.length > 2);
+                const regexMayusculas = /^[A-ZÁÉÍÓÚÑÜ][A-ZÁÉÍÓÚÑÜ\s]+$/;
+                const nombresMayusculas = [];
+                
+                lineas.forEach(linea => {
+                    const lineaLimpia = linea.trim();
+                    if (regexMayusculas.test(lineaLimpia)) {
+                        const palabrasIgnorar = ['NOMBRE', 'APELLIDOS', 'SERVICIO', 'SECCIÓN', 'CANTIDAD', 'TOTAL', 'PAGINA', 'FECHA', 'HORA', 'DECIMOS', 'IMPORTE', 'LOTERIA', 'NAVIDAD', 'ESCUELA', 'TALLER'];
+                        if (!palabrasIgnorar.some(p => lineaLimpia.toUpperCase().includes(p))) {
+                            nombresMayusculas.push(lineaLimpia);
+                        }
+                    }
+                });
+                
+                const yaProcesados = new Set();
+                for (let i = 0; i < nombresMayusculas.length; i++) {
+                    const linea = nombresMayusculas[i];
+                    const palabras = linea.split(/\s+/).filter(p => p.length > 0);
+                    
+                    if (palabras.length >= 2 && palabras.length <= 4) {
+                        if (!yaProcesados.has(linea)) {
+                            empleadosDetectados.push({ nombre: linea, decimos: 2, linea: linea });
+                            yaProcesados.add(linea);
+                        }
+                    } else if (palabras.length === 1 && i + 1 < nombresMayusculas.length) {
+                        const siguienteLinea = nombresMayusculas[i + 1];
+                        const nombreCompleto = linea + ' ' + siguienteLinea;
+                        if (!yaProcesados.has(nombreCompleto)) {
+                            empleadosDetectados.push({ nombre: nombreCompleto, decimos: 2, linea: nombreCompleto });
+                            yaProcesados.add(nombreCompleto);
+                            yaProcesados.add(siguienteLinea);
+                        }
+                        i++;
+                    }
+                }
+            }
+            
+            // 3️⃣ Buscar cada empleado detectado en la base de datos
+            empleadosDetectados.forEach(empDetectado => {
+                const nombreNorm = empDetectado.nombre.toLowerCase()
                     .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
                     .replace(/[^a-z\s]/g, '')
                     .replace(/\s+/g, ' ').trim();
                 
-                const palabras = nombreNorm.split(' ').filter(p => p.length > 2);
-                if (palabras.length < 2) return;
+                let empleadoEncontrado = null;
                 
-                for (const linea of lineas) {
-                    const lineaNorm = linea.toLowerCase()
+                for (const emp of empleadosDelServicio) {
+                    const empNorm = emp.nombre.toLowerCase()
                         .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
                         .replace(/[^a-z\s]/g, '')
                         .replace(/\s+/g, ' ').trim();
                     
-                    const palabrasEncontradas = palabras.filter(p => lineaNorm.includes(p));
-                    const umbral = Math.max(2, Math.ceil(palabras.length * 0.7));
-                    if (palabrasEncontradas.length >= umbral && !nombresProcesados.has(emp.nombre)) {
-                        encontrados.push(emp);
-                        nombresProcesados.add(emp.nombre);
+                    if (empNorm === nombreNorm || empNorm.includes(nombreNorm) || nombreNorm.includes(empNorm)) {
+                        empleadoEncontrado = emp;
                         break;
                     }
                 }
-            });
-            
-            // 2️⃣ Detectar nombres en MAYÚSCULAS (formato de los PDFs)
-            const regexMayusculas = /^[A-ZÁÉÍÓÚÑÜ][A-ZÁÉÍÓÚÑÜ\s]+$/;
-            const nombresMayusculas = [];
-            
-            lineas.forEach(linea => {
-                const lineaLimpia = linea.trim();
-                if (regexMayusculas.test(lineaLimpia)) {
-                    const palabrasIgnorar = ['NOMBRE', 'APELLIDOS', 'SERVICIO', 'SECCIÓN', 'CANTIDAD', 'TOTAL', 'PAGINA', 'FECHA', 'HORA', 'DECIMOS', 'IMPORTE', 'LOTERIA', 'NAVIDAD', 'ESCUELA', 'TALLER'];
-                    if (!palabrasIgnorar.some(p => lineaLimpia.toUpperCase().includes(p))) {
-                        nombresMayusculas.push(lineaLimpia);
-                    }
-                }
-            });
-            
-            // 3️⃣ Combinar líneas consecutivas (NOMBRE + APELLIDOS en columnas separadas)
-            const nombresCompletos = [];
-            const yaProcesados = new Set();
-            
-            for (let i = 0; i < nombresMayusculas.length; i++) {
-                const linea = nombresMayusculas[i];
-                const palabras = linea.split(/\s+/).filter(p => p.length > 0);
                 
-                if (palabras.length >= 2 && palabras.length <= 4) {
-                    if (!yaProcesados.has(linea)) {
-                        nombresCompletos.push(linea);
-                        yaProcesados.add(linea);
-                    }
-                } else if (palabras.length === 1 && i + 1 < nombresMayusculas.length) {
-                    const siguienteLinea = nombresMayusculas[i + 1];
-                    const nombreCompleto = linea + ' ' + siguienteLinea;
-                    if (!yaProcesados.has(nombreCompleto)) {
-                        nombresCompletos.push(nombreCompleto);
-                        yaProcesados.add(nombreCompleto);
-                        yaProcesados.add(siguienteLinea);
-                    }
-                    i++;
-                }
-            }
-            
-            // 4️ Filtrar y agregar nombres no encontrados
-            const palabrasGenericas = [
-                'servicio', 'seccion', 'telefono', 'fecha', 'hora', 'numero', 'total', 
-                'pagina', 'pagado', 'pendiente', 'recogido', 'importe', 'decimos', 
-                'pedido', 'empleado', 'administrador', 'consulta', 'general', 'especial',
-                'nombre', 'apellidos', 'cantidad', 'desarrollo', 'rural', 'apicultura', 
-                'viveros', 'forestales', 'afe', 'cooperacion', 'derechos', 'sociales',
-                'asuntos', 'archivo', 'imprenta', 'centros', 'atencion', 'ilc', 'sepeis',
-                'escuela', 'taller', 'loteria', 'navidad', 'pabellon', 'nino', 'jesus'
-            ];
-            
-            nombresCompletos.forEach(nombre => {
-                const nombreNorm = nombre.toLowerCase()
-                    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-                    .replace(/\s+/g, ' ').trim();
-                
-                const yaEncontrado = encontrados.some(e => {
-                    const eNorm = e.nombre.toLowerCase()
-                        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-                        .replace(/\s+/g, ' ').trim();
-                    return eNorm === nombreNorm || eNorm.includes(nombreNorm) || nombreNorm.includes(eNorm);
-                });
-                
-                if (yaEncontrado || nombresProcesados.has(nombre)) return;
-                
-                const primeraPalabra = nombre.split(' ')[0].toLowerCase();
-                if (palabrasGenericas.includes(primeraPalabra)) return;
-                
-                if (nombre.split(' ').length >= 2 && nombre.length >= 8) {
-                    noEncontrados.push(nombre);
-                    nombresProcesados.add(nombre);
+                if (empleadoEncontrado && !nombresProcesados.has(empleadoEncontrado.nombre)) {
+                    encontrados.push({
+                        ...empleadoEncontrado,
+                        decimosPDF: empDetectado.decimos
+                    });
+                    nombresProcesados.add(empleadoEncontrado.nombre);
+                } else if (!nombresProcesados.has(empDetectado.nombre)) {
+                    noEncontrados.push({
+                        nombre: empDetectado.nombre,
+                        decimosPDF: empDetectado.decimos
+                    });
+                    nombresProcesados.add(empDetectado.nombre);
                 }
             });
             
@@ -2065,7 +2072,8 @@
             const horaAhora = new Date().toTimeString().slice(0, 5);
             
             resultado.encontrados.forEach(emp => {
-                const validacion = validarMaximoDecimos(emp.nombre, resultado.numDecimos);
+                const decimos = emp.decimosPDF || resultado.numDecimos || 2;
+                const validacion = validarMaximoDecimos(emp.nombre, decimos);
                 if (!validacion.valido) {
                     omitidos++;
                     return;
@@ -2076,7 +2084,7 @@
                     servicio: resultado.servicio,
                     seccion: emp.seccion,
                     telefono: emp.telefono || '',
-                    numDecimos: resultado.numDecimos,
+                    numDecimos: decimos,
                     fechaSolicitud: fechaHoy,
                     horaSolicitud: horaAhora,
                     fechaEntrega: '',
@@ -2155,7 +2163,7 @@
             link.href = URL.createObjectURL(blob);
             link.download = 'loteria-navidad-backup-' + new Date().toISOString().slice(0,10) + '.json';
             link.click();
-            showToast('', '📤 Copia de seguridad exportada.');
+            showToast('📤', '📤 Copia de seguridad exportada.');
         }
 
         function importarDatosJSON(event) {
@@ -2228,7 +2236,7 @@
             const rows = pedidosExportar.map(p => [p.nombre, p.servicio||'-', p.seccion||'-', p.telefono||'-', p.numDecimos, (p.numDecimos*PRECIO_DECIMO).toLocaleString('es-ES')+'€', p.fechaSolicitud||'-', p.pagado?'Si':'No']);
             doc.autoTable(cols, rows, { startY: 36, theme: 'striped', headStyles: { fillColor: [26, 58, 92], fontSize: 7 }, bodyStyles: { fontSize: 7 } });
             doc.save('listado-general-loteria-2026.pdf');
-            showToast('📄', ' PDF generado.');
+            showToast('📄', '📄 PDF generado.');
         }
 
         function exportarListadoGeneralCSV() {
@@ -2238,12 +2246,12 @@
             pedidosExportar.forEach(p => { csv += '"'+p.nombre+'","'+(p.servicio||'')+'","'+(p.seccion||'')+'","'+(p.telefono||'')+'",'+p.numDecimos+','+(p.numDecimos*PRECIO_DECIMO)+',"'+(p.fechaSolicitud||'')+'","'+(p.horaSolicitud||'')+'",'+(p.pagado?'Si':'No')+','+(p.recogido?'Si':'No')+'\n'; });
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'listado-general-2026.csv'; link.click();
-            showToast('📊', '📊 CSV generado.');
+            showToast('', '📊 CSV generado.');
         }
 
         function imprimirListadoGeneral() {
             const pedidosExportar = getPedidosFiltradosListado();
-            if (pedidosExportar.length === 0) { showToast('️', 'No hay pedidos'); return; }
+            if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos'); return; }
             const v = window.open('', '', 'width=900,height=600');
             const tablaHTML = pedidosExportar.map(p => '<tr><td>'+p.nombre+'</td><td>'+(p.servicio||'-')+'</td><td>'+(p.seccion||'-')+'</td><td>'+(p.telefono||'-')+'</td><td>'+p.numDecimos+'</td><td>'+(p.numDecimos*PRECIO_DECIMO).toLocaleString('es-ES')+'€</td><td>'+(p.fechaSolicitud||'-')+'</td><td>'+(p.horaSolicitud||'-')+'</td><td>'+(p.pagado?'Si':'No')+'</td><td>'+(p.recogido?'Si':'No')+'</td></tr>').join('');
             v.document.write('<html><head><title>Listado General</title><style>body{font-family:Arial,sans-serif;padding:20px}h1{color:#1a3a5c}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{border:1px solid #ddd;padding:6px;font-size:0.85em}th{background:#1a3a5c;color:white}</style></head><body><h1>Listado General - Lotería 2026</h1><p>Fecha: '+new Date().toLocaleDateString('es-ES')+'</p><table><thead><tr><th>Nombre</th><th>Servicio</th><th>Sección</th><th>Teléfono</th><th>Décimos</th><th>Importe</th><th>Fecha Sol.</th><th>Hora Sol.</th><th>Pagado</th><th>Recogido</th></tr></thead><tbody>'+tablaHTML+'</tbody></table></body></html>');
