@@ -181,15 +181,15 @@
         .control-summary-item .num { font-size: 1.5em; font-weight: 700; color: #1a3a5c; }
         .control-summary-item .label { font-size: 0.8em; color: #666; }
         
-        .control-list { max-height: 500px; overflow-y: auto; border: 1px solid #e0e2e5; border-radius: 8px; }
-        .control-list-header { display: grid; grid-template-columns: 2fr 1fr 80px 80px 80px; gap: 8px; padding: 10px 15px; background: #1a3a5c; color: white; font-weight: 600; font-size: 0.8em; position: sticky; top: 0; z-index: 1; }
-        .control-list-item { display: grid; grid-template-columns: 2fr 1fr 80px 80px 80px; gap: 8px; padding: 10px 15px; border-bottom: 1px solid #f0f2f5; align-items: center; transition: background 0.15s; }
+        .control-list { max-height: 600px; overflow-y: auto; border: 1px solid #e0e2e5; border-radius: 8px; }
+        .control-list-header { display: grid; grid-template-columns: 2fr 1fr 110px 80px 80px; gap: 8px; padding: 10px 15px; background: #1a3a5c; color: white; font-weight: 600; font-size: 0.8em; position: sticky; top: 0; z-index: 1; }
+        .control-list-item { display: grid; grid-template-columns: 2fr 1fr 110px 80px 80px; gap: 8px; padding: 10px 15px; border-bottom: 1px solid #f0f2f5; align-items: center; transition: background 0.15s; }
         .control-list-item:hover { background: #f8f9fa; }
         .control-list-item:last-child { border-bottom: none; }
         .control-list-item .emp-name { font-weight: 500; font-size: 0.85em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .control-list-item .emp-section { font-size: 0.75em; color: #666; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .control-list-item .check-cell { text-align: center; }
-        .control-list-item .check-cell input[type="checkbox"] { width: 22px; height: 22px; cursor: pointer; }
+        .control-list-item .check-cell input[type="checkbox"] { width: 20px; height: 20px; cursor: pointer; }
         .control-list-header .check-cell { text-align: center; font-size: 0.9em; }
         
         @media (max-width: 1024px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .col-servicio, .col-seccion { display: none; } }
@@ -213,7 +213,7 @@
             .login-box { margin: 15px; padding: 25px 15px; }
             .sort-controls { flex-direction: column; }
             .col-recogido-por { display: none; }
-            .control-list-header, .control-list-item { grid-template-columns: 1.5fr 1fr 60px 60px 60px; gap: 4px; padding: 8px 10px; font-size: 0.85em; }
+            .control-list-header, .control-list-item { grid-template-columns: 1.5fr 1fr 90px 60px 60px; gap: 4px; padding: 8px 10px; font-size: 0.85em; }
         }
         @media (max-width: 480px) { .header-title h1 { font-size: 1em; } .stat-number { font-size: 1.5em; } .dashboard-welcome .welcome-date { font-size: 1.2em; } }
     </style>
@@ -287,14 +287,14 @@
                         <div class="stat-details">
                             <div class="stat-detail-row"><span>✓ Pagados:</span><span id="statPagados">0</span></div>
                             <div class="stat-detail-row"><span>⏳ Pendientes:</span><span id="statPendientes">0</span></div>
-                            <div class="stat-detail-row"><span>📦 Entregados:</span><span id="statEntregados">0</span></div>
+                            <div class="stat-detail-row"><span> Entregados:</span><span id="statEntregados">0</span></div>
                         </div>
                     </div>
                     <div class="stat-card gold">
                         <div class="stat-number" id="dineroRecaudado">0 €</div>
                         <div class="stat-label">Dinero Recaudado</div>
                         <div class="stat-details">
-                            <div class="stat-detail-row"><span> Total:</span><span id="statTotalEsperado">0 €</span></div>
+                            <div class="stat-detail-row"><span>💰 Total:</span><span id="statTotalEsperado">0 €</span></div>
                             <div class="stat-detail-row"><span>💵 Cobrado:</span><span id="statCobrado">0 €</span></div>
                             <div class="stat-detail-row"><span>⏳ Pendiente:</span><span id="statPendienteCobro">0 €</span></div>
                         </div>
@@ -310,13 +310,13 @@
                     </div>
                 </div>
                 <div class="quick-actions">
-                    <div class="quick-action" id="qaSolicitar" onclick="irAPagina('solicitar')"><div class="qa-icon">🎟️</div><div class="qa-title">Solicitar</div></div>
+                    <div class="quick-action" id="qaSolicitar" onclick="irAPagina('solicitar')"><div class="qa-icon">️</div><div class="qa-title">Solicitar</div></div>
                     <div class="quick-action" id="qaControl" onclick="irAPagina('control')"><div class="qa-icon">📝</div><div class="qa-title">Control</div></div>
                     <div class="quick-action" onclick="irAPagina('pedidos')"><div class="qa-icon">📋</div><div class="qa-title">Pedidos</div></div>
                     <div class="quick-action" onclick="irAPagina('listado')"><div class="qa-icon">📑</div><div class="qa-title">Listado</div></div>
                     <div class="quick-action" id="qaOCR" onclick="irAPagina('ocr')"><div class="qa-icon">📷</div><div class="qa-title">Lectura PDF</div></div>
                     <div class="quick-action" onclick="irAPagina('resumen')"><div class="qa-icon">📊</div><div class="qa-title">Resumen</div></div>
-                    <div class="quick-action" onclick="irAPagina('participantes')"><div class="qa-icon">👥</div><div class="qa-title">Participantes</div></div>
+                    <div class="quick-action" onclick="irAPagina('participantes')"><div class="qa-icon"></div><div class="qa-title">Participantes</div></div>
                 </div>
             </div>
 
@@ -378,12 +378,11 @@
                 </div>
             </div>
 
-            <!-- NUEVA PESTAÑA: CONTROL CON 3 CHECKS -->
             <div class="section-page" id="page-control">
                 <div class="content-card">
                     <h2 class="section-title">📝 Control de Solicitudes, Pagos y Entregas</h2>
                     <div class="alert-info">
-                         Selecciona un servicio (y opcionalmente una sección) para ver la lista de empleados. Marca los 3 checks según corresponda: <strong>Solicitado</strong>, <strong>Pagado</strong> y <strong>Recibido</strong>.
+                        📋 Selecciona un servicio (y opcionalmente una sección) para ver la lista de empleados. Marca los 3 checks según corresponda: <strong>Solicitado</strong>, <strong>Pagado</strong> y <strong>Recibido</strong>.
                     </div>
                     <div class="filter-bar">
                         <div class="form-group">
@@ -485,7 +484,7 @@
                         </table>
                     </div>
                     <div class="empty-state" id="emptyState">
-                        <div class="empty-icon">🎰</div>
+                        <div class="empty-icon"></div>
                         <h3>Sin pedidos aún</h3>
                         <p>Añade el primer pedido desde "Solicitar"</p>
                     </div>
@@ -494,7 +493,7 @@
 
             <div class="section-page" id="page-listado">
                 <div class="content-card">
-                    <h2 class="section-title"> Listado General</h2>
+                    <h2 class="section-title">📑 Listado General</h2>
                     <div class="alert-info">💡 Haz clic en cualquier cabecera para ordenar.</div>
                     <div class="sort-controls">
                         <div class="form-group">
@@ -514,7 +513,7 @@
                         <div class="form-group">
                             <label for="ordenDireccion">Dirección</label>
                             <select id="ordenDireccion" onchange="renderizarListadoGeneral()">
-                                <option value="asc">️ Ascendente (A-Z)</option>
+                                <option value="asc">⬆️ Ascendente (A-Z)</option>
                                 <option value="desc">⬇️ Descendente (Z-A)</option>
                             </select>
                         </div>
@@ -652,9 +651,9 @@
 
             <div class="section-page" id="page-ocr">
                 <div class="content-card">
-                    <div id="bannerOCR" class="readonly-banner" style="display:none;">🔒 Solo el administrador puede usar esta función.</div>
-                    <h2 class="section-title">📷 Lectura de PDF Escaneado</h2>
-                    <div class="alert-info"> Sube el PDF escaneado del listado de un servicio. El sistema leerá los nombres, buscará los empleados en la base de datos y creará automáticamente los pedidos. Si un empleado no existe, podrás crearlo al momento.</div>
+                    <div id="bannerOCR" class="readonly-banner" style="display:none;"> Solo el administrador puede usar esta función.</div>
+                    <h2 class="section-title"> Lectura de PDF Escaneado</h2>
+                    <div class="alert-info">📋 Sube el PDF escaneado del listado de un servicio. El sistema leerá los nombres, buscará los empleados en la base de datos y creará automáticamente los pedidos. Si un empleado no existe, podrás crearlo al momento.</div>
                     <div id="ocrFormContainer">
                         <div class="form-grid">
                             <div class="form-group">
@@ -672,7 +671,7 @@
                             <label for="ocrFile">Seleccionar PDF o imagen *</label>
                             <input type="file" id="ocrFile" accept=".pdf,image/*" style="padding: 10px;">
                         </div>
-                        <button type="button" class="btn btn-primary" onclick="procesarOCR()" id="btnProcesarOCR">🔍 Procesar archivo</button>
+                        <button type="button" class="btn btn-primary" onclick="procesarOCR()" id="btnProcesarOCR"> Procesar archivo</button>
                     </div>
                     <div id="ocrProgressContainer" style="display:none;">
                         <div class="ocr-progress">
@@ -684,7 +683,7 @@
                     </div>
                     <div id="ocrResultContainer" style="display:none;">
                         <div class="ocr-result">
-                            <h4>📋 Resultados del análisis: <span id="ocrTotalDetectados">0</span></h4>
+                            <h4> Resultados del análisis: <span id="ocrTotalDetectados">0</span></h4>
                             <div id="ocrResultList"></div>
                         </div>
                         <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
@@ -773,7 +772,7 @@
     <div class="modal-overlay" id="modalNuevoEmpleado">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>➕ Dar de alta nuevo empleado</h3>
+                <h3> Dar de alta nuevo empleado</h3>
                 <button class="close-btn" onclick="cerrarModalEmpleado()">✕</button>
             </div>
             <form id="nuevoEmpleadoForm">
@@ -1021,7 +1020,7 @@
                     await dbRef.empleados.set(empleadosObj);
 
                     await dbRef.inicializado.set({
-                        fecha: new Date().toISOString(), version: '15.0',
+                        fecha: new Date().toISOString(), version: '16.0',
                         empleadosCargados: EMPLEADOS_INICIALES.length
                     });
                 }
@@ -1116,7 +1115,7 @@
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             if (!datosCargados) {
-                document.getElementById('loginError').textContent = ' Cargando datos... espera un momento.';
+                document.getElementById('loginError').textContent = '⏳ Cargando datos... espera un momento.';
                 document.getElementById('loginError').classList.add('show');
                 return;
             }
@@ -1140,7 +1139,7 @@
                 aplicarPermisosRol();
                 initApp();
             } else {
-                document.getElementById('loginError').textContent = '⛔ Usuario o contraseña incorrectos.';
+                document.getElementById('loginError').textContent = ' Usuario o contraseña incorrectos.';
                 document.getElementById('loginError').classList.add('show');
             }
         });
@@ -1256,7 +1255,7 @@
 
         function eliminarUsuario(nombre) {
             if (nombre === USUARIO_ADMIN) { showToast('⚠️', 'No se puede eliminar al administrador.'); return; }
-            if (nombre === usuarioActual) { showToast('️', 'No puedes eliminar tu propio usuario.'); return; }
+            if (nombre === usuarioActual) { showToast('⚠️', 'No puedes eliminar tu propio usuario.'); return; }
             if (confirm('¿Eliminar al usuario "' + nombre + '"?')) {
                 delete usuarios[nombre];
                 firebaseGuardarUsuarios();
@@ -1371,14 +1370,12 @@
                 return;
             }
             
-            // Filtrar empleados
             let empleadosFiltrados = empleados.filter(e => e.servicio === servicio);
             if (seccion) {
                 empleadosFiltrados = empleadosFiltrados.filter(e => e.seccion === seccion);
             }
             empleadosFiltrados.sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'));
             
-            // Mapa de pedidos por empleado (nombre en minúsculas)
             const pedidosMap = {};
             pedidos.forEach(p => {
                 const key = p.nombre.toLowerCase().trim();
@@ -1387,8 +1384,7 @@
             });
             
             let html = '<div class="control-list-header">' +
-                '<div>Nombre</div>' +
-                '<div>Sección</div>' +
+                '<div style="grid-column: span 2;">Empleado</div>' +
                 '<div class="check-cell">Solicitado</div>' +
                 '<div class="check-cell">Pagado</div>' +
                 '<div class="check-cell">Recibido</div>' +
@@ -1401,8 +1397,10 @@
                 const tienePedido = pedidoEmp.length > 0;
                 const estaPagado = pedidoEmp.some(p => p.pagado);
                 const estaRecibido = pedidoEmp.some(p => p.recogido);
+                const numDecimos = tienePedido ? pedidoEmp[0].numDecimos : 0;
+                const fechaSol = tienePedido ? (pedidoEmp[0].fechaSolicitud || '') : '';
+                const horaSol = tienePedido ? (pedidoEmp[0].horaSolicitud || '') : '';
                 
-                // Aplicar filtro
                 if (filtro === 'pendientes' && tienePedido) return;
                 if (filtro === 'solicitados' && (!tienePedido || estaPagado)) return;
                 if (filtro === 'pagados' && (!estaPagado || estaRecibido)) return;
@@ -1415,10 +1413,21 @@
                 
                 const disabled = rolActual !== 'admin' ? 'disabled' : '';
                 
+                let fechaHoraText = '';
+                if (fechaSol) {
+                    const partes = fechaSol.split('-');
+                    fechaHoraText = partes[2] + '/' + partes[1] + '/' + partes[0].substr(2);
+                    if (horaSol) fechaHoraText += ' ' + horaSol;
+                }
+                
                 html += '<div class="control-list-item">' +
                     '<div class="emp-name" title="' + emp.nombre + '">' + emp.nombre + '</div>' +
                     '<div class="emp-section" title="' + emp.seccion + '">' + emp.seccion + '</div>' +
-                    '<div class="check-cell"><input type="checkbox" ' + (tienePedido ? 'checked' : '') + ' ' + disabled + ' onchange="toggleControlSolicitud(\'' + emp.id + '\', this.checked)" title="Solicitado"></div>' +
+                    '<div class="check-cell" style="display:flex; flex-direction:column; align-items:center; gap:2px;">' +
+                        '<input type="checkbox" ' + (tienePedido ? 'checked' : '') + ' ' + disabled + ' onchange="toggleControlSolicitud(\'' + emp.id + '\', this.checked)" title="Solicitado">' +
+                        (tienePedido ? '<span style="font-size:0.7em; color:#1976d2; font-weight:600;">' + numDecimos + ' déc.</span>' : '') +
+                        (fechaHoraText ? '<span style="font-size:0.65em; color:#666;">' + fechaHoraText + '</span>' : '') +
+                    '</div>' +
                     '<div class="check-cell"><input type="checkbox" ' + (estaPagado ? 'checked' : '') + ' ' + (tienePedido ? '' : 'disabled') + ' onchange="toggleControlPagado(\'' + emp.id + '\', this.checked)" title="Pagado"></div>' +
                     '<div class="check-cell"><input type="checkbox" ' + (estaRecibido ? 'checked' : '') + ' ' + (tienePedido ? '' : 'disabled') + ' onchange="toggleControlRecibido(\'' + emp.id + '\', this.checked)" title="Recibido"></div>' +
                 '</div>';
@@ -1444,7 +1453,6 @@
             if (!emp) return;
             
             if (checked) {
-                // Crear pedido automáticamente
                 const fechaHoy = new Date().toISOString().split('T')[0];
                 const horaAhora = new Date().toTimeString().slice(0, 5);
                 const nuevo = {
@@ -1468,12 +1476,11 @@
                 dbRef.pedidos.child(id).set(nuevo);
                 showToast('✅', 'Solicitud registrada para ' + emp.nombre);
             } else {
-                // Eliminar pedido si existe
                 const pedido = pedidos.find(p => p.nombre.toLowerCase().trim() === emp.nombre.toLowerCase().trim() && p.servicio === emp.servicio);
                 if (pedido) {
                     if (confirm('¿Eliminar la solicitud de ' + emp.nombre + '?\n\nEsto también quitará los checks de Pagado y Recibido.')) {
                         dbRef.pedidos.child(pedido.id).remove();
-                        showToast('🗑️', 'Solicitud eliminada para ' + emp.nombre);
+                        showToast('️', 'Solicitud eliminada para ' + emp.nombre);
                     } else {
                         renderizarControl();
                     }
@@ -1482,7 +1489,7 @@
         }
 
         function toggleControlPagado(empId, checked) {
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); renderizarControl(); return; }
+            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); renderizarControl(); return; }
             
             const emp = empleados.find(e => e.id === empId);
             if (!emp) return;
@@ -1491,12 +1498,12 @@
             if (pedido) {
                 pedido.pagado = checked;
                 firebaseGuardarPedido(pedido);
-                showToast(checked ? '💰' : '⏳', checked ? emp.nombre + ' ha pagado' : 'Pago desmarcado para ' + emp.nombre);
+                showToast(checked ? '💰' : '', checked ? emp.nombre + ' ha pagado' : 'Pago desmarcado para ' + emp.nombre);
             }
         }
 
         function toggleControlRecibido(empId, checked) {
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); renderizarControl(); return; }
+            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); renderizarControl(); return; }
             
             const emp = empleados.find(e => e.id === empId);
             if (!emp) return;
@@ -1512,7 +1519,7 @@
                     pedido.horaEntrega = '';
                 }
                 firebaseGuardarPedido(pedido);
-                showToast(checked ? '📦' : '⏳', checked ? 'Entrega registrada para ' + emp.nombre : 'Entrega desmarcada para ' + emp.nombre);
+                showToast(checked ? '📦' : '', checked ? 'Entrega registrada para ' + emp.nombre : 'Entrega desmarcada para ' + emp.nombre);
             }
         }
         // ===== FIN FUNCIONES CONTROL =====
@@ -1564,7 +1571,7 @@
             if (select.value === '__nueva__') {
                 const servicio = document.getElementById('servicio').value;
                 if (!servicio) {
-                    alert('️ Primero selecciona un servicio.');
+                    alert('⚠️ Primero selecciona un servicio.');
                     select.value = '';
                     return;
                 }
@@ -1723,7 +1730,7 @@
             tbody.innerHTML = pedidosFiltrados.map(p => {
                 const quienRecogeHtml = p.quienRecoge ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
                 const accionesHtml = esAdmin 
-                    ? '<div class="actions-cell"><button class="btn btn-edit" onclick="editarPedido(\'' + p.id + '\')">✏️</button><button class="btn btn-delete" onclick="eliminarPedido(\'' + p.id + '\')">🗑️</button></div>'
+                    ? '<div class="actions-cell"><button class="btn btn-edit" onclick="editarPedido(\'' + p.id + '\')">✏️</button><button class="btn btn-delete" onclick="eliminarPedido(\'' + p.id + '\')">️</button></div>'
                     : '<span style="color:#999; font-size:0.85em;">—</span>';
                 const checkboxDisabled = !esAdmin ? 'disabled' : '';
                 return '<tr>' +
@@ -1748,7 +1755,7 @@
 
         document.getElementById('pedidoForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
             const empleadoId = document.getElementById('empleado').value;
             const numDecimos = parseInt(document.getElementById('numDecimos').value) || 2;
             const servicio = document.getElementById('servicio').value;
@@ -1787,12 +1794,12 @@
         });
 
         function togglePagado(id) {
-            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
             const p = pedidos.find(x => x.id === id);
             if (p) {
                 p.pagado = !p.pagado;
                 firebaseGuardarPedido(p);
-                showToast(p.pagado ? '' : '⏳', p.pagado ? '¡' + p.nombre + ' ha pagado!' : 'Pago pendiente de ' + p.nombre + '.');
+                showToast(p.pagado ? '💰' : '', p.pagado ? '¡' + p.nombre + ' ha pagado!' : 'Pago pendiente de ' + p.nombre + '.');
             }
         }
 
@@ -1802,16 +1809,16 @@
             if (p) {
                 p.recogido = !p.recogido;
                 firebaseGuardarPedido(p);
-                showToast(p.recogido ? '' : '⏳', p.recogido ? 'Décimos entregados a ' + p.nombre + '.' : 'Entrega pendiente a ' + p.nombre + '.');
+                showToast(p.recogido ? '📦' : '', p.recogido ? 'Décimos entregados a ' + p.nombre + '.' : 'Entrega pendiente a ' + p.nombre + '.');
             }
         }
 
         function eliminarPedido(id) {
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
             const p = pedidos.find(x => x.id === id);
             if (p && confirm('¿Eliminar el pedido de ' + p.nombre + '?')) {
                 firebaseEliminarPedido(id);
-                showToast('🗑️', 'Pedido eliminado.');
+                showToast('️', 'Pedido eliminado.');
             }
         }
 
@@ -1913,7 +1920,7 @@
             tbody.innerHTML = pedidosFiltrados.map(p => {
                 const pagadoBadge = p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7;">✓ Pagado</span>' : '<span class="badge" style="background:#ffebee; color:#c41e3a; border:1px solid #ef9a9a;">⏳ Pendiente</span>';
                 const recogidoBadge = p.recogido ? '<span class="badge" style="background:#e3f2fd; color:#1976d2; border:1px solid #90caf9;">✓ Recogido</span>' : '<span class="badge badge-pending">⏳ Pendiente</span>';
-                const quienRecogeHtml = p.quienRecoge ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
+                const quienRecogeHtml = p.quienRecoge ? '<span class="badge badge-collected"> ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
                 return '<tr>' +
                     '<td class="nombre-cell" title="' + p.nombre + '">' + p.nombre + '</td>' +
                     '<td title="' + (p.servicio || '') + '">' + (p.servicio || '-') + '</td>' +
@@ -1932,7 +1939,7 @@
             }).join('');
             document.querySelectorAll('.sort-icon').forEach(el => el.textContent = '');
             const sortIcon = document.getElementById('sort-' + ordenarPor);
-            if (sortIcon) sortIcon.textContent = ordenDireccion === 'asc' ? '⬆️' : '⬇️';
+            if (sortIcon) sortIcon.textContent = ordenDireccion === 'asc' ? '️' : '⬇️';
         }
 
         function ordenarListado(campo) {
@@ -2026,8 +2033,8 @@
             const fileInput = document.getElementById('ocrFile');
             const servicio = document.getElementById('ocrServicio').value;
             const numDecimos = parseInt(document.getElementById('ocrDecimos').value);
-            if (!servicio) { showToast('⚠️', 'Selecciona un servicio', true); return; }
-            if (!fileInput.files || fileInput.files.length === 0) { showToast('⚠️', 'Selecciona un archivo', true); return; }
+            if (!servicio) { showToast('️', 'Selecciona un servicio', true); return; }
+            if (!fileInput.files || fileInput.files.length === 0) { showToast('️', 'Selecciona un archivo', true); return; }
             if (!numDecimos || numDecimos < 1) { showToast('⚠️', 'Introduce nº válido de décimos', true); return; }
             
             const file = fileInput.files[0];
@@ -2098,7 +2105,7 @@
                     throw new Error('Formato no soportado. Usa PDF o imagen.');
                 }
                 
-                statusEl.textContent = ' Buscando empleados...';
+                statusEl.textContent = '🔎 Buscando empleados...';
                 progressFill.style.width = '90%';
                 
                 const resultado = buscarEmpleadosEnTexto(texto, servicio);
@@ -2147,7 +2154,7 @@
             
             if (resultado.noEncontrados.length > 0) {
                 html += '<h4 style="margin-top:15px; color:#c41e3a;">⚠️ Empleados NO encontrados (' + resultado.noEncontrados.length + '):</h4>';
-                html += '<div style="font-size:0.8em; color:#666; margin-bottom:10px;">Pulsa "➕ Crear" para darlos de alta y crear su pedido automáticamente. Se te pedirá confirmación.</div>';
+                html += '<div style="font-size:0.8em; color:#666; margin-bottom:10px;">Pulsa " Crear" para darlos de alta y crear su pedido automáticamente. Se te pedirá confirmación.</div>';
                 resultado.noEncontrados.forEach((emp, idx) => {
                     const decimos = emp.decimosPDF || window.ocrResultado.numDecimos || 2;
                     html += '<div class="ocr-result-item notfound" style="flex-direction:column; align-items:flex-start; gap:6px;">' +
@@ -2158,7 +2165,7 @@
             }
             
             if (resultado.encontrados.length === 0 && resultado.noEncontrados.length === 0) {
-                html = '<div style="padding:15px; background:#fff3e0; border-radius:6px; margin-top:15px;">️ No se detectaron nombres en el archivo. Verifica que el PDF contenga texto legible.</div>';
+                html = '<div style="padding:15px; background:#fff3e0; border-radius:6px; margin-top:15px;">⚠️ No se detectaron nombres en el archivo. Verifica que el PDF contenga texto legible.</div>';
             }
             
             resultList.innerHTML = html;
@@ -2179,7 +2186,7 @@
                 return;
             }
             
-            const telefono = prompt(' Introduce el teléfono de "' + nombreDetectado + '":');
+            const telefono = prompt('📞 Introduce el teléfono de "' + nombreDetectado + '":');
             if (!telefono || !telefono.trim()) {
                 showToast('⚠️', 'Se necesita el teléfono para crear el empleado.', true);
                 return;
@@ -2193,7 +2200,7 @@
                 const seccionNombre = prompt('📂 Sección para "' + nombreDetectado + '":\n\nSecciones disponibles:\n' + listaSecciones + '\n\nEscribe el nombre de una sección existente o una nueva:', seccionesDelServicio[0].nombre);
                 
                 if (!seccionNombre || !seccionNombre.trim()) {
-                    showToast('⚠️', 'Se necesita una sección.', true);
+                    showToast('️', 'Se necesita una sección.', true);
                     return;
                 }
                 
@@ -2227,7 +2234,7 @@
                         secciones.forEach((s, i) => { obj[i] = s; });
                         dbRef.secciones.set(obj);
                     } else {
-                        showToast('⚠️', 'Operación cancelada.', true);
+                        showToast('️', 'Operación cancelada.', true);
                         return;
                     }
                 }
@@ -2378,7 +2385,7 @@
             if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
             const resultado = window.ocrResultado;
             if (!resultado || resultado.encontrados.length === 0) {
-                showToast('️', 'No hay empleados encontrados para procesar. Crea primero los que faltan.', true);
+                showToast('⚠️', 'No hay empleados encontrados para procesar. Crea primero los que faltan.', true);
                 return;
             }
             
@@ -2424,7 +2431,7 @@
             if (noEncontradosRestantes > 0) mensaje += '. Quedan ' + noEncontradosRestantes + ' empleados por crear manualmente.';
             
             showToast('✅', mensaje);
-            cancelarOCR();
+            document.getElementById('ocrProgressContainer').style.display = 'none';
         }
 
         function cancelarOCR() {
@@ -2441,7 +2448,7 @@
             const { id, ...datos } = pedido;
             dbRef.pedidos.child(id).set(datos)
                 .then(() => setSyncStatus('online'))
-                .catch((err) => { setSyncStatus('offline', ' Error'); showToast('⚠️', 'No se pudo guardar', true); });
+                .catch((err) => { setSyncStatus('offline', '❌ Error'); showToast('️', 'No se pudo guardar', true); });
         }
 
         function firebaseEliminarPedido(id) {
@@ -2479,7 +2486,7 @@
             link.href = URL.createObjectURL(blob);
             link.download = 'loteria-navidad-backup-' + new Date().toISOString().slice(0,10) + '.json';
             link.click();
-            showToast('', '📤 Copia de seguridad exportada.');
+            showToast('📤', '📤 Copia de seguridad exportada.');
         }
 
         function importarDatosJSON(event) {
@@ -2557,7 +2564,7 @@
 
         function exportarListadoGeneralCSV() {
             const pedidosExportar = getPedidosFiltradosListado();
-            if (pedidosExportar.length === 0) { showToast('️', 'No hay pedidos'); return; }
+            if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos'); return; }
             let csv = '\uFEFFNombre,Servicio,Seccion,Telefono,N Decimos,Importe,Fecha Sol.,Hora Sol.,Pagado,Recogido\n';
             pedidosExportar.forEach(p => { csv += '"'+p.nombre+'","'+(p.servicio||'')+'","'+(p.seccion||'')+'","'+(p.telefono||'')+'",'+p.numDecimos+','+(p.numDecimos*PRECIO_DECIMO)+',"'+(p.fechaSolicitud||'')+'","'+(p.horaSolicitud||'')+'",'+(p.pagado?'Si':'No')+','+(p.recogido?'Si':'No')+'\n'; });
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -2591,7 +2598,7 @@
             const rows = pedidosExportar.map(p => [p.nombre, p.servicio||'-', p.seccion||'-', p.telefono||'-', p.numDecimos, (p.numDecimos*PRECIO_DECIMO)+'€', p.fechaSolicitud||'-', p.pagado?'Si':'No']);
             doc.autoTable(cols, rows, { startY: 36, theme: 'striped', headStyles: { fillColor: [26, 58, 92], fontSize: 7 }, bodyStyles: { fontSize: 7 } });
             doc.save('pedidos-loteria-2026.pdf');
-            showToast('', '📄 PDF generado.');
+            showToast('📄', '📄 PDF generado.');
         }
 
         function exportarCSV() {
@@ -2605,7 +2612,7 @@
             pedidosExportar.forEach(p => { csv += '"'+p.nombre+'","'+(p.servicio||'')+'","'+(p.seccion||'')+'","'+(p.telefono||'')+'",'+p.numDecimos+','+(p.numDecimos*PRECIO_DECIMO)+',"'+(p.fechaSolicitud||'')+'","'+(p.horaSolicitud||'')+'",'+(p.pagado?'Si':'No')+','+(p.recogido?'Si':'No')+'\n'; });
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'pedidos-2026.csv'; link.click();
-            showToast('📊', '📊 CSV generado.');
+            showToast('', '📊 CSV generado.');
         }
 
         function imprimirListado() {
