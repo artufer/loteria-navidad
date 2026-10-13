@@ -1652,44 +1652,57 @@
         }
 
         document.getElementById('pedidoForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; }
-            const empleadoId = document.getElementById('empleado').value;
-            const numDecimos = parseInt(document.getElementById('numDecimos').value) || 2;
-            const servicio = document.getElementById('servicio').value;
-            const seccion = document.getElementById('seccion').value;
-            const telefono = document.getElementById('telefono').value.trim();
-            let nombre = '';
-            if (empleadoId && empleadoId !== 'nuevo') {
-                const empleado = empleados.find(emp => emp.id === empleadoId);
-                if (empleado) nombre = empleado.nombre;
-            } else { showToast('⚠️', 'Tienes que elegir un empleado válido.', true); return; }
-            const validacion = validarMaximoDecimos(nombre, numDecimos);
-            if (!validacion.valido) {
-                let mensaje = '🚫 ' + nombre + ' ya tiene ' + validacion.acumulados + ' décimo(s). ';
-                mensaje += 'Con ' + validacion.nuevos + ' más llegaría a ' + validacion.total + ', pero el límite es ' + validacion.maximo + '. ';
-                if (validacion.disponibles > 0) mensaje += ' Aún puede pedir ' + validacion.disponibles + ' más.';
-                else mensaje += 'Ya ha alcanzado el máximo.';
-                showToast('🚫', mensaje, true); return;
-            }
-            const nuevo = {
-                nombre, servicio, seccion, telefono, numDecimos,
-                fechaSolicitud: document.getElementById('fechaSolicitud').value,
-                horaSolicitud: document.getElementById('horaSolicitud').value,
-                fechaEntrega: document.getElementById('fechaEntrega').value,
-                horaEntrega: document.getElementById('horaEntrega').value,
-                quienRecoge: document.getElementById('quienRecoge').value.trim(),
-                pagado: false, recogido: false,
-                fecha: new Date().toLocaleDateString('es-ES'),
-                creadoPor: usuarioActual
-            };
-            const id = generarId();
-            firebaseGuardarPedido({ id, ...nuevo });
-            this.reset();
-            establecerFechaHoraActual();
-            actualizarSelectServicios();
-            showToast('🎉', '¡Décimo(s) de ' + nombre + ' registrados!');
-        });
+    e.preventDefault();
+    if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; }
+    const empleadoId = document.getElementById('empleado').value;
+    const numDecimos = parseInt(document.getElementById('numDecimos').value) || 2;
+    const servicio = document.getElementById('servicio').value;
+    const seccion = document.getElementById('seccion').value;
+    const telefono = document.getElementById('telefono').value.trim();
+    let nombre = '';
+    if (empleadoId && empleadoId !== 'nuevo') {
+        const empleado = empleados.find(emp => emp.id === empleadoId);
+        if (empleado) nombre = empleado.nombre;
+    } else { showToast('⚠️', 'Tienes que elegir un empleado válido.', true); return; }
+    const validacion = validarMaximoDecimos(nombre, numDecimos);
+    if (!validacion.valido) {
+        let mensaje = '🚫 ' + nombre + ' ya tiene ' + validacion.acumulados + ' décimo(s). ';
+        mensaje += 'Con ' + validacion.nuevos + ' más llegaría a ' + validacion.total + ', pero el límite es ' + validacion.maximo + '. ';
+        if (validacion.disponibles > 0) mensaje += ' Aún puede pedir ' + validacion.disponibles + ' más.';
+        else mensaje += 'Ya ha alcanzado el máximo.';
+        showToast('🚫', mensaje, true); return;
+    }
+    const nuevo = {
+        nombre, servicio, seccion, telefono, numDecimos,
+        fechaSolicitud: document.getElementById('fechaSolicitud').value,
+        horaSolicitud: document.getElementById('horaSolicitud').value,
+        fechaEntrega: document.getElementById('fechaEntrega').value,
+        horaEntrega: document.getElementById('horaEntrega').value,
+        quienRecoge: document.getElementById('quienRecoge').value.trim(),
+        pagado: false, recogido: false,
+        fecha: new Date().toLocaleDateString('es-ES'),
+        creadoPor: usuarioActual
+    };
+    const id = generarId();
+    firebaseGuardarPedido({ id, ...nuevo });
+    
+    // ️ Guardar servicio y sección antes de resetear
+    const servicioGuardado = document.getElementById('servicio').value;
+    const seccionGuardada = document.getElementById('seccion').value;
+    
+    this.reset();
+    establecerFechaHoraActual();
+    
+    // ⚠️ Restaurar servicio y sección
+    document.getElementById('servicio').value = servicioGuardado;
+    actualizarSecciones();
+    setTimeout(() => {
+        document.getElementById('seccion').value = seccionGuardada;
+        actualizarEmpleados();
+    }, 100);
+    
+    showToast('🎉', '¡Décimo(s) de ' + nombre + ' registrados!');
+});
 
         function togglePagado(id) {
             if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; }
