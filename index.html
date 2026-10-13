@@ -222,7 +222,7 @@
 
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-spinner"></div>
-        <div class="loading-text" id="loadingText">Conectando con el servidor...</div>
+        <div class="loading-text" id="loadingText">Preparando todo...</div>
     </div>
 
     <div class="login-overlay hidden" id="loginOverlay">
@@ -233,14 +233,14 @@
             <form id="loginForm">
                 <div class="form-group">
                     <label for="loginUsuario">Usuario</label>
-                    <input type="text" id="loginUsuario" placeholder="Introduce tu usuario" required autocomplete="username">
+                    <input type="text" id="loginUsuario" placeholder="Escribe tu usuario" required autocomplete="username">
                 </div>
                 <div class="form-group">
                     <label for="loginClave">Contraseña</label>
-                    <input type="password" id="loginClave" placeholder="Introduce tu contraseña" required autocomplete="current-password">
+                    <input type="password" id="loginClave" placeholder="Escribe tu contraseña" required autocomplete="current-password">
                 </div>
-                <button type="submit" class="btn-login" id="btnLogin">Iniciar sesión</button>
-                <div class="login-error" id="loginError">⛔ Acceso no autorizado.</div>
+                <button type="submit" class="btn-login" id="btnLogin">Entrar</button>
+                <div class="login-error" id="loginError">No he podido reconocerte. Revisa tus datos.</div>
             </form>
         </div>
     </div>
@@ -260,17 +260,17 @@
                     <span id="usuarioActual">Administrador</span>
                     <span id="rolActual" class="role-badge role-admin">admin</span>
                 </div>
-                <button class="btn-logout" onclick="cerrarSesion()">Cerrar sesión</button>
+                <button class="btn-logout" onclick="cerrarSesion()">Salir</button>
             </div>
         </div>
         <div class="nav-tabs">
             <button class="nav-tab active" data-page="inicio">🏠 Inicio</button>
-            <button class="nav-tab" data-page="solicitar" id="tabSolicitar">🎟️ Solicitar</button>
-            <button class="nav-tab" data-page="control" id="tabControl"> Control</button>
+            <button class="nav-tab" data-page="solicitar" id="tabSolicitar">️ Solicitar</button>
+            <button class="nav-tab" data-page="control" id="tabControl">📝 Control</button>
             <button class="nav-tab" data-page="pedidos">📋 Pedidos</button>
             <button class="nav-tab" data-page="listado">📑 Listado</button>
-            <button class="nav-tab" data-page="resumen">📊 Resumen</button>
-            <button class="nav-tab" data-page="participantes">👥 Participantes</button>
+            <button class="nav-tab" data-page="resumen"> Resumen</button>
+            <button class="nav-tab" data-page="participantes"> Participantes</button>
             <button class="nav-tab" data-page="ocr" id="tabOCR">📷 Lectura PDF</button>
             <button class="nav-tab" data-page="configuracion" id="tabConfig">⚙️ Config</button>
         </div>
@@ -287,7 +287,7 @@
                         <div class="stat-details">
                             <div class="stat-detail-row"><span>✓ Pagados:</span><span id="statPagados">0</span></div>
                             <div class="stat-detail-row"><span>⏳ Pendientes:</span><span id="statPendientes">0</span></div>
-                            <div class="stat-detail-row"><span> Entregados:</span><span id="statEntregados">0</span></div>
+                            <div class="stat-detail-row"><span>📦 Entregados:</span><span id="statEntregados">0</span></div>
                         </div>
                     </div>
                     <div class="stat-card gold">
@@ -304,19 +304,19 @@
                         <div class="stat-label">Participantes</div>
                         <div class="stat-details">
                             <div class="stat-detail-row"><span>✓ Con pago:</span><span id="statConPago">0</span></div>
-                            <div class="stat-detail-row"><span>⏳ Sin pago:</span><span id="statSinPago">0</span></div>
+                            <div class="stat-detail-row"><span> Sin pago:</span><span id="statSinPago">0</span></div>
                             <div class="stat-detail-row"><span>📦 Recogidos:</span><span id="statRecogidos">0</span></div>
                         </div>
                     </div>
                 </div>
                 <div class="quick-actions">
-                    <div class="quick-action" id="qaSolicitar" onclick="irAPagina('solicitar')"><div class="qa-icon">️</div><div class="qa-title">Solicitar</div></div>
+                    <div class="quick-action" id="qaSolicitar" onclick="irAPagina('solicitar')"><div class="qa-icon">🎟️</div><div class="qa-title">Solicitar</div></div>
                     <div class="quick-action" id="qaControl" onclick="irAPagina('control')"><div class="qa-icon">📝</div><div class="qa-title">Control</div></div>
                     <div class="quick-action" onclick="irAPagina('pedidos')"><div class="qa-icon">📋</div><div class="qa-title">Pedidos</div></div>
                     <div class="quick-action" onclick="irAPagina('listado')"><div class="qa-icon">📑</div><div class="qa-title">Listado</div></div>
                     <div class="quick-action" id="qaOCR" onclick="irAPagina('ocr')"><div class="qa-icon">📷</div><div class="qa-title">Lectura PDF</div></div>
                     <div class="quick-action" onclick="irAPagina('resumen')"><div class="qa-icon">📊</div><div class="qa-title">Resumen</div></div>
-                    <div class="quick-action" onclick="irAPagina('participantes')"><div class="qa-icon"></div><div class="qa-title">Participantes</div></div>
+                    <div class="quick-action" onclick="irAPagina('participantes')"><div class="qa-icon">👥</div><div class="qa-title">Participantes</div></div>
                 </div>
             </div>
 
@@ -346,7 +346,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="telefono">Teléfono *</label>
-                                <input type="tel" id="telefono" placeholder="Se rellenará automáticamente" required>
+                                <input type="tel" id="telefono" placeholder="Se rellena solo al elegir empleado" required>
                             </div>
                             <div class="form-group">
                                 <label for="numDecimos">Nº de Décimos *</label>
@@ -370,7 +370,7 @@
                             </div>
                             <div class="form-group" style="grid-column: 1 / -1;">
                                 <label for="quienRecoge">Quién lo recoge (si es otra persona)</label>
-                                <input type="text" id="quienRecoge" placeholder="Dejar vacío si lo recoge él/ella">
+                                <input type="text" id="quienRecoge" placeholder="Déjalo vacío si lo recoge él/ella">
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary" id="btnAñadirPedido">➕ Añadir Pedido</button>
@@ -382,7 +382,7 @@
                 <div class="content-card">
                     <h2 class="section-title">📝 Control de Solicitudes, Pagos y Entregas</h2>
                     <div class="alert-info">
-                        📋 Selecciona un servicio (y opcionalmente una sección) para ver la lista de empleados. Marca los 3 checks según corresponda: <strong>Solicitado</strong>, <strong>Pagado</strong> y <strong>Recibido</strong>.
+                        📋 Elige un servicio (y opcionalmente una sección) para ver la lista de empleados. Marca los 3 checks según corresponda: <strong>Solicitado</strong>, <strong>Pagado</strong> y <strong>Recibido</strong>.
                     </div>
                     <div class="filter-bar">
                         <div class="form-group">
@@ -428,7 +428,7 @@
                     </div>
                     <div class="control-list" id="controlList">
                         <div class="empty-state" style="padding: 30px;">
-                            <div class="empty-icon">📝</div>
+                            <div class="empty-icon"></div>
                             <h3>Selecciona un servicio</h3>
                             <p>Elige un servicio para ver la lista de empleados con sus 3 checks</p>
                         </div>
@@ -441,9 +441,9 @@
                     <div class="table-header">
                         <h2>Estado actual de los pedidos</h2>
                         <div class="export-buttons">
-                            <button class="btn btn-export" onclick="exportarPDF()">📄 PDF</button>
-                            <button class="btn btn-export" onclick="exportarCSV()">📊 CSV</button>
-                            <button class="btn btn-export" onclick="imprimirListado()">🖨️ Imprimir</button>
+                            <button class="btn btn-export" onclick="exportarPDF()"> PDF</button>
+                            <button class="btn btn-export" onclick="exportarCSV()"> CSV</button>
+                            <button class="btn btn-export" onclick="imprimirListado()">️ Imprimir</button>
                         </div>
                     </div>
                     <div class="filter-bar">
@@ -485,8 +485,8 @@
                     </div>
                     <div class="empty-state" id="emptyState">
                         <div class="empty-icon"></div>
-                        <h3>Sin pedidos aún</h3>
-                        <p>Añade el primer pedido desde "Solicitar"</p>
+                        <h3>Aún no hay pedidos</h3>
+                        <p>Añade el primero desde "Solicitar" o escaneando un PDF</p>
                     </div>
                 </div>
             </div>
@@ -548,8 +548,8 @@
                     </div>
                     <div class="export-buttons" style="margin-bottom: 15px;">
                         <button class="btn btn-export" onclick="exportarListadoGeneralPDF()">📄 PDF</button>
-                        <button class="btn btn-export" onclick="exportarListadoGeneralCSV()">📊 CSV</button>
-                        <button class="btn btn-export" onclick="imprimirListadoGeneral()">🖨️ Imprimir</button>
+                        <button class="btn btn-export" onclick="exportarListadoGeneralCSV()"> CSV</button>
+                        <button class="btn btn-export" onclick="imprimirListadoGeneral()">️ Imprimir</button>
                     </div>
                     <div class="table-container" id="listadoGeneralContainer" style="display:none;">
                         <table>
@@ -574,7 +574,7 @@
                         </table>
                     </div>
                     <div class="empty-state" id="emptyListadoGeneral">
-                        <div class="empty-icon">📑</div>
+                        <div class="empty-icon"></div>
                         <h3>Sin datos</h3>
                         <p>No hay pedidos o no coinciden con los filtros</p>
                     </div>
@@ -583,7 +583,7 @@
 
             <div class="section-page" id="page-resumen">
                 <div class="content-card">
-                    <h2 class="section-title">📊 Resumen Detallado</h2>
+                    <h2 class="section-title"> Resumen Detallado</h2>
                     <div class="filter-bar">
                         <div class="form-group">
                             <label for="filtroServicioResumen">Servicio</label>
@@ -642,8 +642,8 @@
                         </table>
                     </div>
                     <div class="empty-state" id="emptyParticipantes">
-                        <div class="empty-icon">👥</div>
-                        <h3>Sin participantes aún</h3>
+                        <div class="empty-icon"></div>
+                        <h3>Aún no hay participantes</h3>
                         <p>Aparecerán cuando añadas pedidos</p>
                     </div>
                 </div>
@@ -651,9 +651,9 @@
 
             <div class="section-page" id="page-ocr">
                 <div class="content-card">
-                    <div id="bannerOCR" class="readonly-banner" style="display:none;"> Solo el administrador puede usar esta función.</div>
-                    <h2 class="section-title"> Lectura de PDF Escaneado</h2>
-                    <div class="alert-info">📋 Sube el PDF escaneado del listado de un servicio. El sistema leerá los nombres, buscará los empleados en la base de datos y creará automáticamente los pedidos. Si un empleado no existe, podrás crearlo al momento.</div>
+                    <div id="bannerOCR" class="readonly-banner" style="display:none;">🔒 Solo el administrador puede usar esta función.</div>
+                    <h2 class="section-title">📷 Lectura de PDF Escaneado</h2>
+                    <div class="alert-info"> Sube el PDF escaneado del listado de un servicio. Leeré los nombres, los buscaré en la base de datos y crearé los pedidos automáticamente. Si alguien no existe, podrás darle de alta al momento.</div>
                     <div id="ocrFormContainer">
                         <div class="form-grid">
                             <div class="form-group">
@@ -683,11 +683,11 @@
                     </div>
                     <div id="ocrResultContainer" style="display:none;">
                         <div class="ocr-result">
-                            <h4> Resultados del análisis: <span id="ocrTotalDetectados">0</span></h4>
+                            <h4>📋 Resultados del análisis: <span id="ocrTotalDetectados">0</span></h4>
                             <div id="ocrResultList"></div>
                         </div>
                         <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
-                            <button type="button" class="btn btn-success" onclick="confirmarPedidosOCR()">✅ Crear pedidos de encontrados</button>
+                            <button type="button" class="btn btn-success" onclick="confirmarPedidosOCR()">✅ Crear pedidos de los encontrados</button>
                             <button type="button" class="btn btn-cancel" onclick="cancelarOCR()">❌ Cancelar</button>
                         </div>
                     </div>
@@ -702,7 +702,7 @@
                         <div id="syncStatusBox" class="alert-info">🔄 Conectando...</div>
                     </div>
                     <div class="config-block" id="configUsuariosBlock">
-                        <h3>👤 Añadir nuevo usuario</h3>
+                        <h3> Añadir nuevo usuario</h3>
                         <div class="alert-info">Crea un nuevo usuario con contraseña. Los nuevos usuarios tendrán acceso de <strong>consulta</strong> (solo ver datos).</div>
                         <div class="config-row">
                             <div class="form-group">
@@ -716,21 +716,21 @@
                             <button type="button" class="btn btn-success btn-small" onclick="agregarUsuario()" style="align-self: flex-end;">➕ Crear usuario</button>
                         </div>
                         <ul class="user-list" id="userList"></ul>
-                        <div id="emptyUsers" style="text-align:center; padding: 15px; color: #999; font-size: 0.85em;">No hay usuarios configurados</div>
+                        <div id="emptyUsers" style="text-align:center; padding: 15px; color: #999; font-size: 0.85em;">Aún no hay usuarios configurados</div>
                     </div>
                     <div class="config-block">
-                        <h3>🔐 Cambiar mi contraseña</h3>
+                        <h3> Cambiar mi contraseña</h3>
                         <div class="alert-info">Cambia tu contraseña personal. Se sincroniza en todos los dispositivos.</div>
                         <div class="config-row">
                             <div class="form-group">
                                 <label for="nuevaClave">Nueva contraseña *</label>
                                 <input type="password" id="nuevaClave" placeholder="Mínimo 4 caracteres">
                             </div>
-                            <button type="button" class="btn btn-primary btn-small" onclick="cambiarMiClave()" style="align-self: flex-end;">💾 Guardar</button>
+                            <button type="button" class="btn btn-primary btn-small" onclick="cambiarMiClave()" style="align-self: flex-end;"> Guardar</button>
                         </div>
                     </div>
                     <div class="config-block">
-                        <h3> Copia de seguridad</h3>
+                        <h3>💾 Copia de seguridad</h3>
                         <div class="alert-info">Exporta o importa todos los datos de la aplicación.</div>
                         <div class="config-row">
                             <button type="button" class="btn btn-primary btn-small" onclick="exportarDatosJSON()">📤 Exportar datos</button>
@@ -772,7 +772,7 @@
     <div class="modal-overlay" id="modalNuevoEmpleado">
         <div class="modal-content">
             <div class="modal-header">
-                <h3> Dar de alta nuevo empleado</h3>
+                <h3>➕ Dar de alta nuevo empleado</h3>
                 <button class="close-btn" onclick="cerrarModalEmpleado()">✕</button>
             </div>
             <form id="nuevoEmpleadoForm">
@@ -839,118 +839,7 @@
         let pedidosPendientesOCR = [];
         let datosCargados = false;
 
-        const EMPLEADOS_INICIALES = [
-            {nombre:"MARÍA CARMEN ÁLVAREZ CABO",telefono:"1062",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
-            {nombre:"MARÍA ASUNCIÓN ÁLVAREZ LÓPEZ",telefono:"1073",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
-            {nombre:"MARÍA DEL CARMEN CORDERO GONZÁLEZ",telefono:"1449",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
-            {nombre:"MARÍA DEL CARMEN GODOY CANO",telefono:"1448",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
-            {nombre:"MARÍA NIEVES LOZANO LOZANO",telefono:"1053",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
-            {nombre:"MARÍA YOLANDA RODRÍGUEZ GARCÍA",telefono:"1056",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
-            {nombre:"MARÍA DE LA PAZ SÁNCHEZ LOZANO",telefono:"1011",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
-            {nombre:"MARINA ARIAS ROBLES",telefono:"1265",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"AFE APICULTURA Y VIVEROS"},
-            {nombre:"MARIO VILLADANGOS FERNANDEZ",telefono:"1054",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
-            {nombre:"MARTA EVA PASTRANA RUBIO",telefono:"1060",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
-            {nombre:"NATIVIDAD MORETA ROQUE",telefono:"1071",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
-            {nombre:"PAULA GONZÁLEZ PEÑA",telefono:"1474",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
-            {nombre:"RAQUEL ANDRÉS GARCÍA",telefono:"1058",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
-            {nombre:"RUTH NOEMÍ GRAÑERAS REYERO",telefono:"1052",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
-            {nombre:"SECUNDINO PRIETO TERCERO",telefono:"1065",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
-            {nombre:"ÁNGELA DOMÍNGUEZ GÓMEZ",telefono:"1061",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
-            {nombre:"BEATRIZ ALVAREZ CAMPOS",telefono:"1072",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
-            {nombre:"CLAUDIA FERNÁNDEZ ROMÁN",telefono:"1474",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
-            {nombre:"FÁTIMA SUSANA MANSILLA RODRÍGUEZ",telefono:"1050",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
-            {nombre:"FRANCISCO BAJO ÁLVAREZ",telefono:"1451",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
-            {nombre:"IRENE OTERO LLAMAZARES",telefono:"1051",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
-            {nombre:"JOSÉ RAÚL ORTEGA PÉREZ",telefono:"1131",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"AFE T. FORESTALES"},
-            {nombre:"LETICIA FERNÁNDEZ RASCÓN",telefono:"1265",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"AFE APICULTURA Y VIVEROS"},
-            {nombre:"M.AURORA RODRIGUEZ APARICIO",telefono:"",servicio:"ASUNTOS GENERALES",seccion:"MANTENIMIENTO"},
-            {nombre:"M.CAMINO DIEZ SOTO",telefono:"1033",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS"},
-            {nombre:"M.CARMEN FERNANDEZ FERNANDEZ",telefono:"1032",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS"},
-            {nombre:"M.DOLORES FERNANDEZ GONZALEZ",telefono:"1057",servicio:"SEPEIS",seccion:"SEPEIS"},
-            {nombre:"M.ELENA CIMAS HERNANDO",telefono:"1040",servicio:"DERECHOS SOCIALES",seccion:"CONSUMO"},
-            {nombre:"M.ENCARNACION MIGUELEZ SASTRE",telefono:"1029",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - FAMILIA EAF"},
-            {nombre:"M.GUIOMAR ALVAREZ GONZALEZ",telefono:"1022",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - FAMILIA EAF"},
-            {nombre:"M.ISABEL SANTOS MARTINEZ",telefono:"1455",servicio:"CENTROS DE ATENCIÓN ESPECIALIZADA",seccion:"CAE"},
-            {nombre:"M.JESUS MATILLA GUTIERREZ",telefono:"1441",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - FAMILIA EAF"},
-            {nombre:"M.MAR CHAMORRO GONZALEZ",telefono:"1006",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS"},
-            {nombre:"M.MONTTSERRAT GARCIA ALONSO",telefono:"1003",servicio:"DERECHOS SOCIALES",seccion:"JEFATURA"},
-            {nombre:"M.PAZ SANCHEZ GONZALEZ",telefono:"1038",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE DEPENDENCIA"},
-            {nombre:"M.PILAR MORAN GONZALEZ",telefono:"1025",servicio:"COOPERACIÓN",seccion:"PROYECTOS"},
-            {nombre:"MAITE MUÑIZ MARTINEZ",telefono:"1430",servicio:"COOPERACIÓN",seccion:"COOPERACIÓN"},
-            {nombre:"MARIA GARCIA CRESPO",telefono:"1442",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - FAMILIA EAF"},
-            {nombre:"MARIA HENAR BREZMES NICOLAS",telefono:"1437",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - FAMILIA EAF"},
-            {nombre:"MARIA JESUS BERMEJO CAZURRO",telefono:"1068",servicio:"ARCHIVO E IMPRENTA",seccion:"IMPRENTA"},
-            {nombre:"MARIA JOSE OLMOS FERNANDEZ CORUGEDO",telefono:"1434",servicio:"DERECHOS SOCIALES",seccion:"CONSUMO"},
-            {nombre:"MARIA LUISA FERNANDEZ DIEZ",telefono:"1092",servicio:"ILC - BIBLIOBÚS",seccion:"COORDINACION BIBLIOTECAS"},
-            {nombre:"MARTA MARIA GUTIERREZ MUYOR",telefono:"1047",servicio:"DERECHOS SOCIALES",seccion:"COOPERACION AL DESARROLLO"},
-            {nombre:"MARTA MARIA TASCON MARTINEZ",telefono:"1440",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS"},
-            {nombre:"MIGUEL ANGEL LOZANO GONZALEZ",telefono:"1480",servicio:"CENTROS DE ATENCIÓN ESPECIALIZADA",seccion:"CAE"},
-            {nombre:"MIGUEL ANGEL ORDAS DEL CORRAL",telefono:"1439",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - FAMILIA EAF"},
-            {nombre:"MIGUEL ANGEL PALENZUELA PASTRANA",telefono:"1444",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - EDIS"},
-            {nombre:"MIRIAM GUTIERREZ MARTINEZ",telefono:"1438",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - FAMILIA EAF"},
-            {nombre:"MIRIAN ALVAREZ VIVAS",telefono:"1024",servicio:"SEPEIS",seccion:"SEPEIS"},
-            {nombre:"LEONARDO ARTURO FERNANDEZ CARBAJO",telefono:"1482",servicio:"ASUNTOS GENERALES",seccion:"ORDENANZAS"},
-            {nombre:"PABLO ALBARADO FERNÁNDEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"BASILIO ALONSO DEL HOYO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"VIVERO RIBASECA"},
-            {nombre:"JULIAN ALONSO DEL HOYO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"BUSTILLO PÁRAMO"},
-            {nombre:"LUIS ÁNGEL ALONSO MARTÍNEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"PARQUE SAN ISIDRO"},
-            {nombre:"RUBÉN ÁLVAREZ GONZÁLEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTE SAN ISIDRO"},
-            {nombre:"HECTOR RAUL AMEZ FUERTES",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"AFE APICULTURA Y VIVEROS"},
-            {nombre:"ÁNGEL MANUEL BELTRÁN GARCÍA",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"JUAN CARLOS CABERO RODRÍGUEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"ESTELA CAMPOMANES ROPERO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"VIVERO RIBASECA"},
-            {nombre:"BERNARDO ALBERTO CAMPOS MÁRQUEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"ADRIAN CARVAJAL RODRIGUEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"AFE T. FORESTALES"},
-            {nombre:"DAVID CASADO CABERO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"AFE T. FORESTALES"},
-            {nombre:"RAUL CASAS PÉREZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"MARÍA COVADONGA CHAMORRO ÁLVAREZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"LUIS COMPADRE LOZANO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"MANUEL DEL CASTILLO GONZÁLEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"IGNACIO DELGADO CORCOBADO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"JESÚS FERNÁNDEZ CALVO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"ISABEL FERNÁNDEZ MACAYO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"AFE APICULTURA Y VIVEROS"},
-            {nombre:"MIGUEL FERNANDEZ PICOREL",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"VIVERO RIBASECA"},
-            {nombre:"JULIO FERNANDEZ RODRIGUEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"VIVERO RIBASECA"},
-            {nombre:"VÍCTOR MANUEL FOLLA FERNÁNDEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"ISMAEL FONSECA LORENZO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"NIEVES FRANCO CELADILLA",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"VIVERO RIBASECA"},
-            {nombre:"JOSUÉ GABARRE BORJA",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"OLGA GARCÍA ALLER",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"PARQUE SAN ISIDRO"},
-            {nombre:"JAIME GARCÍA CALLADO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTE SAN ISIDRO"},
-            {nombre:"JONATHAN GARCÍA CANTARERO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"JOSÉ MANUEL GARCÍA GARCÍA",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"JOSÉ MANUEL GÓMEZ FALAGÁN",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"MANUEL GONZÁLEZ ÁLVAREZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"SAMUEL GONZÁLEZ BERNARDO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"JAIME GONZÁLEZ LLAMAZARES",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"MARIANO HERNANDEZ JIMÉNEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"MIGUEL ÁNGEL IGLESIAS CUESTA",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"ABRAHAM JIMÉNEZ GARCÍA",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"ELEAZAR JIMÉNEZ JIMÉNEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"PEDRO LÓPEZ FERNÁNDEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"FELIX MANUEL MACHADO CABEZAS",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"HÉCTOR JOSÉ MAIQUEZ DOMÍNGUEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"AFE APICULTURA Y VIVEROS"},
-            {nombre:"MIGUEL MALLO RODRÍGUEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"AFE APICULTURA Y VIVEROS"},
-            {nombre:"OSCAR MARTÍNEZ MARCOS",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTE SAN ISIDRO"},
-            {nombre:"CRISTIAN MARTÍNEZ MATEOS",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"JOSE MARIA MEDINA MEDINA",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"SAMUEL MÉNDEZ GARCÍA",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"BELÉN MUÑÍZ CAÑIBANO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"AFE APICULTURA Y VIVEROS"},
-            {nombre:"JUAN ANTONIO OLIVERA ANDRES",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"AFE T. FORESTALES"},
-            {nombre:"ELIECER PABLOS DE PRADO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"JOSÉ LUIS PERTEJO CASTELLANOS",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"JOSE MANUEL PINILLA ANTÓN",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"JOSÉ POLO MARTÍN",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"FRANCISCO PRIETO GARCÍA",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"CAMINO RAMOS MARTÍNEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
-            {nombre:"FIDEL REGUERA RODRÍGUEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"JOSÉ ANTONIO RODRÍGUEZ CRESPO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"IVÁN ROSÓN ÁLVAREZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"CRISTIAN JESÚS SÁNCHEZ CAMERO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
-            {nombre:"LAURA SANCHEZ PUENTE",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"AFE T. FORESTALES"},
-            {nombre:"RODOLFO SANTAMARTA CORDERO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTE SAN ISIDRO"},
-            {nombre:"FERNANDO TORNERO FERNÁNDEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"}
-        ];
+        const EMPLEADOS_INICIALES = [];
 
         const SERVICIOS_INICIALES = [
             "ARCHIVO E IMPRENTA","ASUNTOS GENERALES","CENTROS DE ATENCIÓN ESPECIALIZADA","COOPERACIÓN","CONTRATACION Y PATRIMONIO","DESARROLLO RURAL Y MEDIO AMBIENTE","DERECHOS SOCIALES","ILC - BIBLIOBÚS","ILC - COORDINACIÓN DE BIBLIOTECAS","ILC - UNIDAD ADMINISTRATIVA","SEPEIS"
@@ -962,11 +851,11 @@
             const box = document.getElementById('syncStatusBox');
             dot.className = 'sync-dot';
             if (status === 'online') {
-                txt.textContent = text || '✅ Sincronizado';
+                txt.textContent = text || '✅ Todo sincronizado';
                 if (box) { box.className = 'alert-success'; box.innerHTML = '✅ ' + (text || 'Conectado'); }
             } else if (status === 'syncing') {
                 dot.classList.add('syncing');
-                txt.textContent = text || '🔄 Sincronizando...';
+                txt.textContent = text || '🔄 Guardando cambios...';
                 if (box) { box.className = 'alert-info'; box.innerHTML = '🔄 ' + (text || 'Guardando...'); }
             } else if (status === 'offline') {
                 dot.classList.add('offline');
@@ -997,32 +886,19 @@
                     SERVICIOS_INICIALES.forEach((s, i) => { serviciosObj[i] = s; });
                     await dbRef.servicios.set(serviciosObj);
 
-                    loadingText.textContent = 'Cargando secciones...';
-                    const seccionesUnicas = {};
-                    EMPLEADOS_INICIALES.forEach(e => {
-                        if (e.servicio && e.seccion) {
-                            const key = e.servicio + '|||' + e.seccion;
-                            seccionesUnicas[key] = { nombre: e.seccion, servicio: e.servicio };
-                        }
-                    });
+                    loadingText.textContent = 'Preparando secciones...';
                     const seccionesObj = {};
-                    Object.values(seccionesUnicas).forEach((s, i) => { seccionesObj[i] = s; });
                     await dbRef.secciones.set(seccionesObj);
 
-                    loadingText.textContent = 'Cargando empleados...';
+                    loadingText.textContent = 'Preparando empleados...';
                     const empleadosObj = {};
-                    EMPLEADOS_INICIALES.forEach((e, i) => {
-                        empleadosObj['emp_' + i] = {
-                            nombre: e.nombre, telefono: e.telefono, servicio: e.servicio, seccion: e.seccion,
-                            activo: true, fechaAlta: new Date().toISOString().split('T')[0]
-                        };
-                    });
                     await dbRef.empleados.set(empleadosObj);
 
                     await dbRef.inicializado.set({
-                        fecha: new Date().toISOString(), version: '16.0',
-                        empleadosCargados: EMPLEADOS_INICIALES.length
+                        fecha: new Date().toISOString(), version: '18.0',
+                        empleadosCargados: 0
                     });
+                    showToast('👋', '¡Bienvenido! Empieza añadiendo empleados.');
                 }
 
                 loadingText.textContent = 'Verificando administrador...';
@@ -1073,7 +949,7 @@
 
             } catch (error) {
                 console.error('Error al iniciar:', error);
-                loadingText.textContent = '❌ Error al conectar. Recarga la página.';
+                loadingText.textContent = '❌ No he podido conectar. Recarga la página.';
             }
         }
 
@@ -1115,7 +991,7 @@
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             if (!datosCargados) {
-                document.getElementById('loginError').textContent = '⏳ Cargando datos... espera un momento.';
+                document.getElementById('loginError').textContent = '⏳ Un momento, estoy cargando los datos...';
                 document.getElementById('loginError').classList.add('show');
                 return;
             }
@@ -1139,7 +1015,7 @@
                 aplicarPermisosRol();
                 initApp();
             } else {
-                document.getElementById('loginError').textContent = ' Usuario o contraseña incorrectos.';
+                document.getElementById('loginError').textContent = '🔒 No te reconozco. Revisa el usuario y la contraseña.';
                 document.getElementById('loginError').classList.add('show');
             }
         });
@@ -1229,38 +1105,60 @@
 
         function cambiarMiClave() {
             const nueva = document.getElementById('nuevaClave').value.trim();
-            if (!nueva) { showToast('⚠️', 'Introduce la nueva contraseña.'); return; }
-            if (nueva.length < 4) { showToast('⚠️', 'Mínimo 4 caracteres.'); return; }
+            if (!nueva) { showToast('⚠️', 'Escribe la nueva contraseña.'); return; }
+            if (nueva.length < 4) { showToast('⚠️', 'La contraseña debe tener al menos 4 caracteres.'); return; }
             if (usuarios[usuarioActual]) {
                 usuarios[usuarioActual].clave = nueva;
                 firebaseGuardarUsuarios();
                 document.getElementById('nuevaClave').value = '';
-                showToast('✅', 'Contraseña actualizada.');
+                showToast('✅', '¡Contraseña actualizada!');
             }
         }
 
         function agregarUsuario() {
-            const nombre = document.getElementById('nuevoUsuarioNombre').value.trim();
+            const nombre = document.getElementById('nuevoUsuarioNombre').value.trim().toLowerCase();
             const clave = document.getElementById('nuevoUsuarioClave').value;
-            if (!nombre) { showToast('⚠️', 'Introduce el nombre de usuario.'); return; }
-            if (!clave || clave.length < 4) { showToast('⚠️', 'La contraseña debe tener mínimo 4 caracteres.'); return; }
-            if (usuarios[nombre]) { showToast('⚠️', 'Ese usuario ya existe.'); return; }
-            usuarios[nombre] = { clave: clave, rol: 'consulta', nombre: nombre, fechaCreacion: new Date().toISOString() };
-            firebaseGuardarUsuarios();
-            document.getElementById('nuevoUsuarioNombre').value = '';
-            document.getElementById('nuevoUsuarioClave').value = '';
-            renderizarListaUsuarios();
-            showToast('✅', 'Usuario "' + nombre + '" creado (modo consulta).');
+            
+            if (!nombre) { showToast('⚠️', 'Escribe un nombre de usuario.'); return; }
+            if (/[.#$\[\]]/.test(nombre)) { showToast('⚠️', 'El nombre no puede contener: . # $ [ ]'); return; }
+            if (nombre.length < 3) { showToast('⚠️', 'El nombre debe tener al menos 3 caracteres.'); return; }
+            if (nombre === USUARIO_ADMIN.toLowerCase()) { showToast('⚠️', 'Ese nombre está reservado.'); return; }
+            if (!clave || clave.length < 4) { showToast('⚠️', 'La contraseña debe tener al menos 4 caracteres.'); return; }
+            
+            firebase.database().ref('loteria/usuarios/' + nombre).once('value').then(snap => {
+                if (snap.exists()) { showToast('⚠️', 'Ese usuario ya existe. Prueba con otro nombre.'); return; }
+                
+                const nuevoUsuario = {
+                    clave: clave,
+                    rol: 'consulta',
+                    nombre: nombre,
+                    fechaCreacion: new Date().toISOString()
+                };
+                
+                firebase.database().ref('loteria/usuarios/' + nombre).set(nuevoUsuario)
+                    .then(() => {
+                        usuarios[nombre] = nuevoUsuario;
+                        document.getElementById('nuevoUsuarioNombre').value = '';
+                        document.getElementById('nuevoUsuarioClave').value = '';
+                        renderizarListaUsuarios();
+                        showToast('✅', '¡Usuario "' + nombre + '" creado! Ya puede entrar con modo consulta.');
+                    })
+                    .catch(err => {
+                        showToast('❌', 'No he podido crear el usuario: ' + err.message, true);
+                    });
+            }).catch(err => {
+                showToast('❌', 'No he podido verificar: ' + err.message, true);
+            });
         }
 
         function eliminarUsuario(nombre) {
-            if (nombre === USUARIO_ADMIN) { showToast('⚠️', 'No se puede eliminar al administrador.'); return; }
-            if (nombre === usuarioActual) { showToast('⚠️', 'No puedes eliminar tu propio usuario.'); return; }
-            if (confirm('¿Eliminar al usuario "' + nombre + '"?')) {
+            if (nombre === USUARIO_ADMIN) { showToast('️', 'No puedo borrar al administrador principal.'); return; }
+            if (nombre === usuarioActual) { showToast('⚠️', 'No puedes borrarte a ti mismo.'); return; }
+            if (confirm('¿Seguro que quieres borrar a "' + nombre + '"?')) {
                 delete usuarios[nombre];
                 firebaseGuardarUsuarios();
                 renderizarListaUsuarios();
-                showToast('🗑️', 'Usuario eliminado.');
+                showToast('🗑️', 'Usuario "' + nombre + '" eliminado.');
             }
         }
 
@@ -1310,7 +1208,7 @@
         function irAPagina(page) {
             const esAdmin = rolActual === 'admin';
             if (!esAdmin && (page === 'solicitar' || page === 'ocr' || page === 'configuracion' || page === 'control')) {
-                showToast('🔒', 'Solo el administrador puede acceder.', true);
+                showToast('🔒', 'Esta sección es solo para administradores.', true);
                 page = 'inicio';
             }
             document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
@@ -1447,7 +1345,7 @@
         }
 
         function toggleControlSolicitud(empId, checked) {
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); renderizarControl(); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); renderizarControl(); return; }
             
             const emp = empleados.find(e => e.id === empId);
             if (!emp) return;
@@ -1474,13 +1372,13 @@
                 };
                 const id = generarId();
                 dbRef.pedidos.child(id).set(nuevo);
-                showToast('✅', 'Solicitud registrada para ' + emp.nombre);
+                showToast('✅', '¡Solicitud registrada para ' + emp.nombre + '!');
             } else {
                 const pedido = pedidos.find(p => p.nombre.toLowerCase().trim() === emp.nombre.toLowerCase().trim() && p.servicio === emp.servicio);
                 if (pedido) {
-                    if (confirm('¿Eliminar la solicitud de ' + emp.nombre + '?\n\nEsto también quitará los checks de Pagado y Recibido.')) {
+                    if (confirm('¿Seguro que quieres quitar la solicitud de ' + emp.nombre + '?\n\nTambién se quitarán los checks de Pagado y Recibido.')) {
                         dbRef.pedidos.child(pedido.id).remove();
-                        showToast('️', 'Solicitud eliminada para ' + emp.nombre);
+                        showToast('🗑️', 'Solicitud de ' + emp.nombre + ' eliminada.');
                     } else {
                         renderizarControl();
                     }
@@ -1489,7 +1387,7 @@
         }
 
         function toggleControlPagado(empId, checked) {
-            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); renderizarControl(); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); renderizarControl(); return; }
             
             const emp = empleados.find(e => e.id === empId);
             if (!emp) return;
@@ -1498,12 +1396,12 @@
             if (pedido) {
                 pedido.pagado = checked;
                 firebaseGuardarPedido(pedido);
-                showToast(checked ? '💰' : '', checked ? emp.nombre + ' ha pagado' : 'Pago desmarcado para ' + emp.nombre);
+                showToast(checked ? '💰' : '', checked ? '¡' + emp.nombre + ' ha pagado!' : 'Pago desmarcado para ' + emp.nombre);
             }
         }
 
         function toggleControlRecibido(empId, checked) {
-            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); renderizarControl(); return; }
+            if (rolActual !== 'admin') { showToast('', 'Esta acción es solo para administradores.', true); renderizarControl(); return; }
             
             const emp = empleados.find(e => e.id === empId);
             if (!emp) return;
@@ -1519,7 +1417,7 @@
                     pedido.horaEntrega = '';
                 }
                 firebaseGuardarPedido(pedido);
-                showToast(checked ? '📦' : '', checked ? 'Entrega registrada para ' + emp.nombre : 'Entrega desmarcada para ' + emp.nombre);
+                showToast(checked ? '📦' : '', checked ? '¡Entrega registrada para ' + emp.nombre + '!' : 'Entrega desmarcada para ' + emp.nombre);
             }
         }
         // ===== FIN FUNCIONES CONTROL =====
@@ -1571,11 +1469,11 @@
             if (select.value === '__nueva__') {
                 const servicio = document.getElementById('servicio').value;
                 if (!servicio) {
-                    alert('⚠️ Primero selecciona un servicio.');
+                    alert('⚠️ Primero tienes que elegir un servicio.');
                     select.value = '';
                     return;
                 }
-                const nombreNueva = prompt('Introduce el nombre de la nueva sección para "' + servicio + '":');
+                const nombreNueva = prompt('¿Cómo se llama la nueva sección para "' + servicio + '"?');
                 if (nombreNueva && nombreNueva.trim()) {
                     const nombreTrim = nombreNueva.trim().toUpperCase();
                     const existe = secciones.some(s => s.servicio === servicio && s.nombre.toLowerCase() === nombreTrim.toLowerCase());
@@ -1587,7 +1485,7 @@
                         actualizarSecciones();
                         select.value = nombreTrim;
                         actualizarEmpleados();
-                        alert('✅ Sección "' + nombreTrim + '" creada correctamente.');
+                        alert('✅ ¡Sección "' + nombreTrim + '" creada!');
                     } else {
                         alert('⚠️ Esa sección ya existe en este servicio.');
                         select.value = '';
@@ -1633,12 +1531,12 @@
 
         document.getElementById('nuevoEmpleadoForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; }
             const nombre = document.getElementById('nuevoEmpNombre').value.trim();
             const telefono = document.getElementById('nuevoEmpTelefono').value.trim();
             const servicio = document.getElementById('servicio').value;
             const seccion = document.getElementById('seccion').value;
-            if (!nombre || !telefono || !servicio || !seccion) { showToast('⚠️', 'Todos los campos son obligatorios', true); return; }
+            if (!nombre || !telefono || !servicio || !seccion) { showToast('⚠️', 'Rellena todos los campos, por favor.', true); return; }
             const nuevoEmpleado = { nombre, telefono, servicio, seccion, activo: true, fechaAlta: new Date().toISOString().split('T')[0] };
             const id = generarId();
             firebaseGuardarEmpleado({ id, ...nuevoEmpleado });
@@ -1646,7 +1544,7 @@
             actualizarEmpleados();
             document.getElementById('empleado').value = id;
             document.getElementById('telefono').value = telefono;
-            showToast('✅', 'Empleado "' + nombre + '" dado de alta.');
+            showToast('✅', '¡' + nombre + ' dado de alta!');
             this.reset();
         });
 
@@ -1755,7 +1653,7 @@
 
         document.getElementById('pedidoForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; }
             const empleadoId = document.getElementById('empleado').value;
             const numDecimos = parseInt(document.getElementById('numDecimos').value) || 2;
             const servicio = document.getElementById('servicio').value;
@@ -1765,12 +1663,12 @@
             if (empleadoId && empleadoId !== 'nuevo') {
                 const empleado = empleados.find(emp => emp.id === empleadoId);
                 if (empleado) nombre = empleado.nombre;
-            } else { showToast('⚠️', 'Selecciona un empleado válido', true); return; }
+            } else { showToast('⚠️', 'Tienes que elegir un empleado válido.', true); return; }
             const validacion = validarMaximoDecimos(nombre, numDecimos);
             if (!validacion.valido) {
                 let mensaje = '🚫 ' + nombre + ' ya tiene ' + validacion.acumulados + ' décimo(s). ';
-                mensaje += 'Con ' + validacion.nuevos + ' nuevos llegaría a ' + validacion.total + ', pero el límite es ' + validacion.maximo + '. ';
-                if (validacion.disponibles > 0) mensaje += ' Aún puede solicitar ' + validacion.disponibles + ' más.';
+                mensaje += 'Con ' + validacion.nuevos + ' más llegaría a ' + validacion.total + ', pero el límite es ' + validacion.maximo + '. ';
+                if (validacion.disponibles > 0) mensaje += ' Aún puede pedir ' + validacion.disponibles + ' más.';
                 else mensaje += 'Ya ha alcanzado el máximo.';
                 showToast('🚫', mensaje, true); return;
             }
@@ -1790,40 +1688,40 @@
             this.reset();
             establecerFechaHoraActual();
             actualizarSelectServicios();
-            showToast('✅', '🎟️ ¡Décimo(s) de ' + nombre + ' registrado(s)!');
+            showToast('🎉', '¡Décimo(s) de ' + nombre + ' registrados!');
         });
 
         function togglePagado(id) {
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; }
             const p = pedidos.find(x => x.id === id);
             if (p) {
                 p.pagado = !p.pagado;
                 firebaseGuardarPedido(p);
-                showToast(p.pagado ? '💰' : '', p.pagado ? '¡' + p.nombre + ' ha pagado!' : 'Pago pendiente de ' + p.nombre + '.');
+                showToast(p.pagado ? '💰' : '⏳', p.pagado ? '¡' + p.nombre + ' ha pagado!' : 'Pago pendiente de ' + p.nombre + '.');
             }
         }
 
         function toggleRecogido(id) {
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; }
             const p = pedidos.find(x => x.id === id);
             if (p) {
                 p.recogido = !p.recogido;
                 firebaseGuardarPedido(p);
-                showToast(p.recogido ? '📦' : '', p.recogido ? 'Décimos entregados a ' + p.nombre + '.' : 'Entrega pendiente a ' + p.nombre + '.');
+                showToast(p.recogido ? '📦' : '⏳', p.recogido ? '¡Décimos entregados a ' + p.nombre + '!' : 'Entrega pendiente a ' + p.nombre + '.');
             }
         }
 
         function eliminarPedido(id) {
-            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; }
             const p = pedidos.find(x => x.id === id);
-            if (p && confirm('¿Eliminar el pedido de ' + p.nombre + '?')) {
+            if (p && confirm('¿Seguro que quieres borrar el pedido de ' + p.nombre + '?')) {
                 firebaseEliminarPedido(id);
-                showToast('️', 'Pedido eliminado.');
+                showToast('🗑️', 'Pedido de ' + p.nombre + ' eliminado.');
             }
         }
 
         function editarPedido(id) {
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; }
             const p = pedidos.find(x => x.id === id);
             if (!p) return;
             actualizarSelectServicios();
@@ -1856,7 +1754,7 @@
 
         document.getElementById('editarForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; }
             const id = document.getElementById('editarId').value;
             const p = pedidos.find(x => x.id === id);
             if (p) {
@@ -1872,7 +1770,7 @@
                 p.quienRecoge = document.getElementById('editarQuienRecoge').value.trim();
                 firebaseGuardarPedido(p);
                 cerrarModal();
-                showToast('✅', '✏️ Pedido actualizado.');
+                showToast('✅', '¡Pedido de ' + p.nombre + ' actualizado!');
             }
         });
 
@@ -1920,7 +1818,7 @@
             tbody.innerHTML = pedidosFiltrados.map(p => {
                 const pagadoBadge = p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7;">✓ Pagado</span>' : '<span class="badge" style="background:#ffebee; color:#c41e3a; border:1px solid #ef9a9a;">⏳ Pendiente</span>';
                 const recogidoBadge = p.recogido ? '<span class="badge" style="background:#e3f2fd; color:#1976d2; border:1px solid #90caf9;">✓ Recogido</span>' : '<span class="badge badge-pending">⏳ Pendiente</span>';
-                const quienRecogeHtml = p.quienRecoge ? '<span class="badge badge-collected"> ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
+                const quienRecogeHtml = p.quienRecoge ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
                 return '<tr>' +
                     '<td class="nombre-cell" title="' + p.nombre + '">' + p.nombre + '</td>' +
                     '<td title="' + (p.servicio || '') + '">' + (p.servicio || '-') + '</td>' +
@@ -1939,7 +1837,7 @@
             }).join('');
             document.querySelectorAll('.sort-icon').forEach(el => el.textContent = '');
             const sortIcon = document.getElementById('sort-' + ordenarPor);
-            if (sortIcon) sortIcon.textContent = ordenDireccion === 'asc' ? '️' : '⬇️';
+            if (sortIcon) sortIcon.textContent = ordenDireccion === 'asc' ? '⬆️' : '️';
         }
 
         function ordenarListado(campo) {
@@ -2029,13 +1927,13 @@
         }
 
         async function procesarOCR() {
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; }
             const fileInput = document.getElementById('ocrFile');
             const servicio = document.getElementById('ocrServicio').value;
             const numDecimos = parseInt(document.getElementById('ocrDecimos').value);
-            if (!servicio) { showToast('️', 'Selecciona un servicio', true); return; }
-            if (!fileInput.files || fileInput.files.length === 0) { showToast('️', 'Selecciona un archivo', true); return; }
-            if (!numDecimos || numDecimos < 1) { showToast('⚠️', 'Introduce nº válido de décimos', true); return; }
+            if (!servicio) { showToast('️', 'Primero elige un servicio.', true); return; }
+            if (!fileInput.files || fileInput.files.length === 0) { showToast('⚠️', 'Tienes que seleccionar un archivo.', true); return; }
+            if (!numDecimos || numDecimos < 1) { showToast('⚠️', 'Indica un número válido de décimos.', true); return; }
             
             const file = fileInput.files[0];
             const progressContainer = document.getElementById('ocrProgressContainer');
@@ -2056,7 +1954,7 @@
                 const esImagen = file.type.startsWith('image/');
                 
                 if (esPDF) {
-                    statusEl.textContent = '📖 Leyendo PDF...';
+                    statusEl.textContent = '📖 Leyendo el PDF...';
                     progressFill.style.width = '20%';
                     
                     if (!window.pdfjsLib) {
@@ -2086,14 +1984,14 @@
                     progressFill.style.width = '85%';
                     
                 } else if (esImagen) {
-                    statusEl.textContent = '🖼️ Procesando imagen con OCR...';
+                    statusEl.textContent = '🖼️ Procesando la imagen...';
                     progressFill.style.width = '20%';
                     
                     const result = await Tesseract.recognize(file, 'spa', {
                         logger: m => {
                             if (m.status === 'recognizing text') {
                                 const progress = Math.round(m.progress * 100);
-                                statusEl.textContent = '🔍 Reconociendo texto... ' + progress + '%';
+                                statusEl.textContent = '🔍 Leyendo texto... ' + progress + '%';
                                 progressFill.style.width = (20 + progress * 0.65) + '%';
                             }
                         }
@@ -2102,7 +2000,7 @@
                     progressFill.style.width = '85%';
                     
                 } else {
-                    throw new Error('Formato no soportado. Usa PDF o imagen.');
+                    throw new Error('Formato no válido. Usa PDF o imagen.');
                 }
                 
                 statusEl.textContent = '🔎 Buscando empleados...';
@@ -2111,7 +2009,7 @@
                 const resultado = buscarEmpleadosEnTexto(texto, servicio);
                 
                 progressFill.style.width = '100%';
-                statusEl.textContent = '✅ Análisis completado';
+                statusEl.textContent = '✅ ¡Análisis completado!';
                 
                 window.ocrResultado = {
                     encontrados: resultado.encontrados,
@@ -2124,12 +2022,12 @@
                 resultContainer.style.display = 'block';
                 
                 const total = resultado.encontrados.length + resultado.noEncontrados.length;
-                showToast('✅', total + ' nombres detectados (' + resultado.encontrados.length + ' encontrados, ' + resultado.noEncontrados.length + ' por crear)');
+                showToast('', 'He encontrado ' + total + ' nombres (' + resultado.encontrados.length + ' en la base de datos, ' + resultado.noEncontrados.length + ' nuevos)');
                 
             } catch (error) {
                 console.error('Error OCR:', error);
-                statusEl.textContent = '❌ Error: ' + (error.message || 'desconocido');
-                showToast('⚠️', 'Error al procesar: ' + (error.message || 'archivo no válido'), true);
+                statusEl.textContent = '❌ Algo ha fallado: ' + (error.message || 'desconocido');
+                showToast('️', 'No he podido procesar el archivo: ' + (error.message || 'formato no válido'), true);
             } finally {
                 btnProcesar.disabled = false;
                 btnProcesar.textContent = '🔍 Procesar archivo';
@@ -2144,8 +2042,8 @@
             let html = '';
             
             if (resultado.encontrados.length > 0) {
-                html += '<h4 style="margin-top:15px; color:#2e7d32;">✅ Empleados encontrados en la base de datos (' + resultado.encontrados.length + '):</h4>';
-                html += '<div style="font-size:0.8em; color:#666; margin-bottom:10px;">Se crearán automáticamente los pedidos al confirmar.</div>';
+                html += '<h4 style="margin-top:15px; color:#2e7d32;">✅ Empleados que ya tengo en la base de datos (' + resultado.encontrados.length + '):</h4>';
+                html += '<div style="font-size:0.8em; color:#666; margin-bottom:10px;">Crearé sus pedidos automáticamente al confirmar.</div>';
                 resultado.encontrados.forEach(emp => {
                     const decimos = emp.decimosPDF || window.ocrResultado.numDecimos || 2;
                     html += '<div class="ocr-result-item found">✅ <strong>' + emp.nombre + '</strong> - ' + emp.seccion + ' (Tel: ' + (emp.telefono || 'N/A') + ') → <strong>' + decimos + ' décimo(s)</strong></div>';
@@ -2153,19 +2051,19 @@
             }
             
             if (resultado.noEncontrados.length > 0) {
-                html += '<h4 style="margin-top:15px; color:#c41e3a;">⚠️ Empleados NO encontrados (' + resultado.noEncontrados.length + '):</h4>';
-                html += '<div style="font-size:0.8em; color:#666; margin-bottom:10px;">Pulsa " Crear" para darlos de alta y crear su pedido automáticamente. Se te pedirá confirmación.</div>';
+                html += '<h4 style="margin-top:15px; color:#c41e3a;">⚠️ Empleados que no tengo registrados (' + resultado.noEncontrados.length + '):</h4>';
+                html += '<div style="font-size:0.8em; color:#666; margin-bottom:10px;">Pulsa "➕ Crear" para darlos de alta y crear su pedido. Te pediré confirmación.</div>';
                 resultado.noEncontrados.forEach((emp, idx) => {
                     const decimos = emp.decimosPDF || window.ocrResultado.numDecimos || 2;
                     html += '<div class="ocr-result-item notfound" style="flex-direction:column; align-items:flex-start; gap:6px;">' +
-                        '<div>❌ <strong>' + emp.nombre + '</strong> - No existe en el servicio seleccionado → <strong>' + decimos + ' décimo(s)</strong></div>' +
+                        '<div>❌ <strong>' + emp.nombre + '</strong> - No está en el servicio seleccionado → <strong>' + decimos + ' décimo(s)</strong></div>' +
                         '<button class="btn btn-success btn-small" onclick="crearEmpleadoDesdeOCR(' + idx + ')" style="align-self:flex-end;">➕ Crear empleado y pedido</button>' +
                         '</div>';
                 });
             }
             
             if (resultado.encontrados.length === 0 && resultado.noEncontrados.length === 0) {
-                html = '<div style="padding:15px; background:#fff3e0; border-radius:6px; margin-top:15px;">⚠️ No se detectaron nombres en el archivo. Verifica que el PDF contenga texto legible.</div>';
+                html = '<div style="padding:15px; background:#fff3e0; border-radius:6px; margin-top:15px;">⚠️ No he podido detectar nombres en el archivo. Asegúrate de que el PDF o imagen tenga texto legible.</div>';
             }
             
             resultList.innerHTML = html;
@@ -2179,16 +2077,16 @@
             const nombreDetectado = empDetectado.nombre;
             const decimosDetectados = empDetectado.decimosPDF || resultado.numDecimos || 2;
             
-            if (!confirm('¿Deseas crear el empleado "' + nombreDetectado + '" y registrar su pedido de ' + decimosDetectados + ' décimo(s)?\n\nPulsa ACEPTAR para crearlo o CANCELAR para omitirlo.')) {
+            if (!confirm('¿Quieres dar de alta a "' + nombreDetectado + '" y registrar su pedido de ' + decimosDetectados + ' décimo(s)?\n\nAcepta para crearlo o Cancela para omitirlo.')) {
                 resultado.noEncontrados.splice(idx, 1);
                 mostrarResultadosOCR(resultado);
-                showToast('⚠️', 'Empleado "' + nombreDetectado + '" omitido.');
+                showToast('⚠️', '"' + nombreDetectado + '" omitido.');
                 return;
             }
             
-            const telefono = prompt('📞 Introduce el teléfono de "' + nombreDetectado + '":');
+            const telefono = prompt('📞 ¿Cuál es el teléfono de "' + nombreDetectado + '"?');
             if (!telefono || !telefono.trim()) {
-                showToast('⚠️', 'Se necesita el teléfono para crear el empleado.', true);
+                showToast('️', 'Necesito el teléfono para crear el empleado.', true);
                 return;
             }
             
@@ -2197,10 +2095,10 @@
             
             if (seccionesDelServicio.length > 0) {
                 const listaSecciones = seccionesDelServicio.map(s => '- ' + s.nombre).join('\n');
-                const seccionNombre = prompt('📂 Sección para "' + nombreDetectado + '":\n\nSecciones disponibles:\n' + listaSecciones + '\n\nEscribe el nombre de una sección existente o una nueva:', seccionesDelServicio[0].nombre);
+                const seccionNombre = prompt(' ¿En qué sección está "' + nombreDetectado + '"?\n\nSecciones disponibles:\n' + listaSecciones + '\n\nEscribe el nombre de una existente o una nueva:', seccionesDelServicio[0].nombre);
                 
                 if (!seccionNombre || !seccionNombre.trim()) {
-                    showToast('️', 'Se necesita una sección.', true);
+                    showToast('⚠️', 'Necesito una sección.', true);
                     return;
                 }
                 
@@ -2209,26 +2107,26 @@
                 const existe = secciones.some(s => s.servicio === resultado.servicio && s.nombre.toLowerCase() === seccion.toLowerCase());
                 
                 if (!existe) {
-                    if (confirm('⚠️ La sección "' + seccion + '" NO existe en el servicio "' + resultado.servicio + '".\n\n¿Deseas crearla automáticamente?')) {
+                    if (confirm('⚠️ La sección "' + seccion + '" no existe en "' + resultado.servicio + '".\n\n¿La creo automáticamente?')) {
                         secciones.push({ nombre: seccion, servicio: resultado.servicio });
                         const obj = {};
                         secciones.forEach((s, i) => { obj[i] = s; });
                         dbRef.secciones.set(obj);
-                        showToast('✅', 'Sección "' + seccion + '" creada correctamente.');
+                        showToast('✅', '¡Sección "' + seccion + '" creada!');
                     } else {
-                        showToast('⚠️', 'Operación cancelada. La sección no fue creada.', true);
+                        showToast('️', 'Operación cancelada. La sección no se ha creado.', true);
                         return;
                     }
                 }
             } else {
-                seccion = prompt('📂 Introduce la sección para "' + nombreDetectado + '":');
+                seccion = prompt('📂 ¿En qué sección está "' + nombreDetectado + '"?');
                 if (!seccion || !seccion.trim()) {
-                    showToast('⚠️', 'Se necesita una sección.', true);
+                    showToast('⚠️', 'Necesito una sección.', true);
                     return;
                 }
                 seccion = seccion.trim().toUpperCase();
                 if (!secciones.some(s => s.servicio === resultado.servicio && s.nombre === seccion)) {
-                    if (confirm('⚠️ La sección "' + seccion + '" NO existe. ¿Deseas crearla?')) {
+                    if (confirm('️ La sección "' + seccion + '" no existe. ¿La creo?')) {
                         secciones.push({ nombre: seccion, servicio: resultado.servicio });
                         const obj = {};
                         secciones.forEach((s, i) => { obj[i] = s; });
@@ -2276,7 +2174,7 @@
             resultado.noEncontrados.splice(idx, 1);
             mostrarResultadosOCR(resultado);
             
-            showToast('✅', '"' + nombreDetectado + '" creado y pedido registrado (' + decimosDetectados + ' décimos)');
+            showToast('🎉', '¡' + nombreDetectado + ' dado de alta y pedido registrado (' + decimosDetectados + ' décimos)!');
         }
 
         function buscarEmpleadosEnTexto(texto, servicio) {
@@ -2382,10 +2280,10 @@
         }
 
         function confirmarPedidosOCR() {
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; }
             const resultado = window.ocrResultado;
             if (!resultado || resultado.encontrados.length === 0) {
-                showToast('⚠️', 'No hay empleados encontrados para procesar. Crea primero los que faltan.', true);
+                showToast('⚠️', 'No hay empleados encontrados. Crea primero los que faltan.', true);
                 return;
             }
             
@@ -2426,7 +2324,7 @@
             });
             
             const noEncontradosRestantes = resultado.noEncontrados.length;
-            let mensaje = '✅ ' + creados + ' pedidos creados automáticamente';
+            let mensaje = '🎉 ¡' + creados + ' pedidos creados automáticamente!';
             if (omitidos > 0) mensaje += ' (' + omitidos + ' omitidos por límite)';
             if (noEncontradosRestantes > 0) mensaje += '. Quedan ' + noEncontradosRestantes + ' empleados por crear manualmente.';
             
@@ -2448,11 +2346,11 @@
             const { id, ...datos } = pedido;
             dbRef.pedidos.child(id).set(datos)
                 .then(() => setSyncStatus('online'))
-                .catch((err) => { setSyncStatus('offline', '❌ Error'); showToast('️', 'No se pudo guardar', true); });
+                .catch((err) => { setSyncStatus('offline', '❌ Error'); showToast('️', 'No he podido guardar el cambio.', true); });
         }
 
         function firebaseEliminarPedido(id) {
-            setSyncStatus('syncing', '🔄 Eliminando...');
+            setSyncStatus('syncing', '🔄 Borrando...');
             dbRef.pedidos.child(id).remove()
                 .then(() => setSyncStatus('online'))
                 .catch((err) => { setSyncStatus('offline', '❌ Error'); });
@@ -2467,7 +2365,7 @@
         }
 
         function firebaseGuardarConfig() {
-            setSyncStatus('syncing', '🔄 Guardando config...');
+            setSyncStatus('syncing', '🔄 Guardando configuración...');
             dbRef.config.set(config)
                 .then(() => setSyncStatus('online'))
                 .catch((err) => { setSyncStatus('offline', '❌ Error'); });
@@ -2478,7 +2376,7 @@
         }
 
         function exportarDatosJSON() {
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; }
             const datos = { pedidos, empleados, servicios, secciones, usuarios, config, fechaExportacion: new Date().toISOString() };
             const json = JSON.stringify(datos, null, 2);
             const blob = new Blob([json], { type: 'application/json' });
@@ -2486,26 +2384,26 @@
             link.href = URL.createObjectURL(blob);
             link.download = 'loteria-navidad-backup-' + new Date().toISOString().slice(0,10) + '.json';
             link.click();
-            showToast('📤', '📤 Copia de seguridad exportada.');
+            showToast('📤', '¡Copia de seguridad exportada!');
         }
 
         function importarDatosJSON(event) {
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; }
             const file = event.target.files[0];
             if (!file) return;
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
                     const datos = JSON.parse(e.target.result);
-                    if (!confirm('⚠️ ATENCIÓN: Se REEMPLAZARÁN todos los registros. ¿Continuar?')) return;
+                    if (!confirm('⚠️ ATENCIÓN: Se borrarán todos los datos actuales y se reemplazarán por los del archivo. ¿Continúo?')) return;
                     if (datos.pedidos) { const obj = {}; datos.pedidos.forEach(p => { const { id, ...d } = p; obj[id] = d; }); dbRef.pedidos.set(obj); }
                     if (datos.empleados) { const obj = {}; datos.empleados.forEach(e => { const { id, ...d } = e; obj[id] = d; }); dbRef.empleados.set(obj); }
                     if (datos.servicios) { const obj = {}; datos.servicios.forEach((s, i) => { obj[i] = s; }); dbRef.servicios.set(obj); }
                     if (datos.secciones) { const obj = {}; datos.secciones.forEach((s, i) => { obj[i] = s; }); dbRef.secciones.set(obj); }
                     if (datos.usuarios) { dbRef.usuarios.set(datos.usuarios); }
                     if (datos.config) { config = { ...config, ...datos.config }; firebaseGuardarConfig(); }
-                    showToast('✅', '📥 Datos importados.');
-                } catch (err) { showToast('❌', 'Error: ' + err.message, true); }
+                    showToast('✅', '¡Datos importados correctamente!');
+                } catch (err) { showToast('❌', 'Error al importar: ' + err.message, true); }
             };
             reader.readAsText(file);
             event.target.value = '';
@@ -2548,7 +2446,7 @@
 
         function exportarListadoGeneralPDF() {
             const pedidosExportar = getPedidosFiltradosListado();
-            if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos'); return; }
+            if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos para exportar.'); return; }
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             doc.setFontSize(18); doc.setTextColor(26, 58, 92);
@@ -2559,22 +2457,22 @@
             const rows = pedidosExportar.map(p => [p.nombre, p.servicio||'-', p.seccion||'-', p.telefono||'-', p.numDecimos, (p.numDecimos*PRECIO_DECIMO).toLocaleString('es-ES')+'€', p.fechaSolicitud||'-', p.pagado?'Si':'No']);
             doc.autoTable(cols, rows, { startY: 36, theme: 'striped', headStyles: { fillColor: [26, 58, 92], fontSize: 7 }, bodyStyles: { fontSize: 7 } });
             doc.save('listado-general-loteria-2026.pdf');
-            showToast('📄', '📄 PDF generado.');
+            showToast('📄', '¡PDF generado!');
         }
 
         function exportarListadoGeneralCSV() {
             const pedidosExportar = getPedidosFiltradosListado();
-            if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos'); return; }
+            if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos para exportar.'); return; }
             let csv = '\uFEFFNombre,Servicio,Seccion,Telefono,N Decimos,Importe,Fecha Sol.,Hora Sol.,Pagado,Recogido\n';
             pedidosExportar.forEach(p => { csv += '"'+p.nombre+'","'+(p.servicio||'')+'","'+(p.seccion||'')+'","'+(p.telefono||'')+'",'+p.numDecimos+','+(p.numDecimos*PRECIO_DECIMO)+',"'+(p.fechaSolicitud||'')+'","'+(p.horaSolicitud||'')+'",'+(p.pagado?'Si':'No')+','+(p.recogido?'Si':'No')+'\n'; });
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'listado-general-2026.csv'; link.click();
-            showToast('', '📊 CSV generado.');
+            showToast('📊', '¡CSV generado!');
         }
 
         function imprimirListadoGeneral() {
             const pedidosExportar = getPedidosFiltradosListado();
-            if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos'); return; }
+            if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos para imprimir.'); return; }
             const v = window.open('', '', 'width=900,height=600');
             const tablaHTML = pedidosExportar.map(p => '<tr><td>'+p.nombre+'</td><td>'+(p.servicio||'-')+'</td><td>'+(p.seccion||'-')+'</td><td>'+(p.telefono||'-')+'</td><td>'+p.numDecimos+'</td><td>'+(p.numDecimos*PRECIO_DECIMO).toLocaleString('es-ES')+'€</td><td>'+(p.fechaSolicitud||'-')+'</td><td>'+(p.horaSolicitud||'-')+'</td><td>'+(p.pagado?'Si':'No')+'</td><td>'+(p.recogido?'Si':'No')+'</td></tr>').join('');
             v.document.write('<html><head><title>Listado General</title><style>body{font-family:Arial,sans-serif;padding:20px}h1{color:#1a3a5c}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{border:1px solid #ddd;padding:6px;font-size:0.85em}th{background:#1a3a5c;color:white}</style></head><body><h1>Listado General - Lotería 2026</h1><p>Fecha: '+new Date().toLocaleDateString('es-ES')+'</p><table><thead><tr><th>Nombre</th><th>Servicio</th><th>Sección</th><th>Teléfono</th><th>Décimos</th><th>Importe</th><th>Fecha Sol.</th><th>Hora Sol.</th><th>Pagado</th><th>Recogido</th></tr></thead><tbody>'+tablaHTML+'</tbody></table></body></html>');
@@ -2587,7 +2485,7 @@
             let pedidosExportar = pedidos;
             if (filtroServicio) pedidosExportar = pedidosExportar.filter(p => p.servicio === filtroServicio);
             if (filtroSeccion) pedidosExportar = pedidosExportar.filter(p => p.seccion === filtroSeccion);
-            if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos'); return; }
+            if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos para exportar.'); return; }
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             doc.setFontSize(18); doc.setTextColor(26, 58, 92);
@@ -2598,7 +2496,7 @@
             const rows = pedidosExportar.map(p => [p.nombre, p.servicio||'-', p.seccion||'-', p.telefono||'-', p.numDecimos, (p.numDecimos*PRECIO_DECIMO)+'€', p.fechaSolicitud||'-', p.pagado?'Si':'No']);
             doc.autoTable(cols, rows, { startY: 36, theme: 'striped', headStyles: { fillColor: [26, 58, 92], fontSize: 7 }, bodyStyles: { fontSize: 7 } });
             doc.save('pedidos-loteria-2026.pdf');
-            showToast('📄', '📄 PDF generado.');
+            showToast('📄', '¡PDF generado!');
         }
 
         function exportarCSV() {
@@ -2607,12 +2505,12 @@
             let pedidosExportar = pedidos;
             if (filtroServicio) pedidosExportar = pedidosExportar.filter(p => p.servicio === filtroServicio);
             if (filtroSeccion) pedidosExportar = pedidosExportar.filter(p => p.seccion === filtroSeccion);
-            if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos'); return; }
+            if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos para exportar.'); return; }
             let csv = '\uFEFFNombre,Servicio,Seccion,Telefono,Decimos,Importe,Fecha Sol.,Hora Sol.,Pagado,Recogido\n';
             pedidosExportar.forEach(p => { csv += '"'+p.nombre+'","'+(p.servicio||'')+'","'+(p.seccion||'')+'","'+(p.telefono||'')+'",'+p.numDecimos+','+(p.numDecimos*PRECIO_DECIMO)+',"'+(p.fechaSolicitud||'')+'","'+(p.horaSolicitud||'')+'",'+(p.pagado?'Si':'No')+','+(p.recogido?'Si':'No')+'\n'; });
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'pedidos-2026.csv'; link.click();
-            showToast('', '📊 CSV generado.');
+            showToast('📊', '¡CSV generado!');
         }
 
         function imprimirListado() {
@@ -2621,7 +2519,7 @@
             let pedidosExportar = pedidos;
             if (filtroServicio) pedidosExportar = pedidosExportar.filter(p => p.servicio === filtroServicio);
             if (filtroSeccion) pedidosExportar = pedidosExportar.filter(p => p.seccion === filtroSeccion);
-            if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos'); return; }
+            if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos para imprimir.'); return; }
             const v = window.open('', '', 'width=900,height=600');
             const tablaHTML = pedidosExportar.map(p => '<tr><td>'+p.nombre+'</td><td>'+(p.servicio||'-')+'</td><td>'+(p.seccion||'-')+'</td><td>'+(p.telefono||'-')+'</td><td>'+p.numDecimos+'</td><td>'+(p.numDecimos*PRECIO_DECIMO)+'€</td><td>'+(p.fechaSolicitud||'-')+'</td><td>'+(p.horaSolicitud||'-')+'</td><td>'+(p.pagado?'Si':'No')+'</td><td>'+(p.recogido?'Si':'No')+'</td></tr>').join('');
             v.document.write('<html><head><title>Pedidos Lotería 2026</title><style>body{font-family:Arial,sans-serif;padding:20px}h1{color:#1a3a5c}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{border:1px solid #ddd;padding:6px;font-size:0.85em}th{background:#1a3a5c;color:white}</style></head><body><h1>Pedidos Lotería 2026</h1><p>Fecha: '+new Date().toLocaleDateString('es-ES')+'</p><table><thead><tr><th>Nombre</th><th>Servicio</th><th>Sección</th><th>Tel</th><th>Dec</th><th>Importe</th><th>F.Sol</th><th>H.Sol</th><th>Pag</th><th>Rec</th></tr></thead><tbody>'+tablaHTML+'</tbody></table></body></html>');
