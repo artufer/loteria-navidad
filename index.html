@@ -174,6 +174,24 @@
         .role-admin { background: #e3f2fd; color: #1976d2; }
         .role-consulta { background: #f5f5f5; color: #666; }
         .readonly-banner { background: #fff3e0; border: 1px solid #ffcc80; border-radius: 8px; padding: 10px 15px; margin-bottom: 15px; font-size: 0.85em; color: #e65100; display: flex; align-items: center; gap: 8px; }
+        
+        /* Estilos Control con 3 checks */
+        .control-summary { background: #f8f9fa; padding: 12px 15px; border-radius: 8px; margin-bottom: 15px; display: flex; justify-content: space-around; align-items: center; font-size: 0.9em; flex-wrap: wrap; gap: 10px; }
+        .control-summary-item { text-align: center; }
+        .control-summary-item .num { font-size: 1.5em; font-weight: 700; color: #1a3a5c; }
+        .control-summary-item .label { font-size: 0.8em; color: #666; }
+        
+        .control-list { max-height: 500px; overflow-y: auto; border: 1px solid #e0e2e5; border-radius: 8px; }
+        .control-list-header { display: grid; grid-template-columns: 2fr 1fr 80px 80px 80px; gap: 8px; padding: 10px 15px; background: #1a3a5c; color: white; font-weight: 600; font-size: 0.8em; position: sticky; top: 0; z-index: 1; }
+        .control-list-item { display: grid; grid-template-columns: 2fr 1fr 80px 80px 80px; gap: 8px; padding: 10px 15px; border-bottom: 1px solid #f0f2f5; align-items: center; transition: background 0.15s; }
+        .control-list-item:hover { background: #f8f9fa; }
+        .control-list-item:last-child { border-bottom: none; }
+        .control-list-item .emp-name { font-weight: 500; font-size: 0.85em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .control-list-item .emp-section { font-size: 0.75em; color: #666; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .control-list-item .check-cell { text-align: center; }
+        .control-list-item .check-cell input[type="checkbox"] { width: 22px; height: 22px; cursor: pointer; }
+        .control-list-header .check-cell { text-align: center; font-size: 0.9em; }
+        
         @media (max-width: 1024px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } .col-servicio, .col-seccion { display: none; } }
         @media (max-width: 768px) {
             .header { flex-direction: column; gap: 8px; padding: 10px; }
@@ -195,6 +213,7 @@
             .login-box { margin: 15px; padding: 25px 15px; }
             .sort-controls { flex-direction: column; }
             .col-recogido-por { display: none; }
+            .control-list-header, .control-list-item { grid-template-columns: 1.5fr 1fr 60px 60px 60px; gap: 4px; padding: 8px 10px; font-size: 0.85em; }
         }
         @media (max-width: 480px) { .header-title h1 { font-size: 1em; } .stat-number { font-size: 1.5em; } .dashboard-welcome .welcome-date { font-size: 1.2em; } }
     </style>
@@ -208,7 +227,7 @@
 
     <div class="login-overlay hidden" id="loginOverlay">
         <div class="login-box">
-            <div class="login-icon"></div>
+            <div class="login-icon">🎄</div>
             <h2>Control Lotería Navidad</h2>
             <div class="login-subtitle">Pabellón Niño Jesús - Acceso restringido</div>
             <form id="loginForm">
@@ -247,9 +266,10 @@
         <div class="nav-tabs">
             <button class="nav-tab active" data-page="inicio">🏠 Inicio</button>
             <button class="nav-tab" data-page="solicitar" id="tabSolicitar">🎟️ Solicitar</button>
+            <button class="nav-tab" data-page="control" id="tabControl"> Control</button>
             <button class="nav-tab" data-page="pedidos">📋 Pedidos</button>
-            <button class="nav-tab" data-page="listado"> Listado</button>
-            <button class="nav-tab" data-page="resumen"> Resumen</button>
+            <button class="nav-tab" data-page="listado">📑 Listado</button>
+            <button class="nav-tab" data-page="resumen">📊 Resumen</button>
             <button class="nav-tab" data-page="participantes">👥 Participantes</button>
             <button class="nav-tab" data-page="ocr" id="tabOCR">📷 Lectura PDF</button>
             <button class="nav-tab" data-page="configuracion" id="tabConfig">⚙️ Config</button>
@@ -274,7 +294,7 @@
                         <div class="stat-number" id="dineroRecaudado">0 €</div>
                         <div class="stat-label">Dinero Recaudado</div>
                         <div class="stat-details">
-                            <div class="stat-detail-row"><span>💰 Total:</span><span id="statTotalEsperado">0 €</span></div>
+                            <div class="stat-detail-row"><span> Total:</span><span id="statTotalEsperado">0 €</span></div>
                             <div class="stat-detail-row"><span>💵 Cobrado:</span><span id="statCobrado">0 €</span></div>
                             <div class="stat-detail-row"><span>⏳ Pendiente:</span><span id="statPendienteCobro">0 €</span></div>
                         </div>
@@ -291,6 +311,7 @@
                 </div>
                 <div class="quick-actions">
                     <div class="quick-action" id="qaSolicitar" onclick="irAPagina('solicitar')"><div class="qa-icon">🎟️</div><div class="qa-title">Solicitar</div></div>
+                    <div class="quick-action" id="qaControl" onclick="irAPagina('control')"><div class="qa-icon">📝</div><div class="qa-title">Control</div></div>
                     <div class="quick-action" onclick="irAPagina('pedidos')"><div class="qa-icon">📋</div><div class="qa-title">Pedidos</div></div>
                     <div class="quick-action" onclick="irAPagina('listado')"><div class="qa-icon">📑</div><div class="qa-title">Listado</div></div>
                     <div class="quick-action" id="qaOCR" onclick="irAPagina('ocr')"><div class="qa-icon">📷</div><div class="qa-title">Lectura PDF</div></div>
@@ -357,6 +378,65 @@
                 </div>
             </div>
 
+            <!-- NUEVA PESTAÑA: CONTROL CON 3 CHECKS -->
+            <div class="section-page" id="page-control">
+                <div class="content-card">
+                    <h2 class="section-title">📝 Control de Solicitudes, Pagos y Entregas</h2>
+                    <div class="alert-info">
+                         Selecciona un servicio (y opcionalmente una sección) para ver la lista de empleados. Marca los 3 checks según corresponda: <strong>Solicitado</strong>, <strong>Pagado</strong> y <strong>Recibido</strong>.
+                    </div>
+                    <div class="filter-bar">
+                        <div class="form-group">
+                            <label for="controlServicio">Servicio *</label>
+                            <select id="controlServicio" onchange="actualizarControlSecciones()">
+                                <option value="">-- Selecciona un servicio --</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="controlSeccion">Sección (opcional)</label>
+                            <select id="controlSeccion" onchange="renderizarControl()">
+                                <option value="">-- Todas las secciones --</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="controlFiltro">Filtrar por estado</label>
+                            <select id="controlFiltro" onchange="renderizarControl()">
+                                <option value="todos">Todos los empleados</option>
+                                <option value="pendientes">Pendientes de solicitar</option>
+                                <option value="solicitados">Solicitados (sin pagar)</option>
+                                <option value="pagados">Pagados (sin recibir)</option>
+                                <option value="completos">Completos (recibidos)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="control-summary" id="controlSummary" style="display:none;">
+                        <div class="control-summary-item">
+                            <div class="num" id="ctrlTotal">0</div>
+                            <div class="label">Total</div>
+                        </div>
+                        <div class="control-summary-item">
+                            <div class="num" id="ctrlSolicitados" style="color:#1976d2;">0</div>
+                            <div class="label">Solicitados</div>
+                        </div>
+                        <div class="control-summary-item">
+                            <div class="num" id="ctrlPagados" style="color:#e65100;">0</div>
+                            <div class="label">Pagados</div>
+                        </div>
+                        <div class="control-summary-item">
+                            <div class="num" id="ctrlRecibidos" style="color:#2e7d32;">0</div>
+                            <div class="label">Recibidos</div>
+                        </div>
+                    </div>
+                    <div class="control-list" id="controlList">
+                        <div class="empty-state" style="padding: 30px;">
+                            <div class="empty-icon">📝</div>
+                            <h3>Selecciona un servicio</h3>
+                            <p>Elige un servicio para ver la lista de empleados con sus 3 checks</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="section-page" id="page-pedidos">
                 <div class="content-card">
                     <div class="table-header">
@@ -414,7 +494,7 @@
 
             <div class="section-page" id="page-listado">
                 <div class="content-card">
-                    <h2 class="section-title">📑 Listado General</h2>
+                    <h2 class="section-title"> Listado General</h2>
                     <div class="alert-info">💡 Haz clic en cualquier cabecera para ordenar.</div>
                     <div class="sort-controls">
                         <div class="form-group">
@@ -434,8 +514,8 @@
                         <div class="form-group">
                             <label for="ordenDireccion">Dirección</label>
                             <select id="ordenDireccion" onchange="renderizarListadoGeneral()">
-                                <option value="asc">⬆️ Ascendente (A-Z)</option>
-                                <option value="desc">️ Descendente (Z-A)</option>
+                                <option value="asc">️ Ascendente (A-Z)</option>
+                                <option value="desc">⬇️ Descendente (Z-A)</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -470,7 +550,7 @@
                     <div class="export-buttons" style="margin-bottom: 15px;">
                         <button class="btn btn-export" onclick="exportarListadoGeneralPDF()">📄 PDF</button>
                         <button class="btn btn-export" onclick="exportarListadoGeneralCSV()">📊 CSV</button>
-                        <button class="btn btn-export" onclick="imprimirListadoGeneral()">️ Imprimir</button>
+                        <button class="btn btn-export" onclick="imprimirListadoGeneral()">🖨️ Imprimir</button>
                     </div>
                     <div class="table-container" id="listadoGeneralContainer" style="display:none;">
                         <table>
@@ -651,7 +731,7 @@
                         </div>
                     </div>
                     <div class="config-block">
-                        <h3>💾 Copia de seguridad</h3>
+                        <h3> Copia de seguridad</h3>
                         <div class="alert-info">Exporta o importa todos los datos de la aplicación.</div>
                         <div class="config-row">
                             <button type="button" class="btn btn-primary btn-small" onclick="exportarDatosJSON()">📤 Exportar datos</button>
@@ -668,7 +748,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3>✏️ Editar Pedido</h3>
-                <button class="close-btn" onclick="cerrarModal()"></button>
+                <button class="close-btn" onclick="cerrarModal()">✕</button>
             </div>
             <form id="editarForm">
                 <input type="hidden" id="editarId">
@@ -761,29 +841,29 @@
         let datosCargados = false;
 
         const EMPLEADOS_INICIALES = [
-            {nombre:"M.CARMEN CORDERO GONZALEZ",telefono:"1449",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MEDIO AMBIENTE"},
-            {nombre:"M.ASUNCION ALVAREZ LOPEZ",telefono:"1073",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"DESARROLLO AGRO-PECUARIO GRAL"},
-            {nombre:"M.CARMEN ALVAREZ CABO",telefono:"1062",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MEDIO AMBIENTE"},
-            {nombre:"M.CARMEN GODOY CANO",telefono:"1448",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"TRATAMIENTO DE RESIDUOS"},
-            {nombre:"M.NIEVES LOZANO LOZANO",telefono:"1053",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"DESARROLLO AGRO-PECUARIO GRAL"},
-            {nombre:"M.YOLANDA RODRIGUEZ GARCIA",telefono:"1056",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"DESARROLLO AGRO-PECUARIO GRAL"},
-            {nombre:"MARIA DE LA PAZ SANCHEZ LOZANO",telefono:"1011",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"TRATAMIENTO DE RESIDUOS"},
-            {nombre:"MARINA ARIAS ROBLES",telefono:"1265",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"ACCION FORMATIVA MONTE SAN ISIDRO"},
-            {nombre:"MARIO VILLADANGOS FERNANDEZ",telefono:"1054",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MEDIO AMBIENTE"},
-            {nombre:"MARTA EVA PASTRANA RUBIO",telefono:"1060",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MEDIO AMBIENTE"},
-            {nombre:"NATIVIDAD MORETA ROQUE",telefono:"1071",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"TRATAMIENTO DE RESIDUOS"},
-            {nombre:"PAULA GONZALEZ PEÑA",telefono:"1474",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MEDIO AMBIENTE"},
-            {nombre:"RAQUEL ANDRES GARCIA",telefono:"1058",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MEDIO AMBIENTE"},
-            {nombre:"RUTH NOEMI GRAÑERAS REYERO",telefono:"1052",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MEDIO AMBIENTE"},
-            {nombre:"SECUNDINO PRIETO TERCERO",telefono:"1065",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"TRATAMIENTO DE RESIDUOS"},
-            {nombre:"ANGELA DOMINGUEZ GOMEZ",telefono:"1061",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MEDIO AMBIENTE"},
-            {nombre:"BEATRIZ ALVAREZ CAMPOS",telefono:"1072",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"DESARROLLO AGRO-PECUARIO GRAL"},
-            {nombre:"CLAUDIA FERNANDEZ ROMAN",telefono:"1474",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MEDIO AMBIENTE"},
-            {nombre:"FATIMA SUSANA MANSILLA RODRIGUEZ",telefono:"1050",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"DESARROLLO AGRO-PECUARIO GRAL"},
-            {nombre:"FRANCISCO BAJO ALVAREZ",telefono:"1451",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"DESARROLLO AGRO-PECUARIO GRAL"},
-            {nombre:"IRENE OTERO LLAMAZARES",telefono:"1051",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MEDIO AMBIENTE"},
-            {nombre:"JOSE RAUL ORTEGA PEREZ",telefono:"1131",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"ACCION FORMATIVA MONTE SAN ISIDRO"},
-            {nombre:"LETICIA FERNANDEZ RASCON",telefono:"1265",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"ACCION FORMATIVA MONTE SAN ISIDRO"},
+            {nombre:"MARÍA CARMEN ÁLVAREZ CABO",telefono:"1062",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
+            {nombre:"MARÍA ASUNCIÓN ÁLVAREZ LÓPEZ",telefono:"1073",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
+            {nombre:"MARÍA DEL CARMEN CORDERO GONZÁLEZ",telefono:"1449",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
+            {nombre:"MARÍA DEL CARMEN GODOY CANO",telefono:"1448",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
+            {nombre:"MARÍA NIEVES LOZANO LOZANO",telefono:"1053",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
+            {nombre:"MARÍA YOLANDA RODRÍGUEZ GARCÍA",telefono:"1056",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
+            {nombre:"MARÍA DE LA PAZ SÁNCHEZ LOZANO",telefono:"1011",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
+            {nombre:"MARINA ARIAS ROBLES",telefono:"1265",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"AFE APICULTURA Y VIVEROS"},
+            {nombre:"MARIO VILLADANGOS FERNANDEZ",telefono:"1054",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
+            {nombre:"MARTA EVA PASTRANA RUBIO",telefono:"1060",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
+            {nombre:"NATIVIDAD MORETA ROQUE",telefono:"1071",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
+            {nombre:"PAULA GONZÁLEZ PEÑA",telefono:"1474",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
+            {nombre:"RAQUEL ANDRÉS GARCÍA",telefono:"1058",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
+            {nombre:"RUTH NOEMÍ GRAÑERAS REYERO",telefono:"1052",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
+            {nombre:"SECUNDINO PRIETO TERCERO",telefono:"1065",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
+            {nombre:"ÁNGELA DOMÍNGUEZ GÓMEZ",telefono:"1061",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
+            {nombre:"BEATRIZ ALVAREZ CAMPOS",telefono:"1072",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
+            {nombre:"CLAUDIA FERNÁNDEZ ROMÁN",telefono:"1474",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
+            {nombre:"FÁTIMA SUSANA MANSILLA RODRÍGUEZ",telefono:"1050",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
+            {nombre:"FRANCISCO BAJO ÁLVAREZ",telefono:"1451",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
+            {nombre:"IRENE OTERO LLAMAZARES",telefono:"1051",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
+            {nombre:"JOSÉ RAÚL ORTEGA PÉREZ",telefono:"1131",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"AFE T. FORESTALES"},
+            {nombre:"LETICIA FERNÁNDEZ RASCÓN",telefono:"1265",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"AFE APICULTURA Y VIVEROS"},
             {nombre:"M.AURORA RODRIGUEZ APARICIO",telefono:"",servicio:"ASUNTOS GENERALES",seccion:"MANTENIMIENTO"},
             {nombre:"M.CAMINO DIEZ SOTO",telefono:"1033",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS"},
             {nombre:"M.CARMEN FERNANDEZ FERNANDEZ",telefono:"1032",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS"},
@@ -810,7 +890,67 @@
             {nombre:"MIGUEL ANGEL PALENZUELA PASTRANA",telefono:"1444",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - EDIS"},
             {nombre:"MIRIAM GUTIERREZ MARTINEZ",telefono:"1438",servicio:"DERECHOS SOCIALES",seccion:"SECCIÓN DE PROGRAMAS - FAMILIA EAF"},
             {nombre:"MIRIAN ALVAREZ VIVAS",telefono:"1024",servicio:"SEPEIS",seccion:"SEPEIS"},
-            {nombre:"LEONARDO ARTURO FERNANDEZ CARBAJO",telefono:"1482",servicio:"ASUNTOS GENERALES",seccion:"ORDENANZAS"}
+            {nombre:"LEONARDO ARTURO FERNANDEZ CARBAJO",telefono:"1482",servicio:"ASUNTOS GENERALES",seccion:"ORDENANZAS"},
+            {nombre:"PABLO ALBARADO FERNÁNDEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"BASILIO ALONSO DEL HOYO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"VIVERO RIBASECA"},
+            {nombre:"JULIAN ALONSO DEL HOYO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"BUSTILLO PÁRAMO"},
+            {nombre:"LUIS ÁNGEL ALONSO MARTÍNEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"PARQUE SAN ISIDRO"},
+            {nombre:"RUBÉN ÁLVAREZ GONZÁLEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTE SAN ISIDRO"},
+            {nombre:"HECTOR RAUL AMEZ FUERTES",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"AFE APICULTURA Y VIVEROS"},
+            {nombre:"ÁNGEL MANUEL BELTRÁN GARCÍA",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"JUAN CARLOS CABERO RODRÍGUEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"ESTELA CAMPOMANES ROPERO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"VIVERO RIBASECA"},
+            {nombre:"BERNARDO ALBERTO CAMPOS MÁRQUEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"ADRIAN CARVAJAL RODRIGUEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"AFE T. FORESTALES"},
+            {nombre:"DAVID CASADO CABERO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"AFE T. FORESTALES"},
+            {nombre:"RAUL CASAS PÉREZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"MARÍA COVADONGA CHAMORRO ÁLVAREZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"LUIS COMPADRE LOZANO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"MANUEL DEL CASTILLO GONZÁLEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"IGNACIO DELGADO CORCOBADO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"JESÚS FERNÁNDEZ CALVO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"ISABEL FERNÁNDEZ MACAYO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"AFE APICULTURA Y VIVEROS"},
+            {nombre:"MIGUEL FERNANDEZ PICOREL",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"VIVERO RIBASECA"},
+            {nombre:"JULIO FERNANDEZ RODRIGUEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"VIVERO RIBASECA"},
+            {nombre:"VÍCTOR MANUEL FOLLA FERNÁNDEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"ISMAEL FONSECA LORENZO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"NIEVES FRANCO CELADILLA",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"VIVERO RIBASECA"},
+            {nombre:"JOSUÉ GABARRE BORJA",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"OLGA GARCÍA ALLER",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"PARQUE SAN ISIDRO"},
+            {nombre:"JAIME GARCÍA CALLADO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTE SAN ISIDRO"},
+            {nombre:"JONATHAN GARCÍA CANTARERO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"JOSÉ MANUEL GARCÍA GARCÍA",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"JOSÉ MANUEL GÓMEZ FALAGÁN",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"MANUEL GONZÁLEZ ÁLVAREZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"SAMUEL GONZÁLEZ BERNARDO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"JAIME GONZÁLEZ LLAMAZARES",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"MARIANO HERNANDEZ JIMÉNEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"MIGUEL ÁNGEL IGLESIAS CUESTA",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"ABRAHAM JIMÉNEZ GARCÍA",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"ELEAZAR JIMÉNEZ JIMÉNEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"PEDRO LÓPEZ FERNÁNDEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"FELIX MANUEL MACHADO CABEZAS",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"HÉCTOR JOSÉ MAIQUEZ DOMÍNGUEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"AFE APICULTURA Y VIVEROS"},
+            {nombre:"MIGUEL MALLO RODRÍGUEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"AFE APICULTURA Y VIVEROS"},
+            {nombre:"OSCAR MARTÍNEZ MARCOS",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTE SAN ISIDRO"},
+            {nombre:"CRISTIAN MARTÍNEZ MATEOS",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"JOSE MARIA MEDINA MEDINA",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"SAMUEL MÉNDEZ GARCÍA",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"BELÉN MUÑÍZ CAÑIBANO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"AFE APICULTURA Y VIVEROS"},
+            {nombre:"JUAN ANTONIO OLIVERA ANDRES",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"AFE T. FORESTALES"},
+            {nombre:"ELIECER PABLOS DE PRADO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"JOSÉ LUIS PERTEJO CASTELLANOS",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"JOSE MANUEL PINILLA ANTÓN",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"JOSÉ POLO MARTÍN",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"FRANCISCO PRIETO GARCÍA",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"CAMINO RAMOS MARTÍNEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"SAN CAYETANO"},
+            {nombre:"FIDEL REGUERA RODRÍGUEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"JOSÉ ANTONIO RODRÍGUEZ CRESPO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"IVÁN ROSÓN ÁLVAREZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"CRISTIAN JESÚS SÁNCHEZ CAMERO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"},
+            {nombre:"LAURA SANCHEZ PUENTE",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"AFE T. FORESTALES"},
+            {nombre:"RODOLFO SANTAMARTA CORDERO",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTE SAN ISIDRO"},
+            {nombre:"FERNANDO TORNERO FERNÁNDEZ",telefono:"",servicio:"DESARROLLO RURAL Y MEDIO AMBIENTE",seccion:"MONTEL"}
         ];
 
         const SERVICIOS_INICIALES = [
@@ -881,7 +1021,7 @@
                     await dbRef.empleados.set(empleadosObj);
 
                     await dbRef.inicializado.set({
-                        fecha: new Date().toISOString(), version: '12.0',
+                        fecha: new Date().toISOString(), version: '15.0',
                         empleadosCargados: EMPLEADOS_INICIALES.length
                     });
                 }
@@ -945,11 +1085,11 @@
             });
             dbRef.servicios.on('value', (snapshot) => {
                 const data = snapshot.val();
-                if (data) { servicios = Object.keys(data).map(key => data[key]); localStorage.setItem('serviciosLoteria', JSON.stringify(servicios)); if (firebaseReady) { actualizarSelectServicios(); actualizarFiltrosServicio(); } }
+                if (data) { servicios = Object.keys(data).map(key => data[key]); localStorage.setItem('serviciosLoteria', JSON.stringify(servicios)); if (firebaseReady) { actualizarSelectServicios(); actualizarFiltrosServicio(); actualizarControlServicios(); } }
             });
             dbRef.secciones.on('value', (snapshot) => {
                 const data = snapshot.val();
-                if (data) { secciones = Object.keys(data).map(key => data[key]); localStorage.setItem('seccionesLoteria', JSON.stringify(secciones)); if (firebaseReady) actualizarFiltrosSeccion(); }
+                if (data) { secciones = Object.keys(data).map(key => data[key]); localStorage.setItem('seccionesLoteria', JSON.stringify(secciones)); if (firebaseReady) { actualizarFiltrosSeccion(); actualizarControlSecciones(); } }
             });
             dbRef.empleados.on('value', (snapshot) => {
                 const data = snapshot.val();
@@ -959,7 +1099,7 @@
                 const data = snapshot.val();
                 pedidos = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
                 localStorage.setItem('pedidosLoteria', JSON.stringify(pedidos));
-                if (firebaseReady) { renderizarTabla(); renderizarListadoGeneral(); actualizarEstadisticas(); }
+                if (firebaseReady) { renderizarTabla(); renderizarListadoGeneral(); actualizarEstadisticas(); renderizarControl(); }
             });
             dbRef.config.on('value', (snapshot) => {
                 const data = snapshot.val();
@@ -1010,13 +1150,17 @@
             const tabSolicitar = document.getElementById('tabSolicitar');
             const tabOCR = document.getElementById('tabOCR');
             const tabConfig = document.getElementById('tabConfig');
+            const tabControl = document.getElementById('tabControl');
             if (tabSolicitar) tabSolicitar.classList.toggle('hidden', !esAdmin);
             if (tabOCR) tabOCR.classList.toggle('hidden', !esAdmin);
             if (tabConfig) tabConfig.classList.toggle('hidden', !esAdmin);
+            if (tabControl) tabControl.classList.toggle('hidden', !esAdmin);
             const qaSolicitar = document.getElementById('qaSolicitar');
             const qaOCR = document.getElementById('qaOCR');
+            const qaControl = document.getElementById('qaControl');
             if (qaSolicitar) qaSolicitar.classList.toggle('disabled', !esAdmin);
             if (qaOCR) qaOCR.classList.toggle('disabled', !esAdmin);
+            if (qaControl) qaControl.classList.toggle('disabled', !esAdmin);
             const bannerSolicitar = document.getElementById('bannerSolicitar');
             const bannerOCR = document.getElementById('bannerOCR');
             if (bannerSolicitar) bannerSolicitar.style.display = esAdmin ? 'none' : 'flex';
@@ -1036,7 +1180,7 @@
             const paginaActual = document.querySelector('.section-page.active');
             if (paginaActual && !esAdmin) {
                 const pageId = paginaActual.id;
-                if (pageId === 'page-solicitar' || pageId === 'page-ocr' || pageId === 'page-configuracion') {
+                if (pageId === 'page-solicitar' || pageId === 'page-ocr' || pageId === 'page-configuracion' || pageId === 'page-control') {
                     irAPagina('inicio');
                 }
             }
@@ -1086,7 +1230,7 @@
 
         function cambiarMiClave() {
             const nueva = document.getElementById('nuevaClave').value.trim();
-            if (!nueva) { showToast('️', 'Introduce la nueva contraseña.'); return; }
+            if (!nueva) { showToast('⚠️', 'Introduce la nueva contraseña.'); return; }
             if (nueva.length < 4) { showToast('⚠️', 'Mínimo 4 caracteres.'); return; }
             if (usuarios[usuarioActual]) {
                 usuarios[usuarioActual].clave = nueva;
@@ -1112,7 +1256,7 @@
 
         function eliminarUsuario(nombre) {
             if (nombre === USUARIO_ADMIN) { showToast('⚠️', 'No se puede eliminar al administrador.'); return; }
-            if (nombre === usuarioActual) { showToast('⚠️', 'No puedes eliminar tu propio usuario.'); return; }
+            if (nombre === usuarioActual) { showToast('️', 'No puedes eliminar tu propio usuario.'); return; }
             if (confirm('¿Eliminar al usuario "' + nombre + '"?')) {
                 delete usuarios[nombre];
                 firebaseGuardarUsuarios();
@@ -1130,7 +1274,7 @@
             list.innerHTML = keys.map(u => {
                 const user = usuarios[u];
                 const rolBadge = user.rol === 'admin' ? '<span class="role-badge role-admin">admin</span>' : '<span class="role-badge role-consulta">consulta</span>';
-                const btnEliminar = u === USUARIO_ADMIN ? '' : '<button class="btn btn-delete btn-small" onclick="eliminarUsuario(\'' + u + '\')">️</button>';
+                const btnEliminar = u === USUARIO_ADMIN ? '' : '<button class="btn btn-delete btn-small" onclick="eliminarUsuario(\'' + u + '\')">🗑️</button>';
                 return '<li><span>👤 ' + u + ' ' + rolBadge + '</span>' + btnEliminar + '</li>';
             }).join('');
         }
@@ -1140,6 +1284,7 @@
             actualizarSelectServicios();
             actualizarFiltrosServicio();
             actualizarFiltrosSeccion();
+            actualizarControlServicios();
             renderizarTabla();
             renderizarListadoGeneral();
             renderizarListaUsuarios();
@@ -1165,7 +1310,7 @@
 
         function irAPagina(page) {
             const esAdmin = rolActual === 'admin';
-            if (!esAdmin && (page === 'solicitar' || page === 'ocr' || page === 'configuracion')) {
+            if (!esAdmin && (page === 'solicitar' || page === 'ocr' || page === 'configuracion' || page === 'control')) {
                 showToast('🔒', 'Solo el administrador puede acceder.', true);
                 page = 'inicio';
             }
@@ -1181,11 +1326,196 @@
             if (page === 'inicio') actualizarFechaBienvenida();
             if (page === 'solicitar') { establecerFechaHoraActual(); actualizarSelectServicios(); }
             if (page === 'ocr') actualizarSelectServicios();
+            if (page === 'control') { actualizarControlServicios(); renderizarControl(); }
         }
 
         document.querySelectorAll('.nav-tab').forEach(tab => {
             tab.addEventListener('click', function() { irAPagina(this.getAttribute('data-page')); });
         });
+
+        // ===== FUNCIONES CONTROL CON 3 CHECKS =====
+        function actualizarControlServicios() {
+            const select = document.getElementById('controlServicio');
+            if (!select) return;
+            const valorActual = select.value;
+            let html = '<option value="">-- Selecciona un servicio --</option>';
+            [...servicios].sort((a, b) => a.localeCompare(b, 'es')).forEach(s => { html += '<option value="' + s + '">' + s + '</option>'; });
+            select.innerHTML = html;
+            if (valorActual) select.value = valorActual;
+        }
+
+        function actualizarControlSecciones() {
+            const servicio = document.getElementById('controlServicio').value;
+            const select = document.getElementById('controlSeccion');
+            const valorActual = select.value;
+            let html = '<option value="">-- Todas las secciones --</option>';
+            if (servicio) {
+                const seccionesFiltradas = secciones.filter(s => s.servicio === servicio);
+                [...seccionesFiltradas].sort((a, b) => a.nombre.localeCompare(b.nombre, 'es')).forEach(s => { html += '<option value="' + s.nombre + '">' + s.nombre + '</option>'; });
+            }
+            select.innerHTML = html;
+            if (valorActual) select.value = valorActual;
+            renderizarControl();
+        }
+
+        function renderizarControl() {
+            const servicio = document.getElementById('controlServicio').value;
+            const seccion = document.getElementById('controlSeccion').value;
+            const filtro = document.getElementById('controlFiltro').value;
+            const listContainer = document.getElementById('controlList');
+            const summary = document.getElementById('controlSummary');
+            
+            if (!servicio) {
+                listContainer.innerHTML = '<div class="empty-state" style="padding: 30px;"><div class="empty-icon">📝</div><h3>Selecciona un servicio</h3><p>Elige un servicio para ver la lista de empleados con sus 3 checks</p></div>';
+                summary.style.display = 'none';
+                return;
+            }
+            
+            // Filtrar empleados
+            let empleadosFiltrados = empleados.filter(e => e.servicio === servicio);
+            if (seccion) {
+                empleadosFiltrados = empleadosFiltrados.filter(e => e.seccion === seccion);
+            }
+            empleadosFiltrados.sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'));
+            
+            // Mapa de pedidos por empleado (nombre en minúsculas)
+            const pedidosMap = {};
+            pedidos.forEach(p => {
+                const key = p.nombre.toLowerCase().trim();
+                if (!pedidosMap[key]) pedidosMap[key] = [];
+                pedidosMap[key].push(p);
+            });
+            
+            let html = '<div class="control-list-header">' +
+                '<div>Nombre</div>' +
+                '<div>Sección</div>' +
+                '<div class="check-cell">Solicitado</div>' +
+                '<div class="check-cell">Pagado</div>' +
+                '<div class="check-cell">Recibido</div>' +
+            '</div>';
+            
+            let total = 0, solicitados = 0, pagados = 0, recibidos = 0;
+            
+            empleadosFiltrados.forEach(emp => {
+                const pedidoEmp = pedidosMap[emp.nombre.toLowerCase().trim()] || [];
+                const tienePedido = pedidoEmp.length > 0;
+                const estaPagado = pedidoEmp.some(p => p.pagado);
+                const estaRecibido = pedidoEmp.some(p => p.recogido);
+                
+                // Aplicar filtro
+                if (filtro === 'pendientes' && tienePedido) return;
+                if (filtro === 'solicitados' && (!tienePedido || estaPagado)) return;
+                if (filtro === 'pagados' && (!estaPagado || estaRecibido)) return;
+                if (filtro === 'completos' && !estaRecibido) return;
+                
+                total++;
+                if (tienePedido) solicitados++;
+                if (estaPagado) pagados++;
+                if (estaRecibido) recibidos++;
+                
+                const disabled = rolActual !== 'admin' ? 'disabled' : '';
+                
+                html += '<div class="control-list-item">' +
+                    '<div class="emp-name" title="' + emp.nombre + '">' + emp.nombre + '</div>' +
+                    '<div class="emp-section" title="' + emp.seccion + '">' + emp.seccion + '</div>' +
+                    '<div class="check-cell"><input type="checkbox" ' + (tienePedido ? 'checked' : '') + ' ' + disabled + ' onchange="toggleControlSolicitud(\'' + emp.id + '\', this.checked)" title="Solicitado"></div>' +
+                    '<div class="check-cell"><input type="checkbox" ' + (estaPagado ? 'checked' : '') + ' ' + (tienePedido ? '' : 'disabled') + ' onchange="toggleControlPagado(\'' + emp.id + '\', this.checked)" title="Pagado"></div>' +
+                    '<div class="check-cell"><input type="checkbox" ' + (estaRecibido ? 'checked' : '') + ' ' + (tienePedido ? '' : 'disabled') + ' onchange="toggleControlRecibido(\'' + emp.id + '\', this.checked)" title="Recibido"></div>' +
+                '</div>';
+            });
+            
+            if (total === 0) {
+                html = '<div class="empty-state" style="padding: 30px;"><div class="empty-icon">📝</div><h3>Sin resultados</h3><p>No hay empleados que coincidan con los filtros seleccionados</p></div>';
+            }
+            
+            listContainer.innerHTML = html;
+            
+            document.getElementById('ctrlTotal').textContent = total;
+            document.getElementById('ctrlSolicitados').textContent = solicitados;
+            document.getElementById('ctrlPagados').textContent = pagados;
+            document.getElementById('ctrlRecibidos').textContent = recibidos;
+            summary.style.display = 'flex';
+        }
+
+        function toggleControlSolicitud(empId, checked) {
+            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); renderizarControl(); return; }
+            
+            const emp = empleados.find(e => e.id === empId);
+            if (!emp) return;
+            
+            if (checked) {
+                // Crear pedido automáticamente
+                const fechaHoy = new Date().toISOString().split('T')[0];
+                const horaAhora = new Date().toTimeString().slice(0, 5);
+                const nuevo = {
+                    nombre: emp.nombre,
+                    servicio: emp.servicio,
+                    seccion: emp.seccion,
+                    telefono: emp.telefono || '',
+                    numDecimos: 2,
+                    fechaSolicitud: fechaHoy,
+                    horaSolicitud: horaAhora,
+                    fechaEntrega: '',
+                    horaEntrega: '',
+                    quienRecoge: '',
+                    pagado: false,
+                    recogido: false,
+                    fecha: new Date().toLocaleDateString('es-ES'),
+                    creadoPor: usuarioActual,
+                    creadoViaControl: true
+                };
+                const id = generarId();
+                dbRef.pedidos.child(id).set(nuevo);
+                showToast('✅', 'Solicitud registrada para ' + emp.nombre);
+            } else {
+                // Eliminar pedido si existe
+                const pedido = pedidos.find(p => p.nombre.toLowerCase().trim() === emp.nombre.toLowerCase().trim() && p.servicio === emp.servicio);
+                if (pedido) {
+                    if (confirm('¿Eliminar la solicitud de ' + emp.nombre + '?\n\nEsto también quitará los checks de Pagado y Recibido.')) {
+                        dbRef.pedidos.child(pedido.id).remove();
+                        showToast('🗑️', 'Solicitud eliminada para ' + emp.nombre);
+                    } else {
+                        renderizarControl();
+                    }
+                }
+            }
+        }
+
+        function toggleControlPagado(empId, checked) {
+            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); renderizarControl(); return; }
+            
+            const emp = empleados.find(e => e.id === empId);
+            if (!emp) return;
+            
+            const pedido = pedidos.find(p => p.nombre.toLowerCase().trim() === emp.nombre.toLowerCase().trim() && p.servicio === emp.servicio);
+            if (pedido) {
+                pedido.pagado = checked;
+                firebaseGuardarPedido(pedido);
+                showToast(checked ? '💰' : '⏳', checked ? emp.nombre + ' ha pagado' : 'Pago desmarcado para ' + emp.nombre);
+            }
+        }
+
+        function toggleControlRecibido(empId, checked) {
+            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); renderizarControl(); return; }
+            
+            const emp = empleados.find(e => e.id === empId);
+            if (!emp) return;
+            
+            const pedido = pedidos.find(p => p.nombre.toLowerCase().trim() === emp.nombre.toLowerCase().trim() && p.servicio === emp.servicio);
+            if (pedido) {
+                pedido.recogido = checked;
+                if (checked) {
+                    pedido.fechaEntrega = new Date().toISOString().split('T')[0];
+                    pedido.horaEntrega = new Date().toTimeString().slice(0, 5);
+                } else {
+                    pedido.fechaEntrega = '';
+                    pedido.horaEntrega = '';
+                }
+                firebaseGuardarPedido(pedido);
+                showToast(checked ? '📦' : '⏳', checked ? 'Entrega registrada para ' + emp.nombre : 'Entrega desmarcada para ' + emp.nombre);
+            }
+        }
+        // ===== FIN FUNCIONES CONTROL =====
 
         function obtenerDecimosAcumulados(nombre) {
             const n = nombre.trim().toLowerCase();
@@ -1393,7 +1723,7 @@
             tbody.innerHTML = pedidosFiltrados.map(p => {
                 const quienRecogeHtml = p.quienRecoge ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
                 const accionesHtml = esAdmin 
-                    ? '<div class="actions-cell"><button class="btn btn-edit" onclick="editarPedido(\'' + p.id + '\')">✏️</button><button class="btn btn-delete" onclick="eliminarPedido(\'' + p.id + '\')">️</button></div>'
+                    ? '<div class="actions-cell"><button class="btn btn-edit" onclick="editarPedido(\'' + p.id + '\')">✏️</button><button class="btn btn-delete" onclick="eliminarPedido(\'' + p.id + '\')">🗑️</button></div>'
                     : '<span style="color:#999; font-size:0.85em;">—</span>';
                 const checkboxDisabled = !esAdmin ? 'disabled' : '';
                 return '<tr>' +
@@ -1418,7 +1748,7 @@
 
         document.getElementById('pedidoForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
             const empleadoId = document.getElementById('empleado').value;
             const numDecimos = parseInt(document.getElementById('numDecimos').value) || 2;
             const servicio = document.getElementById('servicio').value;
@@ -1431,7 +1761,7 @@
             } else { showToast('⚠️', 'Selecciona un empleado válido', true); return; }
             const validacion = validarMaximoDecimos(nombre, numDecimos);
             if (!validacion.valido) {
-                let mensaje = ' ' + nombre + ' ya tiene ' + validacion.acumulados + ' décimo(s). ';
+                let mensaje = '🚫 ' + nombre + ' ya tiene ' + validacion.acumulados + ' décimo(s). ';
                 mensaje += 'Con ' + validacion.nuevos + ' nuevos llegaría a ' + validacion.total + ', pero el límite es ' + validacion.maximo + '. ';
                 if (validacion.disponibles > 0) mensaje += ' Aún puede solicitar ' + validacion.disponibles + ' más.';
                 else mensaje += 'Ya ha alcanzado el máximo.';
@@ -1457,36 +1787,36 @@
         });
 
         function togglePagado(id) {
-            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
             const p = pedidos.find(x => x.id === id);
             if (p) {
                 p.pagado = !p.pagado;
                 firebaseGuardarPedido(p);
-                showToast(p.pagado ? '💰' : '', p.pagado ? '¡' + p.nombre + ' ha pagado!' : 'Pago pendiente de ' + p.nombre + '.');
+                showToast(p.pagado ? '' : '⏳', p.pagado ? '¡' + p.nombre + ' ha pagado!' : 'Pago pendiente de ' + p.nombre + '.');
             }
         }
 
         function toggleRecogido(id) {
-            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
             const p = pedidos.find(x => x.id === id);
             if (p) {
                 p.recogido = !p.recogido;
                 firebaseGuardarPedido(p);
-                showToast(p.recogido ? '📦' : '⏳', p.recogido ? 'Décimos entregados a ' + p.nombre + '.' : 'Entrega pendiente a ' + p.nombre + '.');
+                showToast(p.recogido ? '' : '⏳', p.recogido ? 'Décimos entregados a ' + p.nombre + '.' : 'Entrega pendiente a ' + p.nombre + '.');
             }
         }
 
         function eliminarPedido(id) {
-            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
             const p = pedidos.find(x => x.id === id);
             if (p && confirm('¿Eliminar el pedido de ' + p.nombre + '?')) {
                 firebaseEliminarPedido(id);
-                showToast('️', 'Pedido eliminado.');
+                showToast('🗑️', 'Pedido eliminado.');
             }
         }
 
         function editarPedido(id) {
-            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
             const p = pedidos.find(x => x.id === id);
             if (!p) return;
             actualizarSelectServicios();
@@ -1535,7 +1865,7 @@
                 p.quienRecoge = document.getElementById('editarQuienRecoge').value.trim();
                 firebaseGuardarPedido(p);
                 cerrarModal();
-                showToast('✅', '️ Pedido actualizado.');
+                showToast('✅', '✏️ Pedido actualizado.');
             }
         });
 
@@ -1583,7 +1913,7 @@
             tbody.innerHTML = pedidosFiltrados.map(p => {
                 const pagadoBadge = p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7;">✓ Pagado</span>' : '<span class="badge" style="background:#ffebee; color:#c41e3a; border:1px solid #ef9a9a;">⏳ Pendiente</span>';
                 const recogidoBadge = p.recogido ? '<span class="badge" style="background:#e3f2fd; color:#1976d2; border:1px solid #90caf9;">✓ Recogido</span>' : '<span class="badge badge-pending">⏳ Pendiente</span>';
-                const quienRecogeHtml = p.quienRecoge ? '<span class="badge badge-collected"> ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
+                const quienRecogeHtml = p.quienRecoge ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
                 return '<tr>' +
                     '<td class="nombre-cell" title="' + p.nombre + '">' + p.nombre + '</td>' +
                     '<td title="' + (p.servicio || '') + '">' + (p.servicio || '-') + '</td>' +
@@ -1602,7 +1932,7 @@
             }).join('');
             document.querySelectorAll('.sort-icon').forEach(el => el.textContent = '');
             const sortIcon = document.getElementById('sort-' + ordenarPor);
-            if (sortIcon) sortIcon.textContent = ordenDireccion === 'asc' ? '️' : '⬇️';
+            if (sortIcon) sortIcon.textContent = ordenDireccion === 'asc' ? '⬆️' : '⬇️';
         }
 
         function ordenarListado(campo) {
@@ -1670,7 +2000,7 @@
             }
             empty.style.display = 'none'; cont.style.display = 'block';
             tbody.innerHTML = pedidosFiltrados.map(p => {
-                const pagadoBadge = p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7;">✓ Pagado</span>' : '<span class="badge" style="background:#ffebee; color:#c41e3a; border:1px solid #ef9a9a;"> Pendiente</span>';
+                const pagadoBadge = p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7;">✓ Pagado</span>' : '<span class="badge" style="background:#ffebee; color:#c41e3a; border:1px solid #ef9a9a;">⏳ Pendiente</span>';
                 const recogidoBadge = p.recogido ? '<span class="badge" style="background:#e3f2fd; color:#1976d2; border:1px solid #90caf9;">✓ Recogido</span>' : '<span class="badge badge-pending">⏳ Pendiente</span>';
                 const recogidoPor = p.quienRecoge ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
                 return '<tr>' +
@@ -1710,7 +2040,7 @@
             progressContainer.style.display = 'block';
             resultContainer.style.display = 'none';
             btnProcesar.disabled = true;
-            btnProcesar.textContent = ' Procesando...';
+            btnProcesar.textContent = '⏳ Procesando...';
             
             let texto = '';
             
@@ -1719,7 +2049,7 @@
                 const esImagen = file.type.startsWith('image/');
                 
                 if (esPDF) {
-                    statusEl.textContent = ' Leyendo PDF...';
+                    statusEl.textContent = '📖 Leyendo PDF...';
                     progressFill.style.width = '20%';
                     
                     if (!window.pdfjsLib) {
@@ -1768,7 +2098,7 @@
                     throw new Error('Formato no soportado. Usa PDF o imagen.');
                 }
                 
-                statusEl.textContent = '🔎 Buscando empleados...';
+                statusEl.textContent = ' Buscando empleados...';
                 progressFill.style.width = '90%';
                 
                 const resultado = buscarEmpleadosEnTexto(texto, servicio);
@@ -1828,7 +2158,7 @@
             }
             
             if (resultado.encontrados.length === 0 && resultado.noEncontrados.length === 0) {
-                html = '<div style="padding:15px; background:#fff3e0; border-radius:6px; margin-top:15px;">⚠️ No se detectaron nombres en el archivo. Verifica que el PDF contenga texto legible.</div>';
+                html = '<div style="padding:15px; background:#fff3e0; border-radius:6px; margin-top:15px;">️ No se detectaron nombres en el archivo. Verifica que el PDF contenga texto legible.</div>';
             }
             
             resultList.innerHTML = html;
@@ -1845,11 +2175,11 @@
             if (!confirm('¿Deseas crear el empleado "' + nombreDetectado + '" y registrar su pedido de ' + decimosDetectados + ' décimo(s)?\n\nPulsa ACEPTAR para crearlo o CANCELAR para omitirlo.')) {
                 resultado.noEncontrados.splice(idx, 1);
                 mostrarResultadosOCR(resultado);
-                showToast('️', 'Empleado "' + nombreDetectado + '" omitido.');
+                showToast('⚠️', 'Empleado "' + nombreDetectado + '" omitido.');
                 return;
             }
             
-            const telefono = prompt('📞 Introduce el teléfono de "' + nombreDetectado + '":');
+            const telefono = prompt(' Introduce el teléfono de "' + nombreDetectado + '":');
             if (!telefono || !telefono.trim()) {
                 showToast('⚠️', 'Se necesita el teléfono para crear el empleado.', true);
                 return;
@@ -1886,7 +2216,7 @@
             } else {
                 seccion = prompt('📂 Introduce la sección para "' + nombreDetectado + '":');
                 if (!seccion || !seccion.trim()) {
-                    showToast('️', 'Se necesita una sección.', true);
+                    showToast('⚠️', 'Se necesita una sección.', true);
                     return;
                 }
                 seccion = seccion.trim().toUpperCase();
@@ -1949,7 +2279,6 @@
             
             const empleadosDelServicio = empleados.filter(e => e.servicio === servicio);
             
-            // 1️⃣ Primero buscar empleados existentes en TODO el texto
             empleadosDelServicio.forEach(emp => {
                 const nombreNorm = emp.nombre.toLowerCase()
                     .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -1972,14 +2301,12 @@
                 }
             });
             
-            // 2️⃣ Dividir el texto en bloques separados por líneas de separación
             const bloques = texto.split(/\|\s*---\|---\|---\|---\|---\s*\|/);
             const empleadosDetectados = [];
             
             bloques.forEach(bloque => {
                 const lineas = bloque.split('\n').map(l => l.trim()).filter(l => l.startsWith('|'));
                 
-                // Procesar cada grupo de 5 líneas consecutivas
                 for (let i = 0; i < lineas.length - 4; i++) {
                     const l1 = lineas[i].replace(/^\|\s*/, '').trim();
                     const l2 = lineas[i + 1].replace(/^\|\s*/, '').trim();
@@ -1987,14 +2314,11 @@
                     const l4 = lineas[i + 3].replace(/^\|\s*/, '').trim();
                     const l5 = lineas[i + 4].replace(/^\|\s*/, '').trim();
                     
-                    // Verificar que l5 sea un número (1 o 2 décimos)
                     const decimos = parseInt(l5);
                     if (isNaN(decimos) || (decimos !== 1 && decimos !== 2)) continue;
                     
-                    // Verificar que l3 contenga el servicio correcto
                     if (!l3.toUpperCase().includes('DESARROLLO') && !l3.toUpperCase().includes('RURAL')) continue;
                     
-                    // Ignorar encabezados
                     const encabezados = ['NOMBRE', 'APELLIDOS', 'SERVICIO', 'CENTRO', 'DÉCIMOS', 'DECIMOS'];
                     if (encabezados.some(e => l1.toUpperCase().includes(e))) continue;
                     if (encabezados.some(e => l2.toUpperCase().includes(e))) continue;
@@ -2010,7 +2334,6 @@
                 }
             });
             
-            // 3️⃣ Procesar empleados detectados
             empleadosDetectados.forEach(empDetectado => {
                 const nombreNorm = empDetectado.nombre.toLowerCase()
                     .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -2052,10 +2375,10 @@
         }
 
         function confirmarPedidosOCR() {
-            if (rolActual !== 'admin') { showToast('', 'Solo el administrador.', true); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Solo el administrador.', true); return; }
             const resultado = window.ocrResultado;
             if (!resultado || resultado.encontrados.length === 0) {
-                showToast('⚠️', 'No hay empleados encontrados para procesar. Crea primero los que faltan.', true);
+                showToast('️', 'No hay empleados encontrados para procesar. Crea primero los que faltan.', true);
                 return;
             }
             
@@ -2118,7 +2441,7 @@
             const { id, ...datos } = pedido;
             dbRef.pedidos.child(id).set(datos)
                 .then(() => setSyncStatus('online'))
-                .catch((err) => { setSyncStatus('offline', '❌ Error'); showToast('⚠️', 'No se pudo guardar', true); });
+                .catch((err) => { setSyncStatus('offline', ' Error'); showToast('⚠️', 'No se pudo guardar', true); });
         }
 
         function firebaseEliminarPedido(id) {
@@ -2229,17 +2552,17 @@
             const rows = pedidosExportar.map(p => [p.nombre, p.servicio||'-', p.seccion||'-', p.telefono||'-', p.numDecimos, (p.numDecimos*PRECIO_DECIMO).toLocaleString('es-ES')+'€', p.fechaSolicitud||'-', p.pagado?'Si':'No']);
             doc.autoTable(cols, rows, { startY: 36, theme: 'striped', headStyles: { fillColor: [26, 58, 92], fontSize: 7 }, bodyStyles: { fontSize: 7 } });
             doc.save('listado-general-loteria-2026.pdf');
-            showToast('📄', ' PDF generado.');
+            showToast('📄', '📄 PDF generado.');
         }
 
         function exportarListadoGeneralCSV() {
             const pedidosExportar = getPedidosFiltradosListado();
-            if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos'); return; }
+            if (pedidosExportar.length === 0) { showToast('️', 'No hay pedidos'); return; }
             let csv = '\uFEFFNombre,Servicio,Seccion,Telefono,N Decimos,Importe,Fecha Sol.,Hora Sol.,Pagado,Recogido\n';
             pedidosExportar.forEach(p => { csv += '"'+p.nombre+'","'+(p.servicio||'')+'","'+(p.seccion||'')+'","'+(p.telefono||'')+'",'+p.numDecimos+','+(p.numDecimos*PRECIO_DECIMO)+',"'+(p.fechaSolicitud||'')+'","'+(p.horaSolicitud||'')+'",'+(p.pagado?'Si':'No')+','+(p.recogido?'Si':'No')+'\n'; });
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'listado-general-2026.csv'; link.click();
-            showToast('📊', ' CSV generado.');
+            showToast('', '📊 CSV generado.');
         }
 
         function imprimirListadoGeneral() {
@@ -2268,7 +2591,7 @@
             const rows = pedidosExportar.map(p => [p.nombre, p.servicio||'-', p.seccion||'-', p.telefono||'-', p.numDecimos, (p.numDecimos*PRECIO_DECIMO)+'€', p.fechaSolicitud||'-', p.pagado?'Si':'No']);
             doc.autoTable(cols, rows, { startY: 36, theme: 'striped', headStyles: { fillColor: [26, 58, 92], fontSize: 7 }, bodyStyles: { fontSize: 7 } });
             doc.save('pedidos-loteria-2026.pdf');
-            showToast('📄', '📄 PDF generado.');
+            showToast('', '📄 PDF generado.');
         }
 
         function exportarCSV() {
@@ -2282,7 +2605,7 @@
             pedidosExportar.forEach(p => { csv += '"'+p.nombre+'","'+(p.servicio||'')+'","'+(p.seccion||'')+'","'+(p.telefono||'')+'",'+p.numDecimos+','+(p.numDecimos*PRECIO_DECIMO)+',"'+(p.fechaSolicitud||'')+'","'+(p.horaSolicitud||'')+'",'+(p.pagado?'Si':'No')+','+(p.recogido?'Si':'No')+'\n'; });
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'pedidos-2026.csv'; link.click();
-            showToast('', '📊 CSV generado.');
+            showToast('📊', '📊 CSV generado.');
         }
 
         function imprimirListado() {
