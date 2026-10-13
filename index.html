@@ -265,12 +265,12 @@
         </div>
         <div class="nav-tabs">
             <button class="nav-tab active" data-page="inicio">🏠 Inicio</button>
-            <button class="nav-tab" data-page="solicitar" id="tabSolicitar">️ Solicitar</button>
+            <button class="nav-tab" data-page="solicitar" id="tabSolicitar">🎟️ Solicitar</button>
             <button class="nav-tab" data-page="control" id="tabControl">📝 Control</button>
             <button class="nav-tab" data-page="pedidos">📋 Pedidos</button>
             <button class="nav-tab" data-page="listado">📑 Listado</button>
-            <button class="nav-tab" data-page="resumen"> Resumen</button>
-            <button class="nav-tab" data-page="participantes"> Participantes</button>
+            <button class="nav-tab" data-page="resumen">📊 Resumen</button>
+            <button class="nav-tab" data-page="participantes">👥 Participantes</button>
             <button class="nav-tab" data-page="ocr" id="tabOCR">📷 Lectura PDF</button>
             <button class="nav-tab" data-page="configuracion" id="tabConfig">⚙️ Config</button>
         </div>
@@ -295,8 +295,8 @@
                         <div class="stat-label">Dinero Recaudado</div>
                         <div class="stat-details">
                             <div class="stat-detail-row"><span>💰 Total:</span><span id="statTotalEsperado">0 €</span></div>
-                            <div class="stat-detail-row"><span>💵 Cobrado:</span><span id="statCobrado">0 €</span></div>
-                            <div class="stat-detail-row"><span>⏳ Pendiente:</span><span id="statPendienteCobro">0 €</span></div>
+                            <div class="stat-detail-row"><span> Cobrado:</span><span id="statCobrado">0 €</span></div>
+                            <div class="stat-detail-row"><span> Pendiente:</span><span id="statPendienteCobro">0 €</span></div>
                         </div>
                     </div>
                     <div class="stat-card green">
@@ -380,7 +380,7 @@
 
             <div class="section-page" id="page-control">
                 <div class="content-card">
-                    <h2 class="section-title">📝 Control de Solicitudes, Pagos y Entregas</h2>
+                    <h2 class="section-title"> Control de Solicitudes, Pagos y Entregas</h2>
                     <div class="alert-info">
                         📋 Elige un servicio (y opcionalmente una sección) para ver la lista de empleados. Marca los 3 checks según corresponda: <strong>Solicitado</strong>, <strong>Pagado</strong> y <strong>Recibido</strong>.
                     </div>
@@ -428,7 +428,7 @@
                     </div>
                     <div class="control-list" id="controlList">
                         <div class="empty-state" style="padding: 30px;">
-                            <div class="empty-icon"></div>
+                            <div class="empty-icon">📝</div>
                             <h3>Selecciona un servicio</h3>
                             <p>Elige un servicio para ver la lista de empleados con sus 3 checks</p>
                         </div>
@@ -442,8 +442,8 @@
                         <h2>Estado actual de los pedidos</h2>
                         <div class="export-buttons">
                             <button class="btn btn-export" onclick="exportarPDF()"> PDF</button>
-                            <button class="btn btn-export" onclick="exportarCSV()"> CSV</button>
-                            <button class="btn btn-export" onclick="imprimirListado()">️ Imprimir</button>
+                            <button class="btn btn-export" onclick="exportarCSV()">📊 CSV</button>
+                            <button class="btn btn-export" onclick="imprimirListado()">🖨️ Imprimir</button>
                         </div>
                     </div>
                     <div class="filter-bar">
@@ -484,7 +484,7 @@
                         </table>
                     </div>
                     <div class="empty-state" id="emptyState">
-                        <div class="empty-icon"></div>
+                        <div class="empty-icon">🎰</div>
                         <h3>Aún no hay pedidos</h3>
                         <p>Añade el primero desde "Solicitar" o escaneando un PDF</p>
                     </div>
@@ -493,7 +493,7 @@
 
             <div class="section-page" id="page-listado">
                 <div class="content-card">
-                    <h2 class="section-title">📑 Listado General</h2>
+                    <h2 class="section-title"> Listado General</h2>
                     <div class="alert-info">💡 Haz clic en cualquier cabecera para ordenar.</div>
                     <div class="sort-controls">
                         <div class="form-group">
@@ -513,7 +513,7 @@
                         <div class="form-group">
                             <label for="ordenDireccion">Dirección</label>
                             <select id="ordenDireccion" onchange="renderizarListadoGeneral()">
-                                <option value="asc">⬆️ Ascendente (A-Z)</option>
+                                <option value="asc">️ Ascendente (A-Z)</option>
                                 <option value="desc">⬇️ Descendente (Z-A)</option>
                             </select>
                         </div>
@@ -549,7 +549,7 @@
                     <div class="export-buttons" style="margin-bottom: 15px;">
                         <button class="btn btn-export" onclick="exportarListadoGeneralPDF()">📄 PDF</button>
                         <button class="btn btn-export" onclick="exportarListadoGeneralCSV()"> CSV</button>
-                        <button class="btn btn-export" onclick="imprimirListadoGeneral()">️ Imprimir</button>
+                        <button class="btn btn-export" onclick="imprimirListadoGeneral()">🖨️ Imprimir</button>
                     </div>
                     <div class="table-container" id="listadoGeneralContainer" style="display:none;">
                         <table>
@@ -574,7 +574,7 @@
                         </table>
                     </div>
                     <div class="empty-state" id="emptyListadoGeneral">
-                        <div class="empty-icon"></div>
+                        <div class="empty-icon">📑</div>
                         <h3>Sin datos</h3>
                         <p>No hay pedidos o no coinciden con los filtros</p>
                     </div>
@@ -583,7 +583,7 @@
 
             <div class="section-page" id="page-resumen">
                 <div class="content-card">
-                    <h2 class="section-title"> Resumen Detallado</h2>
+                    <h2 class="section-title">📊 Resumen Detallado</h2>
                     <div class="filter-bar">
                         <div class="form-group">
                             <label for="filtroServicioResumen">Servicio</label>
@@ -653,7 +653,7 @@
                 <div class="content-card">
                     <div id="bannerOCR" class="readonly-banner" style="display:none;">🔒 Solo el administrador puede usar esta función.</div>
                     <h2 class="section-title">📷 Lectura de PDF Escaneado</h2>
-                    <div class="alert-info"> Sube el PDF escaneado del listado de un servicio. Leeré los nombres, los buscaré en la base de datos y crearé los pedidos automáticamente. Si alguien no existe, podrás darle de alta al momento.</div>
+                    <div class="alert-info">📋 Sube el PDF escaneado del listado de un servicio. Leeré los nombres, los buscaré en la base de datos y crearé los pedidos automáticamente. Si alguien no existe, podrás darle de alta al momento.</div>
                     <div id="ocrFormContainer">
                         <div class="form-grid">
                             <div class="form-group">
@@ -671,7 +671,7 @@
                             <label for="ocrFile">Seleccionar PDF o imagen *</label>
                             <input type="file" id="ocrFile" accept=".pdf,image/*" style="padding: 10px;">
                         </div>
-                        <button type="button" class="btn btn-primary" onclick="procesarOCR()" id="btnProcesarOCR"> Procesar archivo</button>
+                        <button type="button" class="btn btn-primary" onclick="procesarOCR()" id="btnProcesarOCR">🔍 Procesar archivo</button>
                     </div>
                     <div id="ocrProgressContainer" style="display:none;">
                         <div class="ocr-progress">
@@ -702,7 +702,7 @@
                         <div id="syncStatusBox" class="alert-info">🔄 Conectando...</div>
                     </div>
                     <div class="config-block" id="configUsuariosBlock">
-                        <h3> Añadir nuevo usuario</h3>
+                        <h3>👤 Añadir nuevo usuario</h3>
                         <div class="alert-info">Crea un nuevo usuario con contraseña. Los nuevos usuarios tendrán acceso de <strong>consulta</strong> (solo ver datos).</div>
                         <div class="config-row">
                             <div class="form-group">
@@ -719,7 +719,7 @@
                         <div id="emptyUsers" style="text-align:center; padding: 15px; color: #999; font-size: 0.85em;">Aún no hay usuarios configurados</div>
                     </div>
                     <div class="config-block">
-                        <h3> Cambiar mi contraseña</h3>
+                        <h3>🔐 Cambiar mi contraseña</h3>
                         <div class="alert-info">Cambia tu contraseña personal. Se sincroniza en todos los dispositivos.</div>
                         <div class="config-row">
                             <div class="form-group">
@@ -733,8 +733,8 @@
                         <h3>💾 Copia de seguridad</h3>
                         <div class="alert-info">Exporta o importa todos los datos de la aplicación.</div>
                         <div class="config-row">
-                            <button type="button" class="btn btn-primary btn-small" onclick="exportarDatosJSON()">📤 Exportar datos</button>
-                            <button type="button" class="btn btn-success btn-small" onclick="document.getElementById('importarFile').click()">📥 Importar datos</button>
+                            <button type="button" class="btn btn-primary btn-small" onclick="exportarDatosJSON()"> Exportar datos</button>
+                            <button type="button" class="btn btn-success btn-small" onclick="document.getElementById('importarFile').click()"> Importar datos</button>
                             <input type="file" id="importarFile" accept=".json" style="display:none" onchange="importarDatosJSON(event)">
                         </div>
                     </div>
@@ -895,10 +895,10 @@
                     await dbRef.empleados.set(empleadosObj);
 
                     await dbRef.inicializado.set({
-                        fecha: new Date().toISOString(), version: '18.0',
+                        fecha: new Date().toISOString(), version: '19.0',
                         empleadosCargados: 0
                     });
-                    showToast('👋', '¡Bienvenido! Empieza añadiendo empleados.');
+                    showToast('', '¡Bienvenido! Empieza añadiendo empleados.');
                 }
 
                 loadingText.textContent = 'Verificando administrador...';
@@ -1121,12 +1121,12 @@
             
             if (!nombre) { showToast('⚠️', 'Escribe un nombre de usuario.'); return; }
             if (/[.#$\[\]]/.test(nombre)) { showToast('⚠️', 'El nombre no puede contener: . # $ [ ]'); return; }
-            if (nombre.length < 3) { showToast('⚠️', 'El nombre debe tener al menos 3 caracteres.'); return; }
+            if (nombre.length < 3) { showToast('️', 'El nombre debe tener al menos 3 caracteres.'); return; }
             if (nombre === USUARIO_ADMIN.toLowerCase()) { showToast('⚠️', 'Ese nombre está reservado.'); return; }
             if (!clave || clave.length < 4) { showToast('⚠️', 'La contraseña debe tener al menos 4 caracteres.'); return; }
             
             firebase.database().ref('loteria/usuarios/' + nombre).once('value').then(snap => {
-                if (snap.exists()) { showToast('⚠️', 'Ese usuario ya existe. Prueba con otro nombre.'); return; }
+                if (snap.exists()) { showToast('️', 'Ese usuario ya existe. Prueba con otro nombre.'); return; }
                 
                 const nuevoUsuario = {
                     clave: clave,
@@ -1152,7 +1152,7 @@
         }
 
         function eliminarUsuario(nombre) {
-            if (nombre === USUARIO_ADMIN) { showToast('️', 'No puedo borrar al administrador principal.'); return; }
+            if (nombre === USUARIO_ADMIN) { showToast('⚠️', 'No puedo borrar al administrador principal.'); return; }
             if (nombre === usuarioActual) { showToast('⚠️', 'No puedes borrarte a ti mismo.'); return; }
             if (confirm('¿Seguro que quieres borrar a "' + nombre + '"?')) {
                 delete usuarios[nombre];
@@ -1230,7 +1230,7 @@
             tab.addEventListener('click', function() { irAPagina(this.getAttribute('data-page')); });
         });
 
-        // ===== FUNCIONES CONTROL CON 3 CHECKS =====
+        // ===== FUNCIONES CONTROL CON 3 CHECKS Y ACCIONES EN MASA =====
         function actualizarControlServicios() {
             const select = document.getElementById('controlServicio');
             if (!select) return;
@@ -1288,6 +1288,32 @@
                 '<div class="check-cell">Recibido</div>' +
             '</div>';
             
+            // Botones de acción en masa
+            const totalSolicitados = empleadosFiltrados.filter(emp => {
+                const key = emp.nombre.toLowerCase().trim();
+                return pedidosMap[key] && pedidosMap[key].length > 0;
+            }).length;
+            
+            const totalPagados = empleadosFiltrados.filter(emp => {
+                const key = emp.nombre.toLowerCase().trim();
+                return pedidosMap[key] && pedidosMap[key].some(p => p.pagado);
+            }).length;
+            
+            if (rolActual === 'admin' && totalSolicitados > 0) {
+                html += '<div style="padding: 10px 15px; background: #f8f9fa; border-bottom: 1px solid #e0e2e5; display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">';
+                html += '<strong style="font-size: 0.85em; color: #1a3a5c;"> Acciones rápidas:</strong>';
+                
+                if (totalSolicitados > totalPagados) {
+                    html += '<button class="btn btn-success btn-small" onclick="marcarTodosPagados()">💰 Marcar TODOS como pagados (' + (totalSolicitados - totalPagados) + ' pendientes)</button>';
+                }
+                
+                if (totalPagados > 0) {
+                    html += '<button class="btn btn-primary btn-small" onclick="marcarTodosEntregados()">📦 Marcar TODOS como entregados (' + totalPagados + ' pagados)</button>';
+                }
+                
+                html += '</div>';
+            }
+            
             let total = 0, solicitados = 0, pagados = 0, recibidos = 0;
             
             empleadosFiltrados.forEach(emp => {
@@ -1318,6 +1344,9 @@
                     if (horaSol) fechaHoraText += ' ' + horaSol;
                 }
                 
+                // El check de Recibido solo se activa si está Pagado
+                const recogidoDisabled = (!tienePedido || !estaPagado || rolActual !== 'admin') ? 'disabled' : '';
+                
                 html += '<div class="control-list-item">' +
                     '<div class="emp-name" title="' + emp.nombre + '">' + emp.nombre + '</div>' +
                     '<div class="emp-section" title="' + emp.seccion + '">' + emp.seccion + '</div>' +
@@ -1327,7 +1356,7 @@
                         (fechaHoraText ? '<span style="font-size:0.65em; color:#666;">' + fechaHoraText + '</span>' : '') +
                     '</div>' +
                     '<div class="check-cell"><input type="checkbox" ' + (estaPagado ? 'checked' : '') + ' ' + (tienePedido ? '' : 'disabled') + ' onchange="toggleControlPagado(\'' + emp.id + '\', this.checked)" title="Pagado"></div>' +
-                    '<div class="check-cell"><input type="checkbox" ' + (estaRecibido ? 'checked' : '') + ' ' + (tienePedido ? '' : 'disabled') + ' onchange="toggleControlRecibido(\'' + emp.id + '\', this.checked)" title="Recibido"></div>' +
+                    '<div class="check-cell"><input type="checkbox" ' + (estaRecibido ? 'checked' : '') + ' ' + recogidoDisabled + ' onchange="toggleControlRecibido(\'' + emp.id + '\', this.checked)" title="Recibido (solo si está pagado)"></div>' +
                 '</div>';
             });
             
@@ -1401,26 +1430,155 @@
         }
 
         function toggleControlRecibido(empId, checked) {
-            if (rolActual !== 'admin') { showToast('', 'Esta acción es solo para administradores.', true); renderizarControl(); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); renderizarControl(); return; }
             
             const emp = empleados.find(e => e.id === empId);
             if (!emp) return;
             
             const pedido = pedidos.find(p => p.nombre.toLowerCase().trim() === emp.nombre.toLowerCase().trim() && p.servicio === emp.servicio);
-            if (pedido) {
-                pedido.recogido = checked;
-                if (checked) {
+            if (!pedido) {
+                showToast('⚠️', 'No hay pedido para este empleado.', true);
+                renderizarControl();
+                return;
+            }
+            
+            if (!pedido.pagado) {
+                showToast('️', 'Primero hay que marcarlo como Pagado antes de marcarlo como Recibido.', true);
+                renderizarControl();
+                return;
+            }
+            
+            if (checked) {
+                if (confirm('¿Se entregan los décimos al titular (' + emp.nombre + ')?\n\nAceptar = Sí, al titular\nCancelar = No, especificar otra persona')) {
+                    pedido.recogido = true;
                     pedido.fechaEntrega = new Date().toISOString().split('T')[0];
                     pedido.horaEntrega = new Date().toTimeString().slice(0, 5);
+                    pedido.quienRecoge = '';
+                    firebaseGuardarPedido(pedido);
+                    showToast('', '¡Entrega registrada a ' + emp.nombre + '!');
                 } else {
-                    pedido.fechaEntrega = '';
-                    pedido.horaEntrega = '';
+                    const quienRecoge = prompt('¿A nombre de quién se entregan los décimos?');
+                    if (!quienRecoge || !quienRecoge.trim()) {
+                        showToast('⚠️', 'Necesito el nombre de quien recoge.', true);
+                        renderizarControl();
+                        return;
+                    }
+                    pedido.recogido = true;
+                    pedido.fechaEntrega = new Date().toISOString().split('T')[0];
+                    pedido.horaEntrega = new Date().toTimeString().slice(0, 5);
+                    pedido.quienRecoge = quienRecoge.trim();
+                    firebaseGuardarPedido(pedido);
+                    showToast('📦', '¡Entrega registrada a ' + quienRecoge.trim() + ' (por ' + emp.nombre + ')!');
                 }
+            } else {
+                pedido.recogido = false;
+                pedido.fechaEntrega = '';
+                pedido.horaEntrega = '';
+                pedido.quienRecoge = '';
                 firebaseGuardarPedido(pedido);
-                showToast(checked ? '📦' : '', checked ? '¡Entrega registrada para ' + emp.nombre + '!' : 'Entrega desmarcada para ' + emp.nombre);
+                showToast('', 'Entrega desmarcada para ' + emp.nombre);
             }
         }
-        // ===== FIN FUNCIONES CONTROL =====
+
+        // ===== ACCIONES EN MASA =====
+        function marcarTodosPagados() {
+            if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; }
+            
+            const servicio = document.getElementById('controlServicio').value;
+            const seccion = document.getElementById('controlSeccion').value;
+            
+            if (!servicio) { showToast('⚠️', 'Selecciona un servicio primero.', true); return; }
+            
+            const empleadosAPagar = empleados.filter(emp => {
+                if (emp.servicio !== servicio) return false;
+                if (seccion && emp.seccion !== seccion) return false;
+                
+                const pedido = pedidos.find(p => p.nombre.toLowerCase().trim() === emp.nombre.toLowerCase().trim() && p.servicio === emp.servicio);
+                return pedido && !pedido.pagado;
+            });
+            
+            if (empleadosAPagar.length === 0) {
+                showToast('✅', '¡Todos los empleados de esta sección ya están pagados!');
+                return;
+            }
+            
+            if (!confirm('¿Seguro que quieres marcar como PAGADOS a ' + empleadosAPagar.length + ' empleado(s)?\n\nEsta acción se puede deshacer marcándolos uno a uno.')) {
+                return;
+            }
+            
+            let contador = 0;
+            empleadosAPagar.forEach(emp => {
+                const pedido = pedidos.find(p => p.nombre.toLowerCase().trim() === emp.nombre.toLowerCase().trim() && p.servicio === emp.servicio);
+                if (pedido) {
+                    pedido.pagado = true;
+                    firebaseGuardarPedido(pedido);
+                    contador++;
+                }
+            });
+            
+            showToast('💰', '¡' + contador + ' empleados marcados como pagados!');
+            setTimeout(() => renderizarControl(), 500);
+        }
+
+        function marcarTodosEntregados() {
+            if (rolActual !== 'admin') { showToast('', 'Esta acción es solo para administradores.', true); return; }
+            
+            const servicio = document.getElementById('controlServicio').value;
+            const seccion = document.getElementById('controlSeccion').value;
+            
+            if (!servicio) { showToast('️', 'Selecciona un servicio primero.', true); return; }
+            
+            const empleadosAEntregar = empleados.filter(emp => {
+                if (emp.servicio !== servicio) return false;
+                if (seccion && emp.seccion !== seccion) return false;
+                
+                const pedido = pedidos.find(p => p.nombre.toLowerCase().trim() === emp.nombre.toLowerCase().trim() && p.servicio === emp.servicio);
+                return pedido && pedido.pagado && !pedido.recogido;
+            });
+            
+            if (empleadosAEntregar.length === 0) {
+                showToast('✅', '¡Todos los empleados pagados de esta sección ya están entregados!');
+                return;
+            }
+            
+            if (confirm('¿Se entregan los décimos a TODOS los titulares?\n\nAceptar = Sí, todos al titular\nCancelar = No, especificar otra persona')) {
+                let contador = 0;
+                empleadosAEntregar.forEach(emp => {
+                    const pedido = pedidos.find(p => p.nombre.toLowerCase().trim() === emp.nombre.toLowerCase().trim() && p.servicio === emp.servicio);
+                    if (pedido) {
+                        pedido.recogido = true;
+                        pedido.fechaEntrega = new Date().toISOString().split('T')[0];
+                        pedido.horaEntrega = new Date().toTimeString().slice(0, 5);
+                        pedido.quienRecoge = '';
+                        firebaseGuardarPedido(pedido);
+                        contador++;
+                    }
+                });
+                showToast('📦', '¡' + contador + ' entregas registradas a los titulares!');
+            } else {
+                const quienRecoge = prompt('¿A nombre de quién se entregan los décimos de los ' + empleadosAEntregar.length + ' empleados?');
+                if (!quienRecoge || !quienRecoge.trim()) {
+                    showToast('⚠️', 'Necesito el nombre de quien recoge.', true);
+                    return;
+                }
+                let contador = 0;
+                empleadosAEntregar.forEach(emp => {
+                    const pedido = pedidos.find(p => p.nombre.toLowerCase().trim() === emp.nombre.toLowerCase().trim() && p.servicio === emp.servicio);
+                    if (pedido) {
+                        pedido.recogido = true;
+                        pedido.fechaEntrega = new Date().toISOString().split('T')[0];
+                        pedido.horaEntrega = new Date().toTimeString().slice(0, 5);
+                        pedido.quienRecoge = quienRecoge.trim();
+                        firebaseGuardarPedido(pedido);
+                        contador++;
+                    }
+                });
+                showToast('📦', '¡' + contador + ' entregas registradas a ' + quienRecoge.trim() + '!');
+            }
+            
+            setTimeout(() => renderizarControl(), 500);
+        }
+        // ===== FIN ACCIONES EN MASA =====
 
         function obtenerDecimosAcumulados(nombre) {
             const n = nombre.trim().toLowerCase();
@@ -1469,7 +1627,7 @@
             if (select.value === '__nueva__') {
                 const servicio = document.getElementById('servicio').value;
                 if (!servicio) {
-                    alert('⚠️ Primero tienes que elegir un servicio.');
+                    alert('️ Primero tienes que elegir un servicio.');
                     select.value = '';
                     return;
                 }
@@ -1628,7 +1786,7 @@
             tbody.innerHTML = pedidosFiltrados.map(p => {
                 const quienRecogeHtml = p.quienRecoge ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
                 const accionesHtml = esAdmin 
-                    ? '<div class="actions-cell"><button class="btn btn-edit" onclick="editarPedido(\'' + p.id + '\')">✏️</button><button class="btn btn-delete" onclick="eliminarPedido(\'' + p.id + '\')">️</button></div>'
+                    ? '<div class="actions-cell"><button class="btn btn-edit" onclick="editarPedido(\'' + p.id + '\')">✏️</button><button class="btn btn-delete" onclick="eliminarPedido(\'' + p.id + '\')">🗑️</button></div>'
                     : '<span style="color:#999; font-size:0.85em;">—</span>';
                 const checkboxDisabled = !esAdmin ? 'disabled' : '';
                 return '<tr>' +
@@ -1652,57 +1810,57 @@
         }
 
         document.getElementById('pedidoForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; }
-    const empleadoId = document.getElementById('empleado').value;
-    const numDecimos = parseInt(document.getElementById('numDecimos').value) || 2;
-    const servicio = document.getElementById('servicio').value;
-    const seccion = document.getElementById('seccion').value;
-    const telefono = document.getElementById('telefono').value.trim();
-    let nombre = '';
-    if (empleadoId && empleadoId !== 'nuevo') {
-        const empleado = empleados.find(emp => emp.id === empleadoId);
-        if (empleado) nombre = empleado.nombre;
-    } else { showToast('⚠️', 'Tienes que elegir un empleado válido.', true); return; }
-    const validacion = validarMaximoDecimos(nombre, numDecimos);
-    if (!validacion.valido) {
-        let mensaje = '🚫 ' + nombre + ' ya tiene ' + validacion.acumulados + ' décimo(s). ';
-        mensaje += 'Con ' + validacion.nuevos + ' más llegaría a ' + validacion.total + ', pero el límite es ' + validacion.maximo + '. ';
-        if (validacion.disponibles > 0) mensaje += ' Aún puede pedir ' + validacion.disponibles + ' más.';
-        else mensaje += 'Ya ha alcanzado el máximo.';
-        showToast('🚫', mensaje, true); return;
-    }
-    const nuevo = {
-        nombre, servicio, seccion, telefono, numDecimos,
-        fechaSolicitud: document.getElementById('fechaSolicitud').value,
-        horaSolicitud: document.getElementById('horaSolicitud').value,
-        fechaEntrega: document.getElementById('fechaEntrega').value,
-        horaEntrega: document.getElementById('horaEntrega').value,
-        quienRecoge: document.getElementById('quienRecoge').value.trim(),
-        pagado: false, recogido: false,
-        fecha: new Date().toLocaleDateString('es-ES'),
-        creadoPor: usuarioActual
-    };
-    const id = generarId();
-    firebaseGuardarPedido({ id, ...nuevo });
-    
-    // ️ Guardar servicio y sección antes de resetear
-    const servicioGuardado = document.getElementById('servicio').value;
-    const seccionGuardada = document.getElementById('seccion').value;
-    
-    this.reset();
-    establecerFechaHoraActual();
-    
-    // ⚠️ Restaurar servicio y sección
-    document.getElementById('servicio').value = servicioGuardado;
-    actualizarSecciones();
-    setTimeout(() => {
-        document.getElementById('seccion').value = seccionGuardada;
-        actualizarEmpleados();
-    }, 100);
-    
-    showToast('🎉', '¡Décimo(s) de ' + nombre + ' registrados!');
-});
+            e.preventDefault();
+            if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; }
+            const empleadoId = document.getElementById('empleado').value;
+            const numDecimos = parseInt(document.getElementById('numDecimos').value) || 2;
+            const servicio = document.getElementById('servicio').value;
+            const seccion = document.getElementById('seccion').value;
+            const telefono = document.getElementById('telefono').value.trim();
+            let nombre = '';
+            if (empleadoId && empleadoId !== 'nuevo') {
+                const empleado = empleados.find(emp => emp.id === empleadoId);
+                if (empleado) nombre = empleado.nombre;
+            } else { showToast('️', 'Tienes que elegir un empleado válido.', true); return; }
+            const validacion = validarMaximoDecimos(nombre, numDecimos);
+            if (!validacion.valido) {
+                let mensaje = '🚫 ' + nombre + ' ya tiene ' + validacion.acumulados + ' décimo(s). ';
+                mensaje += 'Con ' + validacion.nuevos + ' más llegaría a ' + validacion.total + ', pero el límite es ' + validacion.maximo + '. ';
+                if (validacion.disponibles > 0) mensaje += ' Aún puede pedir ' + validacion.disponibles + ' más.';
+                else mensaje += 'Ya ha alcanzado el máximo.';
+                showToast('', mensaje, true); return;
+            }
+            const nuevo = {
+                nombre, servicio, seccion, telefono, numDecimos,
+                fechaSolicitud: document.getElementById('fechaSolicitud').value,
+                horaSolicitud: document.getElementById('horaSolicitud').value,
+                fechaEntrega: document.getElementById('fechaEntrega').value,
+                horaEntrega: document.getElementById('horaEntrega').value,
+                quienRecoge: document.getElementById('quienRecoge').value.trim(),
+                pagado: false, recogido: false,
+                fecha: new Date().toLocaleDateString('es-ES'),
+                creadoPor: usuarioActual
+            };
+            const id = generarId();
+            firebaseGuardarPedido({ id, ...nuevo });
+            
+            // Guardar servicio y sección antes de resetear
+            const servicioGuardado = document.getElementById('servicio').value;
+            const seccionGuardada = document.getElementById('seccion').value;
+            
+            this.reset();
+            establecerFechaHoraActual();
+            
+            // Restaurar servicio y sección
+            document.getElementById('servicio').value = servicioGuardado;
+            actualizarSecciones();
+            setTimeout(() => {
+                document.getElementById('seccion').value = seccionGuardada;
+                actualizarEmpleados();
+            }, 100);
+            
+            showToast('🎉', '¡Décimo(s) de ' + nombre + ' registrados!');
+        });
 
         function togglePagado(id) {
             if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; }
@@ -1720,7 +1878,7 @@
             if (p) {
                 p.recogido = !p.recogido;
                 firebaseGuardarPedido(p);
-                showToast(p.recogido ? '📦' : '⏳', p.recogido ? '¡Décimos entregados a ' + p.nombre + '!' : 'Entrega pendiente a ' + p.nombre + '.');
+                showToast(p.recogido ? '' : '⏳', p.recogido ? '¡Décimos entregados a ' + p.nombre + '!' : 'Entrega pendiente a ' + p.nombre + '.');
             }
         }
 
@@ -1850,7 +2008,7 @@
             }).join('');
             document.querySelectorAll('.sort-icon').forEach(el => el.textContent = '');
             const sortIcon = document.getElementById('sort-' + ordenarPor);
-            if (sortIcon) sortIcon.textContent = ordenDireccion === 'asc' ? '⬆️' : '️';
+            if (sortIcon) sortIcon.textContent = ordenDireccion === 'asc' ? '️' : '⬇️';
         }
 
         function ordenarListado(campo) {
@@ -1944,9 +2102,9 @@
             const fileInput = document.getElementById('ocrFile');
             const servicio = document.getElementById('ocrServicio').value;
             const numDecimos = parseInt(document.getElementById('ocrDecimos').value);
-            if (!servicio) { showToast('️', 'Primero elige un servicio.', true); return; }
+            if (!servicio) { showToast('⚠️', 'Primero elige un servicio.', true); return; }
             if (!fileInput.files || fileInput.files.length === 0) { showToast('⚠️', 'Tienes que seleccionar un archivo.', true); return; }
-            if (!numDecimos || numDecimos < 1) { showToast('⚠️', 'Indica un número válido de décimos.', true); return; }
+            if (!numDecimos || numDecimos < 1) { showToast('️', 'Indica un número válido de décimos.', true); return; }
             
             const file = fileInput.files[0];
             const progressContainer = document.getElementById('ocrProgressContainer');
@@ -2035,15 +2193,15 @@
                 resultContainer.style.display = 'block';
                 
                 const total = resultado.encontrados.length + resultado.noEncontrados.length;
-                showToast('', 'He encontrado ' + total + ' nombres (' + resultado.encontrados.length + ' en la base de datos, ' + resultado.noEncontrados.length + ' nuevos)');
+                showToast('✅', 'He encontrado ' + total + ' nombres (' + resultado.encontrados.length + ' en la base de datos, ' + resultado.noEncontrados.length + ' nuevos)');
                 
             } catch (error) {
                 console.error('Error OCR:', error);
                 statusEl.textContent = '❌ Algo ha fallado: ' + (error.message || 'desconocido');
-                showToast('️', 'No he podido procesar el archivo: ' + (error.message || 'formato no válido'), true);
+                showToast('⚠️', 'No he podido procesar el archivo: ' + (error.message || 'formato no válido'), true);
             } finally {
                 btnProcesar.disabled = false;
-                btnProcesar.textContent = '🔍 Procesar archivo';
+                btnProcesar.textContent = ' Procesar archivo';
             }
         }
 
@@ -2097,9 +2255,9 @@
                 return;
             }
             
-            const telefono = prompt('📞 ¿Cuál es el teléfono de "' + nombreDetectado + '"?');
+            const telefono = prompt(' ¿Cuál es el teléfono de "' + nombreDetectado + '"?');
             if (!telefono || !telefono.trim()) {
-                showToast('️', 'Necesito el teléfono para crear el empleado.', true);
+                showToast('⚠️', 'Necesito el teléfono para crear el empleado.', true);
                 return;
             }
             
@@ -2108,10 +2266,10 @@
             
             if (seccionesDelServicio.length > 0) {
                 const listaSecciones = seccionesDelServicio.map(s => '- ' + s.nombre).join('\n');
-                const seccionNombre = prompt(' ¿En qué sección está "' + nombreDetectado + '"?\n\nSecciones disponibles:\n' + listaSecciones + '\n\nEscribe el nombre de una existente o una nueva:', seccionesDelServicio[0].nombre);
+                const seccionNombre = prompt('📂 ¿En qué sección está "' + nombreDetectado + '"?\n\nSecciones disponibles:\n' + listaSecciones + '\n\nEscribe el nombre de una existente o una nueva:', seccionesDelServicio[0].nombre);
                 
                 if (!seccionNombre || !seccionNombre.trim()) {
-                    showToast('⚠️', 'Necesito una sección.', true);
+                    showToast('️', 'Necesito una sección.', true);
                     return;
                 }
                 
@@ -2127,7 +2285,7 @@
                         dbRef.secciones.set(obj);
                         showToast('✅', '¡Sección "' + seccion + '" creada!');
                     } else {
-                        showToast('️', 'Operación cancelada. La sección no se ha creado.', true);
+                        showToast('⚠️', 'Operación cancelada. La sección no se ha creado.', true);
                         return;
                     }
                 }
@@ -2139,13 +2297,13 @@
                 }
                 seccion = seccion.trim().toUpperCase();
                 if (!secciones.some(s => s.servicio === resultado.servicio && s.nombre === seccion)) {
-                    if (confirm('️ La sección "' + seccion + '" no existe. ¿La creo?')) {
+                    if (confirm('⚠️ La sección "' + seccion + '" no existe. ¿La creo?')) {
                         secciones.push({ nombre: seccion, servicio: resultado.servicio });
                         const obj = {};
                         secciones.forEach((s, i) => { obj[i] = s; });
                         dbRef.secciones.set(obj);
                     } else {
-                        showToast('️', 'Operación cancelada.', true);
+                        showToast('⚠️', 'Operación cancelada.', true);
                         return;
                     }
                 }
@@ -2381,7 +2539,7 @@
             setSyncStatus('syncing', '🔄 Guardando configuración...');
             dbRef.config.set(config)
                 .then(() => setSyncStatus('online'))
-                .catch((err) => { setSyncStatus('offline', '❌ Error'); });
+                .catch((err) => { setSyncStatus('offline', ' Error'); });
         }
 
         function firebaseGuardarUsuarios() {
@@ -2401,7 +2559,7 @@
         }
 
         function importarDatosJSON(event) {
-            if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; }
+            if (rolActual !== 'admin') { showToast('', 'Esta acción es solo para administradores.', true); return; }
             const file = event.target.files[0];
             if (!file) return;
             const reader = new FileReader();
@@ -2470,7 +2628,7 @@
             const rows = pedidosExportar.map(p => [p.nombre, p.servicio||'-', p.seccion||'-', p.telefono||'-', p.numDecimos, (p.numDecimos*PRECIO_DECIMO).toLocaleString('es-ES')+'€', p.fechaSolicitud||'-', p.pagado?'Si':'No']);
             doc.autoTable(cols, rows, { startY: 36, theme: 'striped', headStyles: { fillColor: [26, 58, 92], fontSize: 7 }, bodyStyles: { fontSize: 7 } });
             doc.save('listado-general-loteria-2026.pdf');
-            showToast('📄', '¡PDF generado!');
+            showToast('', '¡PDF generado!');
         }
 
         function exportarListadoGeneralCSV() {
@@ -2480,7 +2638,7 @@
             pedidosExportar.forEach(p => { csv += '"'+p.nombre+'","'+(p.servicio||'')+'","'+(p.seccion||'')+'","'+(p.telefono||'')+'",'+p.numDecimos+','+(p.numDecimos*PRECIO_DECIMO)+',"'+(p.fechaSolicitud||'')+'","'+(p.horaSolicitud||'')+'",'+(p.pagado?'Si':'No')+','+(p.recogido?'Si':'No')+'\n'; });
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'listado-general-2026.csv'; link.click();
-            showToast('📊', '¡CSV generado!');
+            showToast('', '¡CSV generado!');
         }
 
         function imprimirListadoGeneral() {
@@ -2509,7 +2667,7 @@
             const rows = pedidosExportar.map(p => [p.nombre, p.servicio||'-', p.seccion||'-', p.telefono||'-', p.numDecimos, (p.numDecimos*PRECIO_DECIMO)+'€', p.fechaSolicitud||'-', p.pagado?'Si':'No']);
             doc.autoTable(cols, rows, { startY: 36, theme: 'striped', headStyles: { fillColor: [26, 58, 92], fontSize: 7 }, bodyStyles: { fontSize: 7 } });
             doc.save('pedidos-loteria-2026.pdf');
-            showToast('📄', '¡PDF generado!');
+            showToast('', '¡PDF generado!');
         }
 
         function exportarCSV() {
