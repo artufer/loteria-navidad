@@ -270,7 +270,7 @@
             <button class="nav-tab" data-page="listado"> Listado</button>
             <button class="nav-tab" data-page="resumen">📊 Resumen</button>
             <button class="nav-tab" data-page="participantes">👥 Participantes</button>
-            <button class="nav-tab" data-page="ocr" id="tabOCR">📷 Lectura PDF</button>
+            <button class="nav-tab" data-page="ocr" id="tabOCR"> Lectura PDF</button>
             <button class="nav-tab" data-page="configuracion" id="tabConfig">⚙️ Config</button>
         </div>
 
@@ -295,7 +295,7 @@
                         <div class="stat-details">
                             <div class="stat-detail-row"><span>💰 Total:</span><span id="statTotalEsperado">0 €</span></div>
                             <div class="stat-detail-row"><span>💵 Cobrado:</span><span id="statCobrado">0 €</span></div>
-                            <div class="stat-detail-row"><span>⏳ Pendiente:</span><span id="statPendienteCobro">0 €</span></div>
+                            <div class="stat-detail-row"><span> Pendiente:</span><span id="statPendienteCobro">0 €</span></div>
                         </div>
                     </div>
                     <div class="stat-card green">
@@ -321,8 +321,8 @@
 
             <div class="section-page" id="page-solicitar">
                 <div class="content-card">
-                    <div id="bannerSolicitar" class="readonly-banner" style="display:none;"> Modo consulta: No puedes crear pedidos.</div>
-                    <h2 class="section-title">️ Solicitar Décimos</h2>
+                    <div id="bannerSolicitar" class="readonly-banner" style="display:none;">🔒 Modo consulta: No puedes crear pedidos.</div>
+                    <h2 class="section-title">🎟️ Solicitar Décimos</h2>
                     <form id="pedidoForm">
                         <div class="form-grid">
                             <div class="form-group">
@@ -483,7 +483,7 @@
                         </table>
                     </div>
                     <div class="empty-state" id="emptyState">
-                        <div class="empty-icon"></div>
+                        <div class="empty-icon">🎰</div>
                         <h3>Aún no hay pedidos</h3>
                         <p>Añade el primero desde "Solicitar" o escaneando un PDF</p>
                     </div>
@@ -492,7 +492,7 @@
 
             <div class="section-page" id="page-listado">
                 <div class="content-card">
-                    <h2 class="section-title"> Listado General</h2>
+                    <h2 class="section-title">📑 Listado General</h2>
                     <div class="alert-info">💡 Haz clic en cualquier cabecera para ordenar.</div>
                     <div class="sort-controls">
                         <div class="form-group">
@@ -512,8 +512,8 @@
                         <div class="form-group">
                             <label for="ordenDireccion">Dirección</label>
                             <select id="ordenDireccion" onchange="renderizarListadoGeneral()">
-                                <option value="asc">️ Ascendente (A-Z)</option>
-                                <option value="desc">⬇️ Descendente (Z-A)</option>
+                                <option value="asc">⬆️ Ascendente (A-Z)</option>
+                                <option value="desc">️ Descendente (Z-A)</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -533,7 +533,7 @@
                             <select id="filtroPagadoListado" onchange="renderizarListadoGeneral()">
                                 <option value="">Todos</option>
                                 <option value="pagado">✓ Pagados</option>
-                                <option value="pendiente">⏳ Pendientes</option>
+                                <option value="pendiente"> Pendientes</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -547,7 +547,7 @@
                     </div>
                     <div class="export-buttons" style="margin-bottom: 15px;">
                         <button class="btn btn-export" onclick="exportarListadoGeneralPDF()">📄 PDF</button>
-                        <button class="btn btn-export" onclick="exportarListadoGeneralCSV()">📊 CSV</button>
+                        <button class="btn btn-export" onclick="exportarListadoGeneralCSV()"> CSV</button>
                         <button class="btn btn-export" onclick="imprimirListadoGeneral()">🖨️ Imprimir</button>
                     </div>
                     <div class="table-container" id="listadoGeneralContainer" style="display:none;">
@@ -573,7 +573,7 @@
                         </table>
                     </div>
                     <div class="empty-state" id="emptyListadoGeneral">
-                        <div class="empty-icon">📑</div>
+                        <div class="empty-icon"></div>
                         <h3>Sin datos</h3>
                         <p>No hay pedidos o no coinciden con los filtros</p>
                     </div>
@@ -641,7 +641,7 @@
                         </table>
                     </div>
                     <div class="empty-state" id="emptyParticipantes">
-                        <div class="empty-icon"></div>
+                        <div class="empty-icon">👥</div>
                         <h3>Aún no hay participantes</h3>
                         <p>Aparecerán cuando añadas pedidos</p>
                     </div>
@@ -771,7 +771,7 @@
     <div class="modal-overlay" id="modalNuevoEmpleado">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>➕ Dar de alta nuevo empleado</h3>
+                <h3> Dar de alta nuevo empleado</h3>
                 <button class="close-btn" onclick="cerrarModalEmpleado()">✕</button>
             </div>
             <form id="nuevoEmpleadoForm">
@@ -894,10 +894,10 @@
                     await dbRef.empleados.set(empleadosObj);
 
                     await dbRef.inicializado.set({
-                        fecha: new Date().toISOString(), version: '20.0',
+                        fecha: new Date().toISOString(), version: '21.0',
                         empleadosCargados: 0
                     });
-                    showToast('👋', '¡Bienvenido! Empieza añadiendo empleados.');
+                    showToast('', '¡Bienvenido! Empieza añadiendo empleados.');
                 }
 
                 loadingText.textContent = 'Verificando administrador...';
@@ -1104,7 +1104,7 @@
 
         function cambiarMiClave() {
             const nueva = document.getElementById('nuevaClave').value.trim();
-            if (!nueva) { showToast('⚠️', 'Escribe la nueva contraseña.'); return; }
+            if (!nueva) { showToast('️', 'Escribe la nueva contraseña.'); return; }
             if (nueva.length < 4) { showToast('⚠️', 'La contraseña debe tener al menos 4 caracteres.'); return; }
             if (usuarios[usuarioActual]) {
                 usuarios[usuarioActual].clave = nueva;
@@ -1118,11 +1118,11 @@
             const nombre = document.getElementById('nuevoUsuarioNombre').value.trim().toLowerCase();
             const clave = document.getElementById('nuevoUsuarioClave').value;
             
-            if (!nombre) { showToast('️', 'Escribe un nombre de usuario.'); return; }
+            if (!nombre) { showToast('⚠️', 'Escribe un nombre de usuario.'); return; }
             if (/[.#$\[\]]/.test(nombre)) { showToast('⚠️', 'El nombre no puede contener: . # $ [ ]'); return; }
-            if (nombre.length < 3) { showToast('⚠️', 'El nombre debe tener al menos 3 caracteres.'); return; }
+            if (nombre.length < 3) { showToast('️', 'El nombre debe tener al menos 3 caracteres.'); return; }
             if (nombre === USUARIO_ADMIN.toLowerCase()) { showToast('⚠️', 'Ese nombre está reservado.'); return; }
-            if (!clave || clave.length < 4) { showToast('️', 'La contraseña debe tener al menos 4 caracteres.'); return; }
+            if (!clave || clave.length < 4) { showToast('⚠️', 'La contraseña debe tener al menos 4 caracteres.'); return; }
             
             firebase.database().ref('loteria/usuarios/' + nombre).once('value').then(snap => {
                 if (snap.exists()) { showToast('⚠️', 'Ese usuario ya existe. Prueba con otro nombre.'); return; }
@@ -1229,7 +1229,6 @@
             tab.addEventListener('click', function() { irAPagina(this.getAttribute('data-page')); });
         });
 
-        // ===== FUNCIONES CONTROL CON 3 CHECKS, FECHAS Y ACCIONES EN MASA =====
         function actualizarControlServicios() {
             const select = document.getElementById('controlServicio');
             if (!select) return;
@@ -1372,7 +1371,7 @@
             });
             
             if (total === 0) {
-                html = '<div class="empty-state" style="padding: 30px;"><div class="empty-icon"></div><h3>Sin resultados</h3><p>No hay empleados que coincidan con los filtros seleccionados</p></div>';
+                html = '<div class="empty-state" style="padding: 30px;"><div class="empty-icon">📝</div><h3>Sin resultados</h3><p>No hay empleados que coincidan con los filtros seleccionados</p></div>';
             }
             
             listContainer.innerHTML = html;
@@ -1385,7 +1384,7 @@
         }
 
         function toggleControlSolicitud(empId, checked) {
-            if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); renderizarControl(); return; }
+            if (rolActual !== 'admin') { showToast('', 'Esta acción es solo para administradores.', true); renderizarControl(); return; }
             
             const emp = empleados.find(e => e.id === empId);
             if (!emp) return;
@@ -1500,14 +1499,13 @@
             }
         }
 
-        // ===== ACCIONES EN MASA =====
         function marcarTodosPagados() {
-            if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; }
+            if (rolActual !== 'admin') { showToast('', 'Esta acción es solo para administradores.', true); return; }
             
             const servicio = document.getElementById('controlServicio').value;
             const seccion = document.getElementById('controlSeccion').value;
             
-            if (!servicio) { showToast('⚠️', 'Selecciona un servicio primero.', true); return; }
+            if (!servicio) { showToast('️', 'Selecciona un servicio primero.', true); return; }
             
             const empleadosAPagar = empleados.filter(emp => {
                 if (emp.servicio !== servicio) return false;
@@ -1551,7 +1549,7 @@
             const servicio = document.getElementById('controlServicio').value;
             const seccion = document.getElementById('controlSeccion').value;
             
-            if (!servicio) { showToast('️', 'Selecciona un servicio primero.', true); return; }
+            if (!servicio) { showToast('⚠️', 'Selecciona un servicio primero.', true); return; }
             
             const empleadosAEntregar = empleados.filter(emp => {
                 if (emp.servicio !== servicio) return false;
@@ -1606,7 +1604,6 @@
             
             setTimeout(() => renderizarControl(), 500);
         }
-        // ===== FIN ACCIONES EN MASA =====
 
         function obtenerDecimosAcumulados(nombre) {
             const n = nombre.trim().toLowerCase();
@@ -1655,7 +1652,7 @@
             if (select.value === '__nueva__') {
                 const servicio = document.getElementById('servicio').value;
                 if (!servicio) {
-                    alert('️ Primero tienes que elegir un servicio.');
+                    alert('⚠️ Primero tienes que elegir un servicio.');
                     select.value = '';
                     return;
                 }
@@ -1856,7 +1853,7 @@
                 mensaje += 'Con ' + validacion.nuevos + ' más llegaría a ' + validacion.total + ', pero el límite es ' + validacion.maximo + '. ';
                 if (validacion.disponibles > 0) mensaje += ' Aún puede pedir ' + validacion.disponibles + ' más.';
                 else mensaje += 'Ya ha alcanzado el máximo.';
-                showToast('🚫', mensaje, true); return;
+                showToast('', mensaje, true); return;
             }
             const nuevo = {
                 nombre, servicio, seccion, telefono, numDecimos,
@@ -1890,7 +1887,7 @@
         });
 
         function togglePagado(id) {
-            if (rolActual !== 'admin') { showToast('', 'Esta acción es solo para administradores.', true); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; }
             const p = pedidos.find(x => x.id === id);
             if (p) {
                 p.pagado = !p.pagado;
@@ -1925,7 +1922,7 @@
         }
 
         function eliminarPedido(id) {
-            if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; }
+            if (rolActual !== 'admin') { showToast('', 'Esta acción es solo para administradores.', true); return; }
             const p = pedidos.find(x => x.id === id);
             if (p && confirm('¿Seguro que quieres borrar el pedido de ' + p.nombre + '?')) {
                 firebaseEliminarPedido(id);
@@ -2029,9 +2026,9 @@
             }
             empty.style.display = 'none'; table.style.display = 'block';
             tbody.innerHTML = pedidosFiltrados.map(p => {
-                const pagadoBadge = p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7;">✓ Pagado</span>' : '<span class="badge" style="background:#ffebee; color:#c41e3a; border:1px solid #ef9a9a;"> Pendiente</span>';
-                const recogidoBadge = p.recogido ? '<span class="badge" style="background:#e3f2fd; color:#1976d2; border:1px solid #90caf9;">✓ Recogido</span>' : '<span class="badge badge-pending"> Pendiente</span>';
-                const quienRecogeHtml = p.quienRecoge ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
+                const pagadoBadge = p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7;">✓ Pagado</span>' : '<span class="badge" style="background:#ffebee; color:#c41e3a; border:1px solid #ef9a9a;">⏳ Pendiente</span>';
+                const recogidoBadge = p.recogido ? '<span class="badge" style="background:#e3f2fd; color:#1976d2; border:1px solid #90caf9;">✓ Recogido</span>' : '<span class="badge badge-pending">⏳ Pendiente</span>';
+                const quienRecogeHtml = p.quienRecoge ? '<span class="badge badge-collected"> ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
                 return '<tr>' +
                     '<td class="nombre-cell" title="' + p.nombre + '">' + p.nombre + '</td>' +
                     '<td title="' + (p.servicio || '') + '">' + (p.servicio || '-') + '</td>' +
@@ -2050,7 +2047,7 @@
             }).join('');
             document.querySelectorAll('.sort-icon').forEach(el => el.textContent = '');
             const sortIcon = document.getElementById('sort-' + ordenarPor);
-            if (sortIcon) sortIcon.textContent = ordenDireccion === 'asc' ? '⬆️' : '⬇️';
+            if (sortIcon) sortIcon.textContent = ordenDireccion === 'asc' ? '️' : '⬇️';
         }
 
         function ordenarListado(campo) {
@@ -2144,7 +2141,7 @@
             const fileInput = document.getElementById('ocrFile');
             const servicio = document.getElementById('ocrServicio').value;
             const numDecimos = parseInt(document.getElementById('ocrDecimos').value);
-            if (!servicio) { showToast('⚠️', 'Primero elige un servicio.', true); return; }
+            if (!servicio) { showToast('️', 'Primero elige un servicio.', true); return; }
             if (!fileInput.files || fileInput.files.length === 0) { showToast('⚠️', 'Tienes que seleccionar un archivo.', true); return; }
             if (!numDecimos || numDecimos < 1) { showToast('⚠️', 'Indica un número válido de décimos.', true); return; }
             
@@ -2158,7 +2155,7 @@
             progressContainer.style.display = 'block';
             resultContainer.style.display = 'none';
             btnProcesar.disabled = true;
-            btnProcesar.textContent = '⏳ Procesando...';
+            btnProcesar.textContent = ' Procesando...';
             
             let texto = '';
             
@@ -2187,7 +2184,7 @@
                     
                     texto = '';
                     for (let i = 1; i <= numPaginas; i++) {
-                        statusEl.textContent = '📖 Leyendo página ' + i + ' de ' + numPaginas + '...';
+                        statusEl.textContent = ' Leyendo página ' + i + ' de ' + numPaginas + '...';
                         progressFill.style.width = (20 + (i / numPaginas) * 60) + '%';
                         const pagina = await pdf.getPage(i);
                         const contenido = await pagina.getTextContent();
@@ -2240,7 +2237,7 @@
             } catch (error) {
                 console.error('Error OCR:', error);
                 statusEl.textContent = '❌ Algo ha fallado: ' + (error.message || 'desconocido');
-                showToast('⚠️', 'No he podido procesar el archivo: ' + (error.message || 'formato no válido'), true);
+                showToast('️', 'No he podido procesar el archivo: ' + (error.message || 'formato no válido'), true);
             } finally {
                 btnProcesar.disabled = false;
                 btnProcesar.textContent = '🔍 Procesar archivo';
@@ -2293,7 +2290,7 @@
             if (!confirm('¿Quieres dar de alta a "' + nombreDetectado + '" y registrar su pedido de ' + decimosDetectados + ' décimo(s)?\n\nAcepta para crearlo o Cancela para omitirlo.')) {
                 resultado.noEncontrados.splice(idx, 1);
                 mostrarResultadosOCR(resultado);
-                showToast('⚠️', '"' + nombreDetectado + '" omitido.');
+                showToast('️', '"' + nombreDetectado + '" omitido.');
                 return;
             }
             
@@ -2308,7 +2305,7 @@
             
             if (seccionesDelServicio.length > 0) {
                 const listaSecciones = seccionesDelServicio.map(s => '- ' + s.nombre).join('\n');
-                const seccionNombre = prompt('📂 ¿En qué sección está "' + nombreDetectado + '"?\n\nSecciones disponibles:\n' + listaSecciones + '\n\nEscribe el nombre de una existente o una nueva:', seccionesDelServicio[0].nombre);
+                const seccionNombre = prompt(' ¿En qué sección está "' + nombreDetectado + '"?\n\nSecciones disponibles:\n' + listaSecciones + '\n\nEscribe el nombre de una existente o una nueva:', seccionesDelServicio[0].nombre);
                 
                 if (!seccionNombre || !seccionNombre.trim()) {
                     showToast('⚠️', 'Necesito una sección.', true);
@@ -2327,19 +2324,19 @@
                         dbRef.secciones.set(obj);
                         showToast('✅', '¡Sección "' + seccion + '" creada!');
                     } else {
-                        showToast('⚠️', 'Operación cancelada. La sección no se ha creado.', true);
+                        showToast('️', 'Operación cancelada. La sección no se ha creado.', true);
                         return;
                     }
                 }
             } else {
                 seccion = prompt('📂 ¿En qué sección está "' + nombreDetectado + '"?');
                 if (!seccion || !seccion.trim()) {
-                    showToast('️', 'Necesito una sección.', true);
+                    showToast('⚠️', 'Necesito una sección.', true);
                     return;
                 }
                 seccion = seccion.trim().toUpperCase();
                 if (!secciones.some(s => s.servicio === resultado.servicio && s.nombre === seccion)) {
-                    if (confirm('⚠️ La sección "' + seccion + '" no existe. ¿La creo?')) {
+                    if (confirm('️ La sección "' + seccion + '" no existe. ¿La creo?')) {
                         secciones.push({ nombre: seccion, servicio: resultado.servicio });
                         const obj = {};
                         secciones.forEach((s, i) => { obj[i] = s; });
@@ -2541,7 +2538,7 @@
             });
             
             const noEncontradosRestantes = resultado.noEncontrados.length;
-            let mensaje = ' ¡' + creados + ' pedidos creados automáticamente!';
+            let mensaje = '🎉 ¡' + creados + ' pedidos creados automáticamente!';
             if (omitidos > 0) mensaje += ' (' + omitidos + ' omitidos por límite)';
             if (noEncontradosRestantes > 0) mensaje += '. Quedan ' + noEncontradosRestantes + ' empleados por crear manualmente.';
             
@@ -2567,7 +2564,7 @@
         }
 
         function firebaseEliminarPedido(id) {
-            setSyncStatus('syncing', ' Borrando...');
+            setSyncStatus('syncing', '🔄 Borrando...');
             dbRef.pedidos.child(id).remove()
                 .then(() => setSyncStatus('online'))
                 .catch((err) => { setSyncStatus('offline', '❌ Error'); });
@@ -2601,7 +2598,7 @@
             link.href = URL.createObjectURL(blob);
             link.download = 'loteria-navidad-backup-' + new Date().toISOString().slice(0,10) + '.json';
             link.click();
-            showToast('📤', '¡Copia de seguridad exportada!');
+            showToast('', '¡Copia de seguridad exportada!');
         }
 
         function importarDatosJSON(event) {
@@ -2664,15 +2661,47 @@
         function exportarListadoGeneralPDF() {
             const pedidosExportar = getPedidosFiltradosListado();
             if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos para exportar.'); return; }
+            
+            const filtroServicio = document.getElementById('filtroServicioListado').value;
+            const filtroSeccion = document.getElementById('filtroSeccionListado').value;
+            
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            doc.setFontSize(18); doc.setTextColor(26, 58, 92);
-            doc.text('Listado General - Lotería Navidad 2026', 14, 22);
+            
+            let titulo = 'Listado General - Lotería Navidad 2026';
+            if (filtroServicio) titulo += '\nServicio: ' + filtroServicio;
+            if (filtroSeccion) titulo += ' | Sección: ' + filtroSeccion;
+            
+            doc.setFontSize(14); doc.setTextColor(26, 58, 92);
+            doc.text(titulo, 14, 22);
             doc.setFontSize(10); doc.setTextColor(100);
-            doc.text('Fecha: ' + new Date().toLocaleDateString('es-ES') + ' | Total: ' + pedidosExportar.length, 14, 30);
+            doc.text('Fecha: ' + new Date().toLocaleDateString('es-ES') + ' | Total pedidos: ' + pedidosExportar.length, 14, 32);
+            
+            const totalDecimos = pedidosExportar.reduce((s, p) => s + p.numDecimos, 0);
+            const importeTotal = totalDecimos * PRECIO_DECIMO;
+            const recaudado = pedidosExportar.filter(p => p.pagado).reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0);
+            const pendiente = importeTotal - recaudado;
+            
             const cols = ["Nombre", "Servicio", "Seccion", "Telefono", "Decimos", "Importe", "Fecha Sol.", "Pagado"];
             const rows = pedidosExportar.map(p => [p.nombre, p.servicio||'-', p.seccion||'-', p.telefono||'-', p.numDecimos, (p.numDecimos*PRECIO_DECIMO).toLocaleString('es-ES')+'€', p.fechaSolicitud||'-', p.pagado?'Si':'No']);
-            doc.autoTable(cols, rows, { startY: 36, theme: 'striped', headStyles: { fillColor: [26, 58, 92], fontSize: 7 }, bodyStyles: { fontSize: 7 } });
+            
+            doc.autoTable(cols, rows, { 
+                startY: 38, 
+                theme: 'striped', 
+                headStyles: { fillColor: [26, 58, 92], fontSize: 7 }, 
+                bodyStyles: { fontSize: 7 },
+                margin: { left: 14, right: 14 }
+            });
+            
+            const finalY = doc.lastAutoTable.finalY + 10;
+            doc.setFontSize(11); doc.setTextColor(26, 58, 92);
+            doc.text('RESUMEN', 14, finalY);
+            doc.setFontSize(10); doc.setTextColor(60, 60, 60);
+            doc.text('Total de décimos: ' + totalDecimos, 14, finalY + 7);
+            doc.text('Importe total: ' + importeTotal.toLocaleString('es-ES') + ' €', 14, finalY + 13);
+            doc.text('Recaudado (pagados): ' + recaudado.toLocaleString('es-ES') + ' €', 14, finalY + 19);
+            doc.text('Pendiente por cobrar: ' + pendiente.toLocaleString('es-ES') + ' €', 14, finalY + 25);
+            
             doc.save('listado-general-loteria-2026.pdf');
             showToast('📄', '¡PDF generado!');
         }
@@ -2680,8 +2709,30 @@
         function exportarListadoGeneralCSV() {
             const pedidosExportar = getPedidosFiltradosListado();
             if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos para exportar.'); return; }
-            let csv = '\uFEFFNombre,Servicio,Seccion,Telefono,N Decimos,Importe,Fecha Sol.,Hora Sol.,Pagado,Recogido\n';
-            pedidosExportar.forEach(p => { csv += '"'+p.nombre+'","'+(p.servicio||'')+'","'+(p.seccion||'')+'","'+(p.telefono||'')+'",'+p.numDecimos+','+(p.numDecimos*PRECIO_DECIMO)+',"'+(p.fechaSolicitud||'')+'","'+(p.horaSolicitud||'')+'",'+(p.pagado?'Si':'No')+','+(p.recogido?'Si':'No')+'\n'; });
+            
+            const filtroServicio = document.getElementById('filtroServicioListado').value;
+            const filtroSeccion = document.getElementById('filtroSeccionListado').value;
+            
+            const totalDecimos = pedidosExportar.reduce((s, p) => s + p.numDecimos, 0);
+            const importeTotal = totalDecimos * PRECIO_DECIMO;
+            const recaudado = pedidosExportar.filter(p => p.pagado).reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0);
+            const pendiente = importeTotal - recaudado;
+            
+            let csv = '\uFEFF';
+            csv += 'Listado General - Lotería Navidad 2026\n';
+            if (filtroServicio) csv += 'Servicio: ' + filtroServicio + '\n';
+            if (filtroSeccion) csv += 'Sección: ' + filtroSeccion + '\n';
+            csv += 'Fecha: ' + new Date().toLocaleDateString('es-ES') + '\n\n';
+            csv += 'Nombre,Servicio,Seccion,Telefono,N Decimos,Importe,Fecha Sol.,Hora Sol.,Pagado,Recogido\n';
+            pedidosExportar.forEach(p => { 
+                csv += '"'+p.nombre+'","'+(p.servicio||'')+'","'+(p.seccion||'')+'","'+(p.telefono||'')+'",'+p.numDecimos+','+(p.numDecimos*PRECIO_DECIMO)+',"'+(p.fechaSolicitud||'')+'","'+(p.horaSolicitud||'')+'",'+(p.pagado?'Si':'No')+','+(p.recogido?'Si':'No')+'\n'; 
+            });
+            csv += '\nRESUMEN\n';
+            csv += 'Total de décimos,' + totalDecimos + '\n';
+            csv += 'Importe total,' + importeTotal.toLocaleString('es-ES') + ' €\n';
+            csv += 'Recaudado (pagados),' + recaudado.toLocaleString('es-ES') + ' €\n';
+            csv += 'Pendiente por cobrar,' + pendiente.toLocaleString('es-ES') + ' €\n';
+            
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'listado-general-2026.csv'; link.click();
             showToast('📊', '¡CSV generado!');
@@ -2690,9 +2741,36 @@
         function imprimirListadoGeneral() {
             const pedidosExportar = getPedidosFiltradosListado();
             if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos para imprimir.'); return; }
+            
+            const filtroServicio = document.getElementById('filtroServicioListado').value;
+            const filtroSeccion = document.getElementById('filtroSeccionListado').value;
+            
+            const totalDecimos = pedidosExportar.reduce((s, p) => s + p.numDecimos, 0);
+            const importeTotal = totalDecimos * PRECIO_DECIMO;
+            const recaudado = pedidosExportar.filter(p => p.pagado).reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0);
+            const pendiente = importeTotal - recaudado;
+            
             const v = window.open('', '', 'width=900,height=600');
             const tablaHTML = pedidosExportar.map(p => '<tr><td>'+p.nombre+'</td><td>'+(p.servicio||'-')+'</td><td>'+(p.seccion||'-')+'</td><td>'+(p.telefono||'-')+'</td><td>'+p.numDecimos+'</td><td>'+(p.numDecimos*PRECIO_DECIMO).toLocaleString('es-ES')+'€</td><td>'+(p.fechaSolicitud||'-')+'</td><td>'+(p.horaSolicitud||'-')+'</td><td>'+(p.pagado?'Si':'No')+'</td><td>'+(p.recogido?'Si':'No')+'</td></tr>').join('');
-            v.document.write('<html><head><title>Listado General</title><style>body{font-family:Arial,sans-serif;padding:20px}h1{color:#1a3a5c}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{border:1px solid #ddd;padding:6px;font-size:0.85em}th{background:#1a3a5c;color:white}</style></head><body><h1>Listado General - Lotería 2026</h1><p>Fecha: '+new Date().toLocaleDateString('es-ES')+'</p><table><thead><tr><th>Nombre</th><th>Servicio</th><th>Sección</th><th>Teléfono</th><th>Décimos</th><th>Importe</th><th>Fecha Sol.</th><th>Hora Sol.</th><th>Pagado</th><th>Recogido</th></tr></thead><tbody>'+tablaHTML+'</tbody></table></body></html>');
+            
+            let encabezado = '<h1>Listado General - Lotería 2026</h1>';
+            if (filtroServicio) encabezado += '<p><strong>Servicio:</strong> ' + filtroServicio + '</p>';
+            if (filtroSeccion) encabezado += '<p><strong>Sección:</strong> ' + filtroSeccion + '</p>';
+            encabezado += '<p>Fecha: '+new Date().toLocaleDateString('es-ES')+'</p>';
+            
+            const resumenHTML = `
+                <div style="margin-top: 25px; padding: 15px; background: #f8f9fa; border: 2px solid #1a3a5c; border-radius: 8px;">
+                    <h2 style="color: #1a3a5c; margin-bottom: 12px; font-size: 1.2em;">RESUMEN</h2>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr><td style="padding: 6px; font-weight: bold;">Total de décimos:</td><td style="padding: 6px; text-align: right; font-size: 1.1em;">${totalDecimos}</td></tr>
+                        <tr style="background: #e3f2fd;"><td style="padding: 6px; font-weight: bold;">Importe total:</td><td style="padding: 6px; text-align: right; font-size: 1.1em; font-weight: bold;">${importeTotal.toLocaleString('es-ES')} €</td></tr>
+                        <tr style="background: #e8f5e9;"><td style="padding: 6px; font-weight: bold;">Recaudado (pagados):</td><td style="padding: 6px; text-align: right; font-size: 1.1em; color: #2e7d32; font-weight: bold;">${recaudado.toLocaleString('es-ES')} €</td></tr>
+                        <tr style="background: #fff3e0;"><td style="padding: 6px; font-weight: bold;">Pendiente por cobrar:</td><td style="padding: 6px; text-align: right; font-size: 1.1em; color: #e65100; font-weight: bold;">${pendiente.toLocaleString('es-ES')} €</td></tr>
+                    </table>
+                </div>
+            `;
+            
+            v.document.write('<html><head><title>Listado General</title><style>body{font-family:Arial,sans-serif;padding:20px}h1{color:#1a3a5c}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{border:1px solid #ddd;padding:6px;font-size:0.85em}th{background:#1a3a5c;color:white}</style></head><body>'+encabezado+'<table><thead><tr><th>Nombre</th><th>Servicio</th><th>Sección</th><th>Teléfono</th><th>Décimos</th><th>Importe</th><th>Fecha Sol.</th><th>Hora Sol.</th><th>Pagado</th><th>Recogido</th></tr></thead><tbody>'+tablaHTML+'</tbody></table>'+resumenHTML+'</body></html>');
             v.document.close(); v.print();
         }
 
@@ -2702,16 +2780,45 @@
             let pedidosExportar = pedidos;
             if (filtroServicio) pedidosExportar = pedidosExportar.filter(p => p.servicio === filtroServicio);
             if (filtroSeccion) pedidosExportar = pedidosExportar.filter(p => p.seccion === filtroSeccion);
-            if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos para exportar.'); return; }
+            if (pedidosExportar.length === 0) { showToast('️', 'No hay pedidos para exportar.'); return; }
+            
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            doc.setFontSize(18); doc.setTextColor(26, 58, 92);
-            doc.text('Lotería Navidad 2026 - Pabellón Niño Jesús', 14, 22);
+            
+            let titulo = 'Lotería Navidad 2026 - Pabellón Niño Jesús';
+            if (filtroServicio) titulo += '\nServicio: ' + filtroServicio;
+            if (filtroSeccion) titulo += ' | Sección: ' + filtroSeccion;
+            
+            doc.setFontSize(14); doc.setTextColor(26, 58, 92);
+            doc.text(titulo, 14, 22);
             doc.setFontSize(10); doc.setTextColor(100);
-            doc.text('Fecha: ' + new Date().toLocaleDateString('es-ES'), 14, 30);
+            doc.text('Fecha: ' + new Date().toLocaleDateString('es-ES'), 14, 32);
+            
+            const totalDecimos = pedidosExportar.reduce((s, p) => s + p.numDecimos, 0);
+            const importeTotal = totalDecimos * PRECIO_DECIMO;
+            const recaudado = pedidosExportar.filter(p => p.pagado).reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0);
+            const pendiente = importeTotal - recaudado;
+            
             const cols = ["Nombre", "Servicio", "Seccion", "Tel", "Dec", "Importe", "F.Sol", "Pag"];
             const rows = pedidosExportar.map(p => [p.nombre, p.servicio||'-', p.seccion||'-', p.telefono||'-', p.numDecimos, (p.numDecimos*PRECIO_DECIMO)+'€', p.fechaSolicitud||'-', p.pagado?'Si':'No']);
-            doc.autoTable(cols, rows, { startY: 36, theme: 'striped', headStyles: { fillColor: [26, 58, 92], fontSize: 7 }, bodyStyles: { fontSize: 7 } });
+            
+            doc.autoTable(cols, rows, { 
+                startY: 38, 
+                theme: 'striped', 
+                headStyles: { fillColor: [26, 58, 92], fontSize: 7 }, 
+                bodyStyles: { fontSize: 7 },
+                margin: { left: 14, right: 14 }
+            });
+            
+            const finalY = doc.lastAutoTable.finalY + 10;
+            doc.setFontSize(11); doc.setTextColor(26, 58, 92);
+            doc.text('RESUMEN', 14, finalY);
+            doc.setFontSize(10); doc.setTextColor(60, 60, 60);
+            doc.text('Total de décimos: ' + totalDecimos, 14, finalY + 7);
+            doc.text('Importe total: ' + importeTotal.toLocaleString('es-ES') + ' €', 14, finalY + 13);
+            doc.text('Recaudado (pagados): ' + recaudado.toLocaleString('es-ES') + ' €', 14, finalY + 19);
+            doc.text('Pendiente por cobrar: ' + pendiente.toLocaleString('es-ES') + ' €', 14, finalY + 25);
+            
             doc.save('pedidos-loteria-2026.pdf');
             showToast('📄', '¡PDF generado!');
         }
@@ -2723,8 +2830,27 @@
             if (filtroServicio) pedidosExportar = pedidosExportar.filter(p => p.servicio === filtroServicio);
             if (filtroSeccion) pedidosExportar = pedidosExportar.filter(p => p.seccion === filtroSeccion);
             if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos para exportar.'); return; }
-            let csv = '\uFEFFNombre,Servicio,Seccion,Telefono,Decimos,Importe,Fecha Sol.,Hora Sol.,Pagado,Recogido\n';
-            pedidosExportar.forEach(p => { csv += '"'+p.nombre+'","'+(p.servicio||'')+'","'+(p.seccion||'')+'","'+(p.telefono||'')+'",'+p.numDecimos+','+(p.numDecimos*PRECIO_DECIMO)+',"'+(p.fechaSolicitud||'')+'","'+(p.horaSolicitud||'')+'",'+(p.pagado?'Si':'No')+','+(p.recogido?'Si':'No')+'\n'; });
+            
+            const totalDecimos = pedidosExportar.reduce((s, p) => s + p.numDecimos, 0);
+            const importeTotal = totalDecimos * PRECIO_DECIMO;
+            const recaudado = pedidosExportar.filter(p => p.pagado).reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0);
+            const pendiente = importeTotal - recaudado;
+            
+            let csv = '\uFEFF';
+            csv += 'Lotería Navidad 2026 - Pabellón Niño Jesús\n';
+            if (filtroServicio) csv += 'Servicio: ' + filtroServicio + '\n';
+            if (filtroSeccion) csv += 'Sección: ' + filtroSeccion + '\n';
+            csv += 'Fecha: ' + new Date().toLocaleDateString('es-ES') + '\n\n';
+            csv += 'Nombre,Servicio,Seccion,Telefono,Decimos,Importe,Fecha Sol.,Hora Sol.,Pagado,Recogido\n';
+            pedidosExportar.forEach(p => { 
+                csv += '"'+p.nombre+'","'+(p.servicio||'')+'","'+(p.seccion||'')+'","'+(p.telefono||'')+'",'+p.numDecimos+','+(p.numDecimos*PRECIO_DECIMO)+',"'+(p.fechaSolicitud||'')+'","'+(p.horaSolicitud||'')+'",'+(p.pagado?'Si':'No')+','+(p.recogido?'Si':'No')+'\n'; 
+            });
+            csv += '\nRESUMEN\n';
+            csv += 'Total de décimos,' + totalDecimos + '\n';
+            csv += 'Importe total,' + importeTotal.toLocaleString('es-ES') + ' €\n';
+            csv += 'Recaudado (pagados),' + recaudado.toLocaleString('es-ES') + ' €\n';
+            csv += 'Pendiente por cobrar,' + pendiente.toLocaleString('es-ES') + ' €\n';
+            
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'pedidos-2026.csv'; link.click();
             showToast('', '¡CSV generado!');
@@ -2737,9 +2863,33 @@
             if (filtroServicio) pedidosExportar = pedidosExportar.filter(p => p.servicio === filtroServicio);
             if (filtroSeccion) pedidosExportar = pedidosExportar.filter(p => p.seccion === filtroSeccion);
             if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos para imprimir.'); return; }
+            
+            const totalDecimos = pedidosExportar.reduce((s, p) => s + p.numDecimos, 0);
+            const importeTotal = totalDecimos * PRECIO_DECIMO;
+            const recaudado = pedidosExportar.filter(p => p.pagado).reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0);
+            const pendiente = importeTotal - recaudado;
+            
             const v = window.open('', '', 'width=900,height=600');
             const tablaHTML = pedidosExportar.map(p => '<tr><td>'+p.nombre+'</td><td>'+(p.servicio||'-')+'</td><td>'+(p.seccion||'-')+'</td><td>'+(p.telefono||'-')+'</td><td>'+p.numDecimos+'</td><td>'+(p.numDecimos*PRECIO_DECIMO)+'€</td><td>'+(p.fechaSolicitud||'-')+'</td><td>'+(p.horaSolicitud||'-')+'</td><td>'+(p.pagado?'Si':'No')+'</td><td>'+(p.recogido?'Si':'No')+'</td></tr>').join('');
-            v.document.write('<html><head><title>Pedidos Lotería 2026</title><style>body{font-family:Arial,sans-serif;padding:20px}h1{color:#1a3a5c}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{border:1px solid #ddd;padding:6px;font-size:0.85em}th{background:#1a3a5c;color:white}</style></head><body><h1>Pedidos Lotería 2026</h1><p>Fecha: '+new Date().toLocaleDateString('es-ES')+'</p><table><thead><tr><th>Nombre</th><th>Servicio</th><th>Sección</th><th>Tel</th><th>Dec</th><th>Importe</th><th>F.Sol</th><th>H.Sol</th><th>Pag</th><th>Rec</th></tr></thead><tbody>'+tablaHTML+'</tbody></table></body></html>');
+            
+            let encabezado = '<h1>Pedidos Lotería 2026</h1>';
+            if (filtroServicio) encabezado += '<p><strong>Servicio:</strong> ' + filtroServicio + '</p>';
+            if (filtroSeccion) encabezado += '<p><strong>Sección:</strong> ' + filtroSeccion + '</p>';
+            encabezado += '<p>Fecha: '+new Date().toLocaleDateString('es-ES')+'</p>';
+            
+            const resumenHTML = `
+                <div style="margin-top: 25px; padding: 15px; background: #f8f9fa; border: 2px solid #1a3a5c; border-radius: 8px;">
+                    <h2 style="color: #1a3a5c; margin-bottom: 12px; font-size: 1.2em;">RESUMEN</h2>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <tr><td style="padding: 6px; font-weight: bold;">Total de décimos:</td><td style="padding: 6px; text-align: right; font-size: 1.1em;">${totalDecimos}</td></tr>
+                        <tr style="background: #e3f2fd;"><td style="padding: 6px; font-weight: bold;">Importe total:</td><td style="padding: 6px; text-align: right; font-size: 1.1em; font-weight: bold;">${importeTotal.toLocaleString('es-ES')} €</td></tr>
+                        <tr style="background: #e8f5e9;"><td style="padding: 6px; font-weight: bold;">Recaudado (pagados):</td><td style="padding: 6px; text-align: right; font-size: 1.1em; color: #2e7d32; font-weight: bold;">${recaudado.toLocaleString('es-ES')} €</td></tr>
+                        <tr style="background: #fff3e0;"><td style="padding: 6px; font-weight: bold;">Pendiente por cobrar:</td><td style="padding: 6px; text-align: right; font-size: 1.1em; color: #e65100; font-weight: bold;">${pendiente.toLocaleString('es-ES')} €</td></tr>
+                    </table>
+                </div>
+            `;
+            
+            v.document.write('<html><head><title>Pedidos Lotería 2026</title><style>body{font-family:Arial,sans-serif;padding:20px}h1{color:#1a3a5c}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{border:1px solid #ddd;padding:6px;font-size:0.85em}th{background:#1a3a5c;color:white}</style></head><body>'+encabezado+'<table><thead><tr><th>Nombre</th><th>Servicio</th><th>Sección</th><th>Tel</th><th>Dec</th><th>Importe</th><th>F.Sol</th><th>H.Sol</th><th>Pag</th><th>Rec</th></tr></thead><tbody>'+tablaHTML+'</tbody></table>'+resumenHTML+'</body></html>');
             v.document.close(); v.print();
         }
 
