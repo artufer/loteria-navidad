@@ -452,7 +452,10 @@
                     <div class="filter-bar">
                         <div class="form-group">
                             <label for="filtroServicioPedidos">Servicio</label>
-                            <select id="filtroServicioPedidos" onchange="aplicarFiltrosPedidos()">
+                            
+				<select id="filtroServicioPedidos" onchange="actualizarSeccionesFiltro('filtroServicioPedidos','filtroSeccionPedidos'); aplicarFiltrosPedidos();">
+
+
                                 <option value="">Todos</option>
                             </select>
                         </div>
@@ -522,7 +525,9 @@
                         </div>
                         <div class="form-group">
                             <label for="filtroServicioListado">Servicio</label>
-                            <select id="filtroServicioListado" onchange="renderizarListadoGeneral()">
+ 				<select id="filtroServicioListado" onchange="actualizarSeccionesFiltro('filtroServicioListado','filtroSeccionListado'); renderizarListadoGeneral();">
+
+
                                 <option value="">Todos</option>
                             </select>
                         </div>
@@ -589,8 +594,10 @@
                     <h2 class="section-title">📊 Resumen Detallado</h2>
                     <div class="filter-bar">
                         <div class="form-group">
-                            <label for="filtroServicioResumen">Servicio</label>
-                            <select id="filtroServicioResumen" onchange="renderizarResumen()">
+                            <label for="filtroServicioResumen">Servicio</label>                            
+					<select id="filtroServicioResumen" onchange="actualizarSeccionesFiltro('filtroServicioResumen','filtroSeccionResumen'); renderizarResumen();">
+
+
                                 <option value="">Todos</option>
                             </select>
                         </div>
@@ -611,7 +618,10 @@
                     <div class="filter-bar">
                         <div class="form-group">
                             <label for="filtroServicioParticipantes">Servicio</label>
-                            <select id="filtroServicioParticipantes" onchange="renderizarParticipantes()">
+				<select id="filtroServicioParticipantes" onchange="actualizarSeccionesFiltro('filtroServicioParticipantes','filtroSeccionParticipantes'); renderizarParticipantes();">
+
+
+
                                 <option value="">Todos</option>
                             </select>
                         </div>
@@ -1837,19 +1847,53 @@
             });
         }
 
-        function actualizarFiltrosSeccion() {
-            const filtros = ['filtroSeccionPedidos', 'filtroSeccionResumen', 'filtroSeccionParticipantes', 'filtroSeccionListado'];
-            filtros.forEach(id => {
-                const select = document.getElementById(id);
-                if (select) {
-                    const valorActual = select.value;
-                    let html = '<option value="">Todas</option>';
-                    [...secciones].sort((a, b) => a.nombre.localeCompare(b.nombre, 'es')).forEach(s => { html += '<option value="' + s.nombre + '">' + s.nombre + '</option>'; });
-                    select.innerHTML = html;
-                    if (valorActual) select.value = valorActual;
-                }
-            });
-        }
+        // ===== FUNCIÓN 1: Actualiza las secciones según el servicio seleccionado en un filtro =====
+function actualizarSeccionesFiltro(idServicioSelect, idSeccionSelect) {
+    const servicio = document.getElementById(idServicioSelect).value;
+    const select = document.getElementById(idSeccionSelect);
+    if (!select) return;
+    
+    const valorActual = select.value;
+    let html = '<option value="">Todas</option>';
+    
+    if (servicio) {
+        // Solo mostrar secciones de ESTE servicio
+        const seccionesFiltradas = secciones.filter(s => s.servicio === servicio);
+        [...seccionesFiltradas].sort((a, b) => a.nombre.localeCompare(b.nombre, 'es')).forEach(s => { 
+            html += '<option value="' + s.nombre + '">' + s.nombre + '</option>'; 
+        });
+    } else {
+        // Si no hay servicio seleccionado, mostrar todas
+        [...secciones].sort((a, b) => a.nombre.localeCompare(b.nombre, 'es')).forEach(s => { 
+            html += '<option value="' + s.nombre + '">' + s.nombre + '</option>'; 
+        });
+    }
+    
+    select.innerHTML = html;
+    
+    // Si el valor anterior ya no existe en la nueva lista, resetear
+    const existe = Array.from(select.options).some(opt => opt.value === valorActual);
+    if (existe) {
+        select.value = valorActual;
+    } else {
+        select.value = '';
+    }
+}
+
+// ===== FUNCIÓN 2: Inicializa todos los filtros de sección al cargar la app =====
+function actualizarFiltrosSeccion() {
+    // Al cargar, como no hay servicio seleccionado, mostrar todas las secciones
+    const filtros = [
+        { servicio: 'filtroServicioPedidos', seccion: 'filtroSeccionPedidos' },
+        { servicio: 'filtroServicioListado', seccion: 'filtroSeccionListado' },
+        { servicio: 'filtroServicioResumen', seccion: 'filtroSeccionResumen' },
+        { servicio: 'filtroServicioParticipantes', seccion: 'filtroSeccionParticipantes' }
+    ];
+    
+    filtros.forEach(f => {
+        actualizarSeccionesFiltro(f.servicio, f.seccion);
+    });
+}
 
         function aplicarFiltrosPedidos() { renderizarTabla(); }
 
