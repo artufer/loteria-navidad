@@ -203,7 +203,80 @@
         
         .emp-checkbox { width: 18px; height: 18px; cursor: pointer; }
         
-        /* Resumen de pedidos (barra inferior) */
+        /* Multiselect de secciones */
+        .multiselect-container {
+            position: relative;
+            width: 100%;
+        }
+        .multiselect-btn {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #d0d3d8;
+            border-radius: 6px;
+            background: white;
+            cursor: pointer;
+            text-align: left;
+            font-size: 0.85em;
+            font-family: inherit;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            min-height: 36px;
+        }
+        .multiselect-btn:hover { border-color: #1a3a5c; }
+        .multiselect-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: white;
+            border: 1px solid #d0d3d8;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            max-height: 250px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+            margin-top: 4px;
+        }
+        .multiselect-dropdown.show { display: block; }
+        .multiselect-option {
+            padding: 8px 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85em;
+            border-bottom: 1px solid #f0f2f5;
+        }
+        .multiselect-option:hover { background: #f5f7f9; }
+        .multiselect-option:last-child { border-bottom: none; }
+        .multiselect-option input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; }
+        .multiselect-actions {
+            padding: 8px 12px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #e0e2e5;
+            display: flex;
+            gap: 8px;
+            justify-content: space-between;
+        }
+        .multiselect-actions button {
+            background: none;
+            border: none;
+            color: #1976d2;
+            cursor: pointer;
+            font-size: 0.8em;
+            font-weight: 600;
+            padding: 2px 6px;
+        }
+        .multiselect-actions button:hover { text-decoration: underline; }
+        .secciones-seleccionadas-info {
+            font-size: 0.75em;
+            color: #666;
+            margin-top: 4px;
+            font-style: italic;
+        }
+        
         .resumen-pedidos {
             display: flex;
             justify-content: space-around;
@@ -323,14 +396,14 @@
         </div>
         <div class="nav-tabs" id="navTabs">
             <button class="nav-tab active" data-page="inicio">🏠 Inicio</button>
-            <button class="nav-tab" data-page="solicitar" id="tabSolicitar">🎟️ Solicitar</button>
-            <button class="nav-tab" data-page="control" id="tabControl"> Control</button>
+            <button class="nav-tab" data-page="solicitar" id="tabSolicitar">️ Solicitar</button>
+            <button class="nav-tab" data-page="control" id="tabControl">📝 Control</button>
             <button class="nav-tab" data-page="pedidos">📋 Pedidos</button>
             <button class="nav-tab" data-page="listado">📑 Listado</button>
             <button class="nav-tab" data-page="resumen">📊 Resumen</button>
-            <button class="nav-tab" data-page="participantes">👥 Participantes</button>
+            <button class="nav-tab" data-page="participantes"> Participantes</button>
             <button class="nav-tab" data-page="revision" id="tabRevision">✅ Revisión</button>
-            <button class="nav-tab" data-page="ocr" id="tabOCR"> Lectura PDF</button>
+            <button class="nav-tab" data-page="ocr" id="tabOCR">📷 Lectura PDF</button>
             <button class="nav-tab" data-page="configuracion" id="tabConfig">⚙️ Config</button>
         </div>
 
@@ -364,26 +437,26 @@
                         <div class="stat-label">Participantes</div>
                         <div class="stat-details">
                             <div class="stat-detail-row"><span>✓ Con pago:</span><span id="statConPago">0</span></div>
-                            <div class="stat-detail-row"><span>⏳ Sin pago:</span><span id="statSinPago">0</span></div>
+                            <div class="stat-detail-row"><span> Sin pago:</span><span id="statSinPago">0</span></div>
                             <div class="stat-detail-row"><span>📦 Recogidos:</span><span id="statRecogidos">0</span></div>
                         </div>
                     </div>
                 </div>
                 <div class="quick-actions" id="quickActions">
-                    <div class="quick-action" id="qaSolicitar" onclick="irAPagina('solicitar')"><div class="qa-icon">🎟️</div><div class="qa-title">Solicitar</div></div>
+                    <div class="quick-action" id="qaSolicitar" onclick="irAPagina('solicitar')"><div class="qa-icon">️</div><div class="qa-title">Solicitar</div></div>
                     <div class="quick-action" id="qaControl" onclick="irAPagina('control')"><div class="qa-icon">📝</div><div class="qa-title">Control</div></div>
                     <div class="quick-action" onclick="irAPagina('pedidos')"><div class="qa-icon">📋</div><div class="qa-title">Pedidos</div></div>
-                    <div class="quick-action" onclick="irAPagina('listado')"><div class="qa-icon"></div><div class="qa-title">Listado</div></div>
+                    <div class="quick-action" onclick="irAPagina('listado')"><div class="qa-icon">📑</div><div class="qa-title">Listado</div></div>
                     <div class="quick-action" id="qaRevision" onclick="irAPagina('revision')"><div class="qa-icon">✅</div><div class="qa-title">Revisión</div></div>
-                    <div class="quick-action" id="qaOCR" onclick="irAPagina('ocr')"><div class="qa-icon"></div><div class="qa-title">Lectura PDF</div></div>
+                    <div class="quick-action" id="qaOCR" onclick="irAPagina('ocr')"><div class="qa-icon">📷</div><div class="qa-title">Lectura PDF</div></div>
                     <div class="quick-action" onclick="irAPagina('resumen')"><div class="qa-icon">📊</div><div class="qa-title">Resumen</div></div>
-                    <div class="quick-action" onclick="irAPagina('participantes')"><div class="qa-icon">👥</div><div class="qa-title">Participantes</div></div>
+                    <div class="quick-action" onclick="irAPagina('participantes')"><div class="qa-icon"></div><div class="qa-title">Participantes</div></div>
                 </div>
             </div>
 
             <div class="section-page" id="page-solicitar">
                 <div class="content-card">
-                    <div id="bannerSolicitar" class="readonly-banner" style="display:none;"> Modo consulta: No puedes crear pedidos.</div>
+                    <div id="bannerSolicitar" class="readonly-banner" style="display:none;">🔒 Modo consulta: No puedes crear pedidos.</div>
                     <h2 class="section-title">🎟️ Solicitar Décimos</h2>
                     <form id="pedidoForm">
                         <div class="form-grid">
@@ -442,7 +515,7 @@
 
             <div class="section-page" id="page-control">
                 <div class="content-card">
-                    <h2 class="section-title">📝 Control de Solicitudes, Pagos y Entregas</h2>
+                    <h2 class="section-title"> Control de Solicitudes, Pagos y Entregas</h2>
                     <div class="alert-info">
                         📋 Elige un servicio (y opcionalmente una sección) para ver la lista de empleados. Marca los 3 checks según corresponda: <strong>Solicitado</strong>, <strong>Pagado</strong> y <strong>Recibido</strong>. Usa los checkboxes de la izquierda para entregas múltiples.
                     </div>
@@ -496,7 +569,7 @@
                     </div>
                     <div class="control-list" id="controlList">
                         <div class="empty-state" style="padding: 30px;">
-                            <div class="empty-icon"></div>
+                            <div class="empty-icon">📝</div>
                             <h3>Selecciona un servicio</h3>
                             <p>Elige un servicio para ver la lista de empleados con sus 3 checks</p>
                         </div>
@@ -510,8 +583,8 @@
                         <h2>Estado actual de los pedidos</h2>
                         <div class="export-buttons">
                             <button class="btn btn-export" onclick="exportarPDF()">📄 PDF</button>
-                            <button class="btn btn-export" onclick="exportarCSV()">📊 CSV</button>
-                            <button class="btn btn-export" onclick="imprimirListado()">🖨️ Imprimir</button>
+                            <button class="btn btn-export" onclick="exportarCSV()"> CSV</button>
+                            <button class="btn btn-export" onclick="imprimirListado()">️ Imprimir</button>
                         </div>
                     </div>
                     <div class="filter-bar">
@@ -522,10 +595,21 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="filtroSeccionPedidos">Sección</label>
-                            <select id="filtroSeccionPedidos" onchange="aplicarFiltrosPedidos()">
-                                <option value="">Todas</option>
-                            </select>
+                            <label>Sección (puedes seleccionar varias)</label>
+                            <div class="multiselect-container" id="multiselectSecciones">
+                                <button type="button" class="multiselect-btn" id="multiselectBtn" onclick="toggleMultiselect()">
+                                    <span id="multiselectTexto">Todas las secciones</span>
+                                    <span>▼</span>
+                                </button>
+                                <div class="multiselect-dropdown" id="multiselectDropdown">
+                                    <div class="multiselect-actions">
+                                        <button type="button" onclick="seleccionarTodasSecciones()">✅ Seleccionar todas</button>
+                                        <button type="button" onclick="deseleccionarTodasSecciones()">❌ Deseleccionar todas</button>
+                                    </div>
+                                    <div id="multiselectOpciones"></div>
+                                </div>
+                            </div>
+                            <div class="secciones-seleccionadas-info" id="seccionesInfo"></div>
                         </div>
                     </div>
                     <div class="table-container" id="tableContainer" style="display:none;">
@@ -551,10 +635,9 @@
                             <tbody id="tablaBody"></tbody>
                         </table>
                     </div>
-                    <!-- NUEVO: Barra de resumen de pedidos -->
                     <div class="resumen-pedidos" id="resumenPedidos" style="display:none;">
                         <div class="res-item res-decimos">
-                            <span class="res-label">️ Décimos:</span>
+                            <span class="res-label">🎟️ Décimos:</span>
                             <span class="res-valor" id="resTotalDecimos">0</span>
                         </div>
                         <div class="res-item res-recaudado">
@@ -576,7 +659,7 @@
 
             <div class="section-page" id="page-listado">
                 <div class="content-card">
-                    <h2 class="section-title">📑 Listado General</h2>
+                    <h2 class="section-title"> Listado General</h2>
                     <div class="alert-info">💡 Haz clic en cualquier cabecera para ordenar.</div>
                     <div class="sort-controls">
                         <div class="form-group">
@@ -596,7 +679,7 @@
                         <div class="form-group">
                             <label for="ordenDireccion">Dirección</label>
                             <select id="ordenDireccion" onchange="renderizarListadoGeneral()">
-                                <option value="asc">️ Ascendente (A-Z)</option>
+                                <option value="asc">⬆️ Ascendente (A-Z)</option>
                                 <option value="desc">⬇️ Descendente (Z-A)</option>
                             </select>
                         </div>
@@ -725,7 +808,7 @@
                         </table>
                     </div>
                     <div class="empty-state" id="emptyParticipantes">
-                        <div class="empty-icon"></div>
+                        <div class="empty-icon">👥</div>
                         <h3>Aún no hay participantes</h3>
                         <p>Aparecerán cuando añadas pedidos</p>
                     </div>
@@ -821,7 +904,7 @@
                         </div>
                         <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
                             <button type="button" class="btn btn-success" onclick="confirmarPedidosOCR()">✅ Crear pedidos de los encontrados</button>
-                            <button type="button" class="btn btn-cancel" onclick="cancelarOCR()">❌ Cancelar</button>
+                            <button type="button" class="btn btn-cancel" onclick="cancelarOCR()"> Cancelar</button>
                         </div>
                     </div>
                 </div>
@@ -866,7 +949,7 @@
                         <h3>💾 Copia de seguridad</h3>
                         <div class="alert-info">Exporta o importa todos los datos de la aplicación.</div>
                         <div class="config-row">
-                            <button type="button" class="btn btn-primary btn-small" onclick="exportarDatosJSON()">📤 Exportar datos</button>
+                            <button type="button" class="btn btn-primary btn-small" onclick="exportarDatosJSON()"> Exportar datos</button>
                             <button type="button" class="btn btn-success btn-small" onclick="document.getElementById('importarFile').click()">📥 Importar datos</button>
                             <input type="file" id="importarFile" accept=".json" style="display:none" onchange="importarDatosJSON(event)">
                         </div>
@@ -880,7 +963,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3>➕ Crear nueva sección</h3>
-                <button class="close-btn" onclick="cerrarModalSeccion()">✕</button>
+                <button class="close-btn" onclick="cerrarModalSeccion()"></button>
             </div>
             <div class="alert-info">
                 💡 La nueva sección se creará en el servicio: <strong id="modalServicioNombre"></strong>
@@ -1018,6 +1101,7 @@
         let rolActual = 'consulta';
         let servicioRevisor = null;
         let seccionLimitadaRevisor = null;
+        let seccionesSeleccionadas = []; // Array de secciones seleccionadas en el multiselect
         let pedidosPendientesOCR = [];
         let datosCargados = false;
 
@@ -1036,11 +1120,11 @@
             } else if (status === 'syncing') {
                 dot.classList.add('syncing');
                 txt.textContent = text || '🔄 Guardando cambios...';
-                if (box) { box.className = 'alert-info'; box.innerHTML = '🔄 ' + (text || 'Guardando...'); }
+                if (box) { box.className = 'alert-info'; box.innerHTML = ' ' + (text || 'Guardando...'); }
             } else if (status === 'offline') {
                 dot.classList.add('offline');
                 txt.textContent = text || '⚠️ Sin conexión';
-                if (box) { box.className = 'alert-info'; box.innerHTML = '️ ' + (text || 'Sin conexión'); }
+                if (box) { box.className = 'alert-info'; box.innerHTML = '⚠️ ' + (text || 'Sin conexión'); }
             }
         }
 
@@ -1092,7 +1176,7 @@
                     await dbRef.usuarios.set(revisoresObj);
 
                     await dbRef.inicializado.set({
-                        fecha: new Date().toISOString(), version: '24.0',
+                        fecha: new Date().toISOString(), version: '25.0',
                         empleadosCargados: 0
                     });
                     showToast('👋', '¡Bienvenido! Empieza añadiendo empleados.');
@@ -1176,7 +1260,7 @@
             });
             dbRef.secciones.on('value', (snapshot) => {
                 const data = snapshot.val();
-                if (data) { secciones = Object.keys(data).map(key => data[key]); localStorage.setItem('seccionesLoteria', JSON.stringify(secciones)); if (firebaseReady) { actualizarFiltrosSeccion(); actualizarControlSecciones(); } }
+                if (data) { secciones = Object.keys(data).map(key => data[key]); localStorage.setItem('seccionesLoteria', JSON.stringify(secciones)); if (firebaseReady) { actualizarFiltrosSeccion(); actualizarControlSecciones(); actualizarMultiselectSecciones(); } }
             });
             dbRef.empleados.on('value', (snapshot) => {
                 const data = snapshot.val();
@@ -1210,9 +1294,18 @@
             });
             db.ref('.info/connected').on('value', (snapshot) => {
                 if (snapshot.val() === true) setSyncStatus('online');
-                else setSyncStatus('offline', '📡 Sin conexión');
+                else setSyncStatus('offline', ' Sin conexión');
             });
         }
+
+        // Cerrar multiselect al hacer clic fuera
+        document.addEventListener('click', function(e) {
+            const multiselect = document.getElementById('multiselectSecciones');
+            const dropdown = document.getElementById('multiselectDropdown');
+            if (multiselect && dropdown && !multiselect.contains(e.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
 
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -1547,7 +1640,7 @@
                 html += '<div class="revision-servicio-card">' +
                     '<div><div class="serv-nombre">' + servicio + '</div>' +
                     '<div class="serv-estado ' + estadoClass + '" style="margin-top:5px; padding:5px 8px; border-radius:4px; display:inline-block;">' + estadoHtml + '</div></div>' +
-                    (rev.observaciones && rev.observaciones.length > 0 ? '<button class="btn btn-small btn-primary" onclick="verObservacionesServicio(\'' + servicio + '\')">👁️ Ver todas (' + rev.observaciones.length + ')</button>' : '') +
+                    (rev.observaciones && rev.observaciones.length > 0 ? '<button class="btn btn-small btn-primary" onclick="verObservacionesServicio(\'' + servicio + '\')">️ Ver todas (' + rev.observaciones.length + ')</button>' : '') +
                 '</div>';
             });
             
@@ -1592,7 +1685,7 @@
                 tableCont.style.display = 'block';
                 emptyState.style.display = 'none';
                 tbody.innerHTML = pedidosRevisor.map(p => {
-                    const pagadoBadge = p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7;">✓ Pagado</span>' : '<span class="badge" style="background:#ffebee; color:#c41e3a; border:1px solid #ef9a9a;">⏳ Pendiente</span>';
+                    const pagadoBadge = p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7;">✓ Pagado</span>' : '<span class="badge" style="background:#ffebee; color:#c41e3a; border:1px solid #ef9a9a;"> Pendiente</span>';
                     const recogidoBadge = p.recogido ? '<span class="badge" style="background:#e3f2fd; color:#1976d2; border:1px solid #90caf9;">✓ Recogido</span>' : '<span class="badge badge-pending">⏳ Pendiente</span>';
                     const recogidoPor = p.quienRecoge ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
                     return '<tr>' +
@@ -1634,7 +1727,7 @@
                 listaObs.innerHTML = rev.observaciones.map(obs => 
                     '<div class="revision-obs-item">' +
                         '<div class="obs-texto">' + (obs.texto || '') + '</div>' +
-                        '<div class="obs-meta">👤 ' + (obs.autor || '?') + ' |  ' + formatearFechaHora(obs.fecha, obs.hora) + '</div>' +
+                        '<div class="obs-meta">👤 ' + (obs.autor || '?') + ' | 📅 ' + formatearFechaHora(obs.fecha, obs.hora) + '</div>' +
                     '</div>'
                 ).join('');
             } else {
@@ -1646,7 +1739,7 @@
 
         function marcarRevision(todoCorrecto) {
             if (rolActual !== 'revisor' || !servicioRevisor) {
-                showToast('⚠️', 'No tienes permiso para revisar.', true);
+                showToast('️', 'No tienes permiso para revisar.', true);
                 return;
             }
             
@@ -1689,13 +1782,13 @@
                     renderizarRevision();
                 })
                 .catch(err => {
-                    showToast('❌', 'Error al guardar: ' + err.message, true);
+                    showToast('', 'Error al guardar: ' + err.message, true);
                 });
         }
 
         function desmarcarRevision() {
             if (rolActual !== 'revisor' || !servicioRevisor) {
-                showToast('️', 'No tienes permiso.', true);
+                showToast('⚠️', 'No tienes permiso.', true);
                 return;
             }
             
@@ -1801,7 +1894,7 @@
             
             if (rolActual === 'admin' && totalSolicitados > 0) {
                 html += '<div style="padding: 10px 15px; background: #f8f9fa; border-bottom: 1px solid #e0e2e5; display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">';
-                html += '<strong style="font-size: 0.85em; color: #1a3a5c;">⚡ Acciones rápidas:</strong>';
+                html += '<strong style="font-size: 0.85em; color: #1a3a5c;"> Acciones rápidas:</strong>';
                 
                 if (totalSolicitados > totalPagados) {
                     html += '<button class="btn btn-success btn-small" onclick="marcarTodosPagados()">💰 Marcar TODOS como pagados (' + (totalSolicitados - totalPagados) + ' pendientes)</button>';
@@ -1845,7 +1938,7 @@
                 const fechaHoraText = formatearFechaHora(fechaSol, horaSol);
                 const fechaPagoText = tienePedido ? formatearFechaHora(pedidoEmp[0].fechaPago, pedidoEmp[0].horaPago) : '';
                 const fechaEntregaText = tienePedido ? formatearFechaHora(pedidoEmp[0].fechaEntrega, pedidoEmp[0].horaEntrega) : '';
-                const quienRecogeText = (tienePedido && pedidoEmp[0].quienRecoge && pedidoEmp[0].quienRecoge.trim()) ? '👤 ' + pedidoEmp[0].quienRecoge : '';
+                const quienRecogeText = (tienePedido && pedidoEmp[0].quienRecoge && pedidoEmp[0].quienRecoge.trim()) ? ' ' + pedidoEmp[0].quienRecoge : '';
                 
                 const recogidoDisabled = (!tienePedido || !estaPagado || rolActual !== 'admin') ? 'disabled' : '';
                 const puedeEntregar = tienePedido && estaPagado && !estaRecibido;
@@ -1910,7 +2003,7 @@
         });
 
         function toggleControlSolicitud(empId, checked) {
-            if (rolActual !== 'admin') { showToast('', 'Esta acción es solo para administradores.', true); renderizarControl(); return; }
+            if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); renderizarControl(); return; }
             
             const emp = empleados.find(e => e.id === empId);
             if (!emp) return;
@@ -1975,14 +2068,14 @@
         }
 
         function toggleControlRecibido(empId, checked) {
-            if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); renderizarControl(); return; }
+            if (rolActual !== 'admin') { showToast('', 'Esta acción es solo para administradores.', true); renderizarControl(); return; }
             
             const emp = empleados.find(e => e.id === empId);
             if (!emp) return;
             
             const pedido = pedidos.find(p => p.nombre.toLowerCase().trim() === emp.nombre.toLowerCase().trim() && p.servicio === emp.servicio);
             if (!pedido) {
-                showToast('️', 'No hay pedido para este empleado.', true);
+                showToast('⚠️', 'No hay pedido para este empleado.', true);
                 renderizarControl();
                 return;
             }
@@ -2000,11 +2093,11 @@
                     pedido.horaEntrega = new Date().toTimeString().slice(0, 5);
                     pedido.quienRecoge = '';
                     firebaseGuardarPedido(pedido);
-                    showToast('', '¡Entrega registrada a ' + emp.nombre + '!');
+                    showToast('📦', '¡Entrega registrada a ' + emp.nombre + '!');
                 } else {
                     const quienRecoge = prompt('¿A nombre de quién se entregan los décimos?');
                     if (!quienRecoge || !quienRecoge.trim()) {
-                        showToast('⚠️', 'Necesito el nombre de quien recoge.', true);
+                        showToast('️', 'Necesito el nombre de quien recoge.', true);
                         renderizarControl();
                         return;
                     }
@@ -2013,7 +2106,7 @@
                     pedido.horaEntrega = new Date().toTimeString().slice(0, 5);
                     pedido.quienRecoge = quienRecoge.trim();
                     firebaseGuardarPedido(pedido);
-                    showToast('', '¡Entrega registrada a ' + quienRecoge.trim() + ' (por ' + emp.nombre + ')!');
+                    showToast('📦', '¡Entrega registrada a ' + quienRecoge.trim() + ' (por ' + emp.nombre + ')!');
                 }
             } else {
                 pedido.recogido = false;
@@ -2021,7 +2114,7 @@
                 pedido.horaEntrega = '';
                 pedido.quienRecoge = '';
                 firebaseGuardarPedido(pedido);
-                showToast('', 'Entrega desmarcada para ' + emp.nombre);
+                showToast('⏳', 'Entrega desmarcada para ' + emp.nombre);
             }
         }
 
@@ -2175,7 +2268,7 @@
                         contador++;
                     }
                 });
-                showToast('📦', '¡' + contador + ' entregas registradas a los titulares!');
+                showToast('', '¡' + contador + ' entregas registradas a los titulares!');
             } else {
                 const quienRecoge = prompt('¿A nombre de quién se entregan los décimos de los ' + empIds.length + ' empleados seleccionados?');
                 if (!quienRecoge || !quienRecoge.trim()) {
@@ -2262,7 +2355,7 @@
                 infoDiv.textContent = '📂 ' + seccionesFiltradas.length + ' sección(es) disponible(s) para ' + servicio;
                 infoDiv.classList.add('show');
             } else {
-                infoDiv.textContent = '️ No hay secciones creadas para ' + servicio + '. Crea una nueva.';
+                infoDiv.textContent = '⚠️ No hay secciones creadas para ' + servicio + '. Crea una nueva.';
                 infoDiv.classList.add('show');
             }
             
@@ -2279,7 +2372,7 @@
             if (select.value === '__nueva__') {
                 const servicio = document.getElementById('servicio').value;
                 if (!servicio) {
-                    showToast('️', 'Primero tienes que elegir un servicio.', true);
+                    showToast('⚠️', 'Primero tienes que elegir un servicio.', true);
                     select.value = '';
                     return;
                 }
@@ -2299,7 +2392,7 @@
 
         document.getElementById('nuevaSeccionForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; }
+            if (rolActual !== 'admin') { showToast('', 'Esta acción es solo para administradores.', true); return; }
             
             const servicio = document.getElementById('servicio').value;
             const nombreNueva = document.getElementById('nuevaSeccionNombre').value.trim().toUpperCase();
@@ -2312,7 +2405,7 @@
             const existe = secciones.some(s => s.servicio === servicio && s.nombre.toUpperCase() === nombreNueva);
             if (existe) {
                 document.getElementById('seccionDuplicada').style.display = 'block';
-                showToast('⚠️', 'Ya existe esa sección en este servicio.', true);
+                showToast('️', 'Ya existe esa sección en este servicio.', true);
                 return;
             }
             
@@ -2395,7 +2488,79 @@
             });
         }
 
+        // ===== FUNCIONES DEL MULTISELECT DE SECCIONES =====
+        function actualizarMultiselectSecciones() {
+            const servicio = document.getElementById('filtroServicioPedidos').value;
+            const opcionesDiv = document.getElementById('multiselectOpciones');
+            if (!opcionesDiv) return;
+            
+            let seccionesDisponibles = [];
+            if (servicio) {
+                seccionesDisponibles = secciones.filter(s => s.servicio === servicio);
+            } else {
+                seccionesDisponibles = [...secciones];
+            }
+            seccionesDisponibles.sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'));
+            
+            let html = '';
+            seccionesDisponibles.forEach(s => {
+                const checked = seccionesSeleccionadas.includes(s.nombre) ? 'checked' : '';
+                html += '<label class="multiselect-option">' +
+                    '<input type="checkbox" value="' + s.nombre + '" ' + checked + ' onchange="actualizarSeleccionSecciones()">' +
+                    '<span>' + s.nombre + '</span>' +
+                '</label>';
+            });
+            
+            opcionesDiv.innerHTML = html;
+            actualizarTextoMultiselect();
+        }
+
+        function toggleMultiselect() {
+            const dropdown = document.getElementById('multiselectDropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        function actualizarSeleccionSecciones() {
+            const checkboxes = document.querySelectorAll('#multiselectOpciones input[type="checkbox"]');
+            seccionesSeleccionadas = Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.value);
+            actualizarTextoMultiselect();
+            aplicarFiltrosPedidos();
+        }
+
+        function seleccionarTodasSecciones() {
+            const checkboxes = document.querySelectorAll('#multiselectOpciones input[type="checkbox"]');
+            checkboxes.forEach(cb => cb.checked = true);
+            seccionesSeleccionadas = Array.from(checkboxes).map(cb => cb.value);
+            actualizarTextoMultiselect();
+            aplicarFiltrosPedidos();
+        }
+
+        function deseleccionarTodasSecciones() {
+            const checkboxes = document.querySelectorAll('#multiselectOpciones input[type="checkbox"]');
+            checkboxes.forEach(cb => cb.checked = false);
+            seccionesSeleccionadas = [];
+            actualizarTextoMultiselect();
+            aplicarFiltrosPedidos();
+        }
+
+        function actualizarTextoMultiselect() {
+            const texto = document.getElementById('multiselectTexto');
+            const info = document.getElementById('seccionesInfo');
+            
+            if (seccionesSeleccionadas.length === 0) {
+                texto.textContent = 'Ninguna sección seleccionada';
+                info.textContent = '';
+            } else if (seccionesSeleccionadas.length === 1) {
+                texto.textContent = seccionesSeleccionadas[0];
+                info.textContent = '1 sección seleccionada';
+            } else {
+                texto.textContent = seccionesSeleccionadas.length + ' secciones seleccionadas';
+                info.textContent = 'Secciones: ' + seccionesSeleccionadas.join(', ');
+            }
+        }
+
         function actualizarSeccionesFiltro(idServicioSelect, idSeccionSelect) {
+            // Solo para filtros que no son el multiselect
             const servicio = document.getElementById(idServicioSelect).value;
             const select = document.getElementById(idSeccionSelect);
             if (!select) return;
@@ -2426,7 +2591,6 @@
 
         function actualizarFiltrosSeccion() {
             const filtros = [
-                { servicio: 'filtroServicioPedidos', seccion: 'filtroSeccionPedidos' },
                 { servicio: 'filtroServicioListado', seccion: 'filtroSeccionListado' },
                 { servicio: 'filtroServicioResumen', seccion: 'filtroSeccionResumen' },
                 { servicio: 'filtroServicioParticipantes', seccion: 'filtroSeccionParticipantes' }
@@ -2435,6 +2599,9 @@
             filtros.forEach(f => {
                 actualizarSeccionesFiltro(f.servicio, f.seccion);
             });
+            
+            // Actualizar también el multiselect
+            actualizarMultiselectSecciones();
         }
 
         function aplicarFiltrosPedidos() { renderizarTabla(); }
@@ -2478,13 +2645,18 @@
             document.getElementById('statRecogidos').textContent = recogidos;
         }
 
-        function renderizarTabla() {
+        function getPedidosFiltradosTabla() {
             const filtroServicio = document.getElementById('filtroServicioPedidos').value;
-            const filtroSeccion = document.getElementById('filtroSeccionPedidos').value;
             let pedidosFiltrados = pedidos;
             if (filtroServicio) pedidosFiltrados = pedidosFiltrados.filter(p => p.servicio === filtroServicio);
-            if (filtroSeccion) pedidosFiltrados = pedidosFiltrados.filter(p => p.seccion === filtroSeccion);
-            pedidosFiltrados = ordenarPorNombre(pedidosFiltrados);
+            if (seccionesSeleccionadas.length > 0) {
+                pedidosFiltrados = pedidosFiltrados.filter(p => seccionesSeleccionadas.includes(p.seccion));
+            }
+            return ordenarPorNombre(pedidosFiltrados);
+        }
+
+        function renderizarTabla() {
+            const pedidosFiltrados = getPedidosFiltradosTabla();
             const tbody = document.getElementById('tablaBody');
             const empty = document.getElementById('emptyState');
             const table = document.getElementById('tableContainer');
@@ -2527,7 +2699,6 @@
                 '</tr>';
             }).join('');
             
-            // Calcular y mostrar resumen
             const totalDec = pedidosFiltrados.reduce((s, p) => s + p.numDecimos, 0);
             const totalImp = totalDec * PRECIO_DECIMO;
             const recaudado = pedidosFiltrados.filter(p => p.pagado).reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0);
@@ -2605,7 +2776,7 @@
                     p.horaPago = '';
                 }
                 firebaseGuardarPedido(p);
-                showToast(p.pagado ? '💰' : '', p.pagado ? '¡' + p.nombre + ' ha pagado!' : 'Pago pendiente de ' + p.nombre + '.');
+                showToast(p.pagado ? '💰' : '⏳', p.pagado ? '¡' + p.nombre + ' ha pagado!' : 'Pago pendiente de ' + p.nombre + '.');
             }
         }
 
@@ -2732,8 +2903,8 @@
             }
             empty.style.display = 'none'; table.style.display = 'block';
             tbody.innerHTML = pedidosFiltrados.map(p => {
-                const pagadoBadge = p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7;">✓ Pagado</span>' : '<span class="badge" style="background:#ffebee; color:#c41e3a; border:1px solid #ef9a9a;"> Pendiente</span>';
-                const recogidoBadge = p.recogido ? '<span class="badge" style="background:#e3f2fd; color:#1976d2; border:1px solid #90caf9;">✓ Recogido</span>' : '<span class="badge badge-pending"> Pendiente</span>';
+                const pagadoBadge = p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7;">✓ Pagado</span>' : '<span class="badge" style="background:#ffebee; color:#c41e3a; border:1px solid #ef9a9a;">⏳ Pendiente</span>';
+                const recogidoBadge = p.recogido ? '<span class="badge" style="background:#e3f2fd; color:#1976d2; border:1px solid #90caf9;">✓ Recogido</span>' : '<span class="badge badge-pending">⏳ Pendiente</span>';
                 const quienRecogeHtml = p.quienRecoge ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
                 return '<tr>' +
                     '<td class="nombre-cell" title="' + p.nombre + '">' + p.nombre + '</td>' +
@@ -2796,7 +2967,7 @@
             html += '<div style="background:#fff3e0; padding:12px; border-radius:8px; border-left:4px solid #e65100;"><strong style="color:#e65100; font-size:0.9em;">Recaudado</strong><br><span style="font-size:1.3em; font-weight:700;">' + totalRecaudado.toLocaleString('es-ES') + ' €</span></div>';
             html += '<div style="background:#ffebee; padding:12px; border-radius:8px; border-left:4px solid #c41e3a;"><strong style="color:#c41e3a; font-size:0.9em;">Pendiente</strong><br><span style="font-size:1.3em; font-weight:700;">' + totalPendiente.toLocaleString('es-ES') + ' €</span></div>';
             html += '</div>';
-            html += '<h3 style="color:#1a3a5c; margin-bottom:12px; font-size:1em;"> Por servicio</h3>';
+            html += '<h3 style="color:#1a3a5c; margin-bottom:12px; font-size:1em;">📊 Por servicio</h3>';
             html += '<div class="table-container"><table><thead><tr><th>Servicio</th><th>Décimos</th><th>Importe</th><th>Pagados</th></tr></thead><tbody>';
             Object.keys(porServicio).sort().forEach(sv => {
                 const d = porServicio[sv];
@@ -2823,7 +2994,7 @@
             tbody.innerHTML = pedidosFiltrados.map(p => {
                 const pagadoBadge = p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7;">✓ Pagado</span>' : '<span class="badge" style="background:#ffebee; color:#c41e3a; border:1px solid #ef9a9a;">⏳ Pendiente</span>';
                 const recogidoBadge = p.recogido ? '<span class="badge" style="background:#e3f2fd; color:#1976d2; border:1px solid #90caf9;">✓ Recogido</span>' : '<span class="badge badge-pending">⏳ Pendiente</span>';
-                const recogidoPor = p.quienRecoge ? '<span class="badge badge-collected"> ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
+                const recogidoPor = p.quienRecoge ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
                 return '<tr>' +
                     '<td class="nombre-cell" title="' + p.nombre + '">' + p.nombre + '</td>' +
                     '<td title="' + (p.servicio || '') + '">' + (p.servicio || '-') + '</td>' +
@@ -2843,12 +3014,12 @@
         }
 
         async function procesarOCR() {
-            if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; }
+            if (rolActual !== 'admin') { showToast('', 'Esta acción es solo para administradores.', true); return; }
             const fileInput = document.getElementById('ocrFile');
             const servicio = document.getElementById('ocrServicio').value;
             const numDecimos = parseInt(document.getElementById('ocrDecimos').value);
-            if (!servicio) { showToast('⚠️', 'Primero elige un servicio.', true); return; }
-            if (!fileInput.files || fileInput.files.length === 0) { showToast('⚠️', 'Tienes que seleccionar un archivo.', true); return; }
+            if (!servicio) { showToast('️', 'Primero elige un servicio.', true); return; }
+            if (!fileInput.files || fileInput.files.length === 0) { showToast('️', 'Tienes que seleccionar un archivo.', true); return; }
             if (!numDecimos || numDecimos < 1) { showToast('⚠️', 'Indica un número válido de décimos.', true); return; }
             
             const file = fileInput.files[0];
@@ -2861,7 +3032,7 @@
             progressContainer.style.display = 'block';
             resultContainer.style.display = 'none';
             btnProcesar.disabled = true;
-            btnProcesar.textContent = ' Procesando...';
+            btnProcesar.textContent = '⏳ Procesando...';
             
             let texto = '';
             
@@ -2900,14 +3071,14 @@
                     progressFill.style.width = '85%';
                     
                 } else if (esImagen) {
-                    statusEl.textContent = '️ Procesando la imagen...';
+                    statusEl.textContent = '🖼️ Procesando la imagen...';
                     progressFill.style.width = '20%';
                     
                     const result = await Tesseract.recognize(file, 'spa', {
                         logger: m => {
                             if (m.status === 'recognizing text') {
                                 const progress = Math.round(m.progress * 100);
-                                statusEl.textContent = '🔍 Leyendo texto... ' + progress + '%';
+                                statusEl.textContent = ' Leyendo texto... ' + progress + '%';
                                 progressFill.style.width = (20 + progress * 0.65) + '%';
                             }
                         }
@@ -2943,7 +3114,7 @@
             } catch (error) {
                 console.error('Error OCR:', error);
                 statusEl.textContent = '❌ Algo ha fallado: ' + (error.message || 'desconocido');
-                showToast('⚠️', 'No he podido procesar el archivo: ' + (error.message || 'formato no válido'), true);
+                showToast('️', 'No he podido procesar el archivo: ' + (error.message || 'formato no válido'), true);
             } finally {
                 btnProcesar.disabled = false;
                 btnProcesar.textContent = '🔍 Procesar archivo';
@@ -2996,7 +3167,7 @@
             if (!confirm('¿Quieres dar de alta a "' + nombreDetectado + '" y registrar su pedido de ' + decimosDetectados + ' décimo(s)?\n\nAcepta para crearlo o Cancela para omitirlo.')) {
                 resultado.noEncontrados.splice(idx, 1);
                 mostrarResultadosOCR(resultado);
-                showToast('️', '"' + nombreDetectado + '" omitido.');
+                showToast('⚠️', '"' + nombreDetectado + '" omitido.');
                 return;
             }
             
@@ -3030,14 +3201,14 @@
                         dbRef.secciones.set(obj);
                         showToast('✅', '¡Sección "' + seccion + '" creada!');
                     } else {
-                        showToast('⚠️', 'Operación cancelada. La sección no se ha creado.', true);
+                        showToast('️', 'Operación cancelada. La sección no se ha creado.', true);
                         return;
                     }
                 }
             } else {
-                seccion = prompt(' ¿En qué sección está "' + nombreDetectado + '"?');
+                seccion = prompt('📂 ¿En qué sección está "' + nombreDetectado + '"?');
                 if (!seccion || !seccion.trim()) {
-                    showToast('⚠️', 'Necesito una sección.', true);
+                    showToast('️', 'Necesito una sección.', true);
                     return;
                 }
                 seccion = seccion.trim().toUpperCase();
@@ -3266,7 +3437,7 @@
             const { id, ...datos } = pedido;
             dbRef.pedidos.child(id).set(datos)
                 .then(() => setSyncStatus('online'))
-                .catch((err) => { setSyncStatus('offline', '❌ Error'); showToast('️', 'No he podido guardar el cambio.', true); });
+                .catch((err) => { setSyncStatus('offline', '❌ Error'); showToast('⚠️', 'No he podido guardar el cambio.', true); });
         }
 
         function firebaseEliminarPedido(id) {
@@ -3296,7 +3467,7 @@
         }
 
         function exportarDatosJSON() {
-            if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; }
+            if (rolActual !== 'admin') { showToast('', 'Esta acción es solo para administradores.', true); return; }
             const datos = { pedidos, empleados, servicios, secciones, usuarios, revisiones, config, fechaExportacion: new Date().toISOString() };
             const json = JSON.stringify(datos, null, 2);
             const blob = new Blob([json], { type: 'application/json' });
@@ -3304,7 +3475,7 @@
             link.href = URL.createObjectURL(blob);
             link.download = 'loteria-navidad-backup-' + new Date().toISOString().slice(0,10) + '.json';
             link.click();
-            showToast('📤', '¡Copia de seguridad exportada!');
+            showToast('', '¡Copia de seguridad exportada!');
         }
 
         function importarDatosJSON(event) {
@@ -3367,7 +3538,7 @@
 
         function exportarListadoGeneralPDF() {
             const pedidosExportar = getPedidosFiltradosListado();
-            if (pedidosExportar.length === 0) { showToast('️', 'No hay pedidos para exportar.'); return; }
+            if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos para exportar.'); return; }
             
             const filtroServicio = document.getElementById('filtroServicioListado').value;
             const filtroSeccion = document.getElementById('filtroSeccionListado').value;
@@ -3481,123 +3652,278 @@
             v.document.close(); v.print();
         }
 
+        // ===== FUNCIONES DE IMPRESIÓN/EXPORTACIÓN MULTI-SECCIÓN =====
         function exportarPDF() {
             const filtroServicio = document.getElementById('filtroServicioPedidos').value;
-            const filtroSeccion = document.getElementById('filtroSeccionPedidos').value;
-            let pedidosExportar = pedidos;
-            if (filtroServicio) pedidosExportar = pedidosExportar.filter(p => p.servicio === filtroServicio);
-            if (filtroSeccion) pedidosExportar = pedidosExportar.filter(p => p.seccion === filtroSeccion);
-            if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos para exportar.'); return; }
+            
+            if (!filtroServicio) {
+                showToast('⚠️', 'Selecciona un servicio primero.', true);
+                return;
+            }
+            
+            // Determinar qué secciones imprimir
+            let seccionesAImprimir = [];
+            if (seccionesSeleccionadas.length > 0) {
+                seccionesAImprimir = [...seccionesSeleccionadas];
+            } else {
+                // Si no hay ninguna seleccionada, usar todas las del servicio
+                seccionesAImprimir = secciones.filter(s => s.servicio === filtroServicio).map(s => s.nombre);
+            }
+            
+            if (seccionesAImprimir.length === 0) {
+                showToast('⚠️', 'No hay secciones disponibles para este servicio.', true);
+                return;
+            }
             
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
             
-            let titulo = 'Lotería Navidad 2026 - Pabellón Niño Jesús';
-            if (filtroServicio) titulo += '\nServicio: ' + filtroServicio;
-            if (filtroSeccion) titulo += ' | Sección: ' + filtroSeccion;
+            let titulo = 'Lotería Navidad 2026 - Pabellón Niño Jesús\nServicio: ' + filtroServicio;
+            if (seccionesAImprimir.length > 1) {
+                titulo += '\nSecciones: ' + seccionesAImprimir.join(', ');
+            } else {
+                titulo += '\nSección: ' + seccionesAImprimir[0];
+            }
             
             doc.setFontSize(14); doc.setTextColor(26, 58, 92);
             doc.text(titulo, 14, 22);
             doc.setFontSize(10); doc.setTextColor(100);
             doc.text('Fecha: ' + new Date().toLocaleDateString('es-ES'), 14, 32);
             
-            const totalDecimos = pedidosExportar.reduce((s, p) => s + p.numDecimos, 0);
-            const importeTotal = totalDecimos * PRECIO_DECIMO;
-            const recaudado = pedidosExportar.filter(p => p.pagado).reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0);
-            const pendiente = importeTotal - recaudado;
+            const cols = ["Nombre", "Seccion", "Tel", "Dec", "Importe", "F.Sol", "Pag"];
             
-            const cols = ["Nombre", "Servicio", "Seccion", "Tel", "Dec", "Importe", "F.Sol", "Pag"];
-            const rows = pedidosExportar.map(p => [p.nombre, p.servicio||'-', p.seccion||'-', p.telefono||'-', p.numDecimos, (p.numDecimos*PRECIO_DECIMO)+'€', p.fechaSolicitud||'-', p.pagado?'Si':'No']);
+            let totalGlobalDecimos = 0;
+            let totalGlobalImporte = 0;
+            let totalGlobalRecaudado = 0;
+            let currentY = 38;
             
-            doc.autoTable(cols, rows, { 
-                startY: 38, 
-                theme: 'striped', 
-                headStyles: { fillColor: [26, 58, 92], fontSize: 7 }, 
-                bodyStyles: { fontSize: 7 },
-                margin: { left: 14, right: 14 }
+            seccionesAImprimir.forEach((seccion, idx) => {
+                const pedidosSeccion = pedidos.filter(p => 
+                    p.servicio === filtroServicio && p.seccion === seccion
+                ).sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'));
+                
+                if (pedidosSeccion.length === 0) return;
+                
+                // Título de sección
+                doc.setFontSize(12); doc.setTextColor(26, 58, 92);
+                doc.text('Sección: ' + seccion, 14, currentY);
+                currentY += 6;
+                
+                const totalDec = pedidosSeccion.reduce((s, p) => s + p.numDecimos, 0);
+                const totalImp = totalDec * PRECIO_DECIMO;
+                const recaudado = pedidosSeccion.filter(p => p.pagado).reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0);
+                
+                totalGlobalDecimos += totalDec;
+                totalGlobalImporte += totalImp;
+                totalGlobalRecaudado += recaudado;
+                
+                const rows = pedidosSeccion.map(p => [p.nombre, p.seccion||'-', p.telefono||'-', p.numDecimos, (p.numDecimos*PRECIO_DECIMO)+'€', p.fechaSolicitud||'-', p.pagado?'Si':'No']);
+                
+                doc.autoTable(cols, rows, { 
+                    startY: currentY, 
+                    theme: 'striped', 
+                    headStyles: { fillColor: [26, 58, 92], fontSize: 7 }, 
+                    bodyStyles: { fontSize: 7 },
+                    margin: { left: 14, right: 14 }
+                });
+                
+                currentY = doc.lastAutoTable.finalY + 5;
+                
+                // Resumen de la sección
+                doc.setFontSize(10); doc.setTextColor(60, 60, 60);
+                doc.text('Resumen ' + seccion + ': ' + totalDec + ' déc. | Total: ' + totalImp.toLocaleString('es-ES') + ' € | Recaudado: ' + recaudado.toLocaleString('es-ES') + ' € | Pendiente: ' + (totalImp - recaudado).toLocaleString('es-ES') + ' €', 14, currentY);
+                currentY += 12;
+                
+                // Separador entre secciones
+                if (idx < seccionesAImprimir.length - 1) {
+                    doc.setDrawColor(200, 200, 200);
+                    doc.line(14, currentY - 4, 196, currentY - 4);
+                }
             });
             
-            const finalY = doc.lastAutoTable.finalY + 10;
-            doc.setFontSize(11); doc.setTextColor(26, 58, 92);
-            doc.text('RESUMEN', 14, finalY);
+            // Resumen global al final
+            const pendienteGlobal = totalGlobalImporte - totalGlobalRecaudado;
+            doc.setDrawColor(26, 58, 92);
+            doc.setLineWidth(0.5);
+            doc.line(14, currentY, 196, currentY);
+            currentY += 8;
+            
+            doc.setFontSize(12); doc.setTextColor(26, 58, 92);
+            doc.text('RESUMEN GLOBAL', 14, currentY);
+            currentY += 7;
+            
             doc.setFontSize(10); doc.setTextColor(60, 60, 60);
-            doc.text('Total de décimos: ' + totalDecimos, 14, finalY + 7);
-            doc.text('Importe total: ' + importeTotal.toLocaleString('es-ES') + ' €', 14, finalY + 13);
-            doc.text('Recaudado (pagados): ' + recaudado.toLocaleString('es-ES') + ' €', 14, finalY + 19);
-            doc.text('Pendiente por cobrar: ' + pendiente.toLocaleString('es-ES') + ' €', 14, finalY + 25);
+            doc.text('Total de décimos: ' + totalGlobalDecimos, 14, currentY); currentY += 6;
+            doc.text('Importe total: ' + totalGlobalImporte.toLocaleString('es-ES') + ' €', 14, currentY); currentY += 6;
+            doc.text('Recaudado (pagados): ' + totalGlobalRecaudado.toLocaleString('es-ES') + ' €', 14, currentY); currentY += 6;
+            doc.text('Pendiente por cobrar: ' + pendienteGlobal.toLocaleString('es-ES') + ' €', 14, currentY);
             
             doc.save('pedidos-loteria-2026.pdf');
-            showToast('📄', '¡PDF generado!');
+            showToast('📄', '¡PDF generado con ' + seccionesAImprimir.length + ' sección(es)!');
         }
 
         function exportarCSV() {
             const filtroServicio = document.getElementById('filtroServicioPedidos').value;
-            const filtroSeccion = document.getElementById('filtroSeccionPedidos').value;
-            let pedidosExportar = pedidos;
-            if (filtroServicio) pedidosExportar = pedidosExportar.filter(p => p.servicio === filtroServicio);
-            if (filtroSeccion) pedidosExportar = pedidosExportar.filter(p => p.seccion === filtroSeccion);
-            if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos para exportar.'); return; }
             
-            const totalDecimos = pedidosExportar.reduce((s, p) => s + p.numDecimos, 0);
-            const importeTotal = totalDecimos * PRECIO_DECIMO;
-            const recaudado = pedidosExportar.filter(p => p.pagado).reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0);
-            const pendiente = importeTotal - recaudado;
+            if (!filtroServicio) {
+                showToast('⚠️', 'Selecciona un servicio primero.', true);
+                return;
+            }
+            
+            let seccionesAExportar = [];
+            if (seccionesSeleccionadas.length > 0) {
+                seccionesAExportar = [...seccionesSeleccionadas];
+            } else {
+                seccionesAExportar = secciones.filter(s => s.servicio === filtroServicio).map(s => s.nombre);
+            }
+            
+            if (seccionesAExportar.length === 0) {
+                showToast('⚠️', 'No hay secciones disponibles.', true);
+                return;
+            }
             
             let csv = '\uFEFF';
             csv += 'Lotería Navidad 2026 - Pabellón Niño Jesús\n';
-            if (filtroServicio) csv += 'Servicio: ' + filtroServicio + '\n';
-            if (filtroSeccion) csv += 'Sección: ' + filtroSeccion + '\n';
+            csv += 'Servicio: ' + filtroServicio + '\n';
+            csv += 'Secciones: ' + seccionesAExportar.join(', ') + '\n';
             csv += 'Fecha: ' + new Date().toLocaleDateString('es-ES') + '\n\n';
-            csv += 'Nombre,Servicio,Seccion,Telefono,Decimos,Importe,Fecha Sol.,Hora Sol.,Pagado,Recogido\n';
-            pedidosExportar.forEach(p => { 
-                csv += '"'+p.nombre+'","'+(p.servicio||'')+'","'+(p.seccion||'')+'","'+(p.telefono||'')+'",'+p.numDecimos+','+(p.numDecimos*PRECIO_DECIMO)+',"'+(p.fechaSolicitud||'')+'","'+(p.horaSolicitud||'')+'",'+(p.pagado?'Si':'No')+','+(p.recogido?'Si':'No')+'\n'; 
+            
+            let totalGlobalDecimos = 0;
+            let totalGlobalImporte = 0;
+            let totalGlobalRecaudado = 0;
+            
+            seccionesAExportar.forEach(seccion => {
+                const pedidosSeccion = pedidos.filter(p => 
+                    p.servicio === filtroServicio && p.seccion === seccion
+                ).sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'));
+                
+                if (pedidosSeccion.length === 0) return;
+                
+                csv += '=== SECCIÓN: ' + seccion + ' ===\n';
+                csv += 'Nombre,Servicio,Seccion,Telefono,Decimos,Importe,Fecha Sol.,Hora Sol.,Pagado,Recogido\n';
+                
+                let totalDec = 0;
+                let totalImp = 0;
+                let recaudado = 0;
+                
+                pedidosSeccion.forEach(p => { 
+                    csv += '"'+p.nombre+'","'+(p.servicio||'')+'","'+(p.seccion||'')+'","'+(p.telefono||'')+'",'+p.numDecimos+','+(p.numDecimos*PRECIO_DECIMO)+',"'+(p.fechaSolicitud||'')+'","'+(p.horaSolicitud||'')+'",'+(p.pagado?'Si':'No')+','+(p.recogido?'Si':'No')+'\n';
+                    totalDec += p.numDecimos;
+                    totalImp += p.numDecimos * PRECIO_DECIMO;
+                    if (p.pagado) recaudado += p.numDecimos * PRECIO_DECIMO;
+                });
+                
+                totalGlobalDecimos += totalDec;
+                totalGlobalImporte += totalImp;
+                totalGlobalRecaudado += recaudado;
+                
+                csv += '\nRESUMEN ' + seccion + '\n';
+                csv += 'Total décimos,' + totalDec + '\n';
+                csv += 'Importe total,' + totalImp.toLocaleString('es-ES') + ' €\n';
+                csv += 'Recaudado,' + recaudado.toLocaleString('es-ES') + ' €\n';
+                csv += 'Pendiente,' + (totalImp - recaudado).toLocaleString('es-ES') + ' €\n\n';
             });
-            csv += '\nRESUMEN\n';
-            csv += 'Total de décimos,' + totalDecimos + '\n';
-            csv += 'Importe total,' + importeTotal.toLocaleString('es-ES') + ' €\n';
-            csv += 'Recaudado (pagados),' + recaudado.toLocaleString('es-ES') + ' €\n';
-            csv += 'Pendiente por cobrar,' + pendiente.toLocaleString('es-ES') + ' €\n';
+            
+            const pendienteGlobal = totalGlobalImporte - totalGlobalRecaudado;
+            csv += '========================================\n';
+            csv += 'RESUMEN GLOBAL\n';
+            csv += '========================================\n';
+            csv += 'Total de décimos,' + totalGlobalDecimos + '\n';
+            csv += 'Importe total,' + totalGlobalImporte.toLocaleString('es-ES') + ' €\n';
+            csv += 'Recaudado (pagados),' + totalGlobalRecaudado.toLocaleString('es-ES') + ' €\n';
+            csv += 'Pendiente por cobrar,' + pendienteGlobal.toLocaleString('es-ES') + ' €\n';
             
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'pedidos-2026.csv'; link.click();
-            showToast('📊', '¡CSV generado!');
+            showToast('📊', '¡CSV generado con ' + seccionesAExportar.length + ' sección(es)!');
         }
 
         function imprimirListado() {
             const filtroServicio = document.getElementById('filtroServicioPedidos').value;
-            const filtroSeccion = document.getElementById('filtroSeccionPedidos').value;
-            let pedidosExportar = pedidos;
-            if (filtroServicio) pedidosExportar = pedidosExportar.filter(p => p.servicio === filtroServicio);
-            if (filtroSeccion) pedidosExportar = pedidosExportar.filter(p => p.seccion === filtroSeccion);
-            if (pedidosExportar.length === 0) { showToast('⚠️', 'No hay pedidos para imprimir.'); return; }
             
-            const totalDecimos = pedidosExportar.reduce((s, p) => s + p.numDecimos, 0);
-            const importeTotal = totalDecimos * PRECIO_DECIMO;
-            const recaudado = pedidosExportar.filter(p => p.pagado).reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0);
-            const pendiente = importeTotal - recaudado;
+            if (!filtroServicio) {
+                showToast('️', 'Selecciona un servicio primero.', true);
+                return;
+            }
             
-            const v = window.open('', '', 'width=900,height=600');
-            const tablaHTML = pedidosExportar.map(p => '<tr><td>'+p.nombre+'</td><td>'+(p.servicio||'-')+'</td><td>'+(p.seccion||'-')+'</td><td>'+(p.telefono||'-')+'</td><td>'+p.numDecimos+'</td><td>'+(p.numDecimos*PRECIO_DECIMO)+'€</td><td>'+(p.fechaSolicitud||'-')+'</td><td>'+(p.horaSolicitud||'-')+'</td><td>'+(p.pagado?'Si':'No')+'</td><td>'+(p.recogido?'Si':'No')+'</td></tr>').join('');
+            let seccionesAImprimir = [];
+            if (seccionesSeleccionadas.length > 0) {
+                seccionesAImprimir = [...seccionesSeleccionadas];
+            } else {
+                seccionesAImprimir = secciones.filter(s => s.servicio === filtroServicio).map(s => s.nombre);
+            }
             
-            let encabezado = '<h1>Pedidos Lotería 2026</h1>';
-            if (filtroServicio) encabezado += '<p><strong>Servicio:</strong> ' + filtroServicio + '</p>';
-            if (filtroSeccion) encabezado += '<p><strong>Sección:</strong> ' + filtroSeccion + '</p>';
+            if (seccionesAImprimir.length === 0) {
+                showToast('⚠️', 'No hay secciones disponibles.', true);
+                return;
+            }
+            
+            const v = window.open('', '', 'width=900,height=700');
+            
+            let encabezado = '<h1>Lotería Navidad 2026 - Pabellón Niño Jesús</h1>';
+            encabezado += '<p><strong>Servicio:</strong> ' + filtroServicio + '</p>';
+            if (seccionesAImprimir.length > 1) {
+                encabezado += '<p><strong>Secciones:</strong> ' + seccionesAImprimir.join(', ') + '</p>';
+            } else {
+                encabezado += '<p><strong>Sección:</strong> ' + seccionesAImprimir[0] + '</p>';
+            }
             encabezado += '<p>Fecha: '+new Date().toLocaleDateString('es-ES')+'</p>';
             
-            const resumenHTML = `
-                <div style="margin-top: 25px; padding: 15px; background: #f8f9fa; border: 2px solid #1a3a5c; border-radius: 8px;">
-                    <h2 style="color: #1a3a5c; margin-bottom: 12px; font-size: 1.2em;">RESUMEN</h2>
-                    <table style="width: 100%; border-collapse: collapse;">
-                        <tr><td style="padding: 6px; font-weight: bold;">Total de décimos:</td><td style="padding: 6px; text-align: right; font-size: 1.1em;">${totalDecimos}</td></tr>
-                        <tr style="background: #e3f2fd;"><td style="padding: 6px; font-weight: bold;">Importe total:</td><td style="padding: 6px; text-align: right; font-size: 1.1em; font-weight: bold;">${importeTotal.toLocaleString('es-ES')} €</td></tr>
-                        <tr style="background: #e8f5e9;"><td style="padding: 6px; font-weight: bold;">Recaudado (pagados):</td><td style="padding: 6px; text-align: right; font-size: 1.1em; color: #2e7d32; font-weight: bold;">${recaudado.toLocaleString('es-ES')} €</td></tr>
-                        <tr style="background: #fff3e0;"><td style="padding: 6px; font-weight: bold;">Pendiente por cobrar:</td><td style="padding: 6px; text-align: right; font-size: 1.1em; color: #e65100; font-weight: bold;">${pendiente.toLocaleString('es-ES')} €</td></tr>
+            let contenido = '';
+            let totalGlobalDecimos = 0;
+            let totalGlobalImporte = 0;
+            let totalGlobalRecaudado = 0;
+            
+            seccionesAImprimir.forEach((seccion, idx) => {
+                const pedidosSeccion = pedidos.filter(p => 
+                    p.servicio === filtroServicio && p.seccion === seccion
+                ).sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'));
+                
+                if (pedidosSeccion.length === 0) return;
+                
+                const totalDec = pedidosSeccion.reduce((s, p) => s + p.numDecimos, 0);
+                const totalImp = totalDec * PRECIO_DECIMO;
+                const recaudado = pedidosSeccion.filter(p => p.pagado).reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0);
+                const pendiente = totalImp - recaudado;
+                
+                totalGlobalDecimos += totalDec;
+                totalGlobalImporte += totalImp;
+                totalGlobalRecaudado += recaudado;
+                
+                const tablaHTML = pedidosSeccion.map(p => '<tr><td>'+p.nombre+'</td><td>'+(p.seccion||'-')+'</td><td>'+(p.telefono||'-')+'</td><td>'+p.numDecimos+'</td><td>'+(p.numDecimos*PRECIO_DECIMO)+'€</td><td>'+(p.fechaSolicitud||'-')+'</td><td>'+(p.horaSolicitud||'-')+'</td><td>'+(p.pagado?'Si':'No')+'</td><td>'+(p.recogido?'Si':'No')+'</td></tr>').join('');
+                
+                contenido += '<div style="margin-bottom: 30px;">';
+                contenido += '<h2 style="color: #1a3a5c; border-bottom: 2px solid #1a3a5c; padding-bottom: 5px;">Sección: ' + seccion + '</h2>';
+                contenido += '<table><thead><tr><th>Nombre</th><th>Sección</th><th>Tel</th><th>Dec</th><th>Importe</th><th>F.Sol</th><th>H.Sol</th><th>Pag</th><th>Rec</th></tr></thead><tbody>'+tablaHTML+'</tbody></table>';
+                contenido += '<div style="margin-top: 10px; padding: 10px; background: #f8f9fa; border-left: 4px solid #1a3a5c; border-radius: 4px;">';
+                contenido += '<strong>Resumen ' + seccion + ':</strong> ';
+                contenido += totalDec + ' déc. | Total: ' + totalImp.toLocaleString('es-ES') + ' € | ';
+                contenido += 'Recaudado: <span style="color:#2e7d32; font-weight:bold;">' + recaudado.toLocaleString('es-ES') + ' €</span> | ';
+                contenido += 'Pendiente: <span style="color:#e65100; font-weight:bold;">' + pendiente.toLocaleString('es-ES') + ' €</span>';
+                contenido += '</div>';
+                contenido += '</div>';
+                
+                if (idx < seccionesAImprimir.length - 1) {
+                    contenido += '<hr style="border: none; border-top: 2px dashed #ccc; margin: 20px 0;">';
+                }
+            });
+            
+            const pendienteGlobal = totalGlobalImporte - totalGlobalRecaudado;
+            const resumenGlobalHTML = `
+                <div style="margin-top: 30px; padding: 15px; background: #1a3a5c; color: white; border-radius: 8px;">
+                    <h2 style="color: white; margin-bottom: 12px; font-size: 1.3em;">📊 RESUMEN GLOBAL</h2>
+                    <table style="width: 100%; border-collapse: collapse; color: white;">
+                        <tr><td style="padding: 6px; font-weight: bold;">Total de décimos:</td><td style="padding: 6px; text-align: right; font-size: 1.2em; font-weight: bold;">${totalGlobalDecimos}</td></tr>
+                        <tr><td style="padding: 6px; font-weight: bold;">Importe total:</td><td style="padding: 6px; text-align: right; font-size: 1.2em; font-weight: bold;">${totalGlobalImporte.toLocaleString('es-ES')} €</td></tr>
+                        <tr><td style="padding: 6px; font-weight: bold;">Recaudado (pagados):</td><td style="padding: 6px; text-align: right; font-size: 1.2em; font-weight: bold; color: #a5d6a7;">${totalGlobalRecaudado.toLocaleString('es-ES')} €</td></tr>
+                        <tr><td style="padding: 6px; font-weight: bold;">Pendiente por cobrar:</td><td style="padding: 6px; text-align: right; font-size: 1.2em; font-weight: bold; color: #ffcc80;">${pendienteGlobal.toLocaleString('es-ES')} €</td></tr>
                     </table>
                 </div>
             `;
             
-            v.document.write('<html><head><title>Pedidos Lotería 2026</title><style>body{font-family:Arial,sans-serif;padding:20px}h1{color:#1a3a5c}table{width:100%;border-collapse:collapse;margin-top:15px}th,td{border:1px solid #ddd;padding:6px;font-size:0.85em}th{background:#1a3a5c;color:white}</style></head><body>'+encabezado+'<table><thead><tr><th>Nombre</th><th>Servicio</th><th>Sección</th><th>Tel</th><th>Dec</th><th>Importe</th><th>F.Sol</th><th>H.Sol</th><th>Pag</th><th>Rec</th></tr></thead><tbody>'+tablaHTML+'</tbody></table>'+resumenHTML+'</body></html>');
-            v.document.close(); v.print();
+            v.document.write('<html><head><title>Pedidos Lotería 2026</title><style>body{font-family:Arial,sans-serif;padding:20px}h1{color:#1a3a5c}table{width:100%;border-collapse:collapse;margin-top:10px}th,td{border:1px solid #ddd;padding:6px;font-size:0.85em}th{background:#1a3a5c;color:white}</style></head><body>'+encabezado+contenido+resumenGlobalHTML+'</body></html>');
+            v.document.close(); 
+            setTimeout(() => v.print(), 500);
         }
 
         iniciarAplicacion();
