@@ -880,7 +880,7 @@
                 <div class="form-group" style="margin-bottom: 12px;"><label for="editarNombre">Nombre y Apellidos</label><input type="text" id="editarNombre" required></div>
                 <div class="form-group" style="margin-bottom: 12px;"><label for="editarServicio">Servicio</label><select id="editarServicio" required onchange="actualizarSelectSeccionesEditar(this.value)"></select></div>
                 <div class="form-group" style="margin-bottom: 12px;"><label for="editarSeccion">Sección</label><select id="editarSeccion" required></select></div>
-                <div class="form-group" style="margin-bottom: 12px;"><label for="editarTelefono">Teléfono</label><input type="tel" id="editarTelefono" required></div>
+                <div class="form-group" style="margin-bottom: 12px;"><label for="editarTelefono">Teléfono (opcional)</label><input type="tel" id="editarTelefono" placeholder="Déjalo vacío si no tiene"></div>
                 <div class="form-group" style="margin-bottom: 12px;"><label for="editarNumDecimos">Nº de Décimos</label><input type="number" id="editarNumDecimos" min="1" max="2" value="2" required></div>
                 <div class="form-group" style="margin-bottom: 12px;"><label for="editarFechaSolicitud">Fecha de Solicitud</label><input type="date" id="editarFechaSolicitud" required></div>
                 <div class="form-group" style="margin-bottom: 12px;"><label for="editarHoraSolicitud">Hora de Solicitud</label><input type="time" id="editarHoraSolicitud" required></div>
@@ -904,7 +904,7 @@
             </div>
             <form id="nuevoEmpleadoForm">
                 <div class="form-group" style="margin-bottom: 12px;"><label for="nuevoEmpNombre">Nombre y Apellidos *</label><input type="text" id="nuevoEmpNombre" required></div>
-                <div class="form-group" style="margin-bottom: 12px;"><label for="nuevoEmpTelefono">Teléfono *</label><input type="tel" id="nuevoEmpTelefono" required></div>
+                <div class="form-group" style="margin-bottom: 12px;"><label for="nuevoEmpTelefono">Teléfono (opcional)</label><input type="tel" id="nuevoEmpTelefono" placeholder="Déjalo vacío si no tiene"></div>
                 <div class="modal-actions">
                     <button type="button" class="btn btn-cancel" onclick="cerrarModalEmpleado()">Cancelar</button>
                     <button type="submit" class="btn btn-save">Guardar</button>
@@ -1363,7 +1363,7 @@
 
         function cerrarModalEmpleado() { document.getElementById('modalNuevoEmpleado').classList.remove('active'); }
 
-        document.getElementById('nuevoEmpleadoForm').addEventListener('submit', function(e) { e.preventDefault(); if (rolActual !== 'admin') { showToast('', 'Esta acción es solo para administradores.', true); return; } const nombre = document.getElementById('nuevoEmpNombre').value.trim(); const telefono = document.getElementById('nuevoEmpTelefono').value.trim(); const servicio = document.getElementById('servicio').value; const seccion = document.getElementById('seccion').value; if (!nombre || !telefono || !servicio || !seccion) { showToast('⚠️', 'Rellena todos los campos, por favor.', true); return; } const nuevoEmpleado = { nombre, telefono, servicio, seccion, activo: true, fechaAlta: new Date().toISOString().split('T')[0] }; const id = generarId(); firebaseGuardarEmpleado({ id, ...nuevoEmpleado }); cerrarModalEmpleado(); actualizarEmpleados(); document.getElementById('empleado').value = id; document.getElementById('telefono').value = telefono; showToast('✅', '¡' + nombre + ' dado de alta!'); this.reset(); });
+        document.getElementById('nuevoEmpleadoForm').addEventListener('submit', function(e) { e.preventDefault(); if (rolActual !== 'admin') { showToast('', 'Esta acción es solo para administradores.', true); return; } const nombre = document.getElementById('nuevoEmpNombre').value.trim(); const telefono = document.getElementById('nuevoEmpTelefono').value.trim(); const servicio = document.getElementById('servicio').value; const seccion = document.getElementById('seccion').value; if (!nombre || !servicio || !seccion) { showToast('⚠️', 'Rellena nombre, servicio y sección.', true); return; } const nuevoEmpleado = { nombre, telefono, servicio, seccion, activo: true, fechaAlta: new Date().toISOString().split('T')[0] }; const id = generarId(); firebaseGuardarEmpleado({ id, ...nuevoEmpleado }); cerrarModalEmpleado(); actualizarEmpleados(); document.getElementById('empleado').value = id; document.getElementById('telefono').value = telefono; showToast('✅', '¡' + nombre + ' dado de alta!'); this.reset(); });
 
         function actualizarFiltrosServicio() { const filtros = ['filtroServicioPedidos', 'filtroServicioResumen', 'filtroServicioParticipantes', 'filtroServicioListado']; filtros.forEach(id => { const select = document.getElementById(id); if (select) { const valorActual = select.value; let html = '<option value="">Todos</option>'; [...servicios].sort((a, b) => a.localeCompare(b, 'es')).forEach(s => { html += '<option value="' + s + '">' + s + '</option>'; }); select.innerHTML = html; if (valorActual) select.value = valorActual; } }); }
 
