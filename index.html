@@ -1506,7 +1506,40 @@
 
         function aplicarFiltrosPedidos() { renderizarTabla(); }
 
-        function actualizarEstadisticas() { let pedidosCalc = pedidos; if (rolActual === 'revisor' && servicioRevisor) { pedidosCalc = pedidos.filter(p => p.servicio === servicioRevisor); if (seccionLimitadaRevisor) pedidosCalc = pedidosCalc.filter(p => p.seccion === seccionLimitadaRevisor); } const totalDecimos = pedidosCalc.reduce((s, p) => s + p.numDecimos, 0); const recaudado = pedidosCalc.filter(p => p.pagado).reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0); const totalEsperado = pedidosCalc.reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0); const pendienteCobro = totalEsperado - recaudado; const pagados = pedidosCalc.filter(p => p.pagado).length; const pendientes = pedidosCalc.length - pagados; const recogidos = pedidosCalc.filter(p => p.recogido).length; document.getElementById('totalDecimos').textContent = totalDecimos; document.getElementById('dineroRecaudado').textContent = recaudado.toLocaleString('es-ES') + ' €'; document.getElementById('totalParticipantes').textContent = pedidosCalc.length; document.getElementById('statPagados').textContent = pagados; document.getElementById('statPendientes').textContent = pendientes; document.getElementById('statEntregados').textContent = recogidos; document.getElementById('statTotalEsperado').textContent = totalEsperado.toLocaleString('es-ES') + ' €'; document.getElementById('statCobrado').textContent = recaudado.toLocaleString('es-ES') + ' €'; document.getElementById('statPendienteCobro').textContent = pendienteCobro.toLocaleString('es-ES') + ' €'; document.getElementById('statConPago').textContent = pagados; document.getElementById('statSinPago').textContent = pendientes; document.getElementById('statRecogidos').textContent = recogidos; }
+        function actualizarEstadisticas() { 
+    let pedidosCalc = pedidos; 
+    if (rolActual === 'revisor' && servicioRevisor) { 
+        pedidosCalc = pedidos.filter(p => p.servicio === servicioRevisor); 
+        if (seccionLimitadaRevisor) pedidosCalc = pedidosCalc.filter(p => p.seccion === seccionLimitadaRevisor); 
+    } 
+    
+    const totalDecimos = pedidosCalc.reduce((s, p) => s + p.numDecimos, 0);
+    const recaudado = pedidosCalc.filter(p => p.pagado).reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0);
+    const totalEsperado = pedidosCalc.reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0);
+    const pendienteCobro = totalEsperado - recaudado;
+    
+    // CORREGIDO: contar décimos, no pedidos
+    const decimosPagados = pedidosCalc.filter(p => p.pagado).reduce((s, p) => s + p.numDecimos, 0);
+    const decimosPendientes = pedidosCalc.filter(p => !p.pagado).reduce((s, p) => s + p.numDecimos, 0);
+    const decimosEntregados = pedidosCalc.filter(p => p.recogido).reduce((s, p) => s + p.numDecimos, 0);
+    
+    const numPagados = pedidosCalc.filter(p => p.pagado).length;
+    const numPendientes = pedidosCalc.length - numPagados;
+    const numRecogidos = pedidosCalc.filter(p => p.recogido).length;
+    
+    document.getElementById('totalDecimos').textContent = totalDecimos; 
+    document.getElementById('dineroRecaudado').textContent = recaudado.toLocaleString('es-ES') + ' €'; 
+    document.getElementById('totalParticipantes').textContent = pedidosCalc.length; 
+    document.getElementById('statPagados').textContent = decimosPagados; 
+    document.getElementById('statPendientes').textContent = decimosPendientes; 
+    document.getElementById('statEntregados').textContent = decimosEntregados; 
+    document.getElementById('statTotalEsperado').textContent = totalEsperado.toLocaleString('es-ES') + ' €'; 
+    document.getElementById('statCobrado').textContent = recaudado.toLocaleString('es-ES') + ' €'; 
+    document.getElementById('statPendienteCobro').textContent = pendienteCobro.toLocaleString('es-ES') + ' €'; 
+    document.getElementById('statConPago').textContent = numPagados; 
+    document.getElementById('statSinPago').textContent = numPendientes; 
+    document.getElementById('statRecogidos').textContent = numRecogidos; 
+}
 
         function getPedidosFiltradosTabla() { 
             const filtroServicio = document.getElementById('filtroServicioPedidos').value; 
