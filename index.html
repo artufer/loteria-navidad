@@ -96,7 +96,7 @@
         .filter-bar .form-group { flex: 1; min-width: 150px; margin-bottom: 0; }
         .table-container { overflow-x: auto; border-radius: 6px; border: 1px solid #e0e2e5; width: 100%; }
         table { width: 100%; border-collapse: collapse; }
-        #page-pedidos table, #page-listado table, #page-participantes table, #page-revision table, #page-pagados table, #page-porpagador table { table-layout: auto; min-width: 1100px; }
+        #page-pedidos table, #page-listado table, #page-participantes table, #page-revision table, #page-pagados table, #page-porpagador table, #page-recogida table { table-layout: auto; min-width: 900px; }
         thead { background: #1a3a5c; color: white; }
         th { padding: 6px 4px; text-align: left; font-size: 0.7em; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: pointer; }
         th:hover { background: #2a4a6c; }
@@ -105,19 +105,24 @@
         tbody tr { transition: background 0.15s; }
         tbody tr:hover { background: #f5f7f9; }
         tbody tr:last-child td { border-bottom: none; }
-        .col-nombre { width: 20%; min-width: 150px; }
-        .col-servicio { width: 14%; min-width: 110px; }
-        .col-seccion { width: 12%; min-width: 90px; }
-        .col-centro { width: 7%; text-align: center; }
+        .col-nombre { width: 22%; min-width: 180px; }
+        .col-servicio { width: 16%; min-width: 130px; }
+        .col-seccion { width: 14%; min-width: 110px; }
+        .col-centro { width: 8%; text-align: center; }
         .col-recogido-por { width: 10%; }
-        .col-acciones { width: 10%; text-align: center; }
+        .col-acciones { width: 8%; text-align: center; }
         .checkbox-cell { text-align: center; }
-        .checkbox-cell input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; }
+        .checkbox-cell input[type="checkbox"] { width: 14px; height: 14px; cursor: pointer; }
         .checkbox-cell input[type="checkbox"]:disabled { cursor: not-allowed; }
         .badge { display: inline-flex; align-items: center; gap: 3px; padding: 3px 8px; border-radius: 20px; font-size: 0.72em; font-weight: 600; white-space: nowrap; }
         .badge-collected { background: #fff3e0; color: #e65100; border: 1px solid #ffcc80; }
         .badge-pending { background: #f5f5f5; color: #757575; border: 1px solid #e0e0e0; }
         .badge-decimos { background: #1a3a5c; color: white; padding: 3px 8px; border-radius: 12px; font-size: 0.72em; font-weight: 600; }
+        .badge-sin-recoger { background: #c41e3a; color: white; padding: 4px 10px; border-radius: 4px; font-size: 0.8em; font-weight: 700; animation: pulse-sin-recoger 2s infinite; display: inline-block; }
+        @keyframes pulse-sin-recoger {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
         .importe-cell { font-weight: 700; color: #c41e3a; }
         .nombre-cell { font-weight: 600; color: #1a3a5c; }
         .actions-cell { display: flex; gap: 4px; justify-content: center; }
@@ -267,53 +272,24 @@
         .resumen-linea .res-item { display: flex; align-items: center; gap: 6px; }
         .resumen-linea .res-label { opacity: 0.9; }
         .resumen-linea .res-valor { font-weight: 700; font-size: 1.1em; }
-        /* Estilos para la pestaña Por Pagador */
-        .pagador-card {
-            background: white;
-            border: 1px solid #e0e2e5;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            overflow: hidden;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
-        .pagador-header {
-            background: linear-gradient(135deg, #1a3a5c 0%, #2a4a6c 100%);
-            color: white;
-            padding: 12px 16px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
+        .pagador-card { background: white; border: 1px solid #e0e2e5; border-radius: 8px; margin-bottom: 12px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .pagador-header { background: linear-gradient(135deg, #1a3a5c 0%, #2a4a6c 100%); color: white; padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; }
         .pagador-nombre { font-size: 1.05em; font-weight: 700; }
         .pagador-resumen { font-size: 0.85em; opacity: 0.95; }
         .pagador-resumen span { margin-right: 12px; }
         .pagador-acciones { display: flex; gap: 6px; flex-wrap: wrap; }
         .pagador-body { padding: 0; }
         .pagador-body table { width: 100%; border-collapse: collapse; min-width: auto; }
-        .pagador-body th {
-            background: #f8f9fa;
-            color: #1a3a5c;
-            font-size: 0.75em;
-            padding: 8px 6px;
-            border-bottom: 2px solid #e0e2e5;
-        }
+        .pagador-body th { background: #f8f9fa; color: #1a3a5c; font-size: 0.75em; padding: 8px 6px; border-bottom: 2px solid #e0e2e5; }
         .pagador-body td { padding: 6px; font-size: 0.78em; border-bottom: 1px solid #f0f2f5; }
         .pagador-body tr.pagado-row { background: #e8f5e9; }
         .pagador-body tr.pendiente-row { background: #fff8e1; }
-        .recogido-label {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            cursor: pointer;
-            font-size: 0.85em;
-        }
-        .recogido-label input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
+        .recogido-label { display: flex; align-items: center; gap: 6px; cursor: pointer; font-size: 0.85em; }
+        .recogido-label input[type="checkbox"] { width: 18px; height: 18px; cursor: pointer; }
+        .recogida-fila-sin-recoger { background: #ffebee !important; }
+        .recogida-fila-sin-recoger td { border-left: 4px solid #c41e3a; }
+        .recogida-fila-recogido { background: #e8f5e9 !important; }
+        .recogida-fila-recogido td { border-left: 4px solid #2e7d32; }
         @media (max-width: 1024px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 768px) {
             .header { flex-direction: column; gap: 8px; padding: 10px; }
@@ -393,12 +369,13 @@
             <button class="nav-tab" data-page="control" id="tabControl">📝 Control<span class="badge-notif" id="badgeControl" style="display:none;">0</span></button>
             <button class="nav-tab" data-page="pedidos">📋 Pedidos</button>
             <button class="nav-tab" data-page="listado">📑 Listado</button>
+            <button class="nav-tab" data-page="recogida">📦 Recogida</button>
             <button class="nav-tab" data-page="porpagador">💰 Por Pagador</button>
-            <button class="nav-tab" data-page="pagados"> Pagados</button>
+            <button class="nav-tab" data-page="pagados">💵 Pagados</button>
             <button class="nav-tab" data-page="resumen">📊 Resumen</button>
             <button class="nav-tab" data-page="participantes">👥 Participantes</button>
             <button class="nav-tab" data-page="revision" id="tabRevision">✅ Revisión</button>
-            <button class="nav-tab" data-page="ocr" id="tabOCR">📷 Lectura PDF</button>
+            <button class="nav-tab" data-page="ocr" id="tabOCR"> Lectura PDF</button>
             <button class="nav-tab" data-page="configuracion" id="tabConfig">⚙️ Config</button>
         </div>
 
@@ -443,10 +420,11 @@
                     <div class="quick-action" id="qaControl" onclick="irAPagina('control')"><div class="qa-icon">📝</div><div class="qa-title">Control</div></div>
                     <div class="quick-action" onclick="irAPagina('pedidos')"><div class="qa-icon">📋</div><div class="qa-title">Pedidos</div></div>
                     <div class="quick-action" onclick="irAPagina('listado')"><div class="qa-icon">📑</div><div class="qa-title">Listado</div></div>
-                    <div class="quick-action" onclick="irAPagina('porpagador')"><div class="qa-icon"></div><div class="qa-title">Por Pagador</div></div>
+                    <div class="quick-action" onclick="irAPagina('recogida')"><div class="qa-icon">📦</div><div class="qa-title">Recogida</div></div>
+                    <div class="quick-action" onclick="irAPagina('porpagador')"><div class="qa-icon">💰</div><div class="qa-title">Por Pagador</div></div>
                     <div class="quick-action" onclick="irAPagina('pagados')"><div class="qa-icon">💵</div><div class="qa-title">Pagados</div></div>
                     <div class="quick-action" id="qaRevision" onclick="irAPagina('revision')"><div class="qa-icon">✅</div><div class="qa-title">Revisión</div></div>
-                    <div class="quick-action" id="qaOCR" onclick="irAPagina('ocr')"><div class="qa-icon">📷</div><div class="qa-title">Lectura PDF</div></div>
+                    <div class="quick-action" id="qaOCR" onclick="irAPagina('ocr')"><div class="qa-icon"></div><div class="qa-title">Lectura PDF</div></div>
                     <div class="quick-action" onclick="irAPagina('resumen')"><div class="qa-icon">📊</div><div class="qa-title">Resumen</div></div>
                     <div class="quick-action" onclick="irAPagina('participantes')"><div class="qa-icon">👥</div><div class="qa-title">Participantes</div></div>
                 </div>
@@ -513,7 +491,7 @@
 
             <div class="section-page" id="page-control">
                 <div class="content-card">
-                    <h2 class="section-title"> Control de Solicitudes, Pagos y Entregas</h2>
+                    <h2 class="section-title">📝 Control de Solicitudes, Pagos y Entregas</h2>
                     <div class="alert-info">
                         📋 Elige un servicio (y opcionalmente una sección) para ver la lista de empleados. Marca los 3 checks según corresponda: <strong>Solicitado</strong>, <strong>Pagado</strong> y <strong>Recibido</strong>. Usa los checkboxes de la izquierda para entregas múltiples.
                     </div>
@@ -602,7 +580,7 @@
                                 <div class="multiselect-dropdown" id="multiselectDropdown">
                                     <div class="multiselect-actions">
                                         <button type="button" onclick="seleccionarTodasSecciones()">✅ Seleccionar todas</button>
-                                        <button type="button" onclick="deseleccionarTodasSecciones()">❌ Deseleccionar todas</button>
+                                        <button type="button" onclick="deseleccionarTodasSecciones()"> Deseleccionar todas</button>
                                     </div>
                                     <div id="multiselectOpciones"></div>
                                 </div>
@@ -651,7 +629,7 @@
                     <div class="resumen-linea" id="resumenLineaPedidos" style="display:none;"></div>
                     <div class="resumen-pedidos" id="resumenPedidos" style="display:none;">
                         <div class="res-item res-decimos">
-                            <span class="res-label">️ Décimos:</span>
+                            <span class="res-label">🎟️ Décimos:</span>
                             <span class="res-valor" id="resTotalDecimos">0</span>
                         </div>
                         <div class="res-item res-recaudado">
@@ -664,7 +642,7 @@
                         </div>
                     </div>
                     <div class="empty-state" id="emptyState">
-                        <div class="empty-icon"></div>
+                        <div class="empty-icon">🎰</div>
                         <h3>Aún no hay pedidos</h3>
                         <p>Añade el primero desde "Solicitar" o escaneando un PDF</p>
                     </div>
@@ -729,7 +707,67 @@
                 </div>
             </div>
 
-            <!-- PESTAÑA: POR PAGADOR -->
+            <!-- PESTAÑA: LISTADO DE RECOGIDA -->
+            <div class="section-page" id="page-recogida">
+                <div class="content-card">
+                    <h2 class="section-title">📦 Listado de Recogida</h2>
+                    <div class="alert-info">
+                        💡 Listado de quién reservó, quién pagó y si ha recogido los décimos. Los pedidos <strong>SIN RECOGER</strong> (pagados pero no recogidos) aparecen resaltados en rojo y ordenados por pagador.
+                    </div>
+                    <div class="filter-bar">
+                        <div class="form-group">
+                            <label for="filtroServicioRecogida">Servicio (opcional)</label>
+                            <select id="filtroServicioRecogida" onchange="renderizarRecogida()">
+                                <option value="">Todos los servicios</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="filtroRecogidaEstado">Estado de recogida</label>
+                            <select id="filtroRecogidaEstado" onchange="renderizarRecogida()">
+                                <option value="todos">Todos</option>
+                                <option value="sin-recoger">⚠️ Solo SIN RECOGER (Pagados)</option>
+                                <option value="recogido">✅ Solo recogidos</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="filtroRecogidaPago">Estado de pago</label>
+                            <select id="filtroRecogidaPago" onchange="renderizarRecogida()">
+                                <option value="todos">Todos</option>
+                                <option value="pagado">💰 Solo pagados</option>
+                                <option value="pendiente"> Solo pendientes</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="export-buttons" style="margin-bottom: 15px;">
+                        <button class="btn btn-export" onclick="exportarRecogidaPDF()">📄 PDF</button>
+                        <button class="btn btn-export" onclick="exportarRecogidaCSV()">📊 CSV</button>
+                        <button class="btn btn-export" onclick="imprimirRecogida()">🖨️ Imprimir</button>
+                    </div>
+                    <div class="table-container" id="recogidaContainer" style="display:none;">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="col-nombre">Quien Reservó</th>
+                                    <th class="col-servicio">Servicio</th>
+                                    <th class="col-seccion">Sección</th>
+                                    <th class="col-centro">Décimos</th>
+                                    <th class="col-centro">Quien Pagó</th>
+                                    <th class="col-centro">Estado</th>
+                                    <th class="col-recogido-por">Quien Recogió</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recogidaBody"></tbody>
+                        </table>
+                    </div>
+                    <div class="resumen-linea" id="resumenLineaRecogida" style="display:none;"></div>
+                    <div class="empty-state" id="emptyRecogida">
+                        <div class="empty-icon"></div>
+                        <h3>Sin pedidos</h3>
+                        <p>No hay pedidos que coincidan con los filtros</p>
+                    </div>
+                </div>
+            </div>
+
             <div class="section-page" id="page-porpagador">
                 <div class="content-card">
                     <h2 class="section-title">💰 Gestión por Pagador</h2>
@@ -751,7 +789,7 @@
                             <label for="filtroEstadoPagador">Estado</label>
                             <select id="filtroEstadoPagador" onchange="renderizarPorPagador()">
                                 <option value="todos">Todos</option>
-                                <option value="pendiente">⏳ Solo pendientes</option>
+                                <option value="pendiente"> Solo pendientes</option>
                                 <option value="pagado">✅ Solo pagados</option>
                             </select>
                         </div>
@@ -797,9 +835,9 @@
                         </div>
                     </div>
                     <div class="export-buttons" style="margin-bottom: 15px;">
-                        <button class="btn btn-export" onclick="exportarPagadosPDF()">📄 PDF</button>
-                        <button class="btn btn-export" onclick="exportarPagadosCSV()">📊 CSV</button>
-                        <button class="btn btn-export" onclick="imprimirPagados()">🖨️ Imprimir</button>
+                        <button class="btn btn-export" onclick="exportarPagadosPDF()"> PDF</button>
+                        <button class="btn btn-export" onclick="exportarPagadosCSV()"> CSV</button>
+                        <button class="btn btn-export" onclick="imprimirPagados()">️ Imprimir</button>
                     </div>
                     <div class="table-container" id="pagadosContainer" style="display:none;">
                         <table>
@@ -830,7 +868,7 @@
 
             <div class="section-page" id="page-resumen">
                 <div class="content-card">
-                    <h2 class="section-title">📊 Resumen Detallado</h2>
+                    <h2 class="section-title"> Resumen Detallado</h2>
                     <div class="filter-bar">
                         <div class="form-group">
                             <label for="filtroServicioResumen">Servicio</label>
@@ -922,7 +960,7 @@
                         <p>Aún no se han registrado pedidos para revisar</p>
                     </div>
                     <div class="revision-panel" id="revisionPanel">
-                        <h3> Estado de la revisión</h3>
+                        <h3>📝 Estado de la revisión</h3>
                         <div id="revisionStatusDisplay"></div>
                         <div style="margin-top: 15px;">
                             <label style="font-size: 0.85em; font-weight: 600; color: #555; display: block; margin-bottom: 6px;">
@@ -932,7 +970,7 @@
                         </div>
                         <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
                             <button class="btn btn-success" onclick="marcarRevision(true)" id="btnRevisarOK">✅ Marcar como REVISADO (todo correcto)</button>
-                            <button class="btn btn-warning" onclick="marcarRevision(false)" id="btnRevisarObs">⚠️ Revisado CON observaciones</button>
+                            <button class="btn btn-warning" onclick="marcarRevision(false)" id="btnRevisarObs">️ Revisado CON observaciones</button>
                             <button class="btn btn-danger" onclick="desmarcarRevision()" id="btnDesmarcar" style="display:none;">🔄 Desmarcar revisión</button>
                         </div>
                         <div id="historialObservaciones" style="margin-top: 15px; display:none;">
@@ -965,7 +1003,7 @@
                             <label for="ocrFile">Seleccionar PDF o imagen *</label>
                             <input type="file" id="ocrFile" accept=".pdf,image/*" style="padding: 10px;">
                         </div>
-                        <button type="button" class="btn btn-primary" onclick="procesarOCR()" id="btnProcesarOCR"> Procesar archivo</button>
+                        <button type="button" class="btn btn-primary" onclick="procesarOCR()" id="btnProcesarOCR">🔍 Procesar archivo</button>
                     </div>
                     <div id="ocrProgressContainer" style="display:none;">
                         <div class="ocr-progress">
@@ -1013,7 +1051,7 @@
                         <div id="emptyUsers" style="text-align:center; padding: 15px; color: #999; font-size: 0.85em;">Aún no hay usuarios configurados</div>
                     </div>
                     <div class="config-block">
-                        <h3>🔐 Cambiar mi contraseña</h3>
+                        <h3> Cambiar mi contraseña</h3>
                         <div class="alert-info">Cambia tu contraseña personal. Se sincroniza en todos los dispositivos.</div>
                         <div class="config-row">
                             <div class="form-group">
@@ -1052,7 +1090,7 @@
                     <input type="text" id="nuevaSeccionNombre" placeholder="Ej: OFICINAS, PARQUES DE BOMBEROS..." required style="text-transform: uppercase;">
                 </div>
                 <div class="alert-warning" id="seccionDuplicada" style="display:none;">
-                    ⚠️ Ya existe una sección con ese nombre en este servicio.
+                    ️ Ya existe una sección con ese nombre en este servicio.
                 </div>
                 <div class="modal-actions">
                     <button type="button" class="btn btn-cancel" onclick="cerrarModalSeccion()">Cancelar</button>
@@ -1066,7 +1104,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3>✏️ Editar Pedido</h3>
-                <button class="close-btn" onclick="cerrarModal()">✕</button>
+                <button class="close-btn" onclick="cerrarModal()"></button>
             </div>
             <form id="editarForm">
                 <input type="hidden" id="editarId">
@@ -1092,7 +1130,7 @@
     <div class="modal-overlay" id="modalNuevoEmpleado">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>➕ Dar de alta nuevo empleado</h3>
+                <h3> Dar de alta nuevo empleado</h3>
                 <button class="close-btn" onclick="cerrarModalEmpleado()">✕</button>
             </div>
             <form id="nuevoEmpleadoForm">
@@ -1232,7 +1270,7 @@
                     Object.keys(REVISORES_PREDEFINIDOS).forEach(u => { revisoresObj[u] = { ...REVISORES_PREDEFINIDOS[u], rol: 'revisor', fechaCreacion: new Date().toISOString() }; });
                     revisoresObj[USUARIO_ADMIN] = { clave: CLAVE_DEFECTO, rol: 'admin', nombre: USUARIO_ADMIN, fechaCreacion: new Date().toISOString() };
                     await dbRef.usuarios.set(revisoresObj);
-                    await dbRef.inicializado.set({ fecha: new Date().toISOString(), version: '41.0', empleadosCargados: 0 });
+                    await dbRef.inicializado.set({ fecha: new Date().toISOString(), version: '43.0', empleadosCargados: 0 });
                     showToast('👋', '¡Bienvenido! Empieza añadiendo empleados.');
                 }
                 loadingText.textContent = 'Verificando administrador...';
@@ -1270,7 +1308,7 @@
             dbRef.servicios.on('value', (snapshot) => { const data = snapshot.val(); if (data) { servicios = Object.keys(data).map(key => data[key]); localStorage.setItem('serviciosLoteria', JSON.stringify(servicios)); if (firebaseReady) { actualizarSelectServicios(); actualizarFiltrosServicio(); actualizarControlServicios(); } } });
             dbRef.secciones.on('value', (snapshot) => { const data = snapshot.val(); if (data) { secciones = Object.keys(data).map(key => data[key]); localStorage.setItem('seccionesLoteria', JSON.stringify(secciones)); if (firebaseReady) { actualizarFiltrosSeccion(); actualizarControlSecciones(); actualizarMultiselectSecciones(); actualizarMultiselectSeccionesListado(); actualizarMultiselectSeccionesPagados(); } } });
             dbRef.empleados.on('value', (snapshot) => { const data = snapshot.val(); if (data) { empleados = Object.keys(data).map(key => ({ id: key, ...data[key] })); localStorage.setItem('empleadosLoteria', JSON.stringify(empleados)); } });
-            dbRef.pedidos.on('value', (snapshot) => { const data = snapshot.val(); pedidos = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : []; localStorage.setItem('pedidosLoteria', JSON.stringify(pedidos)); if (firebaseReady) { renderizarTabla(); renderizarListadoGeneral(); renderizarPagados(); renderizarPorPagador(); actualizarEstadisticas(); renderizarControl(); if (rolActual === 'revisor') renderizarRevision(); } });
+            dbRef.pedidos.on('value', (snapshot) => { const data = snapshot.val(); pedidos = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : []; localStorage.setItem('pedidosLoteria', JSON.stringify(pedidos)); if (firebaseReady) { renderizarTabla(); renderizarListadoGeneral(); renderizarPagados(); renderizarPorPagador(); renderizarRecogida(); actualizarEstadisticas(); renderizarControl(); if (rolActual === 'revisor') renderizarRevision(); } });
             dbRef.revisiones.on('value', (snapshot) => { const data = snapshot.val(); revisiones = data || {}; if (firebaseReady) { if (rolActual === 'admin') { renderizarPanelRevisionesAdmin(); actualizarBadgeControl(); } if (rolActual === 'revisor') renderizarRevision(); } });
             dbRef.config.on('value', (snapshot) => { const data = snapshot.val(); if (data) config = { ...config, ...data }; config.maxDecimos = MAX_DECIMOS; localStorage.setItem('configLoteria', JSON.stringify(config)); });
             db.ref('.info/connected').on('value', (snapshot) => { if (snapshot.val() === true) setSyncStatus('online'); else setSyncStatus('offline', '📡 Sin conexión'); });
@@ -1289,7 +1327,7 @@
 
         document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            if (!datosCargados) { document.getElementById('loginError').textContent = '⏳ Un momento, estoy cargando los datos...'; document.getElementById('loginError').classList.add('show'); return; }
+            if (!datosCargados) { document.getElementById('loginError').textContent = ' Un momento, estoy cargando los datos...'; document.getElementById('loginError').classList.add('show'); return; }
             const usuario = document.getElementById('loginUsuario').value.trim().toLowerCase();
             const clave = document.getElementById('loginClave').value;
             if (usuarios[usuario] && usuarios[usuario].clave === clave) {
@@ -1392,7 +1430,7 @@
 
         function agregarUsuario() { const nombre = document.getElementById('nuevoUsuarioNombre').value.trim().toLowerCase(); const clave = document.getElementById('nuevoUsuarioClave').value; if (!nombre) { showToast('️', 'Escribe un nombre de usuario.'); return; } if (/[.#$\[\]]/.test(nombre)) { showToast('⚠️', 'El nombre no puede contener: . # $ [ ]'); return; } if (nombre.length < 3) { showToast('⚠️', 'El nombre debe tener al menos 3 caracteres.'); return; } if (nombre === USUARIO_ADMIN.toLowerCase()) { showToast('⚠️', 'Ese nombre está reservado.'); return; } if (!clave || clave.length < 4) { showToast('⚠️', 'La contraseña debe tener al menos 4 caracteres.'); return; } firebase.database().ref('loteria/usuarios/' + nombre).once('value').then(snap => { if (snap.exists()) { showToast('⚠️', 'Ese usuario ya existe. Prueba con otro nombre.'); return; } const nuevoUsuario = { clave: clave, rol: 'consulta', nombre: nombre, fechaCreacion: new Date().toISOString() }; firebase.database().ref('loteria/usuarios/' + nombre).set(nuevoUsuario).then(() => { usuarios[nombre] = nuevoUsuario; document.getElementById('nuevoUsuarioNombre').value = ''; document.getElementById('nuevoUsuarioClave').value = ''; renderizarListaUsuarios(); showToast('✅', '¡Usuario "' + nombre + '" creado! Ya puede entrar con modo consulta.'); }).catch(err => { showToast('❌', 'No he podido crear el usuario: ' + err.message, true); }); }).catch(err => { showToast('❌', 'No he podido verificar: ' + err.message, true); }); }
 
-        function eliminarUsuario(nombre) { if (nombre === USUARIO_ADMIN) { showToast('⚠️', 'No puedo borrar al administrador principal.'); return; } if (nombre === usuarioActual) { showToast('⚠️', 'No puedes borrarte a ti mismo.'); return; } if (REVISORES_PREDEFINIDOS[nombre]) { showToast('⚠️', 'No se puede borrar un revisor predefinido.', true); return; } if (confirm('¿Seguro que quieres borrar a "' + nombre + '"?')) { delete usuarios[nombre]; firebaseGuardarUsuarios(); renderizarListaUsuarios(); showToast('🗑️', 'Usuario "' + nombre + '" eliminado.'); } }
+        function eliminarUsuario(nombre) { if (nombre === USUARIO_ADMIN) { showToast('⚠️', 'No puedo borrar al administrador principal.'); return; } if (nombre === usuarioActual) { showToast('⚠️', 'No puedes borrarte a ti mismo.'); return; } if (REVISORES_PREDEFINIDOS[nombre]) { showToast('⚠️', 'No se puede borrar un revisor predefinido.', true); return; } if (confirm('¿Seguro que quieres borrar a "' + nombre + '"?')) { delete usuarios[nombre]; firebaseGuardarUsuarios(); renderizarListaUsuarios(); showToast('️', 'Usuario "' + nombre + '" eliminado.'); } }
 
         function renderizarListaUsuarios() { const list = document.getElementById('userList'); const empty = document.getElementById('emptyUsers'); const keys = Object.keys(usuarios); if (keys.length === 0) { list.innerHTML = ''; empty.style.display = 'block'; return; } empty.style.display = 'none'; list.innerHTML = keys.map(u => { const user = usuarios[u]; let rolBadge = '<span class="role-badge role-consulta">consulta</span>'; if (user.rol === 'admin') rolBadge = '<span class="role-badge role-admin">admin</span>'; else if (user.rol === 'revisor') rolBadge = '<span class="role-badge role-revisor">revisor - ' + (user.servicio || '') + '</span>'; const btnEliminar = (u === USUARIO_ADMIN || REVISORES_PREDEFINIDOS[u]) ? '' : '<button class="btn btn-delete btn-small" onclick="eliminarUsuario(\'' + u + '\')">🗑️</button>'; return '<li><span>👤 ' + u + ' ' + rolBadge + '</span>' + btnEliminar + '</li>'; }).join(''); }
 
@@ -1406,6 +1444,7 @@
             renderizarListadoGeneral(); 
             renderizarPagados();
             renderizarPorPagador();
+            renderizarRecogida();
             renderizarListaUsuarios(); 
             actualizarFechaBienvenida(); 
             establecerFechaHoraActual(); 
@@ -1464,6 +1503,7 @@
             if (page === 'participantes') renderizarParticipantes();
             if (page === 'pagados') { actualizarMultiselectSeccionesPagados(); renderizarPagados(); }
             if (page === 'porpagador') { renderizarPorPagador(); }
+            if (page === 'recogida') { renderizarRecogida(); }
             if (page === 'listado') { actualizarMultiselectSeccionesListado(); renderizarListadoGeneral(); }
             if (page === 'configuracion') renderizarListaUsuarios();
             if (page === 'inicio') actualizarFechaBienvenida();
@@ -1527,7 +1567,7 @@
         }
 
         // ============================================
-        // PESTAÑA POR PAGADOR CON BÚSQUEDA
+        // PESTAÑA LISTADO DE RECOGIDA
         // ============================================
         function normalizarParaOrdenar(texto) {
             if (!texto) return '';
@@ -1539,6 +1579,234 @@
         function obtenerPagador(p) {
             if (p.quienPaga && p.quienPaga.trim()) return p.quienPaga.trim();
             return 'TITULAR (' + p.nombre + ')';
+        }
+
+        function getPedidosRecogidaFiltrados() {
+            const filtroServicio = document.getElementById('filtroServicioRecogida').value;
+            const filtroRecogida = document.getElementById('filtroRecogidaEstado').value;
+            const filtroPago = document.getElementById('filtroRecogidaPago').value;
+            
+            let lista = [...pedidos];
+            if (filtroServicio) lista = lista.filter(p => p.servicio === filtroServicio);
+            
+            // Si filtro es "sin-recoger" → mostrar SOLO los pagados pero no recogidos
+            if (filtroRecogida === 'sin-recoger') {
+                lista = lista.filter(p => p.pagado && !p.recogido);
+            } else if (filtroRecogida === 'recogido') {
+                lista = lista.filter(p => p.recogido);
+            }
+            
+            if (filtroPago === 'pagado') lista = lista.filter(p => p.pagado);
+            if (filtroPago === 'pendiente') lista = lista.filter(p => !p.pagado);
+            
+            // Ordenar según el filtro seleccionado
+            if (filtroRecogida === 'sin-recoger') {
+                // SIN RECOGER (pagados): ordenar por pagador → luego por quien reservó
+                lista.sort((a, b) => {
+                    const pagadorA = normalizarParaOrdenar(obtenerPagador(a));
+                    const pagadorB = normalizarParaOrdenar(obtenerPagador(b));
+                    if (pagadorA !== pagadorB) return pagadorA.localeCompare(pagadorB, 'es');
+                    return normalizarParaOrdenar(a.nombre).localeCompare(normalizarParaOrdenar(b.nombre), 'es');
+                });
+            } else if (filtroRecogida === 'recogido') {
+                // RECOGIDOS: ordenar alfabético por nombre
+                lista.sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'));
+            } else {
+                // TODOS: primero los SIN RECOGER (pagados), luego alfabético
+                lista.sort((a, b) => {
+                    const sinRecogerA = a.pagado && !a.recogido;
+                    const sinRecogerB = b.pagado && !b.recogido;
+                    if (sinRecogerA !== sinRecogerB) return sinRecogerA ? -1 : 1;
+                    return a.nombre.localeCompare(b.nombre, 'es');
+                });
+            }
+            
+            return lista;
+        }
+
+        function renderizarRecogida() {
+            const lista = getPedidosRecogidaFiltrados();
+            const tbody = document.getElementById('recogidaBody');
+            const empty = document.getElementById('emptyRecogida');
+            const table = document.getElementById('recogidaContainer');
+            const resumenLinea = document.getElementById('resumenLineaRecogida');
+            
+            if (lista.length === 0) {
+                tbody.innerHTML = '';
+                empty.style.display = 'block';
+                table.style.display = 'none';
+                if (resumenLinea) resumenLinea.style.display = 'none';
+                return;
+            }
+            
+            empty.style.display = 'none';
+            table.style.display = 'block';
+            
+            tbody.innerHTML = lista.map(p => {
+                const quienPaga = p.quienPaga && p.quienPaga.trim() ? p.quienPaga.trim() : 'Titular (él/ella)';
+                const filaClass = p.recogido ? 'recogida-fila-recogido' : 'recogida-fila-sin-recoger';
+                
+                let estadoRecogida;
+                if (p.recogido) {
+                    estadoRecogida = '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7;">✓ Recogido</span>';
+                } else {
+                    estadoRecogida = '<span class="badge-sin-recoger">⚠️ SIN RECOGER</span>';
+                }
+                
+                const quienRecogio = p.quienRecoge && p.quienRecoge.trim() ? p.quienRecoge : (p.recogido ? 'Titular' : '-');
+                
+                return '<tr class="' + filaClass + '">' +
+                    '<td class="nombre-cell" title="' + p.nombre + '">' + p.nombre + '</td>' +
+                    '<td>' + (p.servicio || '-') + '</td>' +
+                    '<td>' + (p.seccion || '-') + '</td>' +
+                    '<td class="col-centro"><span class="badge-decimos">' + p.numDecimos + '</span></td>' +
+                    '<td>' + quienPaga + '</td>' +
+                    '<td class="col-centro">' + estadoRecogida + '</td>' +
+                    '<td>' + quienRecogio + '</td>' +
+                '</tr>';
+            }).join('');
+            
+            // Resumen
+            const total = lista.length;
+            const sinRecoger = lista.filter(p => !p.recogido).length;
+            const recogidos = lista.filter(p => p.recogido).length;
+            const totalDec = lista.reduce((s, p) => s + (p.numDecimos || 0), 0);
+            
+            if (resumenLinea) {
+                resumenLinea.innerHTML = 
+                    '<div class="res-item"><span class="res-label"> Total:</span><span class="res-valor">' + total + '</span></div>' +
+                    '<div class="res-item"><span class="res-label">🎟️ Décimos:</span><span class="res-valor">' + totalDec + '</span></div>' +
+                    '<div class="res-item"><span class="res-label">✅ Recogidos:</span><span class="res-valor" style="color:#a5d6a7;">' + recogidos + '</span></div>' +
+                    '<div class="res-item"><span class="res-label">⚠️ SIN RECOGER:</span><span class="res-valor" style="color:#ff8a80;">' + sinRecoger + '</span></div>';
+                resumenLinea.style.display = 'flex';
+            }
+        }
+
+        function exportarRecogidaPDF() {
+            const lista = getPedidosRecogidaFiltrados();
+            if (lista.length === 0) { showToast('⚠️', 'No hay pedidos para exportar.', true); return; }
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+            
+            let titulo = 'Listado de Recogida - Lotería Navidad 2026';
+            const filtroServicio = document.getElementById('filtroServicioRecogida').value;
+            if (filtroServicio) titulo += '\nServicio: ' + filtroServicio;
+            
+            doc.setFontSize(13); doc.setTextColor(26, 58, 92);
+            doc.text(titulo, 14, 18);
+            doc.setFontSize(9); doc.setTextColor(100);
+            doc.text('Fecha: ' + new Date().toLocaleDateString('es-ES') + ' | Total: ' + lista.length + ' registros', 14, 26);
+            
+            const sinRecoger = lista.filter(p => !p.recogido).length;
+            const recogidos = lista.filter(p => p.recogido).length;
+            doc.text('✅ Recogidos: ' + recogidos + ' | ️ SIN RECOGER: ' + sinRecoger, 14, 32);
+            
+            const cols = ["Quien Reservó", "Servicio", "Sección", "Déc.", "Quien Pagó", "Recogido", "Quien Recogió"];
+            const rows = lista.map(p => [
+                p.nombre,
+                p.servicio || '-',
+                p.seccion || '-',
+                p.numDecimos,
+                (p.quienPaga && p.quienPaga.trim()) ? p.quienPaga.trim() : 'Titular',
+                p.recogido ? 'SÍ' : 'NO',
+                (p.quienRecoge && p.quienRecoge.trim()) ? p.quienRecoge.trim() : (p.recogido ? 'Titular' : '-')
+            ]);
+            
+            doc.autoTable(cols, rows, {
+                startY: 36,
+                theme: 'striped',
+                headStyles: { fillColor: [26, 58, 92], fontSize: 7, fontStyle: 'bold' },
+                bodyStyles: { fontSize: 7 },
+                margin: { left: 10, right: 10 },
+                didParseCell: function(data) {
+                    // Resaltar filas SIN RECOGER
+                    if (data.section === 'body' && data.column.index === 5 && data.cell.raw === 'NO') {
+                        data.cell.styles.fillColor = [196, 30, 58];
+                        data.cell.styles.textColor = [255, 255, 255];
+                        data.cell.styles.fontStyle = 'bold';
+                    }
+                }
+            });
+            
+            doc.save('listado-recogida-2026.pdf');
+            showToast('📄', '¡PDF generado con ' + lista.length + ' registros!');
+        }
+
+        function exportarRecogidaCSV() {
+            const lista = getPedidosRecogidaFiltrados();
+            if (lista.length === 0) { showToast('⚠️', 'No hay pedidos para exportar.', true); return; }
+            let csv = '\uFEFF';
+            csv += 'Listado de Recogida - Lotería Navidad 2026\n';
+            csv += 'Fecha: ' + new Date().toLocaleDateString('es-ES') + '\n\n';
+            csv += 'Quien Reservó,Servicio,Sección,Décimos,Quien Pagó,Recogido,Quien Recogió\n';
+            lista.forEach(p => {
+                const quienPaga = (p.quienPaga && p.quienPaga.trim()) ? p.quienPaga.trim() : 'Titular';
+                const quienRecogio = (p.quienRecoge && p.quienRecoge.trim()) ? p.quienRecoge.trim() : (p.recogido ? 'Titular' : '-');
+                csv += '"'+p.nombre+'","'+(p.servicio||'')+'","'+(p.seccion||'')+'",'+p.numDecimos+',"'+quienPaga+'","'+(p.recogido?'Sí':'No')+'","'+quienRecogio+'"\n';
+            });
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'listado-recogida-2026.csv';
+            link.click();
+            showToast('', '¡CSV generado con ' + lista.length + ' registros!');
+        }
+
+        function imprimirRecogida() {
+            const lista = getPedidosRecogidaFiltrados();
+            if (lista.length === 0) { showToast('⚠️', 'No hay pedidos para imprimir.', true); return; }
+            const v = window.open('', '', 'width=1100,height=700');
+            const filtroServicio = document.getElementById('filtroServicioRecogida').value;
+            const sinRecoger = lista.filter(p => !p.recogido).length;
+            const recogidos = lista.filter(p => p.recogido).length;
+            const totalDec = lista.reduce((s, p) => s + (p.numDecimos || 0), 0);
+            
+            let encabezado = '<h1>📦 Listado de Recogida - Lotería 2026</h1>';
+            if (filtroServicio) encabezado += '<p><strong>Servicio:</strong> ' + filtroServicio + '</p>';
+            else encabezado += '<p><strong>Servicio:</strong> Todos</p>';
+            encabezado += '<p>Fecha: ' + new Date().toLocaleDateString('es-ES') + '</p>';
+            encabezado += '<p style="font-weight:bold;">Total: ' + lista.length + ' registros | ' + totalDec + ' décimos | ✅ Recogidos: ' + recogidos + ' | ⚠️ SIN RECOGER: ' + sinRecoger + '</p>';
+            
+            const tablaHTML = lista.map(p => {
+                const quienPaga = (p.quienPaga && p.quienPaga.trim()) ? p.quienPaga.trim() : 'Titular';
+                const quienRecogio = (p.quienRecoge && p.quienRecoge.trim()) ? p.quienRecogio.trim() : (p.recogido ? 'Titular' : '-');
+                const rowStyle = p.recogido ? '' : 'background:#ffebee;';
+                const estadoHtml = p.recogido 
+                    ? '<span style="color:#2e7d32; font-weight:bold;">✓ Recogido</span>' 
+                    : '<span style="background:#c41e3a; color:white; padding:3px 8px; border-radius:4px; font-weight:bold;">⚠️ SIN RECOGER</span>';
+                return '<tr style="' + rowStyle + '">' +
+                    '<td style="font-weight:600;">' + p.nombre + '</td>' +
+                    '<td>' + (p.servicio || '-') + '</td>' +
+                    '<td>' + (p.seccion || '-') + '</td>' +
+                    '<td style="text-align:center;">' + p.numDecimos + '</td>' +
+                    '<td>' + quienPaga + '</td>' +
+                    '<td style="text-align:center;">' + estadoHtml + '</td>' +
+                    '<td>' + quienRecogio + '</td>' +
+                '</tr>';
+            }).join('');
+            
+            v.document.write('<html><head><title>Listado de Recogida</title><style>' +
+                'body{font-family:Arial,sans-serif;padding:20px;font-size:11px;}' +
+                'h1{color:#1a3a5c;font-size:18px;margin-bottom:5px;}' +
+                'p{margin:3px 0;color:#555;}' +
+                'table{width:100%;border-collapse:collapse;margin-top:15px;}' +
+                'th{background:#1a3a5c;color:white;padding:6px 4px;text-align:left;font-size:11px;}' +
+                'td{border-bottom:1px solid #ddd;padding:5px 4px;font-size:11px;}' +
+                'tr:nth-child(even){background:#f8f9fa;}' +
+                '</style></head><body>' +
+                encabezado +
+                '<table><thead><tr>' +
+                    '<th style="width:22%;">Quien Reservó</th>' +
+                    '<th style="width:16%;">Servicio</th>' +
+                    '<th style="width:14%;">Sección</th>' +
+                    '<th style="width:8%;text-align:center;">Déc.</th>' +
+                    '<th style="width:16%;">Quien Pagó</th>' +
+                    '<th style="width:12%;text-align:center;">Recogido</th>' +
+                    '<th style="width:12%;">Quien Recogió</th>' +
+                '</tr></thead><tbody>' + tablaHTML + '</tbody></table>' +
+                '</body></html>');
+            v.document.close();
+            setTimeout(() => v.print(), 500);
         }
 
         function filtrarPorPagador() {
@@ -1572,7 +1840,6 @@
             const container = document.getElementById('porPagadorContainer');
             const empty = document.getElementById('emptyPorPagador');
             
-            // Limpiar búsqueda al cambiar filtros
             document.getElementById('busquedaPagador').value = '';
             
             let lista = [...pedidos];
@@ -1629,7 +1896,7 @@
                 html += '<div>';
                 html += '<div class="pagador-nombre">💰 ' + grupo.nombre + '</div>';
                 html += '<div class="pagador-resumen">';
-                html += '<span> ' + grupo.pedidos.length + ' pedido(s)</span>';
+                html += '<span>👥 ' + grupo.pedidos.length + ' pedido(s)</span>';
                 html += '<span>🎟️ ' + totalDec + ' décimos</span>';
                 html += '<span>💵 ' + totalImp.toLocaleString('es-ES') + ' €</span>';
                 html += '<span style="color:' + (todosPagados ? '#a5d6a7' : '#ffcc80') + '">✅ ' + pagados + '/' + grupo.pedidos.length + ' pagados</span>';
@@ -1641,10 +1908,10 @@
                     html += '<button class="btn btn-pagador" onclick="marcarTodosPagadosDePagador(\'' + grupo.nombre.replace(/'/g, "\\'") + '\')">✅ Marcar todos PAGADOS</button>';
                 }
                 if (todosPagados && !todosRecogidos) {
-                    html += '<button class="btn btn-recogido" onclick="marcarTodosRecogidosDePagador(\'' + grupo.nombre.replace(/'/g, "\\'") + '\')">📦 Marcar todos RECOGIDOS</button>';
+                    html += '<button class="btn btn-recogido" onclick="marcarTodosRecogidosDePagador(\'' + grupo.nombre.replace(/'/g, "\\'") + '\')"> Marcar todos RECOGIDOS</button>';
                 }
                 if (todosPagados || todosRecogidos) {
-                    html += '<button class="btn btn-desmarcar" onclick="desmarcarTodosDePagador(\'' + grupo.nombre.replace(/'/g, "\\'") + '\')">🔄 Desmarcar todos</button>';
+                    html += '<button class="btn btn-desmarcar" onclick="desmarcarTodosDePagador(\'' + grupo.nombre.replace(/'/g, "\\'") + '\')"> Desmarcar todos</button>';
                 }
                 html += '</div>';
                 html += '</div>';
@@ -1670,7 +1937,7 @@
                     html += '<td>' + (p.seccion || '-') + '</td>';
                     html += '<td style="text-align:center;"><span class="badge-decimos">' + p.numDecimos + '</span></td>';
                     html += '<td style="text-align:right;" class="importe-cell">' + (p.numDecimos * PRECIO_DECIMO).toLocaleString('es-ES') + ' €</td>';
-                    html += '<td style="text-align:center;">' + (p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32;">✓ ' + (p.fechaPago || '') + '</span>' : '<span class="badge badge-pending"></span>') + '</td>';
+                    html += '<td style="text-align:center;">' + (p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32;">✓ ' + (p.fechaPago || '') + '</span>' : '<span class="badge badge-pending">⏳</span>') + '</td>';
                     html += '<td style="text-align:center;">';
                     html += '<label class="recogido-label">';
                     html += '<input type="checkbox" id="' + checkboxId + '" ' + (p.recogido ? 'checked' : '') + ' onchange="toggleRecogidoPagador(\'' + p.id + '\', this.checked)">';
@@ -1706,7 +1973,7 @@
             if (marcado) {
                 pedido.fechaEntrega = new Date().toISOString().split('T')[0];
                 pedido.horaEntrega = new Date().toTimeString().slice(0, 5);
-                showToast('', '¡Pedido de ' + pedido.nombre + ' marcado como RECOGIDO!');
+                showToast('📦', '¡Pedido de ' + pedido.nombre + ' marcado como RECOGIDO!');
             } else {
                 pedido.fechaEntrega = '';
                 pedido.horaEntrega = '';
@@ -1806,13 +2073,13 @@
             setTimeout(() => renderizarPorPagador(), 500);
         }
 
-        function renderizarPanelRevisionesAdmin() { const cont = document.getElementById('listaRevisionesServicios'); if (!cont) return; let html = ''; SERVICIOS_CON_REVISOR.forEach(servicio => { const rev = revisiones[servicio] || {}; let estadoHtml = ''; let estadoClass = ''; if (rev.revisado) { if (rev.observaciones && rev.observaciones.length > 0) { estadoClass = 'revisado-obs'; const ultimaObs = rev.observaciones[rev.observaciones.length - 1]; estadoHtml = '⚠️ Revisado con observaciones por <strong>' + (rev.revisor || 'desconocido') + '</strong> el ' + formatearFechaHora(rev.fechaRevision, rev.horaRevision) + '<br><small style="font-weight:normal;">Última obs: "' + (ultimaObs.texto || '').substring(0, 80) + (ultimaObs.texto.length > 80 ? '...' : '') + '"</small>'; } else { estadoClass = 'revisado-ok'; estadoHtml = '✅ Revisado OK por <strong>' + (rev.revisor || 'desconocido') + '</strong> el ' + formatearFechaHora(rev.fechaRevision, rev.horaRevision); } } else { estadoClass = 'sin-revisar'; estadoHtml = '⚪ Sin revisar'; } html += '<div class="revision-servicio-card"><div><div class="serv-nombre">' + servicio + '</div><div class="serv-estado ' + estadoClass + '" style="margin-top:5px; padding:5px 8px; border-radius:4px; display:inline-block;">' + estadoHtml + '</div></div>' + (rev.observaciones && rev.observaciones.length > 0 ? '<button class="btn btn-small btn-primary" onclick="verObservacionesServicio(\'' + servicio + '\')">️ Ver todas (' + rev.observaciones.length + ')</button>' : '') + '</div>'; }); cont.innerHTML = html || '<div style="color:#999; text-align:center; padding:10px;">No hay servicios con revisor configurados</div>'; }
+        function renderizarPanelRevisionesAdmin() { const cont = document.getElementById('listaRevisionesServicios'); if (!cont) return; let html = ''; SERVICIOS_CON_REVISOR.forEach(servicio => { const rev = revisiones[servicio] || {}; let estadoHtml = ''; let estadoClass = ''; if (rev.revisado) { if (rev.observaciones && rev.observaciones.length > 0) { estadoClass = 'revisado-obs'; const ultimaObs = rev.observaciones[rev.observaciones.length - 1]; estadoHtml = '⚠️ Revisado con observaciones por <strong>' + (rev.revisor || 'desconocido') + '</strong> el ' + formatearFechaHora(rev.fechaRevision, rev.horaRevision) + '<br><small style="font-weight:normal;">Última obs: "' + (ultimaObs.texto || '').substring(0, 80) + (ultimaObs.texto.length > 80 ? '...' : '') + '"</small>'; } else { estadoClass = 'revisado-ok'; estadoHtml = '✅ Revisado OK por <strong>' + (rev.revisor || 'desconocido') + '</strong> el ' + formatearFechaHora(rev.fechaRevision, rev.horaRevision); } } else { estadoClass = 'sin-revisar'; estadoHtml = '⚪ Sin revisar'; } html += '<div class="revision-servicio-card"><div><div class="serv-nombre">' + servicio + '</div><div class="serv-estado ' + estadoClass + '" style="margin-top:5px; padding:5px 8px; border-radius:4px; display:inline-block;">' + estadoHtml + '</div></div>' + (rev.observaciones && rev.observaciones.length > 0 ? '<button class="btn btn-small btn-primary" onclick="verObservacionesServicio(\'' + servicio + '\')">👁️ Ver todas (' + rev.observaciones.length + ')</button>' : '') + '</div>'; }); cont.innerHTML = html || '<div style="color:#999; text-align:center; padding:10px;">No hay servicios con revisor configurados</div>'; }
 
-        function verObservacionesServicio(servicio) { const rev = revisiones[servicio] || {}; if (!rev.observaciones || rev.observaciones.length === 0) { alert('No hay observaciones para ' + servicio); return; } let msg = ' Observaciones de ' + servicio + ':\n\n'; rev.observaciones.forEach((obs, i) => { msg += (i + 1) + '. [' + formatearFechaHora(obs.fecha, obs.hora) + '] ' + (obs.autor || '?') + ': ' + obs.texto + '\n\n'; }); alert(msg); }
+        function verObservacionesServicio(servicio) { const rev = revisiones[servicio] || {}; if (!rev.observaciones || rev.observaciones.length === 0) { alert('No hay observaciones para ' + servicio); return; } let msg = '📜 Observaciones de ' + servicio + ':\n\n'; rev.observaciones.forEach((obs, i) => { msg += (i + 1) + '. [' + formatearFechaHora(obs.fecha, obs.hora) + '] ' + (obs.autor || '?') + ': ' + obs.texto + '\n\n'; }); alert(msg); }
 
-        function renderizarRevision() { if (rolActual !== 'revisor' || !servicioRevisor) { document.getElementById('revisionTableContainer').style.display = 'none'; document.getElementById('revisionEmptyState').style.display = 'block'; return; } let pedidosRevisor = pedidos.filter(p => p.servicio === servicioRevisor); if (seccionLimitadaRevisor) pedidosRevisor = pedidosRevisor.filter(p => p.seccion === seccionLimitadaRevisor); pedidosRevisor.sort((a, b) => a.nombre.localeCompare(b.nombre, 'es')); const tbody = document.getElementById('revisionTablaBody'); const tableCont = document.getElementById('revisionTableContainer'); const emptyState = document.getElementById('revisionEmptyState'); if (pedidosRevisor.length === 0) { tableCont.style.display = 'none'; emptyState.style.display = 'block'; } else { tableCont.style.display = 'block'; emptyState.style.display = 'none'; tbody.innerHTML = pedidosRevisor.map(p => { const pagadoBadge = p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7;">✓ Pagado</span>' : '<span class="badge" style="background:#ffebee; color:#c41e3a; border:1px solid #ef9a9a;">⏳ Pendiente</span>'; const pagadoPor = p.quienPaga ? '<span class="badge badge-collected">💰 ' + p.quienPaga + '</span>' : (p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32;">Titular</span>' : '<span class="badge badge-pending">—</span>'); const recogidoBadge = p.recogido ? '<span class="badge" style="background:#e3f2fd; color:#1976d2; border:1px solid #90caf9;">✓ Recogido</span>' : '<span class="badge badge-pending">⏳ Pendiente</span>'; const recogidoPor = p.quienRecoge ? '<span class="badge badge-collected"> ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>'; return '<tr><td class="nombre-cell" title="' + p.nombre + '">' + p.nombre + '</td><td title="' + (p.seccion || '') + '">' + (p.seccion || '-') + '</td><td class="col-centro"><span class="badge-decimos">' + p.numDecimos + '</span></td><td class="col-centro importe-cell">' + (p.numDecimos * PRECIO_DECIMO).toLocaleString('es-ES') + ' €</td><td class="col-centro">' + pagadoBadge + '</td><td class="col-centro">' + pagadoPor + '</td><td class="col-centro">' + recogidoBadge + '</td><td class="col-recogido-por" title="' + (p.quienRecoge || '') + '">' + recogidoPor + '</td></tr>'; }).join(''); } const rev = revisiones[servicioRevisor] || {}; const statusDisplay = document.getElementById('revisionStatusDisplay'); const btnDesmarcar = document.getElementById('btnDesmarcar'); const historialDiv = document.getElementById('historialObservaciones'); const listaObs = document.getElementById('listaObservaciones'); if (rev.revisado) { let statusClass = rev.observaciones && rev.observaciones.length > 0 ? 'revisado-obs' : 'revisado-ok'; let statusIcon = rev.observaciones && rev.observaciones.length > 0 ? '⚠️' : '✅'; let statusText = rev.observaciones && rev.observaciones.length > 0 ? 'Revisado CON observaciones' : 'Revisado - Todo correcto'; statusDisplay.innerHTML = '<div class="revision-status ' + statusClass + '">' + statusIcon + ' <strong>' + statusText + '</strong><br><small>Por: ' + (rev.revisor || 'desconocido') + ' | ' + formatearFechaHora(rev.fechaRevision, rev.horaRevision) + '</small></div>'; btnDesmarcar.style.display = 'inline-flex'; } else { statusDisplay.innerHTML = '<div class="revision-status sin-revisar">⚪ <strong>Sin revisar</strong><br><small>Aún no has marcado este servicio como revisado</small></div>'; btnDesmarcar.style.display = 'none'; } if (rev.observaciones && rev.observaciones.length > 0) { historialDiv.style.display = 'block'; listaObs.innerHTML = rev.observaciones.map(obs => '<div class="revision-obs-item"><div class="obs-texto">' + (obs.texto || '') + '</div><div class="obs-meta"> ' + (obs.autor || '?') + ' | 📅 ' + formatearFechaHora(obs.fecha, obs.hora) + '</div></div>').join(''); } else { historialDiv.style.display = 'none'; } document.getElementById('revisionObservacion').value = ''; }
+        function renderizarRevision() { if (rolActual !== 'revisor' || !servicioRevisor) { document.getElementById('revisionTableContainer').style.display = 'none'; document.getElementById('revisionEmptyState').style.display = 'block'; return; } let pedidosRevisor = pedidos.filter(p => p.servicio === servicioRevisor); if (seccionLimitadaRevisor) pedidosRevisor = pedidosRevisor.filter(p => p.seccion === seccionLimitadaRevisor); pedidosRevisor.sort((a, b) => a.nombre.localeCompare(b.nombre, 'es')); const tbody = document.getElementById('revisionTablaBody'); const tableCont = document.getElementById('revisionTableContainer'); const emptyState = document.getElementById('revisionEmptyState'); if (pedidosRevisor.length === 0) { tableCont.style.display = 'none'; emptyState.style.display = 'block'; } else { tableCont.style.display = 'block'; emptyState.style.display = 'none'; tbody.innerHTML = pedidosRevisor.map(p => { const pagadoBadge = p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7;">✓ Pagado</span>' : '<span class="badge" style="background:#ffebee; color:#c41e3a; border:1px solid #ef9a9a;"> Pendiente</span>'; const pagadoPor = p.quienPaga ? '<span class="badge badge-collected">💰 ' + p.quienPaga + '</span>' : (p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32;">Titular</span>' : '<span class="badge badge-pending">—</span>'); const recogidoBadge = p.recogido ? '<span class="badge" style="background:#e3f2fd; color:#1976d2; border:1px solid #90caf9;">✓ Recogido</span>' : '<span class="badge badge-pending"> Pendiente</span>'; const recogidoPor = p.quienRecoge ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>'; return '<tr><td class="nombre-cell" title="' + p.nombre + '">' + p.nombre + '</td><td title="' + (p.seccion || '') + '">' + (p.seccion || '-') + '</td><td class="col-centro"><span class="badge-decimos">' + p.numDecimos + '</span></td><td class="col-centro importe-cell">' + (p.numDecimos * PRECIO_DECIMO).toLocaleString('es-ES') + ' €</td><td class="col-centro">' + pagadoBadge + '</td><td class="col-centro">' + pagadoPor + '</td><td class="col-centro">' + recogidoBadge + '</td><td class="col-recogido-por" title="' + (p.quienRecoge || '') + '">' + recogidoPor + '</td></tr>'; }).join(''); } const rev = revisiones[servicioRevisor] || {}; const statusDisplay = document.getElementById('revisionStatusDisplay'); const btnDesmarcar = document.getElementById('btnDesmarcar'); const historialDiv = document.getElementById('historialObservaciones'); const listaObs = document.getElementById('listaObservaciones'); if (rev.revisado) { let statusClass = rev.observaciones && rev.observaciones.length > 0 ? 'revisado-obs' : 'revisado-ok'; let statusIcon = rev.observaciones && rev.observaciones.length > 0 ? '⚠️' : '✅'; let statusText = rev.observaciones && rev.observaciones.length > 0 ? 'Revisado CON observaciones' : 'Revisado - Todo correcto'; statusDisplay.innerHTML = '<div class="revision-status ' + statusClass + '">' + statusIcon + ' <strong>' + statusText + '</strong><br><small>Por: ' + (rev.revisor || 'desconocido') + ' | ' + formatearFechaHora(rev.fechaRevision, rev.horaRevision) + '</small></div>'; btnDesmarcar.style.display = 'inline-flex'; } else { statusDisplay.innerHTML = '<div class="revision-status sin-revisar">⚪ <strong>Sin revisar</strong><br><small>Aún no has marcado este servicio como revisado</small></div>'; btnDesmarcar.style.display = 'none'; } if (rev.observaciones && rev.observaciones.length > 0) { historialDiv.style.display = 'block'; listaObs.innerHTML = rev.observaciones.map(obs => '<div class="revision-obs-item"><div class="obs-texto">' + (obs.texto || '') + '</div><div class="obs-meta">👤 ' + (obs.autor || '?') + ' | 📅 ' + formatearFechaHora(obs.fecha, obs.hora) + '</div></div>').join(''); } else { historialDiv.style.display = 'none'; } document.getElementById('revisionObservacion').value = ''; }
 
-        function marcarRevision(todoCorrecto) { if (rolActual !== 'revisor' || !servicioRevisor) { showToast('⚠️', 'No tienes permiso para revisar.', true); return; } const observacionTexto = document.getElementById('revisionObservacion').value.trim(); if (!todoCorrecto && !observacionTexto) { showToast('⚠️', 'Si marcas con observaciones, debes escribir al menos una.', true); return; } const fechaHoy = new Date().toISOString().split('T')[0]; const horaAhora = new Date().toTimeString().slice(0, 5); const revActual = revisiones[servicioRevisor] || {}; const observacionesExistentes = revActual.observaciones || []; const nuevaObservacion = { texto: observacionTexto, fecha: fechaHoy, hora: horaAhora, autor: usuarioActual }; const nuevaRevision = { revisado: true, revisor: usuarioActual, fechaRevision: fechaHoy, horaRevision: horaAhora, servicio: servicioRevisor, observaciones: todoCorrecto ? observacionesExistentes : [...observacionesExistentes, nuevaObservacion] }; dbRef.revisiones.child(servicioRevisor).set(nuevaRevision).then(() => { if (todoCorrecto) showToast('✅', '¡Servicio ' + servicioRevisor + ' marcado como REVISADO!'); else showToast('⚠️', 'Revisión guardada con observaciones.'); renderizarRevision(); }).catch(err => { showToast('❌', 'Error al guardar: ' + err.message, true); }); }
+        function marcarRevision(todoCorrecto) { if (rolActual !== 'revisor' || !servicioRevisor) { showToast('⚠️', 'No tienes permiso para revisar.', true); return; } const observacionTexto = document.getElementById('revisionObservacion').value.trim(); if (!todoCorrecto && !observacionTexto) { showToast('️', 'Si marcas con observaciones, debes escribir al menos una.', true); return; } const fechaHoy = new Date().toISOString().split('T')[0]; const horaAhora = new Date().toTimeString().slice(0, 5); const revActual = revisiones[servicioRevisor] || {}; const observacionesExistentes = revActual.observaciones || []; const nuevaObservacion = { texto: observacionTexto, fecha: fechaHoy, hora: horaAhora, autor: usuarioActual }; const nuevaRevision = { revisado: true, revisor: usuarioActual, fechaRevision: fechaHoy, horaRevision: horaAhora, servicio: servicioRevisor, observaciones: todoCorrecto ? observacionesExistentes : [...observacionesExistentes, nuevaObservacion] }; dbRef.revisiones.child(servicioRevisor).set(nuevaRevision).then(() => { if (todoCorrecto) showToast('✅', '¡Servicio ' + servicioRevisor + ' marcado como REVISADO!'); else showToast('⚠️', 'Revisión guardada con observaciones.'); renderizarRevision(); }).catch(err => { showToast('❌', 'Error al guardar: ' + err.message, true); }); }
 
         function desmarcarRevision() { if (rolActual !== 'revisor' || !servicioRevisor) { showToast('⚠️', 'No tienes permiso.', true); return; } if (!confirm('¿Seguro que quieres DESMARCAR la revisión de ' + servicioRevisor + '?\n\nLas observaciones se mantendrán en el historial.')) return; const revActual = revisiones[servicioRevisor] || {}; const nuevaRevision = { revisado: false, revisor: null, fechaRevision: null, horaRevision: null, servicio: servicioRevisor, observaciones: revActual.observaciones || [] }; dbRef.revisiones.child(servicioRevisor).set(nuevaRevision).then(() => { showToast('🔄', 'Revisión desmarcada. Las observaciones se conservan.'); renderizarRevision(); }).catch(err => { showToast('❌', 'Error: ' + err.message, true); }); }
 
@@ -1822,7 +2089,7 @@
 
         function formatearFechaHora(fecha, hora) { if (!fecha) return ''; const partes = fecha.split('-'); let texto = partes[2] + '/' + partes[1] + '/' + partes[0].substr(2); if (hora) texto += ' ' + hora; return texto; }
 
-        function renderizarControl() { const servicio = document.getElementById('controlServicio').value; const seccion = document.getElementById('controlSeccion').value; const filtro = document.getElementById('controlFiltro').value; const listContainer = document.getElementById('controlList'); const summary = document.getElementById('controlSummary'); if (!servicio) { listContainer.innerHTML = '<div class="empty-state" style="padding: 30px;"><div class="empty-icon">📝</div><h3>Selecciona un servicio</h3><p>Elige un servicio para ver la lista de empleados con sus 3 checks</p></div>'; summary.style.display = 'none'; return; } let empleadosFiltrados = empleados.filter(e => e.servicio === servicio); if (seccion) empleadosFiltrados = empleadosFiltrados.filter(e => e.seccion === seccion); empleadosFiltrados.sort((a, b) => a.nombre.localeCompare(b.nombre, 'es')); const pedidosMap = {}; pedidos.forEach(p => { const key = p.nombre.toLowerCase().trim(); if (!pedidosMap[key]) pedidosMap[key] = []; pedidosMap[key].push(p); }); let html = '<div class="control-list-header"><div style="grid-column: span 2;">Empleado</div><div class="check-cell">Solicitado</div><div class="check-cell">Pagado</div><div class="check-cell">Recibido</div></div>'; const totalSolicitados = empleadosFiltrados.filter(emp => { const key = emp.nombre.toLowerCase().trim(); return pedidosMap[key] && pedidosMap[key].length > 0; }).length; const totalPagados = empleadosFiltrados.filter(emp => { const key = emp.nombre.toLowerCase().trim(); return pedidosMap[key] && pedidosMap[key].some(p => p.pagado); }).length; if (rolActual === 'admin' && totalSolicitados > 0) { html += '<div style="padding: 10px 15px; background: #f8f9fa; border-bottom: 1px solid #e0e2e5; display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">'; html += '<strong style="font-size: 0.85em; color: #1a3a5c;">⚡ Acciones rápidas:</strong>'; if (totalSolicitados > totalPagados) html += '<button class="btn btn-success btn-small" onclick="marcarTodosPagados()">💰 Marcar TODOS como pagados (' + (totalSolicitados - totalPagados) + ' pendientes)</button>'; if (totalPagados > 0) { if (seccion) html += '<button class="btn btn-primary btn-small" onclick="marcarTodosEntregados(\'seccion\')">📦 Entregar SECCIÓN ' + seccion + ' (' + totalPagados + ' pagados)</button>'; html += '<button class="btn btn-primary btn-small" onclick="marcarTodosEntregados(\'servicio\')">📦 Entregar SERVICIO completo (' + totalPagados + ' pagados)</button>'; } html += '<button class="btn btn-success btn-small" id="btnEntregarSeleccionados" style="display:none;" onclick="entregarSeleccionados()">✅ Entregar seleccionados (<span id="numSeleccionados">0</span>)</button>'; html += '</div>'; } let total = 0, solicitados = 0, pagados = 0, recibidos = 0; empleadosFiltrados.forEach(emp => { const pedidoEmp = pedidosMap[emp.nombre.toLowerCase().trim()] || []; const tienePedido = pedidoEmp.length > 0; const estaPagado = pedidoEmp.some(p => p.pagado); const estaRecibido = pedidoEmp.some(p => p.recogido); const numDecimos = tienePedido ? pedidoEmp[0].numDecimos : 0; const fechaSol = tienePedido ? (pedidoEmp[0].fechaSolicitud || '') : ''; const horaSol = tienePedido ? (pedidoEmp[0].horaSolicitud || '') : ''; if (filtro === 'pendientes' && tienePedido) return; if (filtro === 'solicitados' && (!tienePedido || estaPagado)) return; if (filtro === 'pagados' && (!estaPagado || estaRecibido)) return; if (filtro === 'completos' && !estaRecibido) return; total++; if (tienePedido) solicitados++; if (estaPagado) pagados++; if (estaRecibido) recibidos++; const disabled = rolActual !== 'admin' ? 'disabled' : ''; const fechaHoraText = formatearFechaHora(fechaSol, horaSol); const fechaPagoText = tienePedido ? formatearFechaHora(pedidoEmp[0].fechaPago, pedidoEmp[0].horaPago) : ''; const fechaEntregaText = tienePedido ? formatearFechaHora(pedidoEmp[0].fechaEntrega, pedidoEmp[0].horaEntrega) : ''; const quienPagaText = (tienePedido && pedidoEmp[0].quienPaga && pedidoEmp[0].quienPaga.trim()) ? '💰 ' + pedidoEmp[0].quienPaga : ''; const quienRecogeText = (tienePedido && pedidoEmp[0].quienRecoge && pedidoEmp[0].quienRecoge.trim()) ? '👤 ' + pedidoEmp[0].quienRecoge : ''; const recogidoDisabled = (!tienePedido || !estaPagado || rolActual !== 'admin') ? 'disabled' : ''; const puedeEntregar = tienePedido && estaPagado && !estaRecibido; html += '<div class="control-list-item" data-emp-id="' + emp.id + '"><div style="display:flex; align-items:center; gap:8px;"><input type="checkbox" class="emp-checkbox" data-emp-id="' + emp.id + '" ' + (puedeEntregar ? '' : 'disabled') + ' title="Seleccionar para entrega múltiple"><div><div class="emp-name" title="' + emp.nombre + '">' + emp.nombre + '</div><div class="emp-section" title="' + emp.seccion + '">' + emp.seccion + '</div></div></div><div class="check-cell" style="display:flex; flex-direction:column; align-items:center; gap:2px;"><input type="checkbox" ' + (tienePedido ? 'checked' : '') + ' ' + disabled + ' onchange="toggleControlSolicitud(\'' + emp.id + '\', this.checked)" title="Solicitado">' + (tienePedido ? '<span style="font-size:0.7em; color:#1976d2; font-weight:600;">' + numDecimos + ' déc.</span>' : '') + (fechaHoraText ? '<span style="font-size:0.65em; color:#666;">' + fechaHoraText + '</span>' : '') + '</div><div class="check-cell" style="display:flex; flex-direction:column; align-items:center; gap:2px;"><input type="checkbox" ' + (estaPagado ? 'checked' : '') + ' ' + (tienePedido ? '' : 'disabled') + ' onchange="toggleControlPagado(\'' + emp.id + '\', this.checked)" title="Pagado">' + (fechaPagoText ? '<span style="font-size:0.65em; color:#e65100; font-weight:500;">' + fechaPagoText + '</span>' : '') + (quienPagaText ? '<span style="font-size:0.6em; color:#2e7d32; font-weight:500;">' + quienPagaText + '</span>' : '') + '</div><div class="check-cell" style="display:flex; flex-direction:column; align-items:center; gap:2px;"><input type="checkbox" ' + (estaRecibido ? 'checked' : '') + ' ' + recogidoDisabled + ' onchange="toggleControlRecibido(\'' + emp.id + '\', this.checked)" title="Recibido (solo si está pagado)">' + (fechaEntregaText ? '<span style="font-size:0.65em; color:#2e7d32; font-weight:500;">' + fechaEntregaText + '</span>' : '') + (quienRecogeText ? '<span style="font-size:0.6em; color:#666; font-style:italic;">' + quienRecogeText + '</span>' : '') + '</div></div>'; }); if (total === 0) html = '<div class="empty-state" style="padding: 30px;"><div class="empty-icon">📝</div><h3>Sin resultados</h3><p>No hay empleados que coincidan con los filtros seleccionados</p></div>'; listContainer.innerHTML = html; document.getElementById('ctrlTotal').textContent = total; document.getElementById('ctrlSolicitados').textContent = solicitados; document.getElementById('ctrlPagados').textContent = pagados; document.getElementById('ctrlRecibidos').textContent = recibidos; summary.style.display = 'flex'; actualizarContadorSeleccionados(); }
+        function renderizarControl() { const servicio = document.getElementById('controlServicio').value; const seccion = document.getElementById('controlSeccion').value; const filtro = document.getElementById('controlFiltro').value; const listContainer = document.getElementById('controlList'); const summary = document.getElementById('controlSummary'); if (!servicio) { listContainer.innerHTML = '<div class="empty-state" style="padding: 30px;"><div class="empty-icon">📝</div><h3>Selecciona un servicio</h3><p>Elige un servicio para ver la lista de empleados con sus 3 checks</p></div>'; summary.style.display = 'none'; return; } let empleadosFiltrados = empleados.filter(e => e.servicio === servicio); if (seccion) empleadosFiltrados = empleadosFiltrados.filter(e => e.seccion === seccion); empleadosFiltrados.sort((a, b) => a.nombre.localeCompare(b.nombre, 'es')); const pedidosMap = {}; pedidos.forEach(p => { const key = p.nombre.toLowerCase().trim(); if (!pedidosMap[key]) pedidosMap[key] = []; pedidosMap[key].push(p); }); let html = '<div class="control-list-header"><div style="grid-column: span 2;">Empleado</div><div class="check-cell">Solicitado</div><div class="check-cell">Pagado</div><div class="check-cell">Recibido</div></div>'; const totalSolicitados = empleadosFiltrados.filter(emp => { const key = emp.nombre.toLowerCase().trim(); return pedidosMap[key] && pedidosMap[key].length > 0; }).length; const totalPagados = empleadosFiltrados.filter(emp => { const key = emp.nombre.toLowerCase().trim(); return pedidosMap[key] && pedidosMap[key].some(p => p.pagado); }).length; if (rolActual === 'admin' && totalSolicitados > 0) { html += '<div style="padding: 10px 15px; background: #f8f9fa; border-bottom: 1px solid #e0e2e5; display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">'; html += '<strong style="font-size: 0.85em; color: #1a3a5c;"> Acciones rápidas:</strong>'; if (totalSolicitados > totalPagados) html += '<button class="btn btn-success btn-small" onclick="marcarTodosPagados()">💰 Marcar TODOS como pagados (' + (totalSolicitados - totalPagados) + ' pendientes)</button>'; if (totalPagados > 0) { if (seccion) html += '<button class="btn btn-primary btn-small" onclick="marcarTodosEntregados(\'seccion\')">📦 Entregar SECCIÓN ' + seccion + ' (' + totalPagados + ' pagados)</button>'; html += '<button class="btn btn-primary btn-small" onclick="marcarTodosEntregados(\'servicio\')">📦 Entregar SERVICIO completo (' + totalPagados + ' pagados)</button>'; } html += '<button class="btn btn-success btn-small" id="btnEntregarSeleccionados" style="display:none;" onclick="entregarSeleccionados()">✅ Entregar seleccionados (<span id="numSeleccionados">0</span>)</button>'; html += '</div>'; } let total = 0, solicitados = 0, pagados = 0, recibidos = 0; empleadosFiltrados.forEach(emp => { const pedidoEmp = pedidosMap[emp.nombre.toLowerCase().trim()] || []; const tienePedido = pedidoEmp.length > 0; const estaPagado = pedidoEmp.some(p => p.pagado); const estaRecibido = pedidoEmp.some(p => p.recogido); const numDecimos = tienePedido ? pedidoEmp[0].numDecimos : 0; const fechaSol = tienePedido ? (pedidoEmp[0].fechaSolicitud || '') : ''; const horaSol = tienePedido ? (pedidoEmp[0].horaSolicitud || '') : ''; if (filtro === 'pendientes' && tienePedido) return; if (filtro === 'solicitados' && (!tienePedido || estaPagado)) return; if (filtro === 'pagados' && (!estaPagado || estaRecibido)) return; if (filtro === 'completos' && !estaRecibido) return; total++; if (tienePedido) solicitados++; if (estaPagado) pagados++; if (estaRecibido) recibidos++; const disabled = rolActual !== 'admin' ? 'disabled' : ''; const fechaHoraText = formatearFechaHora(fechaSol, horaSol); const fechaPagoText = tienePedido ? formatearFechaHora(pedidoEmp[0].fechaPago, pedidoEmp[0].horaPago) : ''; const fechaEntregaText = tienePedido ? formatearFechaHora(pedidoEmp[0].fechaEntrega, pedidoEmp[0].horaEntrega) : ''; const quienPagaText = (tienePedido && pedidoEmp[0].quienPaga && pedidoEmp[0].quienPaga.trim()) ? '💰 ' + pedidoEmp[0].quienPaga : ''; const quienRecogeText = (tienePedido && pedidoEmp[0].quienRecoge && pedidoEmp[0].quienRecoge.trim()) ? '👤 ' + pedidoEmp[0].quienRecoge : ''; const recogidoDisabled = (!tienePedido || !estaPagado || rolActual !== 'admin') ? 'disabled' : ''; const puedeEntregar = tienePedido && estaPagado && !estaRecibido; html += '<div class="control-list-item" data-emp-id="' + emp.id + '"><div style="display:flex; align-items:center; gap:8px;"><input type="checkbox" class="emp-checkbox" data-emp-id="' + emp.id + '" ' + (puedeEntregar ? '' : 'disabled') + ' title="Seleccionar para entrega múltiple"><div><div class="emp-name" title="' + emp.nombre + '">' + emp.nombre + '</div><div class="emp-section" title="' + emp.seccion + '">' + emp.seccion + '</div></div></div><div class="check-cell" style="display:flex; flex-direction:column; align-items:center; gap:2px;"><input type="checkbox" ' + (tienePedido ? 'checked' : '') + ' ' + disabled + ' onchange="toggleControlSolicitud(\'' + emp.id + '\', this.checked)" title="Solicitado">' + (tienePedido ? '<span style="font-size:0.7em; color:#1976d2; font-weight:600;">' + numDecimos + ' déc.</span>' : '') + (fechaHoraText ? '<span style="font-size:0.65em; color:#666;">' + fechaHoraText + '</span>' : '') + '</div><div class="check-cell" style="display:flex; flex-direction:column; align-items:center; gap:2px;"><input type="checkbox" ' + (estaPagado ? 'checked' : '') + ' ' + (tienePedido ? '' : 'disabled') + ' onchange="toggleControlPagado(\'' + emp.id + '\', this.checked)" title="Pagado">' + (fechaPagoText ? '<span style="font-size:0.65em; color:#e65100; font-weight:500;">' + fechaPagoText + '</span>' : '') + (quienPagaText ? '<span style="font-size:0.6em; color:#2e7d32; font-weight:500;">' + quienPagaText + '</span>' : '') + '</div><div class="check-cell" style="display:flex; flex-direction:column; align-items:center; gap:2px;"><input type="checkbox" ' + (estaRecibido ? 'checked' : '') + ' ' + recogidoDisabled + ' onchange="toggleControlRecibido(\'' + emp.id + '\', this.checked)" title="Recibido (solo si está pagado)">' + (fechaEntregaText ? '<span style="font-size:0.65em; color:#2e7d32; font-weight:500;">' + fechaEntregaText + '</span>' : '') + (quienRecogeText ? '<span style="font-size:0.6em; color:#666; font-style:italic;">' + quienRecogeText + '</span>' : '') + '</div></div>'; }); if (total === 0) html = '<div class="empty-state" style="padding: 30px;"><div class="empty-icon">📝</div><h3>Sin resultados</h3><p>No hay empleados que coincidan con los filtros seleccionados</p></div>'; listContainer.innerHTML = html; document.getElementById('ctrlTotal').textContent = total; document.getElementById('ctrlSolicitados').textContent = solicitados; document.getElementById('ctrlPagados').textContent = pagados; document.getElementById('ctrlRecibidos').textContent = recibidos; summary.style.display = 'flex'; actualizarContadorSeleccionados(); }
 
         function actualizarContadorSeleccionados() { const checkboxes = document.querySelectorAll('.emp-checkbox:checked'); const btn = document.getElementById('btnEntregarSeleccionados'); const numSpan = document.getElementById('numSeleccionados'); if (checkboxes.length > 0) { if (btn) btn.style.display = 'inline-flex'; if (numSpan) numSpan.textContent = checkboxes.length; } else { if (btn) btn.style.display = 'none'; } }
 
@@ -1843,9 +2110,9 @@
         function obtenerDecimosAcumulados(nombre) { const n = nombre.trim().toLowerCase(); return pedidos.filter(p => p.nombre.trim().toLowerCase() === n).reduce((t, p) => t + p.numDecimos, 0); }
         function validarMaximoDecimos(nombre, nuevosDecimos) { const acumulados = obtenerDecimosAcumulados(nombre); const total = acumulados + nuevosDecimos; if (total > MAX_DECIMOS) return { valido: false, acumulados, nuevos: nuevosDecimos, total, maximo: MAX_DECIMOS, disponibles: MAX_DECIMOS - acumulados }; return { valido: true, acumulados }; }
 
-        function actualizarSelectServicios() { const selects = ['servicio', 'editarServicio', 'ocrServicio', 'filtroServicioPagador']; selects.forEach(id => { const select = document.getElementById(id); if (!select) return; const valorActual = select.value; let html = '<option value="">-- Selecciona un servicio --</option>'; if (id === 'filtroServicioPagador') html = '<option value="">Todos los servicios</option>'; [...servicios].sort((a, b) => a.localeCompare(b, 'es')).forEach(s => { html += '<option value="' + s + '">' + s + '</option>'; }); select.innerHTML = html; if (valorActual) select.value = valorActual; }); }
+        function actualizarSelectServicios() { const selects = ['servicio', 'editarServicio', 'ocrServicio', 'filtroServicioPagador', 'filtroServicioRecogida']; selects.forEach(id => { const select = document.getElementById(id); if (!select) return; const valorActual = select.value; let html = '<option value="">-- Selecciona un servicio --</option>'; if (id === 'filtroServicioPagador' || id === 'filtroServicioRecogida') html = '<option value="">Todos los servicios</option>'; [...servicios].sort((a, b) => a.localeCompare(b, 'es')).forEach(s => { html += '<option value="' + s + '">' + s + '</option>'; }); select.innerHTML = html; if (valorActual) select.value = valorActual; }); }
 
-        function actualizarSecciones() { const servicio = document.getElementById('servicio').value; const select = document.getElementById('seccion'); const infoDiv = document.getElementById('seccionInfo'); const valorActual = select.value; document.getElementById('empleado').innerHTML = '<option value="">-- Primero elige una sección --</option>'; document.getElementById('telefono').value = ''; if (!servicio) { select.innerHTML = '<option value="">-- Primero elige un servicio --</option>'; infoDiv.classList.remove('show'); return; } const seccionesFiltradas = secciones.filter(s => s.servicio === servicio); let html = '<option value="">-- Selecciona una sección --</option>'; if (seccionesFiltradas.length === 0) html += '<option value="__nueva__">➕ No hay secciones. Crear nueva...</option>'; else { [...seccionesFiltradas].sort((a, b) => a.nombre.localeCompare(b.nombre, 'es')).forEach(s => { html += '<option value="' + s.nombre + '">' + s.nombre + '</option>'; }); html += '<option value="__nueva__">➕ Crear nueva sección...</option>'; } select.innerHTML = html; if (seccionesFiltradas.length > 0) { infoDiv.textContent = '📂 ' + seccionesFiltradas.length + ' sección(es) disponible(s) para ' + servicio; infoDiv.classList.add('show'); } else { infoDiv.textContent = '⚠️ No hay secciones creadas para ' + servicio + '. Crea una nueva.'; infoDiv.classList.add('show'); } if (valorActual && valorActual !== '__nueva__') { const existe = seccionesFiltradas.some(s => s.nombre === valorActual); if (existe) select.value = valorActual; } actualizarEmpleados(); }
+        function actualizarSecciones() { const servicio = document.getElementById('servicio').value; const select = document.getElementById('seccion'); const infoDiv = document.getElementById('seccionInfo'); const valorActual = select.value; document.getElementById('empleado').innerHTML = '<option value="">-- Primero elige una sección --</option>'; document.getElementById('telefono').value = ''; if (!servicio) { select.innerHTML = '<option value="">-- Primero elige un servicio --</option>'; infoDiv.classList.remove('show'); return; } const seccionesFiltradas = secciones.filter(s => s.servicio === servicio); let html = '<option value="">-- Selecciona una sección --</option>'; if (seccionesFiltradas.length === 0) html += '<option value="__nueva__">➕ No hay secciones. Crear nueva...</option>'; else { [...seccionesFiltradas].sort((a, b) => a.nombre.localeCompare(b.nombre, 'es')).forEach(s => { html += '<option value="' + s.nombre + '">' + s.nombre + '</option>'; }); html += '<option value="__nueva__">➕ Crear nueva sección...</option>'; } select.innerHTML = html; if (seccionesFiltradas.length > 0) { infoDiv.textContent = ' ' + seccionesFiltradas.length + ' sección(es) disponible(s) para ' + servicio; infoDiv.classList.add('show'); } else { infoDiv.textContent = '⚠️ No hay secciones creadas para ' + servicio + '. Crea una nueva.'; infoDiv.classList.add('show'); } if (valorActual && valorActual !== '__nueva__') { const existe = seccionesFiltradas.some(s => s.nombre === valorActual); if (existe) select.value = valorActual; } actualizarEmpleados(); }
 
         function onSeccionChange() { const select = document.getElementById('seccion'); if (select.value === '__nueva__') { const servicio = document.getElementById('servicio').value; if (!servicio) { showToast('⚠️', 'Primero tienes que elegir un servicio.', true); select.value = ''; return; } document.getElementById('modalServicioNombre').textContent = servicio; document.getElementById('nuevaSeccionNombre').value = ''; document.getElementById('seccionDuplicada').style.display = 'none'; document.getElementById('modalNuevaSeccion').classList.add('active'); } else actualizarEmpleados(); }
 
@@ -2087,7 +2354,7 @@
             tbody.innerHTML = pedidosFiltrados.map(p => { 
                 const quienRecogeHtml = p.quienRecoge ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>'; 
                 const quienPagaHtml = p.quienPaga ? '<span class="badge badge-collected">💰 ' + p.quienPaga + '</span>' : (p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7;">Titular</span>' : '<span class="badge badge-pending">—</span>'); 
-                const accionesHtml = esAdmin ? '<div class="actions-cell"><button class="btn btn-edit" onclick="editarPedido(\'' + p.id + '\')">✏️</button><button class="btn btn-delete" onclick="eliminarPedido(\'' + p.id + '\')">🗑️</button></div>' : '<span style="color:#999; font-size:0.85em;">—</span>'; 
+                const accionesHtml = esAdmin ? '<div class="actions-cell"><button class="btn btn-edit" onclick="editarPedido(\'' + p.id + '\')">️</button><button class="btn btn-delete" onclick="eliminarPedido(\'' + p.id + '\')">🗑️</button></div>' : '<span style="color:#999; font-size:0.85em;">—</span>'; 
                 const checkboxDisabled = !esAdmin ? 'disabled' : ''; 
                 return '<tr>' +
                     '<td class="nombre-cell" title="' + p.nombre + '">' + p.nombre + '</td>' +
@@ -2201,15 +2468,15 @@
             aplicarFiltrosPedidos();
         }
 
-        document.getElementById('pedidoForm').addEventListener('submit', function(e) { e.preventDefault(); if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; } const empleadoId = document.getElementById('empleado').value; const numDecimos = parseInt(document.getElementById('numDecimos').value) || 2; const servicio = document.getElementById('servicio').value; const seccion = document.getElementById('seccion').value; const telefono = document.getElementById('telefono').value.trim(); let nombre = ''; if (empleadoId && empleadoId !== 'nuevo') { const empleado = empleados.find(emp => emp.id === empleadoId); if (empleado) nombre = empleado.nombre; } else { showToast('️', 'Tienes que elegir un empleado válido.', true); return; } const validacion = validarMaximoDecimos(nombre, numDecimos); if (!validacion.valido) { let mensaje = '🚫 ' + nombre + ' ya tiene ' + validacion.acumulados + ' décimo(s). '; mensaje += 'Con ' + validacion.nuevos + ' más llegaría a ' + validacion.total + ', pero el límite es ' + validacion.maximo + '. '; if (validacion.disponibles > 0) mensaje += ' Aún puede pedir ' + validacion.disponibles + ' más.'; else mensaje += 'Ya ha alcanzado el máximo.'; showToast('🚫', mensaje, true); return; } const nuevo = { nombre, servicio, seccion, telefono, numDecimos, fechaSolicitud: document.getElementById('fechaSolicitud').value, horaSolicitud: document.getElementById('horaSolicitud').value, fechaEntrega: document.getElementById('fechaEntrega').value, horaEntrega: document.getElementById('horaEntrega').value, quienRecoge: document.getElementById('quienRecoge').value.trim(), quienPaga: '', pagado: false, recogido: false, fechaPago: '', horaPago: '', fecha: new Date().toLocaleDateString('es-ES'), creadoPor: usuarioActual }; const id = generarId(); firebaseGuardarPedido({ id, ...nuevo }); const servicioGuardado = document.getElementById('servicio').value; const seccionGuardada = document.getElementById('seccion').value; this.reset(); establecerFechaHoraActual(); document.getElementById('servicio').value = servicioGuardado; actualizarSecciones(); setTimeout(() => { document.getElementById('seccion').value = seccionGuardada; actualizarEmpleados(); }, 100); showToast('', '¡Décimo(s) de ' + nombre + ' registrados!'); });
+        document.getElementById('pedidoForm').addEventListener('submit', function(e) { e.preventDefault(); if (rolActual !== 'admin') { showToast('', 'Esta acción es solo para administradores.', true); return; } const empleadoId = document.getElementById('empleado').value; const numDecimos = parseInt(document.getElementById('numDecimos').value) || 2; const servicio = document.getElementById('servicio').value; const seccion = document.getElementById('seccion').value; const telefono = document.getElementById('telefono').value.trim(); let nombre = ''; if (empleadoId && empleadoId !== 'nuevo') { const empleado = empleados.find(emp => emp.id === empleadoId); if (empleado) nombre = empleado.nombre; } else { showToast('⚠️', 'Tienes que elegir un empleado válido.', true); return; } const validacion = validarMaximoDecimos(nombre, numDecimos); if (!validacion.valido) { let mensaje = '🚫 ' + nombre + ' ya tiene ' + validacion.acumulados + ' décimo(s). '; mensaje += 'Con ' + validacion.nuevos + ' más llegaría a ' + validacion.total + ', pero el límite es ' + validacion.maximo + '. '; if (validacion.disponibles > 0) mensaje += ' Aún puede pedir ' + validacion.disponibles + ' más.'; else mensaje += 'Ya ha alcanzado el máximo.'; showToast('🚫', mensaje, true); return; } const nuevo = { nombre, servicio, seccion, telefono, numDecimos, fechaSolicitud: document.getElementById('fechaSolicitud').value, horaSolicitud: document.getElementById('horaSolicitud').value, fechaEntrega: document.getElementById('fechaEntrega').value, horaEntrega: document.getElementById('horaEntrega').value, quienRecoge: document.getElementById('quienRecoge').value.trim(), quienPaga: '', pagado: false, recogido: false, fechaPago: '', horaPago: '', fecha: new Date().toLocaleDateString('es-ES'), creadoPor: usuarioActual }; const id = generarId(); firebaseGuardarPedido({ id, ...nuevo }); const servicioGuardado = document.getElementById('servicio').value; const seccionGuardada = document.getElementById('seccion').value; this.reset(); establecerFechaHoraActual(); document.getElementById('servicio').value = servicioGuardado; actualizarSecciones(); setTimeout(() => { document.getElementById('seccion').value = seccionGuardada; actualizarEmpleados(); }, 100); showToast('🎉', '¡Décimo(s) de ' + nombre + ' registrados!'); });
 
-        function togglePagado(id) { if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; } const p = pedidos.find(x => x.id === id); if (p) { const nuevoEstado = !p.pagado; if (nuevoEstado) { if (confirm('¿Paga el propio ' + p.nombre + '?\n\nAceptar = Sí, paga él/ella\nCancelar = No, paga otra persona')) { p.quienPaga = ''; } else { const quienPaga = prompt('¿A nombre de quién se registra el pago de ' + p.nombre + '?'); if (!quienPaga || !quienPaga.trim()) { showToast('️', 'Necesito el nombre de quien paga.', true); return; } p.quienPaga = quienPaga.trim(); } } else { p.quienPaga = ''; } p.pagado = nuevoEstado; if (nuevoEstado) { p.fechaPago = new Date().toISOString().split('T')[0]; p.horaPago = new Date().toTimeString().slice(0, 5); } else { p.fechaPago = ''; p.horaPago = ''; } firebaseGuardarPedido(p); showToast(p.pagado ? '💰' : '⏳', p.pagado ? '¡' + p.nombre + ' ha pagado!' : 'Pago pendiente de ' + p.nombre + '.'); } }
+        function togglePagado(id) { if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; } const p = pedidos.find(x => x.id === id); if (p) { const nuevoEstado = !p.pagado; if (nuevoEstado) { if (confirm('¿Paga el propio ' + p.nombre + '?\n\nAceptar = Sí, paga él/ella\nCancelar = No, paga otra persona')) { p.quienPaga = ''; } else { const quienPaga = prompt('¿A nombre de quién se registra el pago de ' + p.nombre + '?'); if (!quienPaga || !quienPaga.trim()) { showToast('⚠️', 'Necesito el nombre de quien paga.', true); return; } p.quienPaga = quienPaga.trim(); } } else { p.quienPaga = ''; } p.pagado = nuevoEstado; if (nuevoEstado) { p.fechaPago = new Date().toISOString().split('T')[0]; p.horaPago = new Date().toTimeString().slice(0, 5); } else { p.fechaPago = ''; p.horaPago = ''; } firebaseGuardarPedido(p); showToast(p.pagado ? '💰' : '⏳', p.pagado ? '¡' + p.nombre + ' ha pagado!' : 'Pago pendiente de ' + p.nombre + '.'); } }
 
-        function toggleRecogido(id) { if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; } const p = pedidos.find(x => x.id === id); if (p) { p.recogido = !p.recogido; if (p.recogido) { p.fechaEntrega = new Date().toISOString().split('T')[0]; p.horaEntrega = new Date().toTimeString().slice(0, 5); } else { p.fechaEntrega = ''; p.horaEntrega = ''; p.quienRecoge = ''; } firebaseGuardarPedido(p); showToast(p.recogido ? '📦' : '⏳', p.recogido ? '¡Décimos entregados a ' + p.nombre + '!' : 'Entrega pendiente a ' + p.nombre + '.'); } }
+        function toggleRecogido(id) { if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; } const p = pedidos.find(x => x.id === id); if (p) { p.recogido = !p.recogido; if (p.recogido) { p.fechaEntrega = new Date().toISOString().split('T')[0]; p.horaEntrega = new Date().toTimeString().slice(0, 5); } else { p.fechaEntrega = ''; p.horaEntrega = ''; p.quienRecoge = ''; } firebaseGuardarPedido(p); showToast(p.recogido ? '' : '⏳', p.recogido ? '¡Décimos entregados a ' + p.nombre + '!' : 'Entrega pendiente a ' + p.nombre + '.'); } }
 
         function eliminarPedido(id) { if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; } const p = pedidos.find(x => x.id === id); if (p && confirm('¿Seguro que quieres borrar el pedido de ' + p.nombre + '?')) { firebaseEliminarPedido(id); showToast('🗑️', 'Pedido de ' + p.nombre + ' eliminado.'); } }
 
-        function editarPedido(id) { if (rolActual !== 'admin') { showToast('', 'Esta acción es solo para administradores.', true); return; } const p = pedidos.find(x => x.id === id); if (!p) return; actualizarSelectServicios(); document.getElementById('editarId').value = id; document.getElementById('editarNombre').value = p.nombre; document.getElementById('editarServicio').value = p.servicio || ''; actualizarSelectSeccionesEditar(p.servicio); setTimeout(() => { document.getElementById('editarSeccion').value = p.seccion || ''; }, 100); document.getElementById('editarTelefono').value = p.telefono || ''; document.getElementById('editarNumDecimos').value = p.numDecimos; document.getElementById('editarFechaSolicitud').value = p.fechaSolicitud || ''; document.getElementById('editarHoraSolicitud').value = p.horaSolicitud || ''; document.getElementById('editarFechaEntrega').value = p.fechaEntrega || ''; document.getElementById('editarHoraEntrega').value = p.horaEntrega || ''; document.getElementById('editarQuienPaga').value = p.quienPaga || ''; document.getElementById('editarQuienRecoge').value = p.quienRecoge || ''; document.getElementById('modalEditar').classList.add('active'); }
+        function editarPedido(id) { if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; } const p = pedidos.find(x => x.id === id); if (!p) return; actualizarSelectServicios(); document.getElementById('editarId').value = id; document.getElementById('editarNombre').value = p.nombre; document.getElementById('editarServicio').value = p.servicio || ''; actualizarSelectSeccionesEditar(p.servicio); setTimeout(() => { document.getElementById('editarSeccion').value = p.seccion || ''; }, 100); document.getElementById('editarTelefono').value = p.telefono || ''; document.getElementById('editarNumDecimos').value = p.numDecimos; document.getElementById('editarFechaSolicitud').value = p.fechaSolicitud || ''; document.getElementById('editarHoraSolicitud').value = p.horaSolicitud || ''; document.getElementById('editarFechaEntrega').value = p.fechaEntrega || ''; document.getElementById('editarHoraEntrega').value = p.horaEntrega || ''; document.getElementById('editarQuienPaga').value = p.quienPaga || ''; document.getElementById('editarQuienRecoge').value = p.quienRecoge || ''; document.getElementById('modalEditar').classList.add('active'); }
 
         function actualizarSelectSeccionesEditar(servicio) { const select = document.getElementById('editarSeccion'); let html = '<option value="">-- Selecciona una sección --</option>'; if (servicio) { const seccionesFiltradas = secciones.filter(s => s.servicio === servicio); [...seccionesFiltradas].sort((a, b) => a.nombre.localeCompare(b.nombre, 'es')).forEach(s => { html += '<option value="' + s.nombre + '">' + s.nombre + '</option>'; }); } select.innerHTML = html; }
 
@@ -2270,7 +2537,7 @@
             tbody.innerHTML = pedidosFiltrados.map(p => {
                 const pagadoPor = p.quienPaga ? '<span class="badge badge-collected">💰 ' + p.quienPaga + '</span>' : '<span class="badge" style="background:#e8f5e9; color:#2e7d32;">Titular</span>';
                 const recogidoBadge = p.recogido ? '<span class="badge" style="background:#e3f2fd; color:#1976d2; border:1px solid #90caf9;">✓ Recogido</span>' : '<span class="badge badge-pending">⏳ Pendiente</span>';
-                const quienRecogeHtml = p.quienRecoge ? '<span class="badge badge-collected"> ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
+                const quienRecogeHtml = p.quienRecoge ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>';
                 return '<tr>' +
                     '<td class="nombre-cell" title="' + p.nombre + '">' + p.nombre + '</td>' +
                     '<td title="' + (p.servicio || '') + '">' + (p.servicio || '-') + '</td>' +
@@ -2308,7 +2575,7 @@
             const rows = pedidosFiltrados.map(p => [p.nombre, p.servicio || '-', p.seccion || '-', p.numDecimos, (p.numDecimos * PRECIO_DECIMO).toLocaleString('es-ES') + ' €', p.quienPaga || 'Titular', p.fechaPago || '-', p.recogido ? 'Sí' : 'No', p.quienRecoge || '-']);
             doc.autoTable(cols, rows, { startY: 36, theme: 'striped', headStyles: { fillColor: [26, 58, 92], fontSize: 7, fontStyle: 'bold' }, bodyStyles: { fontSize: 7 }, margin: { left: 10, right: 10 } });
             doc.save('pagados-loteria-2026.pdf');
-            showToast('📄', '¡PDF generado con ' + pedidosFiltrados.length + ' pedidos pagados!');
+            showToast('', '¡PDF generado con ' + pedidosFiltrados.length + ' pedidos pagados!');
         }
 
         function exportarPagadosCSV() {
@@ -2334,7 +2601,7 @@
         function imprimirPagados() {
             const filtroServicio = document.getElementById('filtroServicioPagados').value;
             const pedidosFiltrados = getPedidosPagadosFiltrados();
-            if (pedidosFiltrados.length === 0) { showToast('⚠️', 'No hay pedidos pagados para imprimir.', true); return; }
+            if (pedidosFiltrados.length === 0) { showToast('️', 'No hay pedidos pagados para imprimir.', true); return; }
             const v = window.open('', '', 'width=1100,height=700');
             let encabezado = '<h1>Pedidos Pagados - Lotería 2026</h1>';
             if (filtroServicio) encabezado += '<p><strong>Servicio:</strong> ' + filtroServicio + '</p>';
@@ -2351,7 +2618,7 @@
             setTimeout(() => v.print(), 500);
         }
 
-        function renderizarResumen() { const filtroServicio = document.getElementById('filtroServicioResumen').value; const filtroSeccion = document.getElementById('filtroSeccionResumen').value; let pedidosFiltrados = pedidos; if (filtroServicio) pedidosFiltrados = pedidosFiltrados.filter(p => p.servicio === filtroServicio); if (filtroSeccion) pedidosFiltrados = pedidosFiltrados.filter(p => p.seccion === filtroSeccion); pedidosFiltrados = [...pedidosFiltrados].sort((a, b) => a.nombre.localeCompare(b.nombre, 'es')); const cont = document.getElementById('resumenContenido'); if (pedidosFiltrados.length === 0) { cont.innerHTML = '<div class="empty-state"><div class="empty-icon">📊</div><h3>Sin datos</h3><p>Aún no hay pedidos</p></div>'; return; } const totalDecimos = pedidosFiltrados.reduce((s, p) => s + p.numDecimos, 0); const totalRecaudado = pedidosFiltrados.filter(p => p.pagado).reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0); const totalPendiente = pedidosFiltrados.filter(p => !p.pagado).reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0); const porServicio = {}; pedidosFiltrados.forEach(p => { const key = p.servicio || 'Sin servicio'; if (!porServicio[key]) porServicio[key] = { decimos: 0, importe: 0, pagados: 0 }; porServicio[key].decimos += p.numDecimos; porServicio[key].importe += p.numDecimos * PRECIO_DECIMO; if (p.pagado) porServicio[key].pagados += p.numDecimos; }); let html = '<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 20px;">'; html += '<div style="background:#e3f2fd; padding:12px; border-radius:8px; border-left:4px solid #1976d2;"><strong style="color:#1976d2; font-size:0.9em;">Total pedidos</strong><br><span style="font-size:1.3em; font-weight:700;">' + pedidosFiltrados.length + '</span></div>'; html += '<div style="background:#e8f5e9; padding:12px; border-radius:8px; border-left:4px solid #2e7d32;"><strong style="color:#2e7d32; font-size:0.9em;">Total décimos</strong><br><span style="font-size:1.3em; font-weight:700;">' + totalDecimos + '</span></div>'; html += '<div style="background:#fff3e0; padding:12px; border-radius:8px; border-left:4px solid #e65100;"><strong style="color:#e65100; font-size:0.9em;">Recaudado</strong><br><span style="font-size:1.3em; font-weight:700;">' + totalRecaudado.toLocaleString('es-ES') + ' €</span></div>'; html += '<div style="background:#ffebee; padding:12px; border-radius:8px; border-left:4px solid #c41e3a;"><strong style="color:#c41e3a; font-size:0.9em;">Pendiente</strong><br><span style="font-size:1.3em; font-weight:700;">' + totalPendiente.toLocaleString('es-ES') + ' €</span></div>'; html += '</div>'; html += '<h3 style="color:#1a3a5c; margin-bottom:12px; font-size:1em;"> Por servicio</h3>'; html += '<div class="table-container"><table><thead><tr><th>Servicio</th><th>Décimos</th><th>Importe</th><th>Pagados</th></tr></thead><tbody>'; Object.keys(porServicio).sort().forEach(sv => { const d = porServicio[sv]; html += '<tr><td><strong>' + sv + '</strong></td><td>' + d.decimos + '</td><td>' + d.importe.toLocaleString('es-ES') + ' €</td><td>' + d.pagados + '/' + d.decimos + '</td></tr>'; }); html += '</tbody></table></div>'; cont.innerHTML = html; }
+        function renderizarResumen() { const filtroServicio = document.getElementById('filtroServicioResumen').value; const filtroSeccion = document.getElementById('filtroSeccionResumen').value; let pedidosFiltrados = pedidos; if (filtroServicio) pedidosFiltrados = pedidosFiltrados.filter(p => p.servicio === filtroServicio); if (filtroSeccion) pedidosFiltrados = pedidosFiltrados.filter(p => p.seccion === filtroSeccion); pedidosFiltrados = [...pedidosFiltrados].sort((a, b) => a.nombre.localeCompare(b.nombre, 'es')); const cont = document.getElementById('resumenContenido'); if (pedidosFiltrados.length === 0) { cont.innerHTML = '<div class="empty-state"><div class="empty-icon">📊</div><h3>Sin datos</h3><p>Aún no hay pedidos</p></div>'; return; } const totalDecimos = pedidosFiltrados.reduce((s, p) => s + p.numDecimos, 0); const totalRecaudado = pedidosFiltrados.filter(p => p.pagado).reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0); const totalPendiente = pedidosFiltrados.filter(p => !p.pagado).reduce((s, p) => s + (p.numDecimos * PRECIO_DECIMO), 0); const porServicio = {}; pedidosFiltrados.forEach(p => { const key = p.servicio || 'Sin servicio'; if (!porServicio[key]) porServicio[key] = { decimos: 0, importe: 0, pagados: 0 }; porServicio[key].decimos += p.numDecimos; porServicio[key].importe += p.numDecimos * PRECIO_DECIMO; if (p.pagado) porServicio[key].pagados += p.numDecimos; }); let html = '<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 20px;">'; html += '<div style="background:#e3f2fd; padding:12px; border-radius:8px; border-left:4px solid #1976d2;"><strong style="color:#1976d2; font-size:0.9em;">Total pedidos</strong><br><span style="font-size:1.3em; font-weight:700;">' + pedidosFiltrados.length + '</span></div>'; html += '<div style="background:#e8f5e9; padding:12px; border-radius:8px; border-left:4px solid #2e7d32;"><strong style="color:#2e7d32; font-size:0.9em;">Total décimos</strong><br><span style="font-size:1.3em; font-weight:700;">' + totalDecimos + '</span></div>'; html += '<div style="background:#fff3e0; padding:12px; border-radius:8px; border-left:4px solid #e65100;"><strong style="color:#e65100; font-size:0.9em;">Recaudado</strong><br><span style="font-size:1.3em; font-weight:700;">' + totalRecaudado.toLocaleString('es-ES') + ' €</span></div>'; html += '<div style="background:#ffebee; padding:12px; border-radius:8px; border-left:4px solid #c41e3a;"><strong style="color:#c41e3a; font-size:0.9em;">Pendiente</strong><br><span style="font-size:1.3em; font-weight:700;">' + totalPendiente.toLocaleString('es-ES') + ' €</span></div>'; html += '</div>'; html += '<h3 style="color:#1a3a5c; margin-bottom:12px; font-size:1em;">📊 Por servicio</h3>'; html += '<div class="table-container"><table><thead><tr><th>Servicio</th><th>Décimos</th><th>Importe</th><th>Pagados</th></tr></thead><tbody>'; Object.keys(porServicio).sort().forEach(sv => { const d = porServicio[sv]; html += '<tr><td><strong>' + sv + '</strong></td><td>' + d.decimos + '</td><td>' + d.importe.toLocaleString('es-ES') + ' €</td><td>' + d.pagados + '/' + d.decimos + '</td></tr>'; }); html += '</tbody></table></div>'; cont.innerHTML = html; }
 
         function renderizarParticipantes() { 
             const filtroServicio = document.getElementById('filtroServicioParticipantes').value; 
@@ -2366,7 +2633,7 @@
             if (pedidosFiltrados.length === 0) { tbody.innerHTML = ''; empty.style.display = 'block'; cont.style.display = 'none'; const rl = document.getElementById('resumenLineaParticipantes'); if (rl) rl.style.display = 'none'; return; } 
             empty.style.display = 'none'; cont.style.display = 'block'; 
             tbody.innerHTML = pedidosFiltrados.map(p => { 
-                const pagadoBadge = p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7;">✓ Pagado</span>' : '<span class="badge" style="background:#ffebee; color:#c41e3a; border:1px solid #ef9a9a;"> Pendiente</span>'; 
+                const pagadoBadge = p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32; border:1px solid #a5d6a7;">✓ Pagado</span>' : '<span class="badge" style="background:#ffebee; color:#c41e3a; border:1px solid #ef9a9a;">⏳ Pendiente</span>'; 
                 const pagadoPor = p.quienPaga ? '<span class="badge badge-collected">💰 ' + p.quienPaga + '</span>' : (p.pagado ? '<span class="badge" style="background:#e8f5e9; color:#2e7d32;">Titular</span>' : '<span class="badge badge-pending">—</span>'); 
                 const recogidoBadge = p.recogido ? '<span class="badge" style="background:#e3f2fd; color:#1976d2; border:1px solid #90caf9;">✓ Recogido</span>' : '<span class="badge badge-pending">⏳ Pendiente</span>'; 
                 const recogidoPor = p.quienRecoge ? '<span class="badge badge-collected">👤 ' + p.quienRecoge + '</span>' : '<span class="badge badge-pending">—</span>'; 
@@ -2385,20 +2652,20 @@
             actualizarResumenLinea('resumenLineaParticipantes', pedidosFiltrados);
         }
 
-        async function procesarOCR() { if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; } const fileInput = document.getElementById('ocrFile'); const servicio = document.getElementById('ocrServicio').value; const numDecimos = parseInt(document.getElementById('ocrDecimos').value); if (!servicio) { showToast('⚠️', 'Primero elige un servicio.', true); return; } if (!fileInput.files || fileInput.files.length === 0) { showToast('⚠️', 'Tienes que seleccionar un archivo.', true); return; } if (!numDecimos || numDecimos < 1) { showToast('⚠️', 'Indica un número válido de décimos.', true); return; } const file = fileInput.files[0]; const progressContainer = document.getElementById('ocrProgressContainer'); const resultContainer = document.getElementById('ocrResultContainer'); const statusEl = document.getElementById('ocrStatus'); const progressFill = document.getElementById('ocrProgressFill'); const btnProcesar = document.getElementById('btnProcesarOCR'); progressContainer.style.display = 'block'; resultContainer.style.display = 'none'; btnProcesar.disabled = true; btnProcesar.textContent = '⏳ Procesando...'; let texto = ''; try { const esPDF = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf'); const esImagen = file.type.startsWith('image/'); if (esPDF) { statusEl.textContent = '📖 Leyendo el PDF...'; progressFill.style.width = '20%'; if (!window.pdfjsLib) { await new Promise((resolve, reject) => { const script = document.createElement('script'); script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js'; script.onload = resolve; script.onerror = reject; document.head.appendChild(script); }); pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'; } const arrayBuffer = await file.arrayBuffer(); const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise; const numPaginas = pdf.numPages; texto = ''; for (let i = 1; i <= numPaginas; i++) { statusEl.textContent = ' Leyendo página ' + i + ' de ' + numPaginas + '...'; progressFill.style.width = (20 + (i / numPaginas) * 60) + '%'; const pagina = await pdf.getPage(i); const contenido = await pagina.getTextContent(); const textoPagina = contenido.items.map(item => item.str).join(' '); texto += textoPagina + '\n'; } progressFill.style.width = '85%'; } else if (esImagen) { statusEl.textContent = '🖼️ Procesando la imagen...'; progressFill.style.width = '20%'; const result = await Tesseract.recognize(file, 'spa', { logger: m => { if (m.status === 'recognizing text') { const progress = Math.round(m.progress * 100); statusEl.textContent = ' Leyendo texto... ' + progress + '%'; progressFill.style.width = (20 + progress * 0.65) + '%'; } } }); texto = result.data.text; progressFill.style.width = '85%'; } else throw new Error('Formato no válido. Usa PDF o imagen.'); statusEl.textContent = '🔎 Buscando empleados...'; progressFill.style.width = '90%'; const resultado = buscarEmpleadosEnTexto(texto, servicio); progressFill.style.width = '100%'; statusEl.textContent = '✅ ¡Análisis completado!'; window.ocrResultado = { encontrados: resultado.encontrados, noEncontrados: resultado.noEncontrados, servicio: servicio, numDecimos: numDecimos }; mostrarResultadosOCR(resultado); resultContainer.style.display = 'block'; const total = resultado.encontrados.length + resultado.noEncontrados.length; showToast('✅', 'He encontrado ' + total + ' nombres (' + resultado.encontrados.length + ' en la base de datos, ' + resultado.noEncontrados.length + ' nuevos)'); } catch (error) { console.error('Error OCR:', error); statusEl.textContent = '❌ Algo ha fallado: ' + (error.message || 'desconocido'); showToast('⚠️', 'No he podido procesar el archivo: ' + (error.message || 'formato no válido'), true); } finally { btnProcesar.disabled = false; btnProcesar.textContent = '🔍 Procesar archivo'; } }
+        async function procesarOCR() { if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; } const fileInput = document.getElementById('ocrFile'); const servicio = document.getElementById('ocrServicio').value; const numDecimos = parseInt(document.getElementById('ocrDecimos').value); if (!servicio) { showToast('️', 'Primero elige un servicio.', true); return; } if (!fileInput.files || fileInput.files.length === 0) { showToast('⚠️', 'Tienes que seleccionar un archivo.', true); return; } if (!numDecimos || numDecimos < 1) { showToast('⚠️', 'Indica un número válido de décimos.', true); return; } const file = fileInput.files[0]; const progressContainer = document.getElementById('ocrProgressContainer'); const resultContainer = document.getElementById('ocrResultContainer'); const statusEl = document.getElementById('ocrStatus'); const progressFill = document.getElementById('ocrProgressFill'); const btnProcesar = document.getElementById('btnProcesarOCR'); progressContainer.style.display = 'block'; resultContainer.style.display = 'none'; btnProcesar.disabled = true; btnProcesar.textContent = '⏳ Procesando...'; let texto = ''; try { const esPDF = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf'); const esImagen = file.type.startsWith('image/'); if (esPDF) { statusEl.textContent = '📖 Leyendo el PDF...'; progressFill.style.width = '20%'; if (!window.pdfjsLib) { await new Promise((resolve, reject) => { const script = document.createElement('script'); script.src = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js'; script.onload = resolve; script.onerror = reject; document.head.appendChild(script); }); pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js'; } const arrayBuffer = await file.arrayBuffer(); const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise; const numPaginas = pdf.numPages; texto = ''; for (let i = 1; i <= numPaginas; i++) { statusEl.textContent = '📖 Leyendo página ' + i + ' de ' + numPaginas + '...'; progressFill.style.width = (20 + (i / numPaginas) * 60) + '%'; const pagina = await pdf.getPage(i); const contenido = await pagina.getTextContent(); const textoPagina = contenido.items.map(item => item.str).join(' '); texto += textoPagina + '\n'; } progressFill.style.width = '85%'; } else if (esImagen) { statusEl.textContent = '🖼️ Procesando la imagen...'; progressFill.style.width = '20%'; const result = await Tesseract.recognize(file, 'spa', { logger: m => { if (m.status === 'recognizing text') { const progress = Math.round(m.progress * 100); statusEl.textContent = '🔍 Leyendo texto... ' + progress + '%'; progressFill.style.width = (20 + progress * 0.65) + '%'; } } }); texto = result.data.text; progressFill.style.width = '85%'; } else throw new Error('Formato no válido. Usa PDF o imagen.'); statusEl.textContent = '🔎 Buscando empleados...'; progressFill.style.width = '90%'; const resultado = buscarEmpleadosEnTexto(texto, servicio); progressFill.style.width = '100%'; statusEl.textContent = '✅ ¡Análisis completado!'; window.ocrResultado = { encontrados: resultado.encontrados, noEncontrados: resultado.noEncontrados, servicio: servicio, numDecimos: numDecimos }; mostrarResultadosOCR(resultado); resultContainer.style.display = 'block'; const total = resultado.encontrados.length + resultado.noEncontrados.length; showToast('✅', 'He encontrado ' + total + ' nombres (' + resultado.encontrados.length + ' en la base de datos, ' + resultado.noEncontrados.length + ' nuevos)'); } catch (error) { console.error('Error OCR:', error); statusEl.textContent = '❌ Algo ha fallado: ' + (error.message || 'desconocido'); showToast('⚠️', 'No he podido procesar el archivo: ' + (error.message || 'formato no válido'), true); } finally { btnProcesar.disabled = false; btnProcesar.textContent = '🔍 Procesar archivo'; } }
 
         function mostrarResultadosOCR(resultado) { const resultList = document.getElementById('ocrResultList'); const totalDetectados = resultado.encontrados.length + resultado.noEncontrados.length; document.getElementById('ocrTotalDetectados').textContent = totalDetectados; let html = ''; if (resultado.encontrados.length > 0) { html += '<h4 style="margin-top:15px; color:#2e7d32;">✅ Empleados que ya tengo en la base de datos (' + resultado.encontrados.length + '):</h4>'; html += '<div style="font-size:0.8em; color:#666; margin-bottom:10px;">Crearé sus pedidos automáticamente al confirmar.</div>'; resultado.encontrados.forEach(emp => { const decimos = emp.decimosPDF || window.ocrResultado.numDecimos || 2; html += '<div class="ocr-result-item found">✅ <strong>' + emp.nombre + '</strong> - ' + emp.seccion + ' (Tel: ' + (emp.telefono || 'N/A') + ') → <strong>' + decimos + ' décimo(s)</strong></div>'; }); } if (resultado.noEncontrados.length > 0) { html += '<h4 style="margin-top:15px; color:#c41e3a;">⚠️ Empleados que no tengo registrados (' + resultado.noEncontrados.length + '):</h4>'; html += '<div style="font-size:0.8em; color:#666; margin-bottom:10px;">Pulsa "➕ Crear" para darlos de alta y crear su pedido. Te pediré confirmación.</div>'; resultado.noEncontrados.forEach((emp, idx) => { const decimos = emp.decimosPDF || window.ocrResultado.numDecimos || 2; html += '<div class="ocr-result-item notfound" style="flex-direction:column; align-items:flex-start; gap:6px;"><div>❌ <strong>' + emp.nombre + '</strong> - No está en el servicio seleccionado → <strong>' + decimos + ' décimo(s)</strong></div><button class="btn btn-success btn-small" onclick="crearEmpleadoDesdeOCR(' + idx + ')" style="align-self:flex-end;">➕ Crear empleado y pedido</button></div>'; }); } if (resultado.encontrados.length === 0 && resultado.noEncontrados.length === 0) html = '<div style="padding:15px; background:#fff3e0; border-radius:6px; margin-top:15px;">⚠️ No he podido detectar nombres en el archivo. Asegúrate de que el PDF o imagen tenga texto legible.</div>'; resultList.innerHTML = html; }
 
-        function crearEmpleadoDesdeOCR(idx) { const resultado = window.ocrResultado; if (!resultado || !resultado.noEncontrados[idx]) return; const empDetectado = resultado.noEncontrados[idx]; const nombreDetectado = empDetectado.nombre; const decimosDetectados = empDetectado.decimosPDF || resultado.numDecimos || 2; if (!confirm('¿Quieres dar de alta a "' + nombreDetectado + '" y registrar su pedido de ' + decimosDetectados + ' décimo(s)?\n\nAcepta para crearlo o Cancela para omitirlo.')) { resultado.noEncontrados.splice(idx, 1); mostrarResultadosOCR(resultado); showToast('⚠️', '"' + nombreDetectado + '" omitido.'); return; } const telefono = prompt('📞 ¿Cuál es el teléfono de "' + nombreDetectado + '"?'); if (!telefono || !telefono.trim()) { showToast('⚠️', 'Necesito el teléfono para crear el empleado.', true); return; } const seccionesDelServicio = secciones.filter(s => s.servicio === resultado.servicio); let seccion = ''; if (seccionesDelServicio.length > 0) { const listaSecciones = seccionesDelServicio.map(s => '- ' + s.nombre).join('\n'); const seccionNombre = prompt('📂 ¿En qué sección está "' + nombreDetectado + '"?\n\nSecciones disponibles:\n' + listaSecciones + '\n\nEscribe el nombre de una existente o una nueva:', seccionesDelServicio[0].nombre); if (!seccionNombre || !seccionNombre.trim()) { showToast('⚠️', 'Necesito una sección.', true); return; } seccion = seccionNombre.trim().toUpperCase(); const existe = secciones.some(s => s.servicio === resultado.servicio && s.nombre.toLowerCase() === seccion.toLowerCase()); if (!existe) { if (confirm('⚠️ La sección "' + seccion + '" no existe en "' + resultado.servicio + '".\n\n¿La creo automáticamente?')) { secciones.push({ nombre: seccion, servicio: resultado.servicio }); const obj = {}; secciones.forEach((s, i) => { obj[i] = s; }); dbRef.secciones.set(obj); showToast('✅', '¡Sección "' + seccion + '" creada!'); } else { showToast('⚠️', 'Operación cancelada. La sección no se ha creado.', true); return; } } } else { seccion = prompt('📂 ¿En qué sección está "' + nombreDetectado + '"?'); if (!seccion || !seccion.trim()) { showToast('⚠️', 'Necesito una sección.', true); return; } seccion = seccion.trim().toUpperCase(); if (!secciones.some(s => s.servicio === resultado.servicio && s.nombre === seccion)) { if (confirm('⚠️ La sección "' + seccion + '" no existe. ¿La creo?')) { secciones.push({ nombre: seccion, servicio: resultado.servicio }); const obj = {}; secciones.forEach((s, i) => { obj[i] = s; }); dbRef.secciones.set(obj); } else { showToast('⚠️', 'Operación cancelada.', true); return; } } } const nuevoEmpleado = { nombre: nombreDetectado, telefono: telefono.trim(), servicio: resultado.servicio, seccion: seccion, activo: true, fechaAlta: new Date().toISOString().split('T')[0] }; const idEmp = generarId(); dbRef.empleados.child(idEmp).set(nuevoEmpleado); const fechaHoy = new Date().toISOString().split('T')[0]; const horaAhora = new Date().toTimeString().slice(0, 5); const nuevoPedido = { nombre: nombreDetectado, servicio: resultado.servicio, seccion: seccion, telefono: telefono.trim(), numDecimos: decimosDetectados, fechaSolicitud: fechaHoy, horaSolicitud: horaAhora, fechaEntrega: '', horaEntrega: '', quienRecoge: '', quienPaga: '', pagado: false, recogido: false, fechaPago: '', horaPago: '', fecha: new Date().toLocaleDateString('es-ES'), creadoPor: usuarioActual, creadoViaOCR: true }; const idPed = generarId(); dbRef.pedidos.child(idPed).set(nuevoPedido); resultado.noEncontrados.splice(idx, 1); mostrarResultadosOCR(resultado); showToast('', '¡' + nombreDetectado + ' dado de alta y pedido registrado (' + decimosDetectados + ' décimos)!'); }
+        function crearEmpleadoDesdeOCR(idx) { const resultado = window.ocrResultado; if (!resultado || !resultado.noEncontrados[idx]) return; const empDetectado = resultado.noEncontrados[idx]; const nombreDetectado = empDetectado.nombre; const decimosDetectados = empDetectado.decimosPDF || resultado.numDecimos || 2; if (!confirm('¿Quieres dar de alta a "' + nombreDetectado + '" y registrar su pedido de ' + decimosDetectados + ' décimo(s)?\n\nAcepta para crearlo o Cancela para omitirlo.')) { resultado.noEncontrados.splice(idx, 1); mostrarResultadosOCR(resultado); showToast('⚠️', '"' + nombreDetectado + '" omitido.'); return; } const telefono = prompt('📞 ¿Cuál es el teléfono de "' + nombreDetectado + '"?'); if (!telefono || !telefono.trim()) { showToast('⚠️', 'Necesito el teléfono para crear el empleado.', true); return; } const seccionesDelServicio = secciones.filter(s => s.servicio === resultado.servicio); let seccion = ''; if (seccionesDelServicio.length > 0) { const listaSecciones = seccionesDelServicio.map(s => '- ' + s.nombre).join('\n'); const seccionNombre = prompt(' ¿En qué sección está "' + nombreDetectado + '"?\n\nSecciones disponibles:\n' + listaSecciones + '\n\nEscribe el nombre de una existente o una nueva:', seccionesDelServicio[0].nombre); if (!seccionNombre || !seccionNombre.trim()) { showToast('⚠️', 'Necesito una sección.', true); return; } seccion = seccionNombre.trim().toUpperCase(); const existe = secciones.some(s => s.servicio === resultado.servicio && s.nombre.toLowerCase() === seccion.toLowerCase()); if (!existe) { if (confirm('⚠️ La sección "' + seccion + '" no existe en "' + resultado.servicio + '".\n\n¿La creo automáticamente?')) { secciones.push({ nombre: seccion, servicio: resultado.servicio }); const obj = {}; secciones.forEach((s, i) => { obj[i] = s; }); dbRef.secciones.set(obj); showToast('✅', '¡Sección "' + seccion + '" creada!'); } else { showToast('⚠️', 'Operación cancelada. La sección no se ha creado.', true); return; } } } else { seccion = prompt(' ¿En qué sección está "' + nombreDetectado + '"?'); if (!seccion || !seccion.trim()) { showToast('⚠️', 'Necesito una sección.', true); return; } seccion = seccion.trim().toUpperCase(); if (!secciones.some(s => s.servicio === resultado.servicio && s.nombre === seccion)) { if (confirm('⚠️ La sección "' + seccion + '" no existe. ¿La creo?')) { secciones.push({ nombre: seccion, servicio: resultado.servicio }); const obj = {}; secciones.forEach((s, i) => { obj[i] = s; }); dbRef.secciones.set(obj); } else { showToast('⚠️', 'Operación cancelada.', true); return; } } } const nuevoEmpleado = { nombre: nombreDetectado, telefono: telefono.trim(), servicio: resultado.servicio, seccion: seccion, activo: true, fechaAlta: new Date().toISOString().split('T')[0] }; const idEmp = generarId(); dbRef.empleados.child(idEmp).set(nuevoEmpleado); const fechaHoy = new Date().toISOString().split('T')[0]; const horaAhora = new Date().toTimeString().slice(0, 5); const nuevoPedido = { nombre: nombreDetectado, servicio: resultado.servicio, seccion: seccion, telefono: telefono.trim(), numDecimos: decimosDetectados, fechaSolicitud: fechaHoy, horaSolicitud: horaAhora, fechaEntrega: '', horaEntrega: '', quienRecoge: '', quienPaga: '', pagado: false, recogido: false, fechaPago: '', horaPago: '', fecha: new Date().toLocaleDateString('es-ES'), creadoPor: usuarioActual, creadoViaOCR: true }; const idPed = generarId(); dbRef.pedidos.child(idPed).set(nuevoPedido); resultado.noEncontrados.splice(idx, 1); mostrarResultadosOCR(resultado); showToast('🎉', '¡' + nombreDetectado + ' dado de alta y pedido registrado (' + decimosDetectados + ' décimos)!'); }
 
         function buscarEmpleadosEnTexto(texto, servicio) { const encontrados = []; const noEncontrados = []; const nombresProcesados = new Set(); const empleadosDelServicio = empleados.filter(e => e.servicio === servicio); empleadosDelServicio.forEach(emp => { const nombreNorm = emp.nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z\s]/g, '').replace(/\s+/g, ' ').trim(); const palabras = nombreNorm.split(' ').filter(p => p.length > 2); if (palabras.length < 2) return; const textoNorm = texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z\s]/g, '').replace(/\s+/g, ' '); const palabrasEncontradas = palabras.filter(p => textoNorm.includes(p)); const umbral = Math.max(2, Math.ceil(palabras.length * 0.7)); if (palabrasEncontradas.length >= umbral && !nombresProcesados.has(emp.nombre)) { encontrados.push({ ...emp, decimosPDF: 2 }); nombresProcesados.add(emp.nombre); } }); const bloques = texto.split(/\|\s*---\|---\|---\|---\|---\s*\|/); const empleadosDetectados = []; bloques.forEach(bloque => { const lineas = bloque.split('\n').map(l => l.trim()).filter(l => l.startsWith('|')); for (let i = 0; i < lineas.length - 4; i++) { const l1 = lineas[i].replace(/^\|\s*/, '').trim(); const l2 = lineas[i + 1].replace(/^\|\s*/, '').trim(); const l3 = lineas[i + 2].replace(/^\|\s*/, '').trim(); const l4 = lineas[i + 3].replace(/^\|\s*/, '').trim(); const l5 = lineas[i + 4].replace(/^\|\s*/, '').trim(); const decimos = parseInt(l5); if (isNaN(decimos) || (decimos !== 1 && decimos !== 2)) continue; if (!l3.toUpperCase().includes('DESARROLLO') && !l3.toUpperCase().includes('RURAL')) continue; const encabezados = ['NOMBRE', 'APELLIDOS', 'SERVICIO', 'CENTRO', 'DÉCIMOS', 'DECIMOS']; if (encabezados.some(e => l1.toUpperCase().includes(e))) continue; if (encabezados.some(e => l2.toUpperCase().includes(e))) continue; const nombreCompleto = (l1 + ' ' + l2).toUpperCase().trim(); if (nombreCompleto.length >= 10) empleadosDetectados.push({ nombre: nombreCompleto, decimos: decimos }); } }); empleadosDetectados.forEach(empDetectado => { const nombreNorm = empDetectado.nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z\s]/g, '').replace(/\s+/g, ' ').trim(); if (nombresProcesados.has(empDetectado.nombre)) return; let empleadoEncontrado = null; for (const emp of empleadosDelServicio) { const empNorm = emp.nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z\s]/g, '').replace(/\s+/g, ' ').trim(); if (empNorm === nombreNorm || empNorm.includes(nombreNorm) || nombreNorm.includes(empNorm)) { empleadoEncontrado = emp; break; } } if (empleadoEncontrado && !nombresProcesados.has(empleadoEncontrado.nombre)) { encontrados.push({ ...empleadoEncontrado, decimosPDF: empDetectado.decimos }); nombresProcesados.add(empleadoEncontrado.nombre); } else if (!nombresProcesados.has(empDetectado.nombre)) { noEncontrados.push({ nombre: empDetectado.nombre, decimosPDF: empDetectado.decimos }); nombresProcesados.add(empDetectado.nombre); } }); return { encontrados, noEncontrados }; }
 
-        function confirmarPedidosOCR() { if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; } const resultado = window.ocrResultado; if (!resultado || resultado.encontrados.length === 0) { showToast('⚠️', 'No hay empleados encontrados. Crea primero los que faltan.', true); return; } let creados = 0; let omitidos = 0; const fechaHoy = new Date().toISOString().split('T')[0]; const horaAhora = new Date().toTimeString().slice(0, 5); resultado.encontrados.forEach(emp => { const decimos = emp.decimosPDF || resultado.numDecimos || 2; const validacion = validarMaximoDecimos(emp.nombre, decimos); if (!validacion.valido) { omitidos++; return; } const nuevo = { nombre: emp.nombre, servicio: resultado.servicio, seccion: emp.seccion, telefono: emp.telefono || '', numDecimos: decimos, fechaSolicitud: fechaHoy, horaSolicitud: horaAhora, fechaEntrega: '', horaEntrega: '', quienRecoge: '', quienPaga: '', pagado: false, recogido: false, fechaPago: '', horaPago: '', fecha: new Date().toLocaleDateString('es-ES'), creadoPor: usuarioActual, creadoViaOCR: true }; const id = generarId(); dbRef.pedidos.child(id).set(nuevo); creados++; }); const noEncontradosRestantes = resultado.noEncontrados.length; let mensaje = '🎉 ¡' + creados + ' pedidos creados automáticamente!'; if (omitidos > 0) mensaje += ' (' + omitidos + ' omitidos por límite)'; if (noEncontradosRestantes > 0) mensaje += '. Quedan ' + noEncontradosRestantes + ' empleados por crear manualmente.'; showToast('✅', mensaje); document.getElementById('ocrProgressContainer').style.display = 'none'; }
+        function confirmarPedidosOCR() { if (rolActual !== 'admin') { showToast('🔒', 'Esta acción es solo para administradores.', true); return; } const resultado = window.ocrResultado; if (!resultado || resultado.encontrados.length === 0) { showToast('⚠️', 'No hay empleados encontrados. Crea primero los que faltan.', true); return; } let creados = 0; let omitidos = 0; const fechaHoy = new Date().toISOString().split('T')[0]; const horaAhora = new Date().toTimeString().slice(0, 5); resultado.encontrados.forEach(emp => { const decimos = emp.decimosPDF || resultado.numDecimos || 2; const validacion = validarMaximoDecimos(emp.nombre, decimos); if (!validacion.valido) { omitidos++; return; } const nuevo = { nombre: emp.nombre, servicio: resultado.servicio, seccion: emp.seccion, telefono: emp.telefono || '', numDecimos: decimos, fechaSolicitud: fechaHoy, horaSolicitud: horaAhora, fechaEntrega: '', horaEntrega: '', quienRecoge: '', quienPaga: '', pagado: false, recogido: false, fechaPago: '', horaPago: '', fecha: new Date().toLocaleDateString('es-ES'), creadoPor: usuarioActual, creadoViaOCR: true }; const id = generarId(); dbRef.pedidos.child(id).set(nuevo); creados++; }); const noEncontradosRestantes = resultado.noEncontrados.length; let mensaje = ' ¡' + creados + ' pedidos creados automáticamente!'; if (omitidos > 0) mensaje += ' (' + omitidos + ' omitidos por límite)'; if (noEncontradosRestantes > 0) mensaje += '. Quedan ' + noEncontradosRestantes + ' empleados por crear manualmente.'; showToast('✅', mensaje); document.getElementById('ocrProgressContainer').style.display = 'none'; }
 
         function cancelarOCR() { pedidosPendientesOCR = []; document.getElementById('ocrProgressContainer').style.display = 'none'; document.getElementById('ocrResultContainer').style.display = 'none'; document.getElementById('ocrFile').value = ''; document.getElementById('ocrStatus').textContent = 'Preparando...'; document.getElementById('ocrProgressFill').style.width = '0%'; }
 
         function firebaseGuardarPedido(pedido) { setSyncStatus('syncing', '🔄 Guardando...'); const { id, ...datos } = pedido; dbRef.pedidos.child(id).set(datos).then(() => setSyncStatus('online')).catch((err) => { setSyncStatus('offline', '❌ Error'); showToast('⚠️', 'No he podido guardar el cambio.', true); }); }
-        function firebaseEliminarPedido(id) { setSyncStatus('syncing', ' Borrando...'); dbRef.pedidos.child(id).remove().then(() => setSyncStatus('online')).catch((err) => { setSyncStatus('offline', '❌ Error'); }); }
+        function firebaseEliminarPedido(id) { setSyncStatus('syncing', '🔄 Borrando...'); dbRef.pedidos.child(id).remove().then(() => setSyncStatus('online')).catch((err) => { setSyncStatus('offline', '❌ Error'); }); }
         function firebaseGuardarEmpleado(empleado) { setSyncStatus('syncing', '🔄 Guardando empleado...'); const { id, ...datos } = empleado; dbRef.empleados.child(id).set(datos).then(() => setSyncStatus('online')).catch((err) => { setSyncStatus('offline', '❌ Error'); }); }
         function firebaseGuardarConfig() { setSyncStatus('syncing', '🔄 Guardando configuración...'); dbRef.config.set(config).then(() => setSyncStatus('online')).catch((err) => { setSyncStatus('offline', '❌ Error'); }); }
         function firebaseGuardarUsuarios() { dbRef.usuarios.set(usuarios); }
@@ -2410,7 +2677,7 @@
         function exportarListadoGeneralPDF() {
             const filtroServicio = document.getElementById('filtroServicioListado').value;
             let pedidosFiltrados = getPedidosFiltradosListado();
-            if (pedidosFiltrados.length === 0) { showToast('⚠️', 'No hay pedidos para exportar.', true); return; }
+            if (pedidosFiltrados.length === 0) { showToast('️', 'No hay pedidos para exportar.', true); return; }
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
             let titulo = 'Listado General - Lotería Navidad 2026';
@@ -2447,13 +2714,13 @@
             csv += '\nTOTAL,' + pedidosFiltrados.length + ' registros,' + totalDec + ' décimos,' + totalImp.toLocaleString('es-ES') + ' €\n';
             const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
             const link = document.createElement('a'); link.href = URL.createObjectURL(blob); link.download = 'listado-general-2026.csv'; link.click();
-            showToast('', '¡CSV generado con ' + pedidosFiltrados.length + ' registros!');
+            showToast('📊', '¡CSV generado con ' + pedidosFiltrados.length + ' registros!');
         }
 
         function imprimirListadoGeneral() {
             const filtroServicio = document.getElementById('filtroServicioListado').value;
             let pedidosFiltrados = getPedidosFiltradosListado();
-            if (pedidosFiltrados.length === 0) { showToast('️', 'No hay pedidos para imprimir.', true); return; }
+            if (pedidosFiltrados.length === 0) { showToast('⚠️', 'No hay pedidos para imprimir.', true); return; }
             const v = window.open('', '', 'width=900,height=700');
             let encabezado = '<h1>Listado General - Lotería 2026</h1>';
             if (filtroServicio) encabezado += '<p><strong>Servicio:</strong> ' + filtroServicio + '</p>';
@@ -2501,7 +2768,7 @@
             doc.text('Recaudado: ' + recaudado.toLocaleString('es-ES') + ' €', 14, currentY); currentY += 5; 
             doc.text('Pendiente: ' + (totalImp - recaudado).toLocaleString('es-ES') + ' €', 14, currentY); 
             doc.save('pedidos-loteria-2026.pdf'); 
-            showToast('', '¡PDF generado con ' + pedidosFiltrados.length + ' registros!'); 
+            showToast('📄', '¡PDF generado con ' + pedidosFiltrados.length + ' registros!'); 
         }
 
         function exportarCSV() { 
